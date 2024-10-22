@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="LabelFor">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.SelectGenderViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.user.SelectGenderActivity.ProxyClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:background="@color/white"
+        tools:context=".ui.user.InputNameActivity">
+
+        <include
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}" />
+
+        <View
+            android:id="@+id/man"
+            android:layout_width="400dp"
+            android:layout_height="360dp"
+            android:background="@drawable/bg_selected"
+            android:onClick="@{()-> click.selectMan()}"
+            app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+            app:layout_constraintEnd_toStartOf="@+id/woman"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <ImageView
+            android:id="@+id/manIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:background="@drawable/gender_man_icon"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="@+id/man"
+            app:layout_constraintStart_toStartOf="@+id/man"
+            app:layout_constraintTop_toTopOf="@+id/man" />
+
+        <ImageView
+            android:id="@+id/manSelectedIv"
+            android:layout_width="77dp"
+            android:layout_height="60dp"
+            android:background="@drawable/gender_selected"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="@+id/man"
+            app:layout_constraintTop_toTopOf="@+id/man" />
+
+        <TextView
+            android:id="@+id/mainTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/select_gender_man"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="@+id/man"
+            app:layout_constraintStart_toStartOf="@+id/man"
+            app:layout_constraintTop_toBottomOf="@+id/manIcon" />
+
+        <View
+            android:id="@+id/woman"
+            android:layout_width="400dp"
+            android:layout_height="360dp"
+            android:background="@drawable/bg_normal"
+            android:onClick="@{()-> click.selectWoMan()}"
+            app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/man"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+        <ImageView
+            android:id="@+id/womanIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:background="@drawable/gender_woman_icon"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="@+id/woman"
+            app:layout_constraintStart_toStartOf="@+id/woman"
+            app:layout_constraintTop_toTopOf="@+id/woman" />
+
+        <ImageView
+            android:id="@+id/womanSelectedIv"
+            android:layout_width="77dp"
+            android:layout_height="60dp"
+            android:background="@drawable/gender_selected"
+            android:importantForAccessibility="no"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/woman"
+            app:layout_constraintTop_toTopOf="@+id/woman" />
+
+        <TextView
+            android:id="@+id/womanTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/select_gender_woman"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="@+id/woman"
+            app:layout_constraintStart_toStartOf="@+id/woman"
+            app:layout_constraintTop_toBottomOf="@+id/womanIcon" />
+
+        <Button
+            android:id="@+id/nextBtn"
+            style="@style/SMButtonNext"
+            android:layout_width="240dp"
+            android:layout_marginBottom="45dp"
+            android:text="@string/next_step"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:noRepeatClick="@{()-> click.next()}" />
+
+        <Button
+            style="@style/SMButtonPre"
+            android:layout_width="240dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="45dp"
+            android:onClick="@{()-> click.finish()}"
+            android:text="@string/previous_step"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

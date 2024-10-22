@@ -12,7 +12,11 @@
     <color name="color_gray">#333</color>
     <color name="color_title">#222</color>
     <color name="color_bg_edittext">#F6F6F6</color>
+    <color name="color_gender_normal">#F6F6F6</color>
     <color name="color_1c1c1c">#1C1C1C</color>
     <color name="color_331c1c1c">#331C1C1C</color>
+    <color name="color_cc1c1c1c">#cc1C1C1C</color>
+    <color name="color_801c1c1c">#801C1C1C</color>
     <color name="color_blue">#4E71FF</color>
+    <color name="color_e7e7e7">#E7E7E7</color>
 </resources>

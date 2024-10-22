@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    tools:ignore="LabelFor">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.InputNameViewModel" />
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.user.InputNameActivity.ProxyClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:background="@color/white"
+        tools:context=".ui.user.InputNameActivity">
+
+        <include
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}" />
+
+        <EditText
+            style="@style/SMEditText"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="117dp"
+            android:layout_marginEnd="117dp"
+            android:hint="@string/input_name_hint"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:text="@={viewModel.name}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:layout_width="240dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="45dp"
+            bind:noRepeatClick="@{()-> click.next()}"
+            android:text="@string/next_step"
+            style="@style/SMButtonNext"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

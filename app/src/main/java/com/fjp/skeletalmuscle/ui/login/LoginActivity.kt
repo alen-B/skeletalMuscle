@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.login
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -17,13 +18,12 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.databinding.ActivityLoginBinding
+import com.fjp.skeletalmuscle.ui.user.InputNameActivity
 import com.fjp.skeletalmuscle.viewmodel.state.LoginViewModel
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.util.isPhone
-import java.util.regex.Pattern
 
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
-    override fun layoutId() = R.layout.activity_login
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -74,7 +74,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                     YoYo.with(Techniques.Shake).duration(700).repeat(1).playOn(mDatabind.agreementTv)
                 }
                 else -> {
-                    showToast("执行登录")
+                    startActivity(Intent(this@LoginActivity, InputNameActivity::class.java))
+                    finish()
                 }
             }
 

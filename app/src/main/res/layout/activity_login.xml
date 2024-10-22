@@ -65,8 +65,8 @@
             android:importantForAutofill="no"
             android:inputType="phone"
             android:maxLength="11"
-            android:paddingStart="136dp"
-            android:paddingEnd="136dp"
+            android:paddingStart="36dp"
+            android:paddingEnd="36dp"
             android:text="@={viewModel.phone}"
             android:textColor="@color/color_1c1c1c"
             android:textColorHint="@color/color_331c1c1c"
@@ -75,16 +75,6 @@
             app:layout_constraintStart_toStartOf="@+id/midGuideline"
             app:layout_constraintTop_toBottomOf="@+id/PhoneTitleTv" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="@{viewModel.areaCode}"
-            android:textSize="44sp"
-            app:drawableEndCompat="@drawable/login_zone_code_arrow"
-            app:layout_constraintBottom_toBottomOf="@+id/phoneEt"
-            app:layout_constraintStart_toStartOf="@+id/phoneEt"
-            app:layout_constraintTop_toTopOf="@+id/phoneEt" />
 
         <View
             android:id="@+id/codeView"
@@ -153,17 +143,10 @@
 
         <Button
             android:id="@+id/loginBtn"
+            style="@style/SMButtonNext"
             android:layout_width="0dp"
-            android:layout_height="144dp"
             android:layout_marginBottom="48dp"
-            android:background="@drawable/bg_btn"
-            android:drawableEnd="@drawable/login_login_arrow"
-            android:gravity="start|center_vertical"
-            android:paddingStart="45dp"
-            android:paddingEnd="45dp"
             android:text="@string/login_login"
-            android:textColor="@color/white"
-            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/midGuideline"

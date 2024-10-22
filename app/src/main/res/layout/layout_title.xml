@@ -7,7 +7,8 @@
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.app.base.SMBaseViewModel" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,11 +40,36 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/rightIv"
             android:layout_width="wrap_content"
-            android:visibility="@{viewModel.showRightImg ? View.VISIBLE : View.GONE}"
             android:layout_height="wrap_content"
+            android:visibility="@{viewModel.showRightImg ? View.VISIBLE : View.GONE}"
             app:bitmap="@{viewModel.rightImg}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/curIndexTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.curIndex}"
+            android:textColor="@color/color_cc1c1c1c"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.showRightText ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/totalTv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/totalTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.totalIndex}"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.showRightText ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/curIndexTv"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
