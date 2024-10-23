@@ -1,0 +1,85 @@
+package com.fjp.skeletalmuscle.ui.user
+
+import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.ext.init
+import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.common.Constants
+import com.fjp.skeletalmuscle.databinding.ActivityDiseaseBinding
+import com.fjp.skeletalmuscle.ui.user.adapter.DiseaseAdapter
+import com.fjp.skeletalmuscle.ui.user.adapter.DiseaseDetailAdapter
+import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
+import com.fjp.skeletalmuscle.viewmodel.state.DiseaseViewModel
+import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
+
+class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>(), (String,  Int) -> Unit {
+
+    lateinit var diseaseAdapter: DiseaseAdapter
+    lateinit var diseaseDetailAdapter: DiseaseDetailAdapter
+    override fun initView(savedInstanceState: Bundle?) {
+        mDatabind.viewModel = mViewModel
+        mViewModel.title.set(getString(R.string.disease_title))
+        mDatabind.click = ProxyClick()
+        mViewModel.curIndex.set("7")
+        mViewModel.totalIndex.set("/10")
+        mViewModel.showRightText.set(true)
+        diseaseAdapter = DiseaseAdapter(mViewModel.dataArr as ArrayList<String>, 0, this)
+        diseaseDetailAdapter = DiseaseDetailAdapter(arrayListOf(), 0, clickItem = { item, position ->
+            showToast("点击了" + position)
+        })
+        mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), diseaseAdapter)
+        mDatabind.detailRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), diseaseDetailAdapter)
+
+    }
+
+
+    inner class ProxyClick {
+        fun next() {
+
+        }
+
+        fun finish() {
+            this@DiseaseActivity.finish()
+
+        }
+
+
+    }
+
+    override fun invoke(item: String, position: Int) {
+        when (position) {
+            0 -> {
+                mDatabind.detailRecyclerView.visibility = View.GONE
+                mDatabind.otherEt.visibility = View.GONE
+            }
+
+            1 -> {
+                diseaseDetailAdapter.setList(mViewModel.heartDisease)
+                mDatabind.detailRecyclerView.visibility = View.VISIBLE
+                mDatabind.otherEt.visibility = View.GONE
+            }
+
+            2 -> {
+                diseaseDetailAdapter.setList(mViewModel.lungDisease)
+                mDatabind.detailRecyclerView.visibility = View.VISIBLE
+                mDatabind.otherEt.visibility = View.GONE
+            }
+
+            3 -> {
+                diseaseDetailAdapter.setList(mViewModel.jointDisease)
+                mDatabind.detailRecyclerView.visibility = View.VISIBLE
+                mDatabind.otherEt.visibility = View.GONE
+            }
+
+            4 -> {
+                mDatabind.detailRecyclerView.visibility = View.GONE
+                mDatabind.otherEt.visibility = View.VISIBLE
+            }
+
+        }
+    }
+}

@@ -15,7 +15,7 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
         mDatabind.click = ProxyClick()
         mViewModel.title.set(resources.getString(R.string.select_gender_title))
         mViewModel.curIndex.set("2")
-        mViewModel.totalIndex.set("/9")
+        mViewModel.totalIndex.set("/10")
         mViewModel.showRightText.set(true)
     }
 

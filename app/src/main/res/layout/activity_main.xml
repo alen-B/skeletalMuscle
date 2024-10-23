@@ -1,9 +1,396 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.MainViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.main.MainActivity.ProxyClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:paddingBottom="40dp"
+        tools:context=".ui.main.MainActivity">
+
+        <include
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/midGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintEnd_toEndOf="@id/midGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"/>
+
+        <TextView
+            android:id="@+id/sportTipTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/main_tip_title"
+            android:drawablePadding="12dp"
+            android:text="@string/main_tip"
+            android:textColor="@color/color_cc1c1c1c"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+        <TextView
+            android:id="@+id/sportDetailTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="50dp"
+            android:text="@string/main_tip_detail"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/midGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportTipTv" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_tip"
+            app:layout_constraintEnd_toStartOf="@id/midGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportDetailTv"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:id="@+id/rTbg"
+            android:layout_width="0dp"
+            android:layout_height="470dp"
+            android:layout_marginStart="50dp"
+            android:background="@drawable/bg_gray_round_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/midGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+        <TextView
+            android:id="@+id/scoreTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:drawableStart="@drawable/main_score"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/main_score"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="@+id/rTbg"
+            app:layout_constraintTop_toTopOf="@+id/rTbg" />
+
+        <TextView
+            android:id="@+id/dayOfMonthTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:background="@drawable/main_calendar"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="@{viewModel.currentDay}"
+            android:textColor="@color/color_1c1c1c"
+            android:onClick="@{()-> click.startCalendar()}"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/rTbg"
+            app:layout_constraintTop_toTopOf="@+id/rTbg" />
+
+        <TextView
+            android:id="@+id/totalScoreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="@string/main_total_score"
+            android:textColor="@color/color_cacaca"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="@+id/rTbg"
+            app:layout_constraintTop_toBottomOf="@+id/dayOfMonthTv" />
+
+        <TextView
+            android:id="@+id/curScoreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:text="@{viewModel.curScore}"
+            android:textColor="@color/colorAccent"
+            android:textSize="150sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/totalScoreTv"
+            app:layout_constraintBottom_toBottomOf="@+id/totalScoreTv"
+            app:layout_constraintEnd_toStartOf="@id/totalScoreTv" />
+
+        <TextView
+            android:id="@+id/myDataTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="-40dp"
+            android:drawableStart="@drawable/main_my_data"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/main_my_data"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="@+id/rTbg"
+            app:layout_constraintTop_toBottomOf="@+id/curScoreTv" />
+        <!-- 运动时长-->
+        <View
+            android:id="@+id/sportTimeView"
+            android:layout_width="0dp"
+            android:layout_height="105dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintEnd_toStartOf="@+id/heartRateView"
+            app:layout_constraintStart_toStartOf="@+id/rTbg"
+            app:layout_constraintTop_toBottomOf="@+id/myDataTv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/main_sport_time"
+            android:gravity="center_vertical"
+            android:text="@string/main_sports_time"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/main_arrow_down"
+            app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
+            app:layout_constraintStart_toStartOf="@+id/sportTimeView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/minTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_min"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
+            app:layout_constraintEnd_toEndOf="@+id/sportTimeView" />
+
+        <TextView
+            android:id="@+id/sportsTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@{viewModel.sportsTime}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/minTv"
+            app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
+            app:layout_constraintEnd_toStartOf="@+id/minTv" />
+        <!-- 心率区间-->
+        <View
+            android:id="@+id/heartRateView"
+            android:layout_width="0dp"
+            android:layout_height="105dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sportTimeView"
+            app:layout_constraintTop_toBottomOf="@+id/myDataTv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/main_heart_rate"
+            android:gravity="center_vertical"
+            android:text="@string/main_heart_rate"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/heartRateView"
+            app:layout_constraintTop_toTopOf="@+id/heartRateView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/main_arrow_line"
+            app:layout_constraintBottom_toBottomOf="@+id/heartRateView"
+            app:layout_constraintStart_toStartOf="@+id/heartRateView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/timesTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_times"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/heartRateView"
+            app:layout_constraintEnd_toEndOf="@+id/heartRateView" />
+
+        <TextView
+            android:id="@+id/heartRateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@{viewModel.heartRate}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/timesTv"
+            app:layout_constraintBottom_toBottomOf="@+id/heartRateView"
+            app:layout_constraintEnd_toStartOf="@+id/timesTv" />
+        <!-- 心肺耐力-->
+        <View
+            android:id="@+id/enduranceView"
+            android:layout_width="0dp"
+            android:layout_height="105dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintEnd_toStartOf="@+id/heatView"
+            app:layout_constraintStart_toStartOf="@+id/rTbg"
+            app:layout_constraintTop_toBottomOf="@+id/sportTimeView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/main_endurance"
+            android:gravity="center_vertical"
+            android:text="@string/main_endurance"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/enduranceView"
+            app:layout_constraintTop_toTopOf="@+id/enduranceView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/main_arrow_up"
+            app:layout_constraintBottom_toBottomOf="@+id/enduranceView"
+            app:layout_constraintStart_toStartOf="@+id/enduranceView"
+            tools:ignore="ContentDescription" />
+
+
+        <TextView
+            android:id="@+id/enduranceTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@{viewModel.endurance}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/enduranceView"
+            app:layout_constraintEnd_toEndOf="@+id/enduranceView" />
+        <!-- 消耗热量-->
+        <View
+            android:id="@+id/heatView"
+            android:layout_width="0dp"
+            android:layout_height="105dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/enduranceView"
+            app:layout_constraintTop_toBottomOf="@+id/sportTimeView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/main_heat"
+            android:gravity="center_vertical"
+            android:text="@string/main_heat"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/heatView"
+            app:layout_constraintTop_toTopOf="@+id/heatView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/main_arrow_down"
+            app:layout_constraintBottom_toBottomOf="@+id/heatView"
+            app:layout_constraintStart_toStartOf="@+id/heatView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/kilocalorieTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_kilocalorie"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/heatView"
+            app:layout_constraintEnd_toEndOf="@+id/heatView" />
+
+        <TextView
+            android:id="@+id/heatTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@{viewModel.heat}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/kilocalorieTv"
+            app:layout_constraintBottom_toBottomOf="@+id/heatView"
+            app:layout_constraintEnd_toStartOf="@+id/kilocalorieTv" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_btn"
+            android:onClick="@{()-> click.startSports()}"
+            android:text="@string/main_start_sports"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/midGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/rTbg" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

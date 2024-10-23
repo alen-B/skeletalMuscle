@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="200dp"
+    android:layout_marginEnd="16dp"
+    android:background="@drawable/bg_gray_round_20"
+    android:minWidth="70dp">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/defaultView"
+    android:layout_width="0dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/sportTypeIv"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/sportRateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sportTypeIv"
+        app:layout_constraintBottom_toTopOf="@+id/unitTv"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/unitTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_rate"
+        android:textColor="@color/color_331c1c1c"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sportRateTv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="ContentDescription" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/sportTypeExpandIv"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+    <TextView
+        android:id="@+id/sportNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_1c1c1c"
+        android:textSize="36sp"
+        android:layout_marginStart="6dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sportTypeExpandIv"
+        app:layout_constraintStart_toEndOf="@+id/sportTypeExpandIv"
+        app:layout_constraintTop_toTopOf="@+id/sportTypeExpandIv"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:id="@+id/activeLL"
+        android:layout_width="300dp"
+        android:layout_height="20dp"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sportTypeExpandIv">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暖身激活"
+            android:textColor="@color/color_801c1c1c" />
+
+        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="14dp"
+            app:rpbBackgroundColor="@color/color_e5e5e5"
+            app:rpbCornerRadius="7dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:rpbProgress="30"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_margin="0dp"
+            app:rpbProgressColor="@color/colorAccent"
+            app:rpbShowProgressText="false" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10min"
+            android:textColor="@color/color_801c1c1c" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/highEfficiencyLL"
+        android:layout_width="300dp"
+        android:layout_height="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:paddingStart="16dp"
+        android:visibility="gone"
+        android:paddingEnd="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activeLL">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="高效燃脂"
+            android:textColor="@color/color_801c1c1c" />
+
+        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="14dp"
+            app:rpbBackgroundColor="@color/color_e5e5e5"
+            app:rpbCornerRadius="7dp"
+            app:rpbProgress="40"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:rpbProgressColor="@color/color_ffc019"
+            app:rpbShowProgressText="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12min"
+            android:textColor="@color/color_801c1c1c" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/heartLL"
+        android:layout_width="300dp"
+        android:layout_height="20dp"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:layout_marginTop="8dp"
+        android:paddingEnd="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highEfficiencyLL">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="心肺提升"
+            android:textColor="@color/color_801c1c1c" />
+
+        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="14dp"
+            app:rpbBackgroundColor="@color/color_e5e5e5"
+            app:rpbCornerRadius="7dp"
+            app:rpbProgress="50"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:rpbProgressColor="@color/color_ff824c"
+            app:rpbShowProgressText="false" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14min"
+            android:textColor="@color/color_801c1c1c" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/extremeBreakthroughLL"
+        android:layout_width="300dp"
+        android:layout_height="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:visibility="gone"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heartLL">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="极限突破"
+            android:textColor="@color/color_801c1c1c" />
+
+        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="14dp"
+            app:rpbBackgroundColor="@color/color_e5e5e5"
+            app:rpbCornerRadius="7dp"
+            app:rpbProgress="60"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:rpbProgressColor="@color/color_ff574c"
+            app:rpbShowProgressText="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14min"
+            android:textColor="@color/color_801c1c1c" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

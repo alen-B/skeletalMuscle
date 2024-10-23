@@ -13,7 +13,7 @@ class InputNameActivity  : BaseActivity<InputNameViewModel, ActivityInputNameBin
         mDatabind.click = ProxyClick()
         mViewModel.title.set(resources.getString(R.string.input_name_title))
         mViewModel.curIndex.set("1")
-        mViewModel.totalIndex.set("/9")
+        mViewModel.totalIndex.set("/10")
         mViewModel.showRightText.set(true)
     }
 

@@ -18,7 +18,7 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
         mDatabind.click = ProxyClick()
         mViewModel.title.set(resources.getString(R.string.born_title))
         mViewModel.curIndex.set("3")
-        mViewModel.totalIndex.set("/9")
+        mViewModel.totalIndex.set("/10")
         mViewModel.showRightText.set(true)
     }
 
