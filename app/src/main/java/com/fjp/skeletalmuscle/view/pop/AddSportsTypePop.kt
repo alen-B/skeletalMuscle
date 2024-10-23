@@ -1,15 +1,10 @@
 package com.fjp.skeletalmuscle.view.pop
 
 import android.content.Context
-import android.os.Build
-import android.text.InputType
-import android.text.TextUtils
-import android.text.method.PasswordTransformationMethod
 import android.widget.EditText
 import android.widget.TextView
 import com.fjp.skeletalmuscle.R
 import com.lxj.xpopup.core.CenterPopupView
-import me.hgj.jetpackmvvm.base.appContext
 
 /**
  *Author:Mr'x

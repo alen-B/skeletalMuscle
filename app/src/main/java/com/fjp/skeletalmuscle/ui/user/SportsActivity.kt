@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.user
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -7,10 +8,12 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.data.model.bean.Sports
 import com.fjp.skeletalmuscle.databinding.ActivitySuportsBinding
 import com.fjp.skeletalmuscle.ui.user.adapter.SportsTypeAdapter
 import com.fjp.skeletalmuscle.view.pop.AddSportsTypePop
+import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.SuportsViewModel
 import com.lxj.xpopup.XPopup
 
@@ -21,7 +24,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.sports_type_title))
         mDatabind.click = ProxyClick()
-        mViewModel.curIndex.set("7")
+        mViewModel.curIndex.set("8")
         mViewModel.totalIndex.set("/10")
         mViewModel.showRightText.set(true)
         suportsAdapter = SportsTypeAdapter(mViewModel.dataArr as ArrayList<Sports>, clickItem = { item ->
@@ -33,7 +36,9 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
 
     inner class ProxyClick {
         fun next() {
-
+            val intent =  Intent(this@SportsActivity,SingleSelectActivity::class.java)
+            intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.DAY_ONE_WEEK.type)
+            startActivity(intent)
         }
 
         fun finish() {

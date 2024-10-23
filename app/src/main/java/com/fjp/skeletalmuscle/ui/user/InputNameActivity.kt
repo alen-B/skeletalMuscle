@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.user
 
+import android.content.Intent
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
@@ -23,6 +24,7 @@ class InputNameActivity  : BaseActivity<InputNameViewModel, ActivityInputNameBin
                 showToast(getString(R.string.input_name_tips))
                 return
             }
+            startActivity(Intent(this@InputNameActivity,SelectGenderActivity::class.java))
 
         }
     }

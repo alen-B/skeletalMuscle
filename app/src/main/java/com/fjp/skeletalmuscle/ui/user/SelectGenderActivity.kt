@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.user
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
@@ -21,7 +22,7 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
 
     inner class ProxyClick {
         fun next() {
-
+            startActivity(Intent(this@SelectGenderActivity,BornActivity::class.java))
 
         }
 

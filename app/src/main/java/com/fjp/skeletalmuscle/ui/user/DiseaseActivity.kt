@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.user
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,13 +9,10 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityDiseaseBinding
 import com.fjp.skeletalmuscle.ui.user.adapter.DiseaseAdapter
 import com.fjp.skeletalmuscle.ui.user.adapter.DiseaseDetailAdapter
-import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.DiseaseViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 
 class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>(), (String,  Int) -> Unit {
 
@@ -39,7 +37,7 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
 
     inner class ProxyClick {
         fun next() {
-
+            startActivity(Intent(this@DiseaseActivity,SportsActivity::class.java))
         }
 
         fun finish() {

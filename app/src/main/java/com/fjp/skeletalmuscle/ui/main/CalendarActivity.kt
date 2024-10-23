@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
-import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.databinding.ActivityCalendarBinding
 import com.fjp.skeletalmuscle.view.calendar.SMWeekBar
 import com.fjp.skeletalmuscle.viewmodel.state.CalendarViewModel

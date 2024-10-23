@@ -1,12 +1,11 @@
 package me.hgj.jetpackmvvm.demo.app.event
 
-import com.fjp.skeletalmuscle.data.model.bean.UserInfo
-import com.kunminx.architecture.ui.callback.UnPeekLiveData
-import me.hgj.jetpackmvvm.base.appContext
-import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
-import me.hgj.jetpackmvvm.callback.livedata.event.EventLiveData
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.SettingUtil
+import com.fjp.skeletalmuscle.data.model.bean.UserInfo
+import com.kunminx.architecture.ui.callback.UnPeekLiveData
+import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
+import me.hgj.jetpackmvvm.callback.livedata.event.EventLiveData
 
 class AppViewModel : BaseViewModel() {
 

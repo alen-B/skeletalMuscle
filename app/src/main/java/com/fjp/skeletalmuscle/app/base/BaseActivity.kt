@@ -3,10 +3,10 @@ package com.fjp.skeletalmuscle.app.base
 import android.content.res.Resources
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
-import me.hgj.jetpackmvvm.base.activity.BaseVmDbActivity
-import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import com.fjp.skeletalmuscle.app.ext.dismissLoadingExt
 import com.fjp.skeletalmuscle.app.ext.showLoadingExt
+import me.hgj.jetpackmvvm.base.activity.BaseVmDbActivity
+import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.jessyan.autosize.AutoSizeCompat
 
 

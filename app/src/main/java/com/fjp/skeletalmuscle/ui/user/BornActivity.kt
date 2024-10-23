@@ -1,15 +1,13 @@
 package com.fjp.skeletalmuscle.ui.user
 
-import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityBornBinding
 import com.fjp.skeletalmuscle.viewmodel.state.BornViewModel
+import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 
 
 class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
@@ -24,7 +22,9 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
 
     inner class ProxyClick {
         fun next() {
-
+           val intent =  Intent(this@BornActivity,SingleSelectActivity::class.java)
+            intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.HEIGHT.type)
+            startActivity(intent)
         }
 
         fun finish() {

@@ -2,11 +2,11 @@ package com.fjp.skeletalmuscle.app.base
 
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
-import me.hgj.jetpackmvvm.base.fragment.BaseVmDbFragment
-import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import com.fjp.skeletalmuscle.app.ext.dismissLoadingExt
 import com.fjp.skeletalmuscle.app.ext.hideSoftKeyboard
 import com.fjp.skeletalmuscle.app.ext.showLoadingExt
+import me.hgj.jetpackmvvm.base.fragment.BaseVmDbFragment
+import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 
 
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDbFragment<VM, DB>() {
