@@ -3,7 +3,7 @@
     <!--    登录界面-->
     <string name="login_login">登 录</string>
     <string name="login_title">请输入手机号获取验证码</string>
-    <string name="login_phone_title">手机号登录</string>
+    <string name="login_phone_title">手机号注册/登录</string>
     <string name="login_input_phone">请输入手机号</string>
     <string name="login_input_code">请输入验证码</string>
     <string name="login_agreement">已阅读并同意 骨骼肌用户协议 和 隐私协议</string>
