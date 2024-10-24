@@ -46,6 +46,7 @@
             bind:noRepeatClick="@{()-> click.next()}" />
 
         <Button
+            android:id="@+id/preBtn"
             style="@style/SMButtonPre"
             android:layout_width="240dp"
             android:layout_marginEnd="16dp"
@@ -54,15 +55,6 @@
             android:text="@string/previous_step"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/nextBtn" />
-        <Button
-            android:id="@+id/laterBtn"
-            style="@style/SMButtonPre"
-            android:layout_width="240dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="45dp"
-            android:visibility="gone"
-            android:text="@string/fill_in_later"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/preBtn" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

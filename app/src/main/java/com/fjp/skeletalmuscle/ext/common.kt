@@ -67,3 +67,4 @@ interface OnLazyClickListener : View.OnClickListener {
 
     fun onLazyClick(v: View)
 }
+

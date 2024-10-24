@@ -33,6 +33,7 @@
 
     <string name="sports_time_title">最后一个问题，平均每次运动多长时间？</string>
     <string name="sports_type_title">您平时做什么运动（可多选）？</string>
+    <string name="sports_type_no">无</string>
     <string name="sports_type_run">跑步</string>
     <string name="sports_type_hie">快走</string>
     <string name="sports_type_jumping_rope">跳绳</string>

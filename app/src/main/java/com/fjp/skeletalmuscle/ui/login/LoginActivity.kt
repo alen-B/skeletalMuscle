@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.text.InputFilter
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
@@ -20,8 +21,11 @@ import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.databinding.ActivityLoginBinding
 import com.fjp.skeletalmuscle.ui.user.InputNameActivity
 import com.fjp.skeletalmuscle.viewmodel.state.LoginViewModel
+import com.jay.phone_text_watcher.PhoneTextWatcher
+import com.jay.phone_text_watcher.TextChangeCallback
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.util.isPhone
+
 
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
@@ -30,6 +34,15 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         mViewModel.title.set(resources.getString(R.string.login_title))
         mViewModel.showRightImg.set(true)
         mViewModel.rightImg.set(R.drawable.login_title_right_icon)
+        val phoneTextWatcherSpace = PhoneTextWatcher()
+        mDatabind.phoneEt.addTextChangedListener(phoneTextWatcherSpace)
+        // 设置格式化输入的回调
+        phoneTextWatcherSpace.setTextChangedCallback(object : TextChangeCallback() {
+            override fun afterTextChanged(s: String?, isPhoneNumberValid: Boolean) {
+                mViewModel.phone.set(s)
+            }
+        })
+
         initAgreement()
 
     }
@@ -109,4 +122,5 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             mViewModel.agreement.set(isChecked)
         }
     }
+
 }

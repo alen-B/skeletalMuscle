@@ -75,7 +75,6 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
             }
         } else if (singleSelectType == SingleSelectType.DAY_ONE_WEEK.type) {
             mViewModel.curIndex.set("9")
-            mDatabind.laterBtn.visibility = View.VISIBLE
             title = getString(R.string.day_one_week_title)
             for (i in 0..6) {
                 mViewModel.dataArr.add(i, "${i + 1}天")
@@ -83,7 +82,6 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
 
         } else if (singleSelectType == SingleSelectType.SUPPORT_TIME.type) {
             mViewModel.curIndex.set("10")
-            mDatabind.laterBtn.visibility = View.VISIBLE
             title = getString(R.string.sports_time_title)
             for (i in 0..11) {
                 mViewModel.dataArr.add(i, "${(i + 1) * 10}分钟")
