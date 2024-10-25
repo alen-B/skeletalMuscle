@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.main
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -12,13 +13,20 @@ import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDetailFragmentViewModel
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
 
@@ -31,10 +39,6 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         initBarChart()
         initHorizontalBarChart()
         initLineChart()
-    }
-
-    private fun initLineChart() {
-
     }
 
     private fun getFormatterData(type: ChartType): Array<String> {
@@ -53,8 +57,15 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         }
 
     }
+
     private fun initBarChart() {
         val barChart = mDatabind.barChart
+        barChart.legend.isEnabled = false
+        barChart.setTouchEnabled(false)
+        barChart.isDragEnabled = false
+        barChart.setScaleEnabled(false)
+        barChart.setDrawBorders(false)
+        barChart.setDrawGridBackground(false)
         //xAxis 设置底部样式
         val xAxis = mDatabind.barChart.xAxis
         xAxis.mAxisMinimum = 0f
@@ -71,12 +82,12 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         val axisLeft = barChart.axisLeft
         axisLeft.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         axisLeft.textSize = 18.dp
-        axisLeft.axisMinimum =0f
+        axisLeft.axisMinimum = 0f
         axisLeft.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         //设置右边轴样式
         val axisRight = barChart.axisRight
         axisRight.isEnabled = false
-        axisRight.axisMinimum =0f
+        axisRight.axisMinimum = 0f
 
         val values = ArrayList<BarEntry>()
         for (i in 0 until 24) {
@@ -90,7 +101,6 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         }
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "消耗(千卡)")
-        barChart.legend.isEnabled = false
         dataSets.add(barDataSet)
         barDataSet.setDrawIcons(false)
         barDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
@@ -104,10 +114,16 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         description.text = ""
         barChart.description = description
     }
+
     private fun initHorizontalBarChart() {
         val horizontalBarChart = mDatabind.horizontalBarChart
         horizontalBarChart.legend.isEnabled = false
-        horizontalBarChart.isHighlightFullBarEnabled=false
+        horizontalBarChart.setTouchEnabled(false)
+        horizontalBarChart.isDragEnabled = false
+        horizontalBarChart.setScaleEnabled(false)
+        horizontalBarChart.setDrawBorders(false)
+        horizontalBarChart.setDrawGridBackground(false)
+        horizontalBarChart.isHighlightFullBarEnabled = false
         val xAxis = horizontalBarChart.xAxis
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -119,12 +135,12 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         xAxis.valueFormatter = IndexAxisValueFormatter(dayFormatterData)
         val axisLeft = horizontalBarChart.axisLeft
         axisLeft.isEnabled = false
-        axisLeft.axisMinimum =0f
+        axisLeft.axisMinimum = 0f
         val axisRight = horizontalBarChart.axisRight
 //        axisRight.isEnabled = false
         axisRight.setDrawGridLines(false)
         axisRight.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        axisRight.axisMinimum =0f
+        axisRight.axisMinimum = 0f
 
         val values = ArrayList<BarEntry>()
         for (i in 0 until 4) {
@@ -155,10 +171,77 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
     }
 
+    private fun initLineChart() {
+        val lineChart = mDatabind.lineChart
+        lineChart.legend.isEnabled = false
+        lineChart.setTouchEnabled(false)
+        lineChart.isDragEnabled = false
+        lineChart.setScaleEnabled(false)
+        lineChart.setDrawBorders(false)
+        lineChart.setDrawGridBackground(false)
+        val description = Description()
+        description.text = ""
+        lineChart.description = description
+        val xAxis = lineChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.setDrawGridLines(false)
+        val leftAxis = lineChart.axisLeft
+        leftAxis.setDrawGridLines(true)
+        leftAxis.gridLineWidth = 0.5f
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
+        val rightAxis: YAxis = lineChart.axisRight
+        rightAxis.gridLineWidth = 0.5f
+        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
+        rightAxis.isEnabled = false
+
+        val values = ArrayList<Entry>()
+
+        for (i in 0 until 8) {
+            val num = (Math.random() * 180).toFloat() - 30
+            values.add(BarEntry(i.toFloat(), num))
+        }
+        val dataSets = ArrayList<ILineDataSet>()
+        val lineDataSet = LineDataSet(values, "千卡")
+        lineDataSet.setDrawIcons(false)
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        lineDataSet.setDrawCircles(false)
+        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
+        lineDataSet.setDrawCircleHole(false)
+
+        // text size of values
+        lineDataSet.setDrawValues(false)
+
+
+        // draw selection line as dashed
+        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
+
+        // set the filled area
+
+        // set the filled area
+        lineDataSet.setDrawFilled(true)
+        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+
+        // set color of filled area
+
+        // set color of filled area
+        if (Utils.getSDKInt() >= 18) {
+            // drawables only supported on api level 18 and above
+            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
+            lineDataSet.fillDrawable = drawable
+        } else {
+            lineDataSet.fillColor = Color.BLACK
+        }
+        dataSets.add(lineDataSet)
+        val barData = LineData(dataSets)
+        lineChart.data = barData
+        lineChart.setNoDataText("暂无数据")
+        lineChart.animateY(500)
+    }
 
 
     inner class ProxyClick {
-
     }
 }

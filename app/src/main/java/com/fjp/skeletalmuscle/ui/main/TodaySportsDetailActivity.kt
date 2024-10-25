@@ -34,5 +34,8 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel,Activi
         fun clickSportsRecord(){
 
         }
+        fun finish(){
+            this@TodaySportsDetailActivity.finish()
+        }
     }
 }
