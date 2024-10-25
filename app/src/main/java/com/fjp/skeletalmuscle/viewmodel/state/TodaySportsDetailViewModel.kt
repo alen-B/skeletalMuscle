@@ -9,7 +9,7 @@ import com.fjp.skeletalmuscle.data.model.bean.TodaySportsType
  *Time:2024/10/19
  *Description:
  */
-class TodaySportsDataViewModel : SMBaseViewModel() {
+class TodaySportsDetailViewModel : SMBaseViewModel() {
     val dataArr = mutableListOf<TodaySports>()
 
     init {

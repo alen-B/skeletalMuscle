@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.ui.user.adapter
 
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
@@ -26,17 +27,17 @@ class MainSportsRateAdapter(data: ArrayList<MainSports>, var defaultIndex: Int) 
             holder.setImageResource(R.id.sportTypeExpandIv,R.drawable.main_sports_leg)
             holder.setText(R.id.sportNameTv, "高抬腿")
             holder.setText(R.id.sportRateTv, "98")
-            holder.setTextColor(R.id.sportRateTv, appContext.resources.getColor(R.color.color_blue))
+            holder.setTextColor(R.id.sportRateTv, ContextCompat.getColor(appContext,R.color.color_blue))
         }else if(item.type== SportsType.DUMBBELL){
             holder.setText(R.id.sportNameTv, "哑铃")
             holder.setText(R.id.sportRateTv, "68")
-            holder.setTextColor(R.id.sportRateTv, appContext.resources.getColor(R.color.color_ffc019))
+            holder.setTextColor(R.id.sportRateTv, ContextCompat.getColor(appContext,R.color.color_ffc019))
             holder.setImageResource(R.id.sportTypeIv,R.drawable.main_sports_weightlifting)
             holder.setImageResource(R.id.sportTypeExpandIv,R.drawable.main_sports_weightlifting)
         }else{
             holder.setText(R.id.sportNameTv, "平板支撑")
             holder.setText(R.id.sportRateTv, "88")
-            holder.setTextColor(R.id.sportRateTv, appContext.resources.getColor(R.color.color_ff574c))
+            holder.setTextColor(R.id.sportRateTv, ContextCompat.getColor(appContext,R.color.color_ff574c))
             holder.setImageResource(R.id.sportTypeIv,R.drawable.main_sports_flat_support)
             holder.setImageResource(R.id.sportTypeExpandIv,R.drawable.main_sports_flat_support)
         }

@@ -111,6 +111,10 @@ dependencies {
     implementation 'com.haibin:calendarview:3.7.1'
 
     implementation 'com.github.jaydroid1024:PhoneTextWatcher:0.0.2'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

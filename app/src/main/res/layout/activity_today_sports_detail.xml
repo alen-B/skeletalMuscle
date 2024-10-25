@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDetailViewModel" />
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity.ProxyClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        tools:context=".ui.main.TodaySportsDetailActivity">
+        <include
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}" />
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_gray_round_15"
+            android:paddingLeft="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            android:paddingRight="5dp"
+            app:tl_divider_width="1dp"
+            app:tl_textsize="32sp"
+            app:tl_tab_space_equal="true"
+            app:tl_divider_color="@color/color_cfd1d1"
+            tl:tl_indicator_margin_left="2dp"
+            tl:tl_textSelectColor="@color/color_blue"
+            tl:tl_textUnselectColor="@color/color_1c1c1c"
+            tl:tl_indicator_color="#fff"
+            tl:tl_indicator_corner_radius="5dp"
+            tl:tl_indicator_height="45dp"
+            tl:tl_indicator_margin_right="2dp"
+            tl:tl_indicator_width="220dp"
+            tl:tl_indicator_style="BLOCK"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp"/>
+
+        <Button
+            style="@style/SMButtonPre"
+            android:layout_width="240dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/bg_yellow_round_20"
+            android:onClick="@{()-> click.clickSportsRecord()}"
+            android:text="@string/today_sports_data_share"
+            android:drawableEnd="@drawable/today_sports_data_share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

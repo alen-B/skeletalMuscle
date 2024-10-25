@@ -13,6 +13,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.fjp.skeletalmuscle.R
@@ -57,7 +58,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
             override fun updateDrawState(ds: TextPaint) {
                 ds.isUnderlineText = false
-                ds.color = resources.getColor(R.color.color_1c1c1c)
+                ds.color = ContextCompat.getColor(appContext,R.color.color_1c1c1c)
             }
         }
         val privacyClickableSpan = object : ClickableSpan() {
@@ -67,7 +68,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
             override fun updateDrawState(ds: TextPaint) {
                 ds.isUnderlineText = false
-                ds.color = resources.getColor(R.color.color_1c1c1c)
+                ds.color = ContextCompat.getColor(appContext,R.color.color_1c1c1c)
             }
         }
         mDatabind.agreementTv.movementMethod = LinkMovementMethod.getInstance()
@@ -102,9 +103,9 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
             startCountDown()
         }
 
-        fun startCountDown() {
+        private fun startCountDown() {
             mViewModel.verificationCodeisEnabled.set(false)
-            mDatabind.countDownTv.setTextColor(resources.getColor(R.color.color_331c1c1c))
+            mDatabind.countDownTv.setTextColor(ContextCompat.getColor(appContext,R.color.color_331c1c1c))
            object : CountDownTimer(60000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     mViewModel.verificationCodeText.set(String.format(getString(R.string.login_count_down), millisUntilFinished / 1000))
@@ -112,7 +113,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
                 override fun onFinish() {
                     mViewModel.verificationCodeText.set(appContext.getString(R.string.login_get_verification_code))
-                    mDatabind.countDownTv.setTextColor(resources.getColor(R.color.colorAccent))
+                    mDatabind.countDownTv.setTextColor(ContextCompat.getColor(appContext,R.color.colorAccent))
                     mViewModel.verificationCodeisEnabled.set(false)
                 }
             }.start()

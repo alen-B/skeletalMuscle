@@ -67,7 +67,7 @@
     <string name="calendar_title">运动打卡日记</string>
     <string name="calendar_pre_month">前一月</string>
     <string name="calendar_next_month">下一月</string>
-<!--    -->
+    <!--    -->
     <string name="today_sports_data_title">看看今日运动数据吧</string>
     <string name="today_sports_data_share">分享</string>
     <string name="today_sports_data_recorde">运动记录</string>
@@ -76,11 +76,15 @@
     <string name="today_sports_data_type3">平板支撑</string>
     <string name="today_sports_data_type4">心率区间</string>
     <string name="today_sports_data_type5">运动时长</string>
-    <string name="today_sports_data_type6">心率区间</string>
-    <string name="today_sports_data_type7">肌肉比例</string>
-    <string name="today_sports_data_type8">有氧能耗</string>
+    <string name="today_sports_data_type6">肌肉比例</string>
+    <string name="today_sports_data_type7">有氧能耗</string>
     <string name="today_sports_data_min">/分钟</string>
     <string name="today_sports_data_kilocalorie">/千卡</string>
+
+    <string name="today_sports_detail_break_through">极限突破</string>
+    <string name="today_sports_detail_heart_enhancement">心肺提升</string>
+    <string name="today_sports_detail_fat_burn">高效燃脂</string>
+    <string name="today_sports_detail_active">暖身激活</string>
 
 
     <string-array name="chinese_week_string_array">
@@ -92,4 +96,7 @@
         <item>周五</item>
         <item>周六</item>
     </string-array>
+    <string name="today_sports_detail_time">时长(分钟)</string>
+    <string name="today_sports_detail_kilocalorie">消耗(千卡)</string>
+
 </resources>
