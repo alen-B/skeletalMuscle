@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.SportsRecordViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.main.SportsRecordActivity.ProxyClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_blue"
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        tools:context=".ui.main.SportsRecordActivity">
+
+        <include
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}" />
+
+        <TextView
+            android:layout_width="188dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_white_round_15"
+            android:drawableStart="@drawable/calendar_pre_month"
+            android:gravity="center"
+            android:onClick="@{()-> click.clickPreDay()}"
+            android:paddingStart="15dp"
+            android:text="@string/sports_record_pre_day"
+            android:textColor="@color/color_994e71ff"
+            android:textSize="34sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+        <TextView
+            android:id="@+id/calendarTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:text="@{viewModel.calendarTitle}"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+        <TextView
+            android:layout_width="188dp"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_white_round_15"
+            android:gravity="center"
+            android:onClick="@{()-> click.clickNextDay()}"
+            android:paddingEnd="15dp"
+            android:text="@string/sports_record_next_day"
+            android:textColor="@color/color_994e71ff"
+            android:textSize="34sp"
+            app:drawableEndCompat="@drawable/calendar_next_month"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarTitleTv">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/heightLegBg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_white_round_20"
+                    android:padding="32dp">
+
+                    <ImageView
+                        android:id="@+id/legIcon"
+                        android:layout_width="23dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/main_sports_leg"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/today_sports_data_type1"
+                        android:textColor="@color/color_222"
+                        android:textSize="28sp"
+                        app:layout_constraintStart_toEndOf="@+id/legIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.legSportsTime}"
+                        android:textColor="@color/color_222"
+                        android:textSize="26sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/legRecyclerView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/legIcon" />
+
+                    <TextView
+                        android:id="@+id/sportNameTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@string/sports_record_sport_time"
+                        android:textColor="@color/color_1c1c1c"
+                        android:textSize="24sp"
+                        android:layout_marginTop="30dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/legRecyclerView"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:id="@+id/activeLL"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:layout_constraintEnd_toStartOf="@+id/lineChart"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/sportNameTv">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_sports_detail_active"
+                            android:textColor="@color/color_801c1c1c"
+                            android:textSize="22sp" />
+
+                        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="16dp"
+                            android:layout_margin="0dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            app:rpbBackgroundColor="@color/color_e5e5e5"
+                            app:rpbCornerRadius="8dp"
+                            app:rpbProgress="30"
+                            app:rpbProgressColor="@color/colorAccent"
+                            app:rpbShowProgressText="false" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10min"
+                            android:textColor="@color/color_801c1c1c" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/highEfficiencyLL"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:layout_constraintEnd_toStartOf="@+id/lineChart"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/activeLL">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_sports_detail_fat_burn"
+                            android:textColor="@color/color_801c1c1c"
+                            android:textSize="22sp" />
+
+                        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            app:rpbBackgroundColor="@color/color_e5e5e5"
+                            app:rpbCornerRadius="8dp"
+                            app:rpbProgress="40"
+                            app:rpbProgressColor="@color/color_ffc019"
+                            app:rpbShowProgressText="false" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12min"
+                            android:textColor="@color/color_801c1c1c" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/heartLL"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:layout_constraintEnd_toStartOf="@+id/lineChart"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/highEfficiencyLL">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_sports_detail_heart_enhancement"
+                            android:textColor="@color/color_801c1c1c"
+                            android:textSize="22sp" />
+
+                        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            app:rpbBackgroundColor="@color/color_e5e5e5"
+                            app:rpbCornerRadius="8dp"
+                            app:rpbProgress="50"
+                            app:rpbProgressColor="@color/color_ff824c"
+                            app:rpbShowProgressText="false" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="14min"
+                            android:textColor="@color/color_801c1c1c" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/extremeBreakthroughLL"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:layout_constraintEnd_toStartOf="@+id/lineChart"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/heartLL">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_sports_detail_break_through"
+                            android:textColor="@color/color_801c1c1c"
+                            android:textSize="22sp" />
+
+                        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                            android:layout_width="0dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            app:rpbBackgroundColor="@color/color_e5e5e5"
+                            app:rpbCornerRadius="8dp"
+                            app:rpbProgress="60"
+                            app:rpbProgressColor="@color/color_ff574c"
+                            app:rpbShowProgressText="false" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="14min"
+                            android:textColor="@color/color_801c1c1c" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/heartTimeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="42dp"
+                        android:text="@string/today_sports_detail_heart_time"
+                        android:textColor="@color/color_801c1c1c"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@+id/lineChart"
+                        app:layout_constraintTop_toTopOf="@+id/sportNameTv" />
+
+                    <TextView
+                        android:id="@+id/maxTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/today_sports_detail_max"
+                        android:textColor="@color/color_801c1c1c"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/heartTimeTv" />
+
+                    <TextView
+                        android:id="@+id/averageTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/today_sports_detail_max"
+                        android:textColor="@color/color_801c1c1c"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toStartOf="@+id/maxTv"
+                        app:layout_constraintTop_toTopOf="@+id/heartTimeTv" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lineChart"
+                        android:layout_width="0dp"
+                        android:layout_height="130dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/activeLL"
+                        app:layout_constraintTop_toBottomOf="@+id/heartTimeTv" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_white_round_20"
+                    android:padding="32dp">
+
+                    <ImageView
+                        android:id="@+id/dumbbellIcon"
+                        android:layout_width="23dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/main_sports_weightlifting"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/today_sports_data_type2"
+                        android:textColor="@color/color_222"
+                        android:textSize="28sp"
+                        app:layout_constraintStart_toEndOf="@+id/dumbbellIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.dumbbellSportsTime}"
+                        android:textColor="@color/color_222"
+                        android:textSize="26sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/dumbbellRecyclerView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dumbbellIcon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_white_round_20"
+                    android:padding="32dp">
+
+                    <ImageView
+                        android:id="@+id/plankIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/main_sports_flat_support"
+                        app:layout_constraintBottom_toBottomOf="@+id/plankTitleTv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/plankTitleTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/today_sports_data_type2"
+                        android:textColor="@color/color_222"
+                        android:textSize="28sp"
+                        app:layout_constraintStart_toEndOf="@+id/plankIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.plankSportsTime}"
+                        android:textColor="@color/color_222"
+                        android:textSize="26sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/plankRecyclerView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/plankIcon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </ScrollView>
+        <ImageView
+            android:layout_width="144dp"
+            android:background="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{()-> click.clickfinish()}"
+            android:layout_marginBottom="35dp"
+            android:layout_height="144dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

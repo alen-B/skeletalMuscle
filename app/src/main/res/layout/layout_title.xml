@@ -20,7 +20,7 @@
             android:id="@+id/leftIv"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/title_left_default_icon"
+            app:bitmap="@{viewModel.leftImg}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

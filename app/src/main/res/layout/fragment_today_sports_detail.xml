@@ -118,13 +118,43 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/kilocalorieTv"
             android:layout_height="160dp"/>
+        <TextView
+            android:id="@+id/heartTimeTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalBarChart"
+            android:text="@string/today_sports_detail_heart_time"
+            android:textSize="20sp"
+            android:layout_marginTop="42dp"
+            android:textColor="@color/color_801c1c1c"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/maxTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/heartTimeTv"
+            android:text="@string/today_sports_detail_max"
+            android:textSize="20sp"
+            android:textColor="@color/color_801c1c1c"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/averageTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/maxTv"
+            app:layout_constraintTop_toTopOf="@+id/heartTimeTv"
+            android:text="@string/today_sports_detail_max"
+            android:textSize="20sp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/color_801c1c1c"
+            android:layout_height="wrap_content"/>
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
             android:layout_width="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalBarChart"
+            app:layout_constraintTop_toBottomOf="@+id/heartTimeTv"
             android:layout_height="220dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

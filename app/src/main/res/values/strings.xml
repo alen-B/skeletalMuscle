@@ -67,7 +67,7 @@
     <string name="calendar_title">运动打卡日记</string>
     <string name="calendar_pre_month">前一月</string>
     <string name="calendar_next_month">下一月</string>
-    <!--    -->
+    <!--  当天运动  -->
     <string name="today_sports_data_title">看看今日运动数据吧</string>
     <string name="today_sports_data_share">分享</string>
     <string name="today_sports_data_recorde">运动记录</string>
@@ -80,11 +80,28 @@
     <string name="today_sports_data_type7">有氧能耗</string>
     <string name="today_sports_data_min">/分钟</string>
     <string name="today_sports_data_kilocalorie">/千卡</string>
-
+    <!--运动详情-->
     <string name="today_sports_detail_break_through">极限突破</string>
     <string name="today_sports_detail_heart_enhancement">心肺提升</string>
     <string name="today_sports_detail_fat_burn">高效燃脂</string>
     <string name="today_sports_detail_active">暖身激活</string>
+    <string name="today_sports_detail_time">时长(分钟)</string>
+    <string name="today_sports_detail_kilocalorie">消耗(千卡)</string>
+    <string name="today_sports_detail_heart_time">心率(次)</string>
+    <string name="today_sports_detail_average">平均:</string>
+    <string name="today_sports_detail_max">最高:</string>
+    <!--    运动记录-->
+    <string name="sports_record_pre_day">前一天</string>
+    <string name="sports_record_next_day">后一天</string>
+    <string name="sports_record_sport_time">运动强度与时间</string>
+
+<!--    选择您今天想完成的运动-->
+    <string name="today_sports_title">选择您今天爱那个完成的运动</string>
+    <string name="today_sports_start">选择运动计划</string>
+    <string name="today_sports_height_leg_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
+    <string name="today_sports_dumbbell_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
+    <string name="today_sports_plank_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
+
 
 
     <string-array name="chinese_week_string_array">
@@ -96,7 +113,6 @@
         <item>周五</item>
         <item>周六</item>
     </string-array>
-    <string name="today_sports_detail_time">时长(分钟)</string>
-    <string name="today_sports_detail_kilocalorie">消耗(千卡)</string>
+
 
 </resources>

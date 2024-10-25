@@ -1,9 +1,12 @@
 package com.fjp.skeletalmuscle.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityCalendarBinding
 import com.fjp.skeletalmuscle.view.calendar.SMWeekBar
 import com.fjp.skeletalmuscle.viewmodel.state.CalendarViewModel
@@ -57,6 +60,14 @@ class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>
 //        mDatabind.tvYear.text = calendar.year.toString();
 //        mDatabind.tvLunar.text = calendar.lunar;
 //        mYear = calendar.year
+        if(isClick){
+            showToast("点击了"+calendar.month+"月"+calendar.day+"日")
+            val intent = Intent(this@CalendarActivity,SportsRecordActivity::class.java)
+            intent.putExtra(Constants.INTENT_KEY_YEAR,calendar.year)
+            intent.putExtra(Constants.INTENT_KEY_MONTH,calendar.month)
+            intent.putExtra(Constants.INTENT_KEY_DAY,calendar.day)
+            startActivity(intent)
+        }
     }
 
     private fun getSchemeCalendar(year: Int, month: Int, day: Int, color: Int, text: String): Calendar? {
@@ -82,5 +93,9 @@ class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>
         fun clickNextMonth(){
             mDatabind.calendarView.scrollToNext()
         }
+        fun clickfinish(){
+           this@CalendarActivity.finish()
+        }
+
     }
 }

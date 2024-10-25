@@ -8,5 +8,8 @@ package com.fjp.skeletalmuscle.common
 class Constants {
     companion object {
         val INTENT_KEY_SINGLESELECT_TYPE = "type"
+        val INTENT_KEY_YEAR = "year"
+        val INTENT_KEY_MONTH = "month"
+        val INTENT_KEY_DAY = "day"
     }
 }

@@ -151,6 +151,7 @@
             android:drawableStart="@drawable/main_my_data"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
+            android:onClick="@{()-> click.clickTodaySports()}"
             android:text="@string/main_my_data"
             android:textColor="@color/color_1c1c1c"
             android:textSize="30sp"

@@ -35,5 +35,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         fun startCalendar(){
            startActivity(Intent(this@MainActivity, CalendarActivity::class.java))
         }
+        fun clickTodaySports(){
+            startActivity(Intent(this@MainActivity,TodaySportsActivity::class.java))
+        }
     }
 }

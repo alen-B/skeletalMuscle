@@ -39,6 +39,8 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         initBarChart()
         initHorizontalBarChart()
         initLineChart()
+        mDatabind.maxTv.text = getString(R.string.today_sports_detail_max)+" 142"
+        mDatabind.averageTv.text = getString(R.string.today_sports_detail_average)+" 111"
     }
 
     private fun getFormatterData(type: ChartType): Array<String> {
@@ -83,6 +85,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         axisLeft.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         axisLeft.textSize = 18.dp
         axisLeft.axisMinimum = 0f
+        axisLeft.enableGridDashedLine(2f,1f,0f)
         axisLeft.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         //设置右边轴样式
         val axisRight = barChart.axisRight
@@ -134,6 +137,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         val dayFormatterData = getFormatterData(ChartType.HBarChart)
         xAxis.valueFormatter = IndexAxisValueFormatter(dayFormatterData)
         val axisLeft = horizontalBarChart.axisLeft
+        axisLeft.enableGridDashedLine(2f,1f,0f)
         axisLeft.isEnabled = false
         axisLeft.axisMinimum = 0f
         val axisRight = horizontalBarChart.axisRight
@@ -190,6 +194,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.gridLineWidth = 0.5f
+        leftAxis.enableGridDashedLine(2f,1f,0f)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
@@ -243,5 +248,6 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
 
     inner class ProxyClick {
+
     }
 }

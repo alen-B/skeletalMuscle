@@ -189,6 +189,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         leftAxis.gridLineWidth = 0.5f
         leftAxis.gridColor = ContextCompat.getColor(appContext,R.color.color_gray)
         leftAxis.isEnabled = false
+        leftAxis.enableGridDashedLine(2f,1f,0f)
 
         val rightAxis: YAxis = barChart.axisRight
         rightAxis.gridLineWidth = 0.5f
@@ -214,7 +215,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         barDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
         barDataSet.setDrawValues(false)//不显示柱状图上数据
         val barData = BarData(dataSets)
-        barData.barWidth=0.2f
+        barData.barWidth=0.4f
         barChart.data = barData
         barChart.setNoDataText("暂无数据")
         barChart.animateY(500)

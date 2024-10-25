@@ -110,6 +110,13 @@
                 app:year_view_scheme_color="#f17706" />
         </com.haibin.calendarview.CalendarLayout>
 
-
+        <ImageView
+            android:layout_width="144dp"
+            android:background="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{()-> click.clickfinish()}"
+            android:layout_marginBottom="35dp"
+            android:layout_height="144dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
