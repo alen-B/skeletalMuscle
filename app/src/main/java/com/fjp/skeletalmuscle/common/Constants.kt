@@ -11,5 +11,6 @@ class Constants {
         val INTENT_KEY_YEAR = "year"
         val INTENT_KEY_MONTH = "month"
         val INTENT_KEY_DAY = "day"
+        val INTENT_SPORTS_TYPE = "sports_ty0pe"
     }
 }

@@ -1,19 +1,16 @@
 package com.fjp.skeletalmuscle.ui.main
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.animation.OvershootInterpolator
-import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.common.Constants
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySelectSportsBinding
 import com.fjp.skeletalmuscle.utils.AnimUtil
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySelectSuportsViewModel
@@ -35,12 +32,19 @@ class TodaySelectSportsActivity :BaseActivity<TodaySelectSuportsViewModel,Activi
         }
 
         fun clickStartSports(){
-            showToast("开启运动")
+            if(mViewModel.sportsType.get()==null){
+                showToast(getString(R.string.today_sports_start))
+                return
+            }
+            val intent = Intent(this@TodaySelectSportsActivity,ExercisePlanActivity::class.java)
+            intent.putExtra(Constants.INTENT_SPORTS_TYPE,mViewModel.sportsType.get()?.type)
+            startActivity(intent)
         }
         fun clickHeightLeg(){
             if(mDatabind.legDetailCl.isVisible){
                 rotateAndSwitchViews(mDatabind.legDetailCl,mDatabind.legIv)
             }else{
+                mViewModel.sportsType.set(SportsType.LEG_LIFT)
                 rotateAndSwitchViews(mDatabind.legIv,mDatabind.legDetailCl)
             }
 
@@ -48,28 +52,30 @@ class TodaySelectSportsActivity :BaseActivity<TodaySelectSuportsViewModel,Activi
                 rotateAndSwitchViews(mDatabind.dumbbellCl, mDatabind.dumbbellIv)
             }
 
-            if(mDatabind.plankDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.plankDetailCl,mDatabind.plankIv)
+            if(mDatabind.pushUpDetailCl.isVisible){
+                rotateAndSwitchViews(mDatabind.pushUpDetailCl,mDatabind.plankIv)
             }
         }
         fun clickDumbbell(){
             if(mDatabind.dumbbellCl.isVisible){
                 rotateAndSwitchViews(mDatabind.dumbbellCl,mDatabind.dumbbellIv)
             }else{
+                mViewModel.sportsType.set(SportsType.DUMBBELL)
                 rotateAndSwitchViews(mDatabind.dumbbellIv,mDatabind.dumbbellCl)
             }
             if(mDatabind.legDetailCl.isVisible){
                 rotateAndSwitchViews(mDatabind.legDetailCl,mDatabind.legIv)
             }
-            if(mDatabind.plankDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.plankDetailCl,mDatabind.plankIv)
+            if(mDatabind.pushUpDetailCl.isVisible){
+                rotateAndSwitchViews(mDatabind.pushUpDetailCl,mDatabind.plankIv)
             }
         }
-        fun clickPlank(){
-            if(mDatabind.plankDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.plankDetailCl,mDatabind.plankIv)
+        fun clickPushUp(){
+            if(mDatabind.pushUpDetailCl.isVisible){
+                rotateAndSwitchViews(mDatabind.pushUpDetailCl,mDatabind.plankIv)
             }else{
-                rotateAndSwitchViews(mDatabind.plankIv,mDatabind.plankDetailCl)
+                mViewModel.sportsType.set(SportsType.PUSH_UP)
+                rotateAndSwitchViews(mDatabind.plankIv,mDatabind.pushUpDetailCl)
             }
             if(mDatabind.legDetailCl.isVisible){
                 rotateAndSwitchViews(mDatabind.legDetailCl,mDatabind.legIv)

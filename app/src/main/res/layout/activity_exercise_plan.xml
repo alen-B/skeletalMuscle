@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.ExercisePlanViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.main.ExercisePlanActivity.ProxyClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_blue"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        tools:context=".ui.main.ExercisePlanActivity">
+
+        <include
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}" />
+
+        <ImageView
+            android:id="@+id/sportsTypeIv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:bitmap="@{viewModel.sportsIcon}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.sportsType}"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="@+id/sportsTypeIv"
+            app:layout_constraintStart_toEndOf="@+id/sportsTypeIv"
+            android:layout_marginStart="12dp"
+            app:layout_constraintTop_toTopOf="@+id/sportsTypeIv" />
+        <!--  运动处方View      -->
+        <View
+            android:id="@+id/exerciseView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginBottom="21dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintBottom_toTopOf="@+id/backIv"
+            app:layout_constraintEnd_toStartOf="@+id/deviceView"
+            app:layout_constraintHorizontal_weight="580"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportsTypeIv" />
+        <TextView
+            android:id="@+id/exerciseDataTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/color_222"
+            android:text="@string/exercise_plan_sports_data"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="@+id/exerciseView"
+            app:layout_constraintTop_toTopOf="@+id/exerciseView" />
+<!--        运动时间-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/exercisePlanSportsTimeCl"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseView"
+            android:paddingStart="24dp"
+            android:visibility="gone"
+            android:paddingEnd="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseDataTv"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/exercisePlanSportsTimeTv"
+                android:layout_width="105dp"
+                android:textSize="26sp"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/exercise_plan_sports_time"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/exercisePlanSportsTimeView"
+                android:layout_width="0dp"
+                android:background="@drawable/bg_born_1a4e71ff_20"
+                app:layout_constraintStart_toEndOf="@+id/exercisePlanSportsTimeTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_height="66dp"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintStart_toStartOf="@+id/exercisePlanSportsTimeView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="22dp"
+                android:background="@drawable/exercise_sub"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsTimeSub()}"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/unit_min"
+                android:textSize="20sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/sportsTimeDataTv"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toEndOf="@+id/sportsTimeDataTv"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/sportsTimeDataTv"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{viewModel.sportsTime}"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toStartOf="@+id/exercisePlanSportsTimeView"
+                app:layout_constraintEnd_toEndOf="@+id/exercisePlanSportsTimeView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintEnd_toEndOf="@+id/exercisePlanSportsTimeView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="22dp"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsTimeAdd()}"
+                android:background="@drawable/exercise_add"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        哑铃重量-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sportsWeightCl"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseView"
+            android:paddingStart="24dp"
+            android:layout_marginTop="8dp"
+            android:paddingEnd="24dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/exercisePlanSportsTimeCl"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/sportsWeightTv"
+                android:layout_width="105dp"
+                android:textSize="26sp"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/exercise_plan_dumbbell_weight"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/sportsWeightTvView"
+                android:layout_width="0dp"
+                android:background="@drawable/bg_born_1a4e71ff_20"
+                app:layout_constraintStart_toEndOf="@+id/sportsWeightTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_height="66dp"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintStart_toStartOf="@+id/sportsWeightTvView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="22dp"
+                android:background="@drawable/exercise_sub"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsWeightSub()}"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/sportsWeightUnitTv"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/unit_kg"
+                android:textSize="20sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/sportsWeightDataTv"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toEndOf="@+id/sportsWeightDataTv"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/sportsWeightDataTv"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{viewModel.sportsWeight}"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintEnd_toEndOf="@+id/sportsWeightTvView"
+                app:layout_constraintStart_toStartOf="@+id/sportsWeightTvView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintEnd_toEndOf="@+id/sportsWeightTvView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="22dp"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsWeightAdd()}"
+                android:background="@drawable/exercise_add"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        上举-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sportsUpliftCl"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseView"
+            android:paddingStart="24dp"
+            android:visibility="gone"
+            android:layout_marginTop="8dp"
+            android:paddingEnd="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/sportsWeightCl"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/sportsUpliftTv"
+                android:layout_width="105dp"
+                android:textSize="26sp"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/exercise_plan_uplift"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/sportsUpliftView"
+                android:layout_width="0dp"
+                android:background="@drawable/bg_born_1a4e71ff_20"
+                app:layout_constraintStart_toEndOf="@+id/sportsUpliftTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_height="66dp"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintStart_toStartOf="@+id/sportsUpliftView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="22dp"
+                android:background="@drawable/exercise_sub"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsUpliftSub()}"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/unit_group"
+                android:textSize="20sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/sportsUpliftDataTv"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toEndOf="@+id/sportsUpliftDataTv"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/sportsUpliftDataTv"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{viewModel.sportsUplift}"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintEnd_toEndOf="@+id/sportsUpliftView"
+                app:layout_constraintStart_toStartOf="@+id/sportsUpliftView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintEnd_toEndOf="@+id/sportsUpliftView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="22dp"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsUpliftAdd()}"
+                android:background="@drawable/exercise_add"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!--        扩胸-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sportsExpandChestCl"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseView"
+            android:paddingStart="24dp"
+            android:visibility="gone"
+            android:layout_marginTop="8dp"
+            android:paddingEnd="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/sportsUpliftCl"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/sportsExpandChestTv"
+                android:layout_width="105dp"
+                android:textSize="26sp"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/exercise_plan_expand_chest"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/sportsExpandChestView"
+                android:layout_width="0dp"
+                android:background="@drawable/bg_born_1a4e71ff_20"
+                app:layout_constraintStart_toEndOf="@+id/sportsExpandChestTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_height="66dp"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintStart_toStartOf="@+id/sportsExpandChestView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="22dp"
+                android:background="@drawable/exercise_sub"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsExpandChestSub()}"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/unit_group"
+                android:textSize="20sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/sportsExpandChestDataTv"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toEndOf="@+id/sportsExpandChestDataTv"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/sportsExpandChestDataTv"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{viewModel.sportsExpandChest}"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintEnd_toEndOf="@+id/sportsExpandChestView"
+                app:layout_constraintStart_toStartOf="@+id/sportsExpandChestView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintEnd_toEndOf="@+id/sportsExpandChestView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="22dp"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsExpandChestAdd()}"
+                android:background="@drawable/exercise_add"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        高抬腿运动时间-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/exercisePlanSportsLegTimeCl"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseView"
+            android:paddingStart="24dp"
+            android:visibility="gone"
+            android:paddingEnd="24dp"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseDataTv"
+            app:layout_constraintBottom_toTopOf="@+id/exercisePlanSportsLegAngleCl"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/exercisePlanSportsTimeLegTv"
+                android:layout_width="105dp"
+                android:textSize="26sp"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/exercise_plan_sports_time"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/exercisePlanSportsTimeLegView"
+                android:layout_width="0dp"
+                android:background="@drawable/bg_born_1a4e71ff_20"
+                app:layout_constraintStart_toEndOf="@+id/exercisePlanSportsTimeLegTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_height="99dp"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintStart_toStartOf="@+id/exercisePlanSportsTimeLegView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="22dp"
+                android:background="@drawable/exercise_sub"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsTimeSub()}"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/unit_min"
+                android:textSize="20sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/sportsTimeDataLegTv"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toEndOf="@+id/sportsTimeDataLegTv"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/sportsTimeDataLegTv"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{viewModel.sportsTime}"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toStartOf="@+id/exercisePlanSportsTimeLegView"
+                app:layout_constraintEnd_toEndOf="@+id/exercisePlanSportsTimeLegView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintEnd_toEndOf="@+id/exercisePlanSportsTimeLegView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="22dp"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsTimeAdd()}"
+                android:background="@drawable/exercise_add"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!--        高抬腿角度-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/exercisePlanSportsLegAngleCl"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseView"
+            android:paddingStart="24dp"
+            android:visibility="gone"
+            android:paddingEnd="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/exercisePlanSportsLegTimeCl"
+            app:layout_constraintBottom_toTopOf="@+id/backIv"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/exercisePlanSportsLegAngleTv"
+                android:layout_width="105dp"
+                android:textSize="26sp"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/exercise_plan_foot_height"
+                android:layout_height="wrap_content"/>
+            <View
+                android:id="@+id/exercisePlanSportsLegAngleView"
+                android:layout_width="0dp"
+                android:background="@drawable/bg_born_1a4e71ff_20"
+                app:layout_constraintStart_toEndOf="@+id/exercisePlanSportsLegAngleTv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_height="99dp"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintStart_toStartOf="@+id/exercisePlanSportsLegAngleView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="22dp"
+                android:background="@drawable/exercise_sub"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsAngleSub()}"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/unit_angle"
+                android:textSize="40sp"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toEndOf="@+id/sportsDataLegAngleTv"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/sportsDataLegAngleTv"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{viewModel.sportsAngle}"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:textColor="@color/color_99222222"
+                app:layout_constraintStart_toStartOf="@+id/exercisePlanSportsLegAngleView"
+                app:layout_constraintEnd_toEndOf="@+id/exercisePlanSportsLegAngleView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="42dp"
+                app:layout_constraintEnd_toEndOf="@+id/exercisePlanSportsLegAngleView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="22dp"
+                android:layout_height="42dp"
+                android:onClick="@{()-> click.clickSportsAngleAdd()}"
+                android:background="@drawable/exercise_add"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--  链接设备      -->
+        <View
+            android:id="@+id/deviceView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginBottom="21dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintBottom_toTopOf="@+id/backIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="502"
+            app:layout_constraintStart_toEndOf="@+id/exerciseView"
+            app:layout_constraintTop_toBottomOf="@+id/sportsTypeIv" />
+        <TextView
+            android:id="@+id/deviceLinkTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/color_222"
+            android:text="@string/exercise_plan_link_device"
+            android:textSize="30sp"
+            android:drawableStart="@drawable/exercise_device_linked"
+            app:layout_constraintStart_toStartOf="@+id/deviceView"
+            app:layout_constraintTop_toTopOf="@+id/deviceView" />
+
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="0dp"
+           app:layout_constraintStart_toStartOf="@+id/deviceView"
+           app:layout_constraintEnd_toEndOf="@+id/deviceView"
+           app:layout_constraintTop_toBottomOf="@+id/deviceLinkTv"
+           app:layout_constraintBottom_toBottomOf="@+id/deviceView"
+           android:background="@drawable/bg_e0e6ff_round_20"
+           android:layout_margin="24dp"
+           android:paddingTop="21dp"
+           android:paddingBottom="21dp"
+           android:paddingEnd="16dp"
+           android:paddingStart="16dp"
+           android:layout_height="0dp">
+            <ImageView
+                android:id="@+id/device1Iv"
+                android:layout_width="100dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/device2Iv"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="14dp"
+                app:layout_constraintBottom_toTopOf="@+id/device1Tv"
+                android:src="@drawable/bracelet"
+                android:background="@drawable/bg_white_round_20"
+                tools:ignore="ContentDescription" />
+           <TextView
+               android:id="@+id/device1Tv"
+               android:layout_width="wrap_content"
+               android:textSize="20sp"
+               android:textColor="@color/color_cc1c1c1c"
+               app:layout_constraintStart_toStartOf="@+id/device1Iv"
+               app:layout_constraintEnd_toEndOf="@+id/device1Iv"
+               app:layout_constraintBottom_toBottomOf="parent"
+               android:text="@string/exercise_plan_wrist_watch"
+               android:layout_height="wrap_content"/>
+           <ImageView
+               android:id="@+id/device2Iv"
+               android:layout_width="100dp"
+               app:layout_constraintHorizontal_weight="1"
+               app:layout_constraintStart_toEndOf="@+id/device1Iv"
+               app:layout_constraintEnd_toStartOf="@+id/device3Iv"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_height="0dp"
+               android:layout_marginBottom="14dp"
+               app:layout_constraintBottom_toTopOf="@+id/device2Tv"
+               android:src="@drawable/dumbbell_left"
+               android:background="@drawable/bg_white_round_20"
+               tools:ignore="ContentDescription" />
+           <TextView
+               android:id="@+id/device2Tv"
+               android:layout_width="wrap_content"
+               android:textSize="20sp"
+               android:textColor="@color/color_cc1c1c1c"
+               app:layout_constraintStart_toStartOf="@+id/device2Iv"
+               app:layout_constraintEnd_toEndOf="@+id/device2Iv"
+               app:layout_constraintBottom_toBottomOf="parent"
+               android:text="@string/exercise_plan_left_dumbbell"
+               android:layout_height="wrap_content"/>
+           <ImageView
+               android:id="@+id/device3Iv"
+               android:layout_width="100dp"
+               app:layout_constraintHorizontal_weight="1"
+               app:layout_constraintStart_toEndOf="@+id/device2Iv"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_height="0dp"
+               android:layout_marginBottom="14dp"
+               app:layout_constraintBottom_toTopOf="@+id/device3Tv"
+               android:src="@drawable/dumbbell_right"
+               android:background="@drawable/bg_white_round_20"
+               tools:ignore="ContentDescription" />
+           <TextView
+               android:id="@+id/device3Tv"
+               android:layout_width="wrap_content"
+               android:textSize="20sp"
+               android:textColor="@color/color_cc1c1c1c"
+               app:layout_constraintStart_toStartOf="@+id/device3Iv"
+               app:layout_constraintEnd_toEndOf="@+id/device3Iv"
+               app:layout_constraintBottom_toBottomOf="parent"
+               android:text="@string/exercise_plan_right_dumbbell"
+               android:layout_height="wrap_content"/>
+       </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/backIv"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:background="@drawable/back"
+            android:onClick="@{()-> click.clickFinish()}"
+            app:layout_constraintBottom_toBottomOf="@+id/shareBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <Button
+            android:id="@+id/shareBtn"
+            style="@style/SMButtonNext"
+            android:layout_width="502dp"
+            android:layout_height="144dp"
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/bg_yellow_round_20"
+            android:drawableEnd="@drawable/exercise_plan_start_icon"
+            android:onClick="@{()-> click.clickStartSports()}"
+            android:text="@string/exercise_plan_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -153,7 +153,7 @@
             android:id="@+id/plankFl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->click.clickPlank()}"
+            android:onClick="@{()->click.clickPushUp()}"
             app:layout_constraintBottom_toTopOf="@+id/shareBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/dumbbellFl"
@@ -167,7 +167,7 @@
                 tools:ignore="ContentDescription" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/plankDetailCl"
+                android:id="@+id/pushUpDetailCl"
                 android:layout_width="389dp"
                 android:layout_height="409dp"
                 android:background="@drawable/select_sports_detail_bg"

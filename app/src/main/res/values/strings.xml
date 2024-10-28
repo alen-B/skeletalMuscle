@@ -95,13 +95,27 @@
     <string name="sports_record_next_day">后一天</string>
     <string name="sports_record_sport_time">运动强度与时间</string>
 
-<!--    选择您今天想完成的运动-->
+    <!--    选择您今天想完成的运动-->
     <string name="today_sports_title">选择您今天爱那个完成的运动</string>
     <string name="today_sports_start">选择运动计划</string>
     <string name="today_sports_height_leg_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
     <string name="today_sports_dumbbell_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
     <string name="today_sports_plank_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
 
+    <string name="exercise_plan_title">选择您的运动计划</string>
+    <string name="exercise_plan_sports_data">运动处方</string>
+    <string name="exercise_plan_sports_time">运动时间</string>
+    <string name="exercise_plan_foot_height">抬脚高度</string>
+    <string name="exercise_plan_dumbbell_weight">哑铃重量</string>
+    <string name="exercise_plan_uplift">上举</string>
+    <string name="exercise_plan_expand_chest">扩胸</string>
+    <string name="exercise_plan_link_device">链接设备</string>
+    <string name="exercise_plan_start">开始运动</string>
+    <string name="exercise_plan_wrist_watch">智能手表</string>
+    <string name="exercise_plan_left_knee">左膝</string>
+    <string name="exercise_plan_right_knee">右膝</string>
+    <string name="exercise_plan_right_dumbbell">右哑铃</string>
+    <string name="exercise_plan_left_dumbbell">左哑铃</string>
 
 
     <string-array name="chinese_week_string_array">
@@ -113,6 +127,11 @@
         <item>周五</item>
         <item>周六</item>
     </string-array>
+
+    <string name="unit_min">min</string>
+    <string name="unit_kg">kg</string>
+    <string name="unit_group">租</string>
+    <string name="unit_angle">°</string>
 
 
 </resources>
