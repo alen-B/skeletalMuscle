@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.app.ext
 
+import android.content.Context
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -124,7 +125,7 @@ inline fun <reified T> List<T>?.getChild(position: Int): T? {
     }
 }
 
-fun AppCompatActivity.showToast(message:String){
+fun Context.showToast(message:String){
     Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
 }
 

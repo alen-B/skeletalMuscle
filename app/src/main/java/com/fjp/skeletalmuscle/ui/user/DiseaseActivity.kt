@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
@@ -27,7 +28,7 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
         mViewModel.showRightText.set(true)
         diseaseAdapter = DiseaseAdapter(mViewModel.dataArr as ArrayList<String>, 0, this)
         diseaseDetailAdapter = DiseaseDetailAdapter(arrayListOf(), 0, clickItem = { item, position ->
-            showToast("点击了" + position)
+//            showToast("点击了" + position)
         })
         mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), diseaseAdapter)
         mDatabind.detailRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), diseaseDetailAdapter)
@@ -78,6 +79,12 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
                 mDatabind.otherEt.visibility = View.VISIBLE
             }
 
+        }
+    }
+    override fun createObserver() {
+        super.createObserver()
+        App.eventViewModelInstance.finish.observeInActivity(this) {
+            finish()
         }
     }
 }

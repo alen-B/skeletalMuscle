@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.SettingViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.setting.SettingActivity.ProxyClick" />
+    </data>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_f5f5f5"
+            android:paddingStart="35dp"
+            android:paddingEnd="35dp"
+            tools:context=".ui.setting.SettingActivity">
+
+            <include
+                layout="@layout/layout_title"
+                app:viewModel="@{viewModel}" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/userInfoCl"
+                android:layout_width="322dp"
+                android:layout_height="186dp"
+                android:background="@drawable/bg_white_round_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_layout">
+
+                <ImageView
+                    android:id="@+id/avatarIv"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/avatar_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:maxLength="10"
+                    android:text="@{viewModel.userInfo.name}"
+                    app:layout_constraintBottom_toBottomOf="@+id/avatarIv"
+                    app:layout_constraintStart_toEndOf="@+id/avatarIv"
+                    app:layout_constraintTop_toTopOf="@+id/avatarIv" />
+
+                <TextView
+                    android:id="@+id/userinfoTv"
+                    style="@style/SettingNavStyle"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_userinfo_selector"
+                    android:drawableStart="@drawable/setting_userinfo"
+                    android:enabled="false"
+                    android:onClick="@{()-> click.clickUserInfo()}"
+                    android:text="@string/setting_userinfo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/avatarIv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="322dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_white_round_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userInfoCl">
+
+                <TextView
+                    android:id="@+id/deviceLinkTv"
+                    style="@style/SettingNavStyle"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_setting_device_link_selector"
+                    android:drawableStart="@drawable/setting_device_link"
+                    android:onClick="@{()-> click.clickDeviceLink()}"
+                    android:text="@string/setting_device_link"
+                    android:textColor="@color/setting_lab"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/deviceLinkTv" />
+
+                <TextView
+                    android:id="@+id/sysSettingTv"
+                    style="@style/SettingNavStyle"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/bg_setting_sys_setting_selector"
+                    android:drawableStart="@drawable/setting_system_setting"
+                    android:onClick="@{()-> click.clickSysSetting()}"
+                    android:text="@string/setting_sys_setting"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/deviceLinkTv" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sysSettingTv" />
+
+                <TextView
+                    android:id="@+id/exportReportTv"
+                    style="@style/SettingNavStyle"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/bg_userinfo_selector"
+                    android:drawableStart="@drawable/setting_export_report"
+                    android:onClick="@{()-> click.clickExportReport()}"
+                    android:text="@string/setting_export_report"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sysSettingTv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <io.alterac.blurkit.BlurLayout
+                android:id="@+id/blurLayout"
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:layout_marginBottom="35dp"
+                android:onClick="@{()-> click.clickFinish()}"
+                app:blk_blurRadius="25"
+                app:blk_cornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:layout_width="144dp"
+                    android:layout_height="144dp"
+                    android:background="@drawable/bg_back"
+                    android:onClick="@{()-> click.clickFinish()}"
+                    android:scaleType="center"
+                    android:src="@drawable/arrow_right" />
+            </io.alterac.blurkit.BlurLayout>
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="35dp"
+                android:background="@color/color_1a000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/userInfoCl"
+                app:layout_constraintTop_toTopOf="@+id/userInfoCl" />
+            <fragment
+                android:id="@+id/fragment"
+                android:layout_width="0dp"
+                android:name="com.fjp.skeletalmuscle.ui.setting.UserInfoFragment"
+                app:layout_constraintStart_toEndOf="@+id/line"
+                android:layout_marginStart="35dp"
+                app:layout_constraintTop_toTopOf="@+id/userInfoCl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="0dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

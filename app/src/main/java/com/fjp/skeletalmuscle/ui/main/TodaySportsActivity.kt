@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,13 +22,25 @@ class TodaySportsActivity :BaseActivity<TodaySportsDataViewModel,ActivityTodaySp
         mViewModel.title.set(getString(R.string.today_sports_data_title))
         mDatabind.click = ProxyClick()
         todaySportsDataAdapter = TodaySportsDataAdapter(mViewModel.dataArr as ArrayList<TodaySports>, clickItem = { item ->
-            showToast("点击了")
+            if(item.type.value<5){
+                val intent = Intent(this@TodaySportsActivity,TodaySportsDetailActivity::class.java)
+                startActivity(intent)
+            }
+
         })
         mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), todaySportsDataAdapter)
         mDatabind.recyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
 
+    override fun onResume() {
+        super.onResume()
+        mDatabind.blurLayout.startBlur()
+    }
 
+    override fun onPause() {
+        super.onPause()
+        mDatabind.blurLayout.pauseBlur()
+    }
     inner class ProxyClick{
         fun clickShare(){
 

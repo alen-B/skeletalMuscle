@@ -12,7 +12,7 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel,Activi
 
 
     override fun initView(savedInstanceState: Bundle?) {
-//        mViewModel.title.set()
+        mViewModel.title.set("今日运动详情")
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         val vp = mDatabind.vp
@@ -29,7 +29,14 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel,Activi
         })
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        mDatabind.blurLayout.startBlur()
+    }
+    override fun onPause() {
+        super.onPause()
+        mDatabind.blurLayout.pauseBlur()
+    }
     inner class ProxyClick{
         fun clickSportsRecord(){
 

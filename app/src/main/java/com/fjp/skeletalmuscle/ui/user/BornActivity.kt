@@ -3,6 +3,7 @@ package com.fjp.skeletalmuscle.ui.user
 import android.content.Intent
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityBornBinding
@@ -35,4 +36,10 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
 
     }
 
+    override fun createObserver() {
+        super.createObserver()
+        App.eventViewModelInstance.finish.observeInActivity(this) {
+            finish()
+        }
+    }
 }

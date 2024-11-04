@@ -29,13 +29,13 @@
             app:viewModel="@{viewModel}" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/main_tip"
+            android:layout_width="362dp"
+            android:layout_height="359dp"
+            android:src="@drawable/login_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/midGuideline"
-            android:layout_marginBottom="48dp"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/midGuideline"
@@ -50,16 +50,16 @@
             android:layout_height="wrap_content"
             android:text="@string/login_phone_title"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="30sp"
-            android:layout_marginTop="54dp"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/midGuideline"
             app:layout_constraintTop_toBottomOf="@+id/title_layout" />
 
         <EditText
             android:id="@+id/phoneEt"
-            android:layout_width="348dp"
+            android:layout_width="0dp"
             android:layout_height="88dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/bg_edittext"
             android:hint="@string/login_input_phone"
             android:importantForAutofill="no"
@@ -69,45 +69,54 @@
             android:paddingEnd="36dp"
             android:textColor="@color/color_1c1c1c"
             android:textColorHint="@color/color_331c1c1c"
-            android:textSize="30sp"
+            android:textSize="44sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/midGuideline"
             app:layout_constraintTop_toBottomOf="@+id/PhoneTitleTv" />
 
 
+        <View
+            android:id="@+id/codeView"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_edittext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/midGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/phoneEt" />
 
         <EditText
             android:id="@+id/codeEt"
-            android:layout_width="348dp"
+            android:layout_width="300dp"
             android:layout_height="88dp"
-            android:background="@drawable/bg_edittext"
+            android:background="@android:color/transparent"
             android:hint="@string/login_input_code"
             android:importantForAutofill="no"
             android:inputType="phone"
             android:maxLength="11"
             android:paddingStart="24dp"
-            android:layout_marginTop="23dp"
             android:paddingEnd="6dp"
             android:text="@={viewModel.verificationCode}"
             android:textColor="@color/color_1c1c1c"
             android:textColorHint="@color/color_331c1c1c"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="@+id/midGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/phoneEt" />
+            android:textSize="44sp"
+            app:layout_constraintStart_toStartOf="@+id/codeView"
+            app:layout_constraintTop_toTopOf="@+id/codeView" />
 
         <TextView
             android:id="@+id/countDownTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:enabled="@{viewModel.verificationCodeisEnabled}"
             android:text="@{viewModel.verificationCodeText}"
             android:textColor="@color/color_blue"
-            android:textSize="25sp"
-            app:layout_constraintStart_toEndOf="@+id/codeEt"
-            app:layout_constraintTop_toTopOf="@+id/codeEt"
-            app:layout_constraintBottom_toBottomOf="@+id/codeEt"
+            android:textSize="44sp"
+            app:layout_constraintEnd_toEndOf="@+id/codeView"
+            app:layout_constraintTop_toTopOf="@+id/codeView"
+            app:layout_constraintBottom_toBottomOf="@+id/codeView"
             android:onClick="@{()-> click.requestVerificationCode()}"
-             />
+            />
 
         <CheckBox
             android:id="@+id/agreementCb"
@@ -137,8 +146,6 @@
             android:layout_width="0dp"
             android:layout_marginBottom="48dp"
             android:text="@string/login_login"
-            android:gravity="start|center_vertical"
-            android:paddingStart="46dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/midGuideline"

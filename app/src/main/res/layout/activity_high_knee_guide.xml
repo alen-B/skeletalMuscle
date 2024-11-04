@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.deviceguidepage.HighKneeGuideActivity.ProxyClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.deviceguidepage.HighKneeGuideActivity">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp"/>
+
+        <Button
+            android:id="@+id/nextBtn"
+            style="@style/SMButtonNext"
+            android:layout_width="240dp"
+            android:layout_marginBottom="45dp"
+            android:text="@string/next_step"
+            android:layout_marginEnd="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{()-> click.clickNext()}" />
+
+        <Button
+            style="@style/SMButtonPre"
+            android:layout_width="240dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="45dp"
+            android:onClick="@{()-> click.clickPre()}"
+            android:text="@string/previous_step"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -14,6 +14,6 @@ class SelectGenderViewModel : SMBaseViewModel() {
 
 }
 
-enum class SEX{
-    MAN,WOMAN
+enum class SEX(val value:Int){
+    WOMAN(0),MAN(1)
 }

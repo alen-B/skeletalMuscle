@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.databinding.ActivitySelectGenderBinding
 import com.fjp.skeletalmuscle.viewmodel.state.SEX
@@ -22,6 +23,7 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
 
     inner class ProxyClick {
         fun next() {
+            App.userInfo.sex = mViewModel.sex.get()!!.value
             startActivity(Intent(this@SelectGenderActivity,BornActivity::class.java))
 
         }
@@ -53,5 +55,10 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
 
         }
     }
-
+    override fun createObserver() {
+        super.createObserver()
+        App.eventViewModelInstance.finish.observeInActivity(this) {
+            finish()
+        }
+    }
 }

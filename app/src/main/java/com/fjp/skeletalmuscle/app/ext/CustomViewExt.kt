@@ -11,6 +11,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -230,14 +232,15 @@ fun MagicIndicator.bindViewPager2(
 }
 
 fun ViewPager2.init(
-    fragment: Fragment,
+    fragmentManager: FragmentManager,
+    lifecycle:Lifecycle,
     fragments: ArrayList<Fragment>,
     isUserInputEnabled: Boolean = true
 ): ViewPager2 {
     //是否可滑动
     this.isUserInputEnabled = isUserInputEnabled
     //设置适配器
-    adapter = object : FragmentStateAdapter(fragment) {
+    adapter = object : FragmentStateAdapter(fragmentManager,lifecycle) {
         override fun createFragment(position: Int) = fragments[position]
         override fun getItemCount() = fragments.size
     }

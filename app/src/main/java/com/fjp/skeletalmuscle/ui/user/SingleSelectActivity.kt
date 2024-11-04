@@ -6,11 +6,13 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.databinding.ActivitySingleSelectBinding
+import com.fjp.skeletalmuscle.ui.main.MainActivity
 import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectViewModel
@@ -31,7 +33,7 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
         initData()
         val defaultSelectedIndex = getDefaultSelectedIndex()
         singleSelectAdapter = SingleSelectAdapter(mViewModel.dataArr as ArrayList<String>, defaultSelectedIndex, clickItem = { item, position ->
-            showToast("点击了" + position)
+//            showToast("点击了" + position)
         })
         mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), singleSelectAdapter)
 
@@ -102,6 +104,10 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
                 }
 
                 SingleSelectType.DAY_ONE_WEEK.type -> intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.SUPPORT_TIME.type)
+                SingleSelectType.SUPPORT_TIME.type -> {
+                    App.eventViewModelInstance.finish.value=true
+                    intent = Intent(this@SingleSelectActivity, MainActivity::class.java)
+                }
             }
             startActivity(intent)
         }
@@ -112,5 +118,12 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
         }
 
 
+    }
+
+    override fun createObserver() {
+        super.createObserver()
+        App.eventViewModelInstance.finish.observeInActivity(this) {
+            finish()
+        }
     }
 }

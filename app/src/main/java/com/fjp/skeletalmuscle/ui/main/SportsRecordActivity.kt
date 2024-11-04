@@ -1,8 +1,6 @@
 package com.fjp.skeletalmuscle.ui.main
 
 import android.graphics.Color
-import android.graphics.DashPathEffect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -17,7 +15,7 @@ import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.databinding.ActivitySportsRecordBinding
 import com.fjp.skeletalmuscle.ext.dp
-import com.fjp.skeletalmuscle.ui.main.adapter.SprotsRecordLegAdapter
+import com.fjp.skeletalmuscle.ui.main.adapter.SportsRecordLegAdapter
 import com.fjp.skeletalmuscle.view.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.viewmodel.state.SportsRecordViewModel
 import com.github.mikephil.charting.components.Description
@@ -57,21 +55,24 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
 
 
     private fun initSportsDumbbell() {
-        mDatabind.dumbbellRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SprotsRecordLegAdapter(mViewModel.legSportsDate))
+        mDatabind.dumbbellRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.dumbbellSportsDate))
         mDatabind.dumbbellRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
     private fun initSportsPlank() {
-        mDatabind.plankRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SprotsRecordLegAdapter(mViewModel.legSportsDate))
+        mDatabind.plankRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.plankSportsDate))
         mDatabind.plankRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
 
     private fun initSportsLeg() {
-        mDatabind.legRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SprotsRecordLegAdapter(mViewModel.legSportsDate))
+        mDatabind.legRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.legSportsDate))
         mDatabind.legRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
 
     fun setCalendarTitle(){
         mViewModel.calendarTitle.set("${calendar.year}年${calendar.month}月${calendar.dayOfMonth}日")
+        mViewModel.legSportsTime.set("${calendar.month}月${calendar.dayOfMonth}日")
+        mViewModel.dumbbellSportsTime.set("${calendar.month}月${calendar.dayOfMonth}日")
+        mViewModel.plankSportsTime.set("${calendar.month}月${calendar.dayOfMonth}日")
     }
     private fun initLineChart() {
         val lineChart = mDatabind.lineChart
@@ -159,5 +160,12 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
             this@SportsRecordActivity.finish()
         }
     }
-
+    override fun onResume() {
+        super.onResume()
+        mDatabind.blurLayout.startBlur()
+    }
+    override fun onPause() {
+        super.onPause()
+        mDatabind.blurLayout.pauseBlur()
+    }
 }

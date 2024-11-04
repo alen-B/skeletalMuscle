@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.UserInfoViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.setting.UserInfoFragment.ProxyClick" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.setting.UserInfoFragment">
+
+
+            <View
+                android:id="@+id/rtView"
+                android:layout_width="0dp"
+                android:layout_height="216dp"
+                android:background="@drawable/bg_white_round_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/userIv"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="61dp"
+                android:background="@drawable/setting_userinfo_max"
+                app:layout_constraintStart_toStartOf="@+id/rtView"
+                app:layout_constraintTop_toTopOf="@+id/rtView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:text="@string/setting_userinfo"
+                android:textColor="@color/color_cc1c1c1c"
+                android:textSize="30sp"
+                app:layout_constraintStart_toEndOf="@+id/userIv"
+                app:layout_constraintTop_toTopOf="@+id/userIv" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:text="@string/setting_userinfo_des"
+                android:textColor="@color/color_cc1c1c1c"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/userIv"
+                app:layout_constraintStart_toEndOf="@+id/userIv" />
+
+            <com.fjp.skeletalmuscle.view.SettingItemLayout
+                android:id="@+id/avatarLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:isFirst="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rtView"
+                app:title="@string/setting_avatar" />
+
+            <com.fjp.skeletalmuscle.view.SettingItemLayout
+                android:id="@+id/userNameLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/avatarLayout"
+                app:title="@string/setting_user_name" />
+
+            <com.fjp.skeletalmuscle.view.SettingItemLayout
+                android:id="@+id/mobileLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                app:isLast="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userNameLayout"
+                app:title="@string/setting_mobile" />
+
+            <com.fjp.skeletalmuscle.view.SettingItemLayout
+                android:id="@+id/bornLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:isFirst="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mobileLayout"
+                app:title="@string/setting_born" />
+
+            <com.fjp.skeletalmuscle.view.SettingItemLayout
+                android:id="@+id/sexLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                app:isLast="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bornLayout"
+                app:title="@string/setting_sex" />
+
+            <com.fjp.skeletalmuscle.view.SettingItemLayout
+                android:id="@+id/weightLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:isFirst="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mobileLayout"
+                app:title="@string/setting_weight" />
+
+            <com.fjp.skeletalmuscle.view.SettingItemLayout
+                android:id="@+id/heightLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weightLayout"
+                app:title="@string/setting_height" />
+
+            <com.fjp.skeletalmuscle.view.SettingItemLayout
+                android:id="@+id/waistLinLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                app:isLast="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/heightLayout"
+                app:title="@string/setting_waist_lin" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

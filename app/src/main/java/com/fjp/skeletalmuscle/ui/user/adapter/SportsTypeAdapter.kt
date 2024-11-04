@@ -6,6 +6,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.setAdapterAnimation
 import com.fjp.skeletalmuscle.app.util.SettingUtil
 import com.fjp.skeletalmuscle.data.model.bean.Sports
+import me.hgj.jetpackmvvm.base.appContext
 
 
 class SportsTypeAdapter( data: ArrayList<Sports>, var clickItem: (item: Sports) -> Unit) :
@@ -28,6 +29,17 @@ class SportsTypeAdapter( data: ArrayList<Sports>, var clickItem: (item: Sports) 
         }
         holder.setText(R.id.contentTv,item.name)
         holder.itemView.setOnClickListener {
+
+            if(item.name === appContext.getString(R.string.sports_type_no) && (!item.isSelected)){
+                data.forEach { it.isSelected = false }
+            }
+            if(item.name != appContext.getString(R.string.sports_type_no) && (!item.isSelected)){
+                data.forEach {
+                    if(it.name === appContext.getString(R.string.sports_type_no)){
+                        it.isSelected = false
+                    }
+                }
+            }
             item.isSelected = !item.isSelected
             clickItem.invoke(item)
             notifyDataSetChanged()

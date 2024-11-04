@@ -89,7 +89,7 @@
                 app:day_text_size="36sp"
                 app:max_year="2124"
                 app:min_year="2024"
-                app:calendar_height="72dp"
+                app:calendar_height="92dp"
                 app:month_view="com.fjp.skeletalmuscle.view.calendar.ProgressMonthView"
                 app:month_view_show_mode="mode_fix"
                 app:other_month_lunar_text_color="#e1e1e1"
@@ -99,7 +99,7 @@
                 app:scheme_theme_color="#128c4b"
                 app:selected_lunar_text_color="#CFCFCF"
                 app:selected_text_color="#FFFFFF"
-                app:selected_theme_color="#FFf54a00"
+                app:selected_theme_color="@color/color_blue"
                 app:week_background="#fff"
                 app:week_text_color="#111111"
                 app:week_view="com.fjp.skeletalmuscle.view.calendar.ProgressWeekView"
@@ -109,14 +109,24 @@
                 app:year_view_month_text_size="20sp"
                 app:year_view_scheme_color="#f17706" />
         </com.haibin.calendarview.CalendarLayout>
-
-        <ImageView
-            android:layout_width="144dp"
-            android:background="@drawable/back"
+        <io.alterac.blurkit.BlurLayout
+            android:id="@+id/blurLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:blk_cornerRadius="20dp"
             android:onClick="@{()-> click.clickfinish()}"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="35dp"
-            android:layout_height="144dp"/>
+            android:layout_width="144dp"
+            app:blk_blurRadius="25"
+            android:layout_height="144dp">
+            <ImageView
+                android:layout_width="144dp"
+                android:src="@drawable/arrow_right"
+                android:background="@drawable/bg_back"
+                android:onClick="@{()-> click.clickfinish()}"
+                android:scaleType="center"
+                android:layout_height="144dp"/>
+        </io.alterac.blurkit.BlurLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

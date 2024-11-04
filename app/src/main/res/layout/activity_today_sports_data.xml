@@ -29,14 +29,23 @@
             android:layout_width="match_parent"
             android:scrollbars="none"
             android:layout_height="wrap_content"/>
+        <io.alterac.blurkit.BlurLayout
+            android:id="@+id/blurLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:blk_cornerRadius="20dp"
+            android:onClick="@{()-> click.finish()}"
+            app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
+            android:layout_width="144dp"
+            app:blk_blurRadius="25"
+            android:layout_height="144dp">
         <ImageView
             android:layout_width="144dp"
-            android:background="@drawable/back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
+            android:src="@drawable/arrow_right"
+            android:background="@drawable/bg_back"
             android:onClick="@{()-> click.finish()}"
+            android:scaleType="center"
             android:layout_height="144dp"/>
-
+        </io.alterac.blurkit.BlurLayout>
         <Button
             android:id="@+id/nextBtn"
             style="@style/SMButton"

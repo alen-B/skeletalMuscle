@@ -61,7 +61,7 @@ class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>
 //        mDatabind.tvLunar.text = calendar.lunar;
 //        mYear = calendar.year
         if(isClick){
-            showToast("点击了"+calendar.month+"月"+calendar.day+"日")
+//            showToast("点击了"+calendar.month+"月"+calendar.day+"日")
             val intent = Intent(this@CalendarActivity,SportsRecordActivity::class.java)
             intent.putExtra(Constants.INTENT_KEY_YEAR,calendar.year)
             intent.putExtra(Constants.INTENT_KEY_MONTH,calendar.month)
@@ -97,5 +97,13 @@ class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>
            this@CalendarActivity.finish()
         }
 
+    }
+    override fun onResume() {
+        super.onResume()
+        mDatabind.blurLayout.startBlur()
+    }
+    override fun onPause() {
+        super.onPause()
+        mDatabind.blurLayout.pauseBlur()
     }
 }

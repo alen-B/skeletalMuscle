@@ -53,7 +53,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         val agreementClickableSpan = object : ClickableSpan() {
             override fun onClick(p0: View) {
 //                showMessage("点击了骨骼肌用户协议")
-                Toast.makeText(this@LoginActivity, "点击了骨骼肌用户协议", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@LoginActivity, "点击了骨骼肌用户协议", Toast.LENGTH_SHORT).show()
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -63,7 +63,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
         val privacyClickableSpan = object : ClickableSpan() {
             override fun onClick(p0: View) {
-                Toast.makeText(this@LoginActivity, "点击了隐私协议", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@LoginActivity, "点击了隐私协议", Toast.LENGTH_SHORT).show()
             }
 
             override fun updateDrawState(ds: TextPaint) {

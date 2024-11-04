@@ -3,6 +3,7 @@ package com.fjp.skeletalmuscle.ui.user
 import android.content.Intent
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.databinding.ActivityInputNameBinding
@@ -24,9 +25,16 @@ class InputNameActivity  : BaseActivity<InputNameViewModel, ActivityInputNameBin
                 showToast(getString(R.string.input_name_tips))
                 return
             }
+            App.userInfo.name = mViewModel.name.get().toString()
             startActivity(Intent(this@InputNameActivity,SelectGenderActivity::class.java))
 
         }
     }
 
+    override fun createObserver() {
+        super.createObserver()
+        App.eventViewModelInstance.finish.observeInActivity(this) {
+            finish()
+        }
+    }
 }

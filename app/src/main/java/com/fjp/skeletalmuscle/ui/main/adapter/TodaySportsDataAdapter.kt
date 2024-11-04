@@ -200,7 +200,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         val values = ArrayList<BarEntry>()
 
         for (i in 0 until 24) {
-            if (i == 3 || i == 5) {
+            if (i <8 || i>20) {
                 values.add(BarEntry(i.toFloat(), 0.0f))
             } else {
                 val num = (Math.random() * 180).toFloat()
@@ -213,6 +213,12 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         dataSets.add(barDataSet)
         barDataSet.setDrawIcons(false)
         barDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
+        if(holder.adapterPosition ==1){
+            barDataSet.color = ContextCompat.getColor(appContext, R.color.color_ffc019)
+        }else if(holder.adapterPosition ==2){
+            barDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
+        }
+
         barDataSet.setDrawValues(false)//不显示柱状图上数据
         val barData = BarData(dataSets)
         barData.barWidth=0.4f

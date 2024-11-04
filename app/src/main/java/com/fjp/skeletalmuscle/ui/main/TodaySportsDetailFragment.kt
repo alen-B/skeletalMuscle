@@ -94,10 +94,10 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
         val values = ArrayList<BarEntry>()
         for (i in 0 until 24) {
-            if (i == 3 || i == 5) {
+            if (i<8 || i >20) {
                 values.add(BarEntry(i.toFloat(), 0.0f))
             } else {
-                val num = (Math.random() * 180).toFloat()
+                val num = (Math.random() * 30).toFloat()
                 values.add(BarEntry(i.toFloat(), num))
             }
 
@@ -205,7 +205,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         val values = ArrayList<Entry>()
 
         for (i in 0 until 8) {
-            val num = (Math.random() * 180).toFloat() - 30
+            val num = 110+(Math.random() * 30).toFloat()
             values.add(BarEntry(i.toFloat(), num))
         }
         val dataSets = ArrayList<ILineDataSet>()

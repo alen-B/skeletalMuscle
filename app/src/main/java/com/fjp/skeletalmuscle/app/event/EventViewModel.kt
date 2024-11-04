@@ -19,5 +19,7 @@ class EventViewModel : BaseViewModel() {
 
     //添加TODO通知
     val todoEvent = EventLiveData<Boolean>()
+    //监听注册完成逻辑关闭之前的页面
+    val finish = EventLiveData<Boolean>()
 
 }
