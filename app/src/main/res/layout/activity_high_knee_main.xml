@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@color/color_222"
                 android:textSize="40sp"
-                android:text="L  90°"
+                android:text="@{viewModel.leftLegAngle}"
                 android:layout_height="wrap_content"/>
             <ImageView
                 android:id="@+id/lIv1"
@@ -59,7 +59,6 @@
                 android:id="@+id/lIv3"
                 android:layout_width="110dp"
                 android:layout_marginTop="2dp"
-                android:src="@drawable/sports_current_data_selected"
                 android:layout_height="40dp"
                 android:scaleType="centerCrop"
                 android:background="@drawable/bg_804e71ff_8"
@@ -101,7 +100,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             android:textColor="@color/color_222"
             android:textSize="50sp"
-            android:text="13"
+            android:text="@{viewModel.leftLegCount}"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/lUnitTv"
@@ -125,7 +124,7 @@
             android:layout_height="wrap_content">
         <TextView
             android:id="@+id/rCurDataTv"
-            android:text="R  90°"
+            android:text="@{viewModel.rightLegAngle}"
             android:layout_width="wrap_content"
             android:textColor="@color/color_222"
             android:textSize="40sp"
@@ -144,7 +143,6 @@
             android:layout_marginTop="2dp"
             android:layout_height="40dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sports_current_data_selected"
             android:background="@drawable/bg_b34e71ff_8"
             tools:ignore="ContentDescription" />
         <ImageView
@@ -192,7 +190,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             android:textColor="@color/color_222"
             android:textSize="50sp"
-            android:text="13"
+            android:text="@{viewModel.rightLegCount}"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/rUnitTv"

@@ -52,13 +52,28 @@ object DeviceDataParse {
         // 数据不匹配
     }
 
-    fun parseData2Angle(data:ByteArray):Float {
+    fun parseData2Pitch(data:ByteArray):Float {
         if (data.size >= 20) {
             val pitch: Float = Math.abs(twoBytesToFloat(data[14], data[15]) + 100)
             val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
             val yaw: Float = twoBytesToFloat(data[18], data[19])
             // 检查pitch是否大于100度
             return pitch
+        }
+        return 0f
+    }
+    fun parseData2Roll(data:ByteArray):Float {
+        if (data.size >= 20) {
+            val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
+            // 检查pitch是否大于100度
+            return roll
+        }
+        return 0f
+    }
+    fun parseData2Yaw(data:ByteArray):Float {
+        if (data.size >= 20) {
+            val yaw: Float = twoBytesToFloat(data[18], data[19])
+            return yaw
         }
         return 0f
     }

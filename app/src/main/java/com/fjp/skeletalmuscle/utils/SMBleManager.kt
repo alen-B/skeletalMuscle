@@ -161,10 +161,10 @@ object SMBleManager {
                     if (deviceName.startsWith("GTS")) {
                         it.onGTSData(data)
                     } else if (deviceName.startsWith("WT901BLE67L")) {
-                        it.onRightLegData(data)
+                        it.onLeftLegData(data)
 
                     } else if (deviceName.startsWith("WT901BLE67R")) {
-                        it.onLeftLegData(data)
+                        it.onRightLegData(data)
                     }
 
                 }
