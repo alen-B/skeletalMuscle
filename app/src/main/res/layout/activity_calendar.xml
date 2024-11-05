@@ -31,7 +31,7 @@
             android:layout_width="188dp"
             android:gravity="center"
             android:textColor="@color/color_994e71ff"
-            android:drawableStart="@drawable/calendar_pre_month"
+            app:drawableStartCompat="@drawable/calendar_pre_month"
             android:background="@drawable/bg_white_round_15"
             android:textSize="34sp"
             android:paddingStart="15dp"

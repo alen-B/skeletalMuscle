@@ -45,7 +45,7 @@
             app:layout_constraintStart_toStartOf="@+id/midGuideline"
             android:text="@string/high_knee_guide_step9_check"
             android:textColor="@color/color_332c2c2c"
-            android:drawableStart="@drawable/guide1_step2_1"
+            app:drawableStartCompat="@drawable/guide1_step2_1"
             android:layout_marginTop="60dp"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
             android:layout_height="wrap_content"/>

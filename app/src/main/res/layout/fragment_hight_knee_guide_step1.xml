@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/step1Tv"
             android:layout_marginTop="32dp"
             android:drawablePadding="16dp"
-            android:drawableStart="@drawable/guide1_step1_1"
+            app:drawableStartCompat="@drawable/guide1_step1_1"
             android:text="@string/exercise_plan_wrist_watch"
             android:textColor="@color/color_222"
             android:layout_height="wrap_content"/>
@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/step1_1Tv"
             android:layout_marginTop="32dp"
             android:drawablePadding="16dp"
-            android:drawableStart="@drawable/guide1_step1_2"
+            app:drawableStartCompat="@drawable/guide1_step1_2"
             android:text="@string/exercise_plan_left_knee"
             android:textColor="@color/color_222"
             android:layout_height="wrap_content"/>
@@ -73,7 +73,7 @@
             app:layout_constraintTop_toBottomOf="@+id/step1_2Tv"
             android:layout_marginTop="32dp"
             android:drawablePadding="16dp"
-            android:drawableStart="@drawable/guide1_step1_3"
+            app:drawableStartCompat="@drawable/guide1_step1_3"
             android:text="@string/exercise_plan_right_knee"
             android:textColor="@color/color_222"
             android:layout_height="wrap_content"/>
@@ -95,7 +95,7 @@
             app:layout_constraintStart_toStartOf="@+id/step2Tv"
             app:layout_constraintTop_toBottomOf="@+id/step2Tv"
             android:layout_marginTop="32dp"
-            android:drawableStart="@drawable/guide1_step2_1"
+            app:drawableStartCompat="@drawable/guide1_step2_1"
             android:text="@string/exercise_plan_wrist_watch"
             android:drawablePadding="16dp"
             android:textColor="@color/color_332c2c2c"
@@ -108,7 +108,7 @@
             app:layout_constraintTop_toBottomOf="@+id/step2_1Tv"
             android:layout_marginTop="32dp"
             android:drawablePadding="16dp"
-            android:drawableStart="@drawable/guide1_step2_2"
+            app:drawableStartCompat="@drawable/guide1_step2_2"
             android:text="@string/exercise_plan_left_knee"
             android:textColor="@color/color_332c2c2c"
             android:layout_height="wrap_content"/>
@@ -120,7 +120,7 @@
             app:layout_constraintTop_toBottomOf="@+id/step2_2Tv"
             android:layout_marginTop="32dp"
             android:drawablePadding="16dp"
-            android:drawableStart="@drawable/guide1_step2_2"
+            app:drawableStartCompat="@drawable/guide1_step2_2"
             android:text="@string/exercise_plan_right_knee"
             android:textColor="@color/color_332c2c2c"
             android:layout_height="wrap_content"/>

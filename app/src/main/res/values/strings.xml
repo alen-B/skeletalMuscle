@@ -50,11 +50,13 @@
     <string name="next_step">下一步</string>
     <string name="jump">跳过</string>
     <string name="sports_customer">自定义</string>
-    <string name="sure">添加</string>
+    <string name="add">添加</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
     <!--    首页-->
     <string name="main_start_sports">运动处方</string>
     <string name="main_score">今日得分</string>
-    <string name="main_my_data">我的数据</string>
+    <string name="main_my_data">今日数据</string>
     <string name="main_sports_time">运动时长</string>
     <string name="main_heart_rate">心率区间</string>
     <string name="main_endurance">心肺耐力</string>

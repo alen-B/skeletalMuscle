@@ -30,7 +30,7 @@
             android:layout_width="188dp"
             android:layout_height="56dp"
             android:background="@drawable/bg_white_round_15"
-            android:drawableStart="@drawable/calendar_pre_month"
+            app:drawableStartCompat="@drawable/calendar_pre_month"
             android:gravity="center"
             android:onClick="@{()-> click.clickPreDay()}"
             android:paddingStart="15dp"

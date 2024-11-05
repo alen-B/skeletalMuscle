@@ -558,7 +558,7 @@
             android:textColor="@color/color_222"
             android:text="@string/exercise_plan_link_device"
             android:textSize="30sp"
-            android:drawableStart="@drawable/exercise_device_linked"
+            app:drawableStartCompat="@drawable/exercise_device_linked"
             app:layout_constraintStart_toStartOf="@+id/deviceView"
             app:layout_constraintTop_toTopOf="@+id/deviceView" />
 
