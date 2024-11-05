@@ -13,6 +13,8 @@
     <string name="login_get_verification_code">获取验证码</string>
     <string name="login_count_down">剩余%d秒</string>
     <string name="login_input_success_phone">手机号不正确</string>
+    <string name="service_agreement_title">用户服务协议</string>
+    <string name="privacy_policy_title">隐私政策</string>
 
     <string name="input_name_title">先让我们熟悉起来吧</string>
     <string name="input_name_tips">请输入姓名</string>
@@ -223,7 +225,6 @@
     <string name="setting_waist_lin">腰围</string>
 
 
-
     <string name="request_bluetooth_permission_reject">蓝牙权限被拒绝</string>
     <string name="request_bluetooth_permission_go_setting">去设置</string>
     <string name="request_bluetooth_permission_cancel">取消</string>
@@ -232,7 +233,6 @@
     <string name="bluetooth_scaning_device_start_connect">开始连接设备...</string>
     <string name="bluetooth_scaning_device_connect_fail">尝试连接失败，请重试！</string>
     <string name="bluetooth_scaning_device_connect_success">链接成功</string>
-
 
 
 </resources>

@@ -12,6 +12,7 @@ class Constants {
         val INTENT_KEY_MONTH = "month"
         val INTENT_KEY_DAY = "day"
         val INTENT_SPORTS_TYPE = "sports_ty0pe"
+        val INTENT_IS_SERVICE_AGREEMENT = "is_service_agreement"
 
         val GTS_UUID_SERVICE = "6E400001-B5A3-F393-E0A9-E50E24DCCA9D"
         val GTS_UUID_CHARACTERISTIC_WRITE = "6E400002-B5A3-F393-E0A9-E50E24DCCA9D"

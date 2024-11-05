@@ -19,6 +19,7 @@ import com.daimajia.androidanimations.library.YoYo
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityLoginBinding
 import com.fjp.skeletalmuscle.ui.user.InputNameActivity
 import com.fjp.skeletalmuscle.viewmodel.state.LoginViewModel
@@ -52,23 +53,26 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         val spannableStringBuilder = SpannableStringBuilder(getString(R.string.login_agreement))
         val agreementClickableSpan = object : ClickableSpan() {
             override fun onClick(p0: View) {
-//                showMessage("点击了骨骼肌用户协议")
-//                Toast.makeText(this@LoginActivity, "点击了骨骼肌用户协议", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, ServiceAgreementActivity::class.java)
+                intent.putExtra(Constants.INTENT_IS_SERVICE_AGREEMENT, true)
+                startActivity(intent)
             }
 
             override fun updateDrawState(ds: TextPaint) {
                 ds.isUnderlineText = false
-                ds.color = ContextCompat.getColor(appContext,R.color.color_1c1c1c)
+                ds.color = ContextCompat.getColor(appContext, R.color.color_1c1c1c)
             }
         }
         val privacyClickableSpan = object : ClickableSpan() {
             override fun onClick(p0: View) {
-//                Toast.makeText(this@LoginActivity, "点击了隐私协议", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, ServiceAgreementActivity::class.java)
+                intent.putExtra(Constants.INTENT_IS_SERVICE_AGREEMENT, false)
+                startActivity(intent)
             }
 
             override fun updateDrawState(ds: TextPaint) {
                 ds.isUnderlineText = false
-                ds.color = ContextCompat.getColor(appContext,R.color.color_1c1c1c)
+                ds.color = ContextCompat.getColor(appContext, R.color.color_1c1c1c)
             }
         }
         mDatabind.agreementTv.movementMethod = LinkMovementMethod.getInstance()
@@ -87,6 +91,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                     showToast(getString(R.string.login_agreement_no_checked))
                     YoYo.with(Techniques.Shake).duration(700).repeat(1).playOn(mDatabind.agreementTv)
                 }
+
                 else -> {
                     startActivity(Intent(this@LoginActivity, InputNameActivity::class.java))
                     finish()
@@ -105,15 +110,15 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
         private fun startCountDown() {
             mViewModel.verificationCodeisEnabled.set(false)
-            mDatabind.countDownTv.setTextColor(ContextCompat.getColor(appContext,R.color.color_331c1c1c))
-           object : CountDownTimer(60000, 1000) {
+            mDatabind.countDownTv.setTextColor(ContextCompat.getColor(appContext, R.color.color_331c1c1c))
+            object : CountDownTimer(60000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     mViewModel.verificationCodeText.set(String.format(getString(R.string.login_count_down), millisUntilFinished / 1000))
                 }
 
                 override fun onFinish() {
                     mViewModel.verificationCodeText.set(appContext.getString(R.string.login_get_verification_code))
-                    mDatabind.countDownTv.setTextColor(ContextCompat.getColor(appContext,R.color.colorAccent))
+                    mDatabind.countDownTv.setTextColor(ContextCompat.getColor(appContext, R.color.colorAccent))
                     mViewModel.verificationCodeisEnabled.set(false)
                 }
             }.start()
