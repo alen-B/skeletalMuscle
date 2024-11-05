@@ -148,7 +148,7 @@
         style="@style/SMButton"
         android:layout_width="240dp"
         android:layout_marginEnd="35dp"
-        android:drawableEnd="@drawable/reconnect"
+        android:drawableEnd="@drawable/exercise_plan_start_icon"
         android:paddingEnd="24dp"
         android:text="@string/share_completed"
         app:layout_constraintBottom_toBottomOf="parent"

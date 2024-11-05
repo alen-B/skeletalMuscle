@@ -13,6 +13,7 @@ import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.common.DeviceType
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityExercisePlanBinding
+import com.fjp.skeletalmuscle.ui.deviceguidepage.HighKneeGuideActivity
 import com.fjp.skeletalmuscle.ui.highKnee.HighKneeMainActivity
 import com.fjp.skeletalmuscle.utils.SMBleManager
 import com.fjp.skeletalmuscle.viewmodel.state.ExercisePlanViewModel
@@ -66,6 +67,10 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
 
         fun clickStartSports() {
             startActivity(Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java))
+        }
+
+        fun clickStartDeviceGuide(){
+            startActivity(Intent(this@ExercisePlanActivity, HighKneeGuideActivity::class.java))
         }
         fun clickDevice1() {
             SMBleManager.scanDevices(DeviceType.GTS.value,DeviceType.GTS, object:SMBleManager.DeviceStatusListener{

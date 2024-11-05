@@ -46,7 +46,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     inner class ProxyClick{
         fun startSports(){
-            showToast("正在开发中...")
+            startActivity(Intent(this@MainActivity,TodaySelectSportsActivity::class.java))
         }
         fun startCalendar(){
            startActivity(Intent(this@MainActivity, CalendarActivity::class.java))

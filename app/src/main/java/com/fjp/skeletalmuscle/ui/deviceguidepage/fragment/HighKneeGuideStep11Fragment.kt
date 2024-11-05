@@ -9,6 +9,7 @@ import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep2Binding
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep3Binding
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep5Binding
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep7Binding
+import com.fjp.skeletalmuscle.ui.deviceguidepage.HighKneeGuideActivity
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep11ViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep1ViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep2ViewModel
@@ -25,6 +26,7 @@ class HighKneeGuideStep11Fragment : BaseFragment<HighKneeGuideStep11ViewModel, F
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.high_knee_guide_step11_title))
+//        (activity as HighKneeGuideActivity).setNextButtonEnable(false)
 
 
     }
