@@ -11,7 +11,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.DatetimeUtil
-import com.fjp.skeletalmuscle.common.Constants
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityBornBinding
 import com.fjp.skeletalmuscle.viewmodel.state.BornViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
@@ -93,6 +93,7 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
     inner class ProxyClick {
         fun next() {
             val intent = Intent(this@BornActivity, SingleSelectActivity::class.java)
+            App.userInfo?.born = Date(mViewModel.year.get()!!.toInt(),mViewModel.month.get()!!.toInt(),mViewModel.day.get()!!.toInt()).time
             intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.HEIGHT.type)
             startActivity(intent)
         }
@@ -111,8 +112,5 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
 
     override fun createObserver() {
         super.createObserver()
-        App.eventViewModelInstance.finish.observeInActivity(this) {
-            finish()
-        }
     }
 }

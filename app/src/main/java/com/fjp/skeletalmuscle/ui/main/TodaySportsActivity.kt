@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
-import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.data.model.bean.TodaySports
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySportsDataBinding
-import com.fjp.skeletalmuscle.ext.dp
+import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.ui.main.adapter.TodaySportsDataAdapter
-import com.fjp.skeletalmuscle.view.recyclerview.SpaceItemDecoration
+import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDataViewModel
 
 class TodaySportsActivity :BaseActivity<TodaySportsDataViewModel,ActivityTodaySportsDataBinding>() {

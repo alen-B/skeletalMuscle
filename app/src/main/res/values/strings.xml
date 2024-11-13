@@ -105,8 +105,8 @@
     <string name="today_sports_title">选择您今天想完成的运动</string>
     <string name="today_sports_start">选择运动计划</string>
     <string name="today_sports_height_leg_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
-    <string name="today_sports_dumbbell_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
-    <string name="today_sports_plank_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
+    <string name="today_sports_dumbbell_detail">哑铃训练主要强化上肢肌群以及胸背部肌群，有助于提升上肢力量并改善心肺功能。</string>
+    <string name="today_sports_plank_detail">该运动主要作用于腹肌和背肌，能够有效减少腹部脂肪堆积，促进核心力量发展。</string>
 
     <string name="exercise_plan_title">选择您的运动计划</string>
     <string name="exercise_plan_sports_data">运动处方</string>
@@ -123,6 +123,41 @@
     <string name="exercise_plan_right_knee">右膝</string>
     <string name="exercise_plan_right_dumbbell">右哑铃</string>
     <string name="exercise_plan_left_dumbbell">左哑铃</string>
+
+
+    <string name="hand_grips_left_device">左手握力</string>
+    <string name="hand_grips_right_device">又手握力</string>
+
+    <string name="hand_grips_connect_left_device_title">请取出左手握力器</string>
+    <string name="hand_grips_connect_left_device_connected_title">左手握力器已连接成功</string>
+    <string name="hand_grips_connect_left_device_connect">连接左手握力器</string>
+    <string name="hand_grips_connect_left_device_step1">取出左手握力器</string>
+    <string name="hand_grips_connect_left_device_step2">手握左手握力器</string>
+    <string name="hand_grips_connect_left_device_step3">检查传感器</string>
+
+    <string name="hand_grips_connect_right_device_title">请取出右手握力器</string>
+    <string name="hand_grips_connect_right_device_connected_title">右手握力器已连接成功</string>
+    <string name="hand_grips_connect_right_device_connect">连接右手握力器</string>
+    <string name="hand_grips_connect_right_device_step1">取出右手握力器</string>
+    <string name="hand_grips_connect_right_device_step2">手握右手握力器</string>
+    <string name="hand_grips_connect_right_device_step3">检查传感器</string>
+
+    <string name="dumbbell_connect_left_device_title">请将左手哑铃握在左手上</string>
+    <string name="dumbbell_connect_left_device_connect">左手哑铃已连接成功</string>
+    <string name="dumbbell_connect_left_device_connected_title">连接左手哑铃</string>
+    <string name="dumbbell_connect_left_device_step1">· 取出左手哑铃</string>
+    <string name="dumbbell_connect_left_device_step2">· 手握左手哑铃</string>
+    <string name="dumbbell_connect_left_device_step3">· 检查传感器</string>
+
+    <string name="dumbbell_connect_right_device_title">请将右手哑铃握在左手上</string>
+    <string name="dumbbell_connect_right_device_connect">右手哑铃已连接成功</string>
+    <string name="dumbbell_connect_right_device_connected_title">连接右手哑铃</string>
+    <string name="dumbbell_connect_right_device_step1">· 取出右手哑铃</string>
+    <string name="dumbbell_connect_right_device_step2">· 手握右手哑铃</string>
+    <string name="dumbbell_connect_right_device_step3">· 检查传感器</string>
+
+    <string name="dumbbell_left">左手哑铃</string>
+    <string name="dumbbell_right">右手哑铃</string>
 
 
     <string-array name="chinese_week_string_array">
@@ -179,6 +214,9 @@
 
     <string name="high_knee_guide_step10_title">智能手环已检查完成</string>
     <string name="high_knee_guide_step11_title">所有设备已经就绪，开始吧</string>
+    <string name="high_knee_guide_step11_right_knee_checked">右膝设备检测完成</string>
+    <string name="high_knee_guide_step11_right_dumebbell_checked">右手哑铃检测完成</string>
+    <string name="high_knee_guide_step11_right_hand_grips_checked">右手握力器检测完成</string>
 
     <string name="high_knee_main_title">您现在处于暖身激活阶段,继续努力！</string>
     <string name="high_knee_main_complete">结束</string>
@@ -208,7 +246,7 @@
 
     <string name="sports_completed_title">一起来看看今天的成果</string>
     <string name="sports_completed_score">本次训练得分</string>
-    <string name="sports_completed_sports_time">「高抬腿30分钟锻炼计划」</string>
+    <string name="sports_completed_sports_time">「高抬腿%d分钟锻炼计划」</string>
     <string name="sports_completed_time">完成次数</string>
 
     <string name="setting_title">设置您的个人资料</string>

@@ -97,22 +97,22 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
      * 是否需要懒加载
      */
     private fun onVisible() {
-        if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
-            // 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿
-            handler.postDelayed( {
-                lazyLoadData()
-                //在Fragment中，只有懒加载过了才能开启网络变化监听
-                NetworkStateManager.instance.mNetworkStateCallback.observeInFragment(
-                    this,
-                    Observer {
-                        //不是首次订阅时调用方法，防止数据第一次监听错误
-                        if (!isFirst) {
-                            onNetworkStateChanged(it)
-                        }
-                    })
-                isFirst = false
-            },lazyLoadTime())
-        }
+//        if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
+//            // 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿
+//            handler.postDelayed( {
+//                lazyLoadData()
+//                //在Fragment中，只有懒加载过了才能开启网络变化监听
+//                NetworkStateManager.instance.mNetworkStateCallback.observeInFragment(
+//                    this,
+//                    Observer {
+//                        //不是首次订阅时调用方法，防止数据第一次监听错误
+//                        if (!isFirst) {
+//                            onNetworkStateChanged(it)
+//                        }
+//                    })
+//                isFirst = false
+//            },lazyLoadTime())
+//        }
     }
 
     /**

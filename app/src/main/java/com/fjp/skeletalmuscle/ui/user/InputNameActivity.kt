@@ -25,7 +25,7 @@ class InputNameActivity  : BaseActivity<InputNameViewModel, ActivityInputNameBin
                 showToast(getString(R.string.input_name_tips))
                 return
             }
-            App.userInfo.name = mViewModel.name.get().toString()
+            App.userInfo?.name = mViewModel.name.get().toString()
             startActivity(Intent(this@InputNameActivity,SelectGenderActivity::class.java))
 
         }
@@ -33,8 +33,5 @@ class InputNameActivity  : BaseActivity<InputNameViewModel, ActivityInputNameBin
 
     override fun createObserver() {
         super.createObserver()
-        App.eventViewModelInstance.finish.observeInActivity(this) {
-            finish()
-        }
     }
 }

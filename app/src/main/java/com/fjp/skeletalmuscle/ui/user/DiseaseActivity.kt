@@ -83,8 +83,5 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
     }
     override fun createObserver() {
         super.createObserver()
-        App.eventViewModelInstance.finish.observeInActivity(this) {
-            finish()
-        }
     }
 }

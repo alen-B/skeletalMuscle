@@ -390,6 +390,7 @@
             android:paddingEnd="24dp"
             app:layout_constraintVertical_chainStyle="spread"
             app:layout_constraintTop_toBottomOf="@+id/exerciseDataTv"
+            app:layout_goneMarginBottom="180dp"
             app:layout_constraintBottom_toTopOf="@+id/exercisePlanSportsLegAngleCl"
             android:layout_height="wrap_content">
             <TextView
@@ -558,7 +559,6 @@
             android:textColor="@color/color_222"
             android:text="@string/exercise_plan_link_device"
             android:textSize="30sp"
-            app:drawableStartCompat="@drawable/exercise_device_linked"
             app:layout_constraintStart_toStartOf="@+id/deviceView"
             app:layout_constraintTop_toTopOf="@+id/deviceView" />
 
@@ -665,15 +665,25 @@
             android:drawableBottom="@drawable/connect_device_arrow"
             android:ems="1"
             android:layout_height="0dp"/>
-        <ImageView
+        <io.alterac.blurkit.BlurLayout
             android:id="@+id/backIv"
             android:layout_width="144dp"
             android:layout_height="144dp"
-            android:background="@drawable/back"
             android:onClick="@{()-> click.clickFinish()}"
+            app:blk_blurRadius="25"
+            app:blk_cornerRadius="20dp"
+            app:blk_fps="0"
             app:layout_constraintBottom_toBottomOf="@+id/shareBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:background="@drawable/bg_back"
+                android:onClick="@{()-> click.clickFinish()}"
+                android:scaleType="center"
+                android:src="@drawable/arrow_right" />
+        </io.alterac.blurkit.BlurLayout>
 
         <Button
             android:id="@+id/shareBtn"
@@ -681,7 +691,8 @@
             android:layout_width="502dp"
             android:layout_height="144dp"
             android:layout_marginBottom="35dp"
-            android:background="@drawable/bg_yellow_round_20"
+            android:enabled="false"
+            android:background="@drawable/bg_start_sports"
             android:drawableEnd="@drawable/exercise_plan_start_icon"
             android:onClick="@{()-> click.clickStartSports()}"
             android:text="@string/exercise_plan_start_sports"

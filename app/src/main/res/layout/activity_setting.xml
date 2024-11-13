@@ -50,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:maxLength="10"
+                    android:textSize="32sp"
                     android:text="@{viewModel.userInfo.name}"
                     app:layout_constraintBottom_toBottomOf="@+id/avatarIv"
                     app:layout_constraintStart_toEndOf="@+id/avatarIv"
@@ -145,7 +146,7 @@
                 <ImageView
                     android:layout_width="144dp"
                     android:layout_height="144dp"
-                    android:background="@drawable/bg_back"
+                    android:background="@drawable/bg_back_gray"
                     android:onClick="@{()-> click.clickFinish()}"
                     android:scaleType="center"
                     android:src="@drawable/arrow_right" />
@@ -161,8 +162,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/userInfoCl"
                 app:layout_constraintTop_toTopOf="@+id/userInfoCl" />
-            <fragment
-                android:id="@+id/fragment"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/rightFragment"
                 android:layout_width="0dp"
                 android:name="com.fjp.skeletalmuscle.ui.setting.UserInfoFragment"
                 app:layout_constraintStart_toEndOf="@+id/line"

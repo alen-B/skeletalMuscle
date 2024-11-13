@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.app.util
 
 import android.text.TextUtils
+import com.fjp.skeletalmuscle.data.model.bean.TodayhignKneeSports
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -14,7 +15,7 @@ object CacheUtil {
         val kv = MMKV.mmkvWithID("app")
         val userStr = kv.decodeString("user")
         return if (TextUtils.isEmpty(userStr)) {
-           null
+            null
         } else {
             Gson().fromJson(userStr, UserInfo::class.java)
         }
@@ -31,6 +32,23 @@ object CacheUtil {
         } else {
             kv.encode("user", Gson().toJson(userResponse))
             setIsLogin(true)
+        }
+
+    }
+
+    fun setSports(highKneeSports: TodayhignKneeSports) {
+        val kv = MMKV.mmkvWithID("app")
+        kv.encode("todayHighKneeSports", Gson().toJson(highKneeSports))
+
+    }
+
+    fun getSports(): TodayhignKneeSports? {
+        val kv = MMKV.mmkvWithID("app")
+        val highKneeSports = kv.decodeString("todayHighKneeSports")
+        return if (TextUtils.isEmpty(highKneeSports)) {
+            return null
+        } else {
+            return Gson().fromJson(highKneeSports, TodayhignKneeSports::class.java)
         }
 
     }
@@ -58,10 +76,11 @@ object CacheUtil {
         val kv = MMKV.mmkvWithID("app")
         return kv.decodeBool("first", true)
     }
+
     /**
      * 是否是第一次登陆
      */
-    fun setFirst(first:Boolean): Boolean {
+    fun setFirst(first: Boolean): Boolean {
         val kv = MMKV.mmkvWithID("app")
         return kv.encode("first", first)
     }
@@ -73,28 +92,29 @@ object CacheUtil {
         val kv = MMKV.mmkvWithID("app")
         return kv.decodeBool("top", true)
     }
+
     /**
      * 设置首页是否开启获取指定文章
      */
-    fun setIsNeedTop(isNeedTop:Boolean): Boolean {
+    fun setIsNeedTop(isNeedTop: Boolean): Boolean {
         val kv = MMKV.mmkvWithID("app")
         return kv.encode("top", isNeedTop)
     }
+
     /**
      * 获取搜索历史缓存数据
      */
     fun getSearchHistoryData(): ArrayList<String> {
         val kv = MMKV.mmkvWithID("cache")
-        val searchCacheStr =  kv.decodeString("history")
+        val searchCacheStr = kv.decodeString("history")
         if (!TextUtils.isEmpty(searchCacheStr)) {
-            return Gson().fromJson(searchCacheStr
-                , object : TypeToken<ArrayList<String>>() {}.type)
+            return Gson().fromJson(searchCacheStr, object : TypeToken<ArrayList<String>>() {}.type)
         }
         return arrayListOf()
     }
 
     fun setSearchHistoryData(searchResponseStr: String) {
         val kv = MMKV.mmkvWithID("cache")
-        kv.encode("history",searchResponseStr)
+        kv.encode("history", searchResponseStr)
     }
 }

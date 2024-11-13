@@ -23,7 +23,7 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
 
     inner class ProxyClick {
         fun next() {
-            App.userInfo.sex = mViewModel.sex.get()!!.value
+            App.userInfo?.sex = mViewModel.sex.get()!!.value
             startActivity(Intent(this@SelectGenderActivity,BornActivity::class.java))
 
         }
@@ -57,8 +57,6 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
     }
     override fun createObserver() {
         super.createObserver()
-        App.eventViewModelInstance.finish.observeInActivity(this) {
-            finish()
-        }
+
     }
 }

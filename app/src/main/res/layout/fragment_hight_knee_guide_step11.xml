@@ -27,9 +27,9 @@
             android:layout_width="385dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/high_knee_guide5_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="385dp"
+            android:background="@drawable/high_knee_guide5_icon"
             tools:ignore="ContentDescription" />
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/midGuideline"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:textSize="46sp"
             app:layout_constraintStart_toStartOf="@+id/midGuideline"
-            android:text="@string/high_knee_guide_step9_check"
+            android:text="@string/high_knee_guide_step11_right_knee_checked"
             android:textColor="@color/color_222"
             android:drawablePadding="24dp"
             app:drawableStartCompat="@drawable/high_knee_guide3_connected"
@@ -86,7 +86,5 @@
             android:text="@string/high_knee_guide_step9_circle"
             android:textColor="@color/color_222"
             android:layout_height="wrap_content"/>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

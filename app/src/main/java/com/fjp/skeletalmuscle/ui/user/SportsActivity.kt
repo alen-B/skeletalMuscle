@@ -5,16 +5,15 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
-import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.common.Constants
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.data.model.bean.Sports
 import com.fjp.skeletalmuscle.databinding.ActivitySuportsBinding
 import com.fjp.skeletalmuscle.ui.main.MainActivity
 import com.fjp.skeletalmuscle.ui.user.adapter.SportsTypeAdapter
-import com.fjp.skeletalmuscle.view.pop.AddSportsTypePop
+import com.fjp.skeletalmuscle.app.weight.pop.AddSportsTypePop
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.SuportsViewModel
 import com.lxj.xpopup.XPopup
@@ -42,8 +41,8 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
     inner class ProxyClick {
         fun next() {
             if(curItem?.name === appContext.getString(R.string.sports_type_no)){
-                App.eventViewModelInstance.finish.value=true
                 val intent =  Intent(this@SportsActivity,MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }else{
                 val intent =  Intent(this@SportsActivity,SingleSelectActivity::class.java)
@@ -82,8 +81,5 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
     }
     override fun createObserver() {
         super.createObserver()
-        App.eventViewModelInstance.finish.observeInActivity(this) {
-            finish()
-        }
     }
 }

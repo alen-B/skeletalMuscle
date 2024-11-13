@@ -13,7 +13,10 @@
             name="click"
             type="com.fjp.skeletalmuscle.ui.setting.UserInfoFragment.ProxyClick" />
     </data>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -63,7 +66,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/userIv"
                 app:layout_constraintStart_toEndOf="@+id/userIv" />
 
-            <com.fjp.skeletalmuscle.view.SettingItemLayout
+            <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
                 android:id="@+id/avatarLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -74,17 +77,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/rtView"
                 app:title="@string/setting_avatar" />
 
-            <com.fjp.skeletalmuscle.view.SettingItemLayout
+            <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
                 android:id="@+id/userNameLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:onClick="@{()->click.clickUpdateUserName()}"
                 app:layout_constraintTop_toBottomOf="@+id/avatarLayout"
                 app:title="@string/setting_user_name" />
 
-            <com.fjp.skeletalmuscle.view.SettingItemLayout
+            <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
                 android:id="@+id/mobileLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -95,7 +99,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/userNameLayout"
                 app:title="@string/setting_mobile" />
 
-            <com.fjp.skeletalmuscle.view.SettingItemLayout
+            <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
                 android:id="@+id/bornLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -106,7 +110,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/mobileLayout"
                 app:title="@string/setting_born" />
 
-            <com.fjp.skeletalmuscle.view.SettingItemLayout
+            <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
                 android:id="@+id/sexLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -117,7 +121,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bornLayout"
                 app:title="@string/setting_sex" />
 
-            <com.fjp.skeletalmuscle.view.SettingItemLayout
+            <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
                 android:id="@+id/weightLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -128,7 +132,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/mobileLayout"
                 app:title="@string/setting_weight" />
 
-            <com.fjp.skeletalmuscle.view.SettingItemLayout
+            <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
                 android:id="@+id/heightLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -138,7 +142,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/weightLayout"
                 app:title="@string/setting_height" />
 
-            <com.fjp.skeletalmuscle.view.SettingItemLayout
+            <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
                 android:id="@+id/waistLinLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -150,4 +154,5 @@
                 app:title="@string/setting_waist_lin" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    </LinearLayout>
 </layout>

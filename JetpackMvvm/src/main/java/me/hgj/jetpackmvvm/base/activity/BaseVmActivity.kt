@@ -1,8 +1,13 @@
 package me.hgj.jetpackmvvm.base.activity
 
+import android.Manifest
+import android.bluetooth.BluetoothManager
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
@@ -46,6 +51,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         NetworkStateManager.instance.mNetworkStateCallback.observeInActivity(this, Observer {
             onNetworkStateChanged(it)
         })
+
     }
 
     /**

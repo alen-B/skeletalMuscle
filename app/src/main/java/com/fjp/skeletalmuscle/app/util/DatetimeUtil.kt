@@ -30,6 +30,9 @@ object DatetimeUtil {
         get() = formatDate(DATE_PATTERN, now)
 
 
+    fun getCurDate2Str():String{
+       return formatDate(System.currentTimeMillis(),DATE_PATTERN)
+    }
 
     /**
      * Date to Strin
@@ -100,6 +103,10 @@ object DatetimeUtil {
      */
     fun getCustomTime(dateStr: String):Date{
         return formatDate(DATE_PATTERN,dateStr)
+    }
+
+    fun formSportTime(time:Long):String{
+        return String.format("%.2f",(time /(1000 * 60f)))
     }
 
 }

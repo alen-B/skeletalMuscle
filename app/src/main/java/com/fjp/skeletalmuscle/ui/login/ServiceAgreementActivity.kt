@@ -3,7 +3,7 @@ package com.fjp.skeletalmuscle.ui.login
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
-import com.fjp.skeletalmuscle.common.Constants
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityServiceAgreementBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ServiceAgreementViewModel
 

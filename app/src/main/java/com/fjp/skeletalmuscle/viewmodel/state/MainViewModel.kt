@@ -15,10 +15,10 @@ class MainViewModel : SMBaseViewModel() {
     private var dayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
     val sportsData = mutableListOf<MainSports>()
     val currentDay = ObservableField(dayOfMonth.toString())
-    val curScore = ObservableField("96")
-    val sportsTime = ObservableField("28")
-    val heartRate = ObservableField("92-113")
-    val endurance = ObservableField("0.32")
-    val heat = ObservableField("261")
+    val curScore = ObservableField("0")
+    val sportsTime = ObservableField("0")
+    val heartRate = ObservableField("0")
+    val endurance = ObservableField("0")
+    val heat = ObservableField("0")
 
 }

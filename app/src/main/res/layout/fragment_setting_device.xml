@@ -14,11 +14,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent">
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="设备界面"
+            android:text="正在开发中..."
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_height="wrap_content"/>

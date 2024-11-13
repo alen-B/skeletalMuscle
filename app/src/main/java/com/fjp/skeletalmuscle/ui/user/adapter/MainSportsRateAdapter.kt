@@ -9,10 +9,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.setAdapterAnimation
+import com.fjp.skeletalmuscle.app.util.DatetimeUtil
 import com.fjp.skeletalmuscle.app.util.SettingUtil
 import com.fjp.skeletalmuscle.data.model.bean.MainSports
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
-import com.fjp.skeletalmuscle.ext.dp
+import com.mackhartley.roundedprogressbar.RoundedProgressBar
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.util.dp2px
 
@@ -26,11 +27,20 @@ class MainSportsRateAdapter(data: ArrayList<MainSports>, var defaultIndex: Int) 
     }
 
     override fun convert(holder: BaseViewHolder, item: MainSports) {
-        if(item.type== SportsType.LEG_LIFT){
+        if(item.type== SportsType.HIGH_KNEE){
             holder.setImageResource(R.id.sportTypeIv,R.drawable.main_sports_leg)
             holder.setImageResource(R.id.sportTypeExpandIv,R.drawable.main_sports_leg)
             holder.setText(R.id.sportNameTv, "高抬腿")
-            holder.setText(R.id.sportRateTv, "98")
+            holder.setText(R.id.sportRateTv, item.sports.score.toString())
+            holder.getView<RoundedProgressBar>(R.id.warmupTimePB).setProgressPercentage(item.sports.warmupTime/(item.sports.time/1000)*100,true)
+            holder.getView<RoundedProgressBar>(R.id.fatBurningTimePb).setProgressPercentage(item.sports.fatBurningTime/(item.sports.time/1000)*100,true)
+            holder.getView<RoundedProgressBar>(R.id.cardioTimePb).setProgressPercentage(item.sports.cardioTime/(item.sports.time/1000)*100,true)
+            holder.getView<RoundedProgressBar>(R.id.breakTimePB).setProgressPercentage(item.sports.breakTime/(item.sports.time/1000)*100,true)
+            val totalTime = (item.sports.time /(1000 * 60f)).toInt().toString()+"min"
+            holder.setText(R.id.warmupTimeMinTv, totalTime)
+            holder.setText(R.id.fatBurningTimeMinTv, totalTime)
+            holder.setText(R.id.cardioTimeTotalMinTv, totalTime)
+            holder.setText(R.id.breakTimeTotalMinTv, totalTime)
             holder.setTextColor(R.id.sportRateTv, ContextCompat.getColor(appContext,R.color.color_blue))
         }else if(item.type== SportsType.DUMBBELL){
             holder.setText(R.id.sportNameTv, "哑铃")

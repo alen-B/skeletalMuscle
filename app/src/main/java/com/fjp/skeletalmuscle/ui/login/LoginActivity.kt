@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.text.InputFilter
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
@@ -12,14 +11,14 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.common.Constants
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityLoginBinding
 import com.fjp.skeletalmuscle.ui.user.InputNameActivity
 import com.fjp.skeletalmuscle.viewmodel.state.LoginViewModel
@@ -94,6 +93,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
                 else -> {
                     startActivity(Intent(this@LoginActivity, InputNameActivity::class.java))
+                    App.userInfo?.phone = mViewModel.phone.get()!!
                     finish()
                 }
             }

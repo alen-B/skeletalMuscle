@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    <variable
+        name="viewModel"
+        type="com.fjp.skeletalmuscle.viewmodel.state.SetUserNameViewModel" />
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.setting.SetUserNameFragment.ProxyClick" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f5f5f5"
+        tools:context=".ui.setting.SetUserNameFragment">
+
+        <EditText
+            android:text="@{viewModel.userName}"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center_vertical"
+            android:layout_height="70dp" />
+        <Button
+            android:id="@+id/nextBtn"
+            style="@style/SMButtonNext"
+            android:layout_width="240dp"
+            android:text="@string/share_completed"
+            android:drawableEnd="@drawable/exercise_plan_start_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="35dp"
+            android:onClick="@{()-> click.clickUpdate()}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

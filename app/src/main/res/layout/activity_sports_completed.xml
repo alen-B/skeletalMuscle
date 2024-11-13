@@ -120,12 +120,12 @@
             app:layout_constraintTop_toBottomOf="@+id/fatBurnTv"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/sportsTimeTv"
             android:layout_width="wrap_content"
             app:layout_constraintStart_toStartOf="@+id/midGuideline"
             android:layout_marginTop="90dp"
             android:textSize="30sp"
             android:textColor="@color/color_99222222"
-            android:text="@string/sports_completed_sports_time"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
             android:layout_height="wrap_content"/>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -151,7 +151,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
-            android:id="@+id/numberTv"
+            android:id="@+id/timeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -292,7 +292,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/color_1c1c1c"
                 android:textSize="52sp"
-                android:text="350"
                 android:layout_marginEnd="6dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/heatUnitTv"
                 app:layout_constraintEnd_toStartOf="@+id/heatUnitTv"
@@ -307,6 +306,26 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <io.alterac.blurkit.BlurLayout
+            android:id="@+id/backIv"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:onClick="@{()-> click.clickFinish()}"
+            app:blk_blurRadius="25"
+            app:blk_cornerRadius="20dp"
+            app:blk_fps="0"
+            app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:background="@drawable/bg_back_gray"
+                android:onClick="@{()-> click.clickFinish()}"
+                android:scaleType="center"
+                android:src="@drawable/arrow_right"
+                tools:ignore="ContentDescription" />
+        </io.alterac.blurkit.BlurLayout>
         <Button
             android:id="@+id/nextBtn"
             style="@style/SMButtonNext"
@@ -315,7 +334,7 @@
             android:drawableEnd="@drawable/exercise_plan_start_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{()-> click.clickShare()}" />
+            android:onClick="@{()-> click.clickCompleted()}" />
 
         <Button
             style="@style/SMButtonPre"

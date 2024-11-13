@@ -96,6 +96,7 @@
             android:textColor="@color/color_801c1c1c" />
 
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:id="@+id/warmupTimePB"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="14dp"
@@ -110,6 +111,7 @@
             app:rpbProgressColor="@color/colorAccent"
             app:rpbShowProgressText="false" />
         <TextView
+            android:id="@+id/warmupTimeMinTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10min"
@@ -137,6 +139,7 @@
             android:textColor="@color/color_801c1c1c" />
 
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:id="@+id/fatBurningTimePb"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="14dp"
@@ -149,6 +152,7 @@
             app:rpbShowProgressText="false" />
 
         <TextView
+            android:id="@+id/fatBurningTimeMinTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="12min"
@@ -176,6 +180,7 @@
             android:textColor="@color/color_801c1c1c" />
 
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:id="@+id/cardioTimePb"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="14dp"
@@ -187,6 +192,7 @@
             app:rpbProgressColor="@color/color_ff824c"
             app:rpbShowProgressText="false" />
         <TextView
+            android:id="@+id/cardioTimeTotalMinTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="14min"
@@ -214,6 +220,7 @@
             android:textColor="@color/color_801c1c1c" />
 
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:id="@+id/breakTimePB"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="14dp"
@@ -226,6 +233,7 @@
             app:rpbShowProgressText="false" />
 
         <TextView
+            android:id="@+id/breakTimeTotalMinTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="14min"

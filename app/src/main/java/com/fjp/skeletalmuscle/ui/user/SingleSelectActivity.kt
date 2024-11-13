@@ -2,15 +2,13 @@ package com.fjp.skeletalmuscle.ui.user
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
-import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.common.Constants
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivitySingleSelectBinding
 import com.fjp.skeletalmuscle.ui.main.MainActivity
 import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
@@ -25,20 +23,22 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
     val SupportTtimeDefaultIndex = 2
     lateinit var singleSelectAdapter: SingleSelectAdapter
     var singleSelectType: Int? = 0
+    var currIndex = 0
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.showRightText.set(true)
         mDatabind.click = ProxyClick()
         singleSelectType = intent?.getIntExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.SUPPORT_TIME.type)
         initData()
-        val defaultSelectedIndex = getDefaultSelectedIndex()
-        singleSelectAdapter = SingleSelectAdapter(mViewModel.dataArr as ArrayList<String>, defaultSelectedIndex, clickItem = { item, position ->
+        currIndex = getDefaultSelectedIndex()
+        singleSelectAdapter = SingleSelectAdapter(mViewModel.dataArr as ArrayList<String>, currIndex, clickItem = { item, position ->
 //            showToast("点击了" + position)
+            currIndex = position
         })
         mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), singleSelectAdapter)
 
 
-        mDatabind.recyclerView.smoothScrollToPosition(defaultSelectedIndex + 2)
+        mDatabind.recyclerView.smoothScrollToPosition(currIndex + 2)
     }
 
     private fun getDefaultSelectedIndex(): Int {
@@ -97,16 +97,25 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
         fun next() {
             var intent = Intent(this@SingleSelectActivity, SingleSelectActivity::class.java)
             when (singleSelectType) {
-                SingleSelectType.HEIGHT.type -> intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.WEIGHT.type)
-                SingleSelectType.WEIGHT.type -> intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.WAIST_LINE.type)
+                SingleSelectType.HEIGHT.type -> {
+                    App.userInfo?.height = mViewModel.dataArr[currIndex]
+                    intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.WEIGHT.type)
+                }
+                SingleSelectType.WEIGHT.type -> {
+                    App.userInfo?.weight = mViewModel.dataArr[currIndex]
+                    intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.WAIST_LINE.type)
+                }
                 SingleSelectType.WAIST_LINE.type -> {
+                    App.userInfo?.waist_line = mViewModel.dataArr[currIndex]
                     intent = Intent(this@SingleSelectActivity, DiseaseActivity::class.java)
                 }
 
-                SingleSelectType.DAY_ONE_WEEK.type -> intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.SUPPORT_TIME.type)
+                SingleSelectType.DAY_ONE_WEEK.type -> {
+                    intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.SUPPORT_TIME.type)
+                }
                 SingleSelectType.SUPPORT_TIME.type -> {
-                    App.eventViewModelInstance.finish.value=true
                     intent = Intent(this@SingleSelectActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
             }
             startActivity(intent)
@@ -122,8 +131,5 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
 
     override fun createObserver() {
         super.createObserver()
-        App.eventViewModelInstance.finish.observeInActivity(this) {
-            finish()
-        }
     }
 }

@@ -15,6 +15,7 @@ open class SMBaseViewModel:BaseViewModel() {
     var leftImg = ObservableField(R.drawable.title_left_default_icon)
     var rightImg = ObservableField<Int>()
     var showRightText = ObservableField(false)
+    var showSetting = ObservableField(false)
     var curIndex = ObservableField("1")
     var totalIndex = ObservableField("9")
 }

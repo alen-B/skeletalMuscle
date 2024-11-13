@@ -27,7 +27,7 @@
             android:layout_width="516dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/high_knee_guide1_icon"
+            android:background="@drawable/hight_knee_guide3_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="318dp"
             tools:ignore="ContentDescription" />

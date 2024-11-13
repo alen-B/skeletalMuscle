@@ -11,83 +11,95 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.clj.fastble.BleManager
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.common.Constants
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySelectSportsBinding
-import com.fjp.skeletalmuscle.utils.AnimUtil
-import com.fjp.skeletalmuscle.utils.PermissionUtils
-import com.fjp.skeletalmuscle.utils.PermissionUtils.hasPermission
-import com.fjp.skeletalmuscle.utils.PermissionUtils.requestPermission
+import com.fjp.skeletalmuscle.app.util.AnimUtil
+import com.fjp.skeletalmuscle.app.util.PermissionUtils
+import com.fjp.skeletalmuscle.app.util.PermissionUtils.hasPermission
+import com.fjp.skeletalmuscle.app.util.PermissionUtils.requestPermission
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySelectSuportsViewModel
 import me.hgj.jetpackmvvm.base.appContext
 
 
-class TodaySelectSportsActivity :BaseActivity<TodaySelectSuportsViewModel,ActivityTodaySelectSportsBinding>(){
+class TodaySelectSportsActivity : BaseActivity<TodaySelectSuportsViewModel, ActivityTodaySelectSportsBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.title.set(getString(R.string.today_sports_title))
         mViewModel.leftImg.set(R.drawable.title_icon_sports_record)
-        findViewById<TextView>(R.id.titleTv).setTextColor(ContextCompat.getColor(appContext,R.color.white))
+        findViewById<TextView>(R.id.titleTv).setTextColor(ContextCompat.getColor(appContext, R.color.white))
     }
 
-    inner class ProxyClick{
-        fun clickFinish(){
+    override fun createObserver() {
+        super.createObserver()
+        eventViewModel.startSports.observeInActivity(this) {
+            finish()
+        }
+    }
+
+    inner class ProxyClick {
+        fun clickFinish() {
             this@TodaySelectSportsActivity.finish()
         }
 
-        fun clickStartSports(){
-            if(mViewModel.sportsType.get()==null){
+        fun clickStartSports() {
+            if (mViewModel.sportsType.get() == null) {
                 showToast(getString(R.string.today_sports_start))
                 return
             }
             checkBluetoothPermission()
         }
-        fun clickHeightLeg(){
-            if(mDatabind.legDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.legDetailCl,mDatabind.legIv)
-            }else{
-                mViewModel.sportsType.set(SportsType.LEG_LIFT)
-                rotateAndSwitchViews(mDatabind.legIv,mDatabind.legDetailCl)
+
+        fun clickHeightLeg() {
+            if (mDatabind.legDetailCl.isVisible) {
+                rotateAndSwitchViews(mDatabind.legDetailCl, mDatabind.legIv)
+            } else {
+                mViewModel.sportsType.set(SportsType.HIGH_KNEE)
+                rotateAndSwitchViews(mDatabind.legIv, mDatabind.legDetailCl)
             }
 
-            if(mDatabind.dumbbellCl.isVisible) {
+            if (mDatabind.dumbbellCl.isVisible) {
                 rotateAndSwitchViews(mDatabind.dumbbellCl, mDatabind.dumbbellIv)
             }
 
-            if(mDatabind.pushUpDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.pushUpDetailCl,mDatabind.plankIv)
+            if (mDatabind.plankDetailCl.isVisible) {
+                rotateAndSwitchViews(mDatabind.plankDetailCl, mDatabind.plankIv)
             }
         }
-        fun clickDumbbell(){
-            if(mDatabind.dumbbellCl.isVisible){
-                rotateAndSwitchViews(mDatabind.dumbbellCl,mDatabind.dumbbellIv)
-            }else{
+
+        fun clickDumbbell() {
+            if (mDatabind.dumbbellCl.isVisible) {
+                rotateAndSwitchViews(mDatabind.dumbbellCl, mDatabind.dumbbellIv)
+            } else {
                 mViewModel.sportsType.set(SportsType.DUMBBELL)
-                rotateAndSwitchViews(mDatabind.dumbbellIv,mDatabind.dumbbellCl)
+                rotateAndSwitchViews(mDatabind.dumbbellIv, mDatabind.dumbbellCl)
             }
-            if(mDatabind.legDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.legDetailCl,mDatabind.legIv)
+            if (mDatabind.legDetailCl.isVisible) {
+                rotateAndSwitchViews(mDatabind.legDetailCl, mDatabind.legIv)
             }
-            if(mDatabind.pushUpDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.pushUpDetailCl,mDatabind.plankIv)
+            if (mDatabind.plankDetailCl.isVisible) {
+                rotateAndSwitchViews(mDatabind.plankDetailCl, mDatabind.plankIv)
             }
         }
-        fun clickPushUp(){
-            if(mDatabind.pushUpDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.pushUpDetailCl,mDatabind.plankIv)
-            }else{
-                mViewModel.sportsType.set(SportsType.PUSH_UP)
-                rotateAndSwitchViews(mDatabind.plankIv,mDatabind.pushUpDetailCl)
+
+        fun clickPlank() {
+            if (mDatabind.plankDetailCl.isVisible) {
+                rotateAndSwitchViews(mDatabind.plankDetailCl, mDatabind.plankIv)
+            } else {
+                mViewModel.sportsType.set(SportsType.PLANK)
+                rotateAndSwitchViews(mDatabind.plankIv, mDatabind.plankDetailCl)
             }
-            if(mDatabind.legDetailCl.isVisible){
-                rotateAndSwitchViews(mDatabind.legDetailCl,mDatabind.legIv)
+            if (mDatabind.legDetailCl.isVisible) {
+                rotateAndSwitchViews(mDatabind.legDetailCl, mDatabind.legIv)
             }
-            if(mDatabind.dumbbellCl.isVisible){
-                rotateAndSwitchViews(mDatabind.dumbbellCl,mDatabind.dumbbellIv)
+            if (mDatabind.dumbbellCl.isVisible) {
+                rotateAndSwitchViews(mDatabind.dumbbellCl, mDatabind.dumbbellIv)
             }
         }
     }
@@ -95,18 +107,30 @@ class TodaySelectSportsActivity :BaseActivity<TodaySelectSuportsViewModel,Activi
 
     private fun checkBluetoothPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val scanPermission = hasPermission(this, android.Manifest.permission.BLUETOOTH_SCAN);
-            val advertisePermission = hasPermission(this, android.Manifest.permission.BLUETOOTH_ADVERTISE);
-            val connectPermission = hasPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT);
+            val bluetoothPermission = hasPermission(this, android.Manifest.permission.BLUETOOTH)
+            val coarseLocationPermission = hasPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+            val accessLocationPermission = hasPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+            val scanPermission = hasPermission(this, android.Manifest.permission.BLUETOOTH_SCAN)
+            val advertisePermission = hasPermission(this, android.Manifest.permission.BLUETOOTH_ADVERTISE)
+            val connectPermission = hasPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT)
 
-            if (!scanPermission || !advertisePermission || !connectPermission) {
+            if (!bluetoothPermission||
+                !coarseLocationPermission ||
+                !accessLocationPermission ||
+                !scanPermission ||
+                !advertisePermission ||
+                !connectPermission) {
                 // 有一个或多个权限未授予，需要申请权限
                 PermissionUtils.requestPermission(this, arrayOf(
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.BLUETOOTH,
                     android.Manifest.permission.BLUETOOTH_SCAN,
                     android.Manifest.permission.BLUETOOTH_ADVERTISE,
                     android.Manifest.permission.BLUETOOTH_CONNECT,
-                ), 1001);
+                ), 1001)
             } else {
+                BleManager.getInstance().enableBluetooth()
                 startExericisePlanActivity()
             }
         } else {
@@ -120,11 +144,12 @@ class TodaySelectSportsActivity :BaseActivity<TodaySelectSuportsViewModel,Activi
         }
     }
 
-    fun startExericisePlanActivity(){
-        val intent = Intent(this@TodaySelectSportsActivity,ExercisePlanActivity::class.java)
-        intent.putExtra(Constants.INTENT_SPORTS_TYPE,mViewModel.sportsType.get()?.type)
+    fun startExericisePlanActivity() {
+        val intent = Intent(this@TodaySelectSportsActivity, ExercisePlanActivity::class.java)
+        App.sportsType = mViewModel.sportsType.get()!!.type
         startActivity(intent)
     }
+
     fun checkLocationPermissions() {
         // 检查权限状态
         val locationPermission = hasPermission(applicationContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -141,12 +166,14 @@ class TodaySelectSportsActivity :BaseActivity<TodaySelectSuportsViewModel,Activi
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1001) {
+            BleManager.getInstance().enableBluetooth()
             // 处理蓝牙权限请求结果
             if (PermissionUtils.verifyPermissions(grantResults)) {
                 // 权限已授予
                 startExericisePlanActivity()
             } else {
                 // 用户拒绝了权限请求，可以进行相应的处理
+                showPermissionDeniedDialog()
             }
         } else if (requestCode == 1002) {
             // 处理位置权限请求结果
@@ -159,10 +186,12 @@ class TodaySelectSportsActivity :BaseActivity<TodaySelectSuportsViewModel,Activi
             }
         }
     }
+
     private fun showPermissionDeniedDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setMessage(getString(R.string.request_bluetooth_permission_reject)).setPositiveButton(getString(R.string.request_bluetooth_permission_go_setting), DialogInterface.OnClickListener { dialog, id -> openAppSettings() }).setNegativeButton(getString(R.string.request_bluetooth_permission_cancel), DialogInterface.OnClickListener { dialog, id ->
             // 关闭应用或其他操作
+            openAppSettings()
         })
         builder.create().show()
     }
@@ -174,8 +203,8 @@ class TodaySelectSportsActivity :BaseActivity<TodaySelectSuportsViewModel,Activi
     }
 
 
-    private fun rotateAndSwitchViews( iv: View, cl: View) {
-        AnimUtil.flipAnimatorYViewShow(iv,cl,500)
+    private fun rotateAndSwitchViews(iv: View, cl: View) {
+        AnimUtil.flipAnimatorYViewShow(iv, cl, 500)
     }
 
 }
