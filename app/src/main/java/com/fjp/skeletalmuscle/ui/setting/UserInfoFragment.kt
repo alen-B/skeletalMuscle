@@ -24,7 +24,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel,FragmentUserInfoBinding>
         if(App.userInfo.sex==0){
             sex="女"
         }
-        mDatabind.bornLayout.setValue(sex)
+        mDatabind.sexLayout.setValue(sex)
         mDatabind.weightLayout.setValue(App.userInfo.weight)
         mDatabind.heightLayout.setValue(App.userInfo.height)
         mDatabind.waistLinLayout.setValue(App.userInfo.waist_line)

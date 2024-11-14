@@ -1,7 +1,9 @@
 package com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -11,14 +13,15 @@ import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseFragment
-import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.BleScanHelper
+import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
+import com.fjp.skeletalmuscle.app.util.SMBleManager
+import com.fjp.skeletalmuscle.data.model.BleDevice
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep4Binding
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
-import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep4ViewModel
-import me.hgj.jetpackmvvm.base.appContext
 
 
 class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, FragmentHightKneeGuideStep4Binding>() {
@@ -99,22 +102,63 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             mViewModel.title.set(getString(R.string.hand_grips_connect_left_device_title))
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
-            SMBleManager.scanDevices(DeviceType.LEFT_HAND_GRIPS.value, DeviceType.LEFT_HAND_GRIPS,object: SMBleManager.DeviceStatusListener{
-                override fun disConnected() {
-                    appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
-                }
-
-                override fun connected() {
-                    showConnectedView()
-                }
-
-
-            })
-
+//            SMBleManager.scanDevices(DeviceType.LEFT_HAND_GRIPS.value, DeviceType.LEFT_HAND_GRIPS,object: SMBleManager.DeviceStatusListener{
+//                override fun disConnected() {
+//                    appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
+//                }
+//
+//                override fun connected() {
+//                    showConnectedView()
+//                }
+//
+//
+//            })
+            initBluetooth()
         }
     }
 
-
+    /**
+     * 初始化蓝牙
+     */
+    //蓝牙设配器
+    private lateinit var mBluetoothAdapter:BluetoothAdapter
+    val OpenBluetooth_Request_Code = 10086
+    //蓝牙扫描辅助类
+    private lateinit var mBleScanHelper:BleScanHelper
+    private var maxGrip=0
+    private fun initBluetooth(){
+        //初始化ble设配器
+        val manager = activity?.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        mBluetoothAdapter = manager.adapter
+        //判断蓝牙是否开启，如果关闭则请求打开蓝牙
+        if (!mBluetoothAdapter.isEnabled()){
+            val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(intent, OpenBluetooth_Request_Code)
+        }
+        //创建扫描辅助类
+        mBleScanHelper = BleScanHelper(activity as Context)
+        mBleScanHelper.setOnScanListener(object : BleScanHelper.onScanListener{
+            @SuppressLint("MissingPermission")
+            override fun onNext(device: BleDevice) {
+                if(device.device.name!=null && device.device.name.startsWith(DeviceType.LEFT_HAND_GRIPS.value)){
+                    val rawDataStr =DeviceDataParse.bytesToHexString(device.scanRecordBytes)
+                    println("====扫描到的握力数据数据是："+rawDataStr)
+                    var lengthStr = rawDataStr?.substring(46,50)
+                    //将长度转10进制
+                    println("====扫描到的握力数据数据是lengthStr："+lengthStr)
+                    val grip = Integer.parseInt(lengthStr,16)
+                    println("====扫描到的握力是："+grip/10f+"kg")
+                    if(maxGrip<grip){
+                        maxGrip = grip
+                    }
+                    println("====最大握力数据："+maxGrip)
+                }
+            }
+            override fun onFinish() {
+            }
+        })
+        mBleScanHelper.startScanBle(1)
+    }
     private fun initDumbbell() {
         mViewModel.title.set(getString(R.string.dumbbell_connect_left_device_title))
         mDatabind.step2Tv.text = getString(R.string.dumbbell_connect_left_device_connected_title)

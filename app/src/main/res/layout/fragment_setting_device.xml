@@ -14,14 +14,77 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
+        android:background="@color/color_f5f5f5"
         android:layout_height="match_parent">
+        <View
+            android:id="@+id/rtView"
+            android:layout_width="0dp"
+            android:layout_height="216dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/deviceIv"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="61dp"
+            android:background="@drawable/setting_device_connect"
+            app:layout_constraintStart_toStartOf="@+id/rtView"
+            app:layout_constraintTop_toTopOf="@+id/rtView" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:text="正在开发中..."
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:text="@string/setting_device_link"
+            android:textColor="@color/color_cc1c1c1c"
+            android:textSize="30sp"
+            app:layout_constraintStart_toEndOf="@+id/deviceIv"
+            app:layout_constraintTop_toTopOf="@+id/deviceIv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:text="@string/setting_device_des"
+            android:textColor="@color/color_cc1c1c1c"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/deviceIv"
+            app:layout_constraintStart_toEndOf="@+id/deviceIv" />
+        <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
+            android:id="@+id/smartWatchLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:roundTop="true"
+            app:roundBottom="true"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toBottomOf="@+id/rtView"
+            app:title="@string/setting_device_smart_watch" />
+
+        <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
+            android:id="@+id/leftKneeLL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:roundTop="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/smartWatchLayout"
+            app:title="@string/setting_device_left_knee" />
+        <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
+            android:id="@+id/rightKneeLL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:roundBottom="true"
+            android:layout_marginTop="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/leftKneeLL"
+            app:title="@string/setting_device_right_knee" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

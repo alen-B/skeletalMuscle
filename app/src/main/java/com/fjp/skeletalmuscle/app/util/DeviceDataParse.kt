@@ -26,13 +26,23 @@ object DeviceDataParse {
             Log.e("handleNotifyData", "Received empty or null data.")
         }
     }
-
-    fun bytesToHex(bytes: ByteArray): String {
-        val hexBuilder = StringBuilder()
-        for (b in bytes) {
-            hexBuilder.append(String.format("%02X ", b))
+    fun bytesToHexString(src: ByteArray?): String? {
+        if (src == null || src.size == 0) {
+            return ""
         }
-        return hexBuilder.toString().trim { it <= ' ' } // 移除最后一个空格
+        val stringBuilder = java.lang.StringBuilder("")
+        if (src == null || src.size <= 0) {
+            return null
+        }
+        for (i in src.indices) {
+            val v = src[i].toInt() and 0xFF
+            val hex = Integer.toHexString(v)
+            if (hex.length < 2) {
+                stringBuilder.append(0)
+            }
+            stringBuilder.append(hex)
+        }
+        return stringBuilder.toString()
     }
 
     fun parseData2HeartRate(data: ByteArray): Int {

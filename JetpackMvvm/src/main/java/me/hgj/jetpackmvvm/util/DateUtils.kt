@@ -13,9 +13,9 @@ import java.util.Date
 object  DateUtils {
      fun calculateAge(birthdayDate: Date, currentDate: Date): Int {
         val birthdayCalendar: Calendar = Calendar.getInstance()
-        birthdayCalendar.setTime(birthdayDate)
+         birthdayCalendar.time = birthdayDate
         val currentCalendar: Calendar = Calendar.getInstance()
-        currentCalendar.setTime(currentDate)
+         currentCalendar.time = currentDate
         val currentYear: Int = currentCalendar.get(Calendar.YEAR)
         val birthdayYear: Int = birthdayCalendar.get(Calendar.YEAR)
         var age = currentYear - birthdayYear

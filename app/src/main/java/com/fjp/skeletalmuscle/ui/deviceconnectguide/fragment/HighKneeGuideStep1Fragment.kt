@@ -32,16 +32,12 @@ class HighKneeGuideStep1Fragment : BaseFragment<HighKneeGuideStep1ViewModel,Frag
         mDatabind.iconIv.setBackgroundResource(R.drawable.hand_grips_guide_1_icon)
         mDatabind.step12Tv.text = getString(R.string.hand_grips_left_device)
         mDatabind.step13Tv.text = getString(R.string.hand_grips_right_device)
-        mDatabind.step22Tv.text = getString(R.string.hand_grips_left_device)
-        mDatabind.step23Tv.text = getString(R.string.hand_grips_right_device)
     }
 
     private fun initDumbbellView() {
         mDatabind.iconIv.setBackgroundResource(R.drawable.dumbbell_guide_1_icon)
         mDatabind.step12Tv.text = getString(R.string.dumbbell_left)
         mDatabind.step13Tv.text = getString(R.string.dumbbell_right)
-        mDatabind.step22Tv.text = getString(R.string.dumbbell_left)
-        mDatabind.step23Tv.text = getString(R.string.dumbbell_right)
     }
 
     override fun initData() {

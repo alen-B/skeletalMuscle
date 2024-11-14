@@ -60,9 +60,7 @@ object DatetimeUtil {
     fun formatDate(formatStyle: String, formatStr: String): Date {
         val format = SimpleDateFormat(formatStyle, Locale.CHINA)
         return try {
-            val date = Date()
-            date.time = format.parse(formatStr).time
-            date
+            return format.parse(formatStr)
         } catch (e: Exception) {
             println(e.message)
             nows
@@ -106,7 +104,19 @@ object DatetimeUtil {
     }
 
     fun formSportTime(time:Long):String{
-        return String.format("%.2f",(time /(1000 * 60f)))
+        return String.format("%.1f",(time /(1000 * 60f)))
     }
 
+    fun formatTime(seconds: Long): String {
+        val hours = seconds / 3600
+        val remainingSecondsAfterHours = seconds % 3600
+        val minutes = remainingSecondsAfterHours / 60
+        val remainingSecondsAfterMinutes = remainingSecondsAfterHours % 60
+
+        return when {
+            hours > 0 -> "$hours H"
+            minutes > 0 -> "$minutes Min"
+            else -> "$remainingSecondsAfterMinutes sec"
+        }
+    }
 }

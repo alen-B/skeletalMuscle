@@ -15,8 +15,10 @@ import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityBornBinding
 import com.fjp.skeletalmuscle.viewmodel.state.BornViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
+import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Calendar
 import java.util.Date
+import java.util.TimeZone
 
 
 class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
@@ -33,13 +35,13 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
     }
 
     private fun initTimePicker() {
-        val selectedDate: Calendar = Calendar.getInstance()
-        val startDate: Calendar = Calendar.getInstance()
-        val endDate: Calendar = Calendar.getInstance()
+        val selectedDate: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"))
+        val startDate: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"))
+        val endDate: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"))
         //endDate.set(2020,1,1);
-        selectedDate.set(1978, 7, 8)
+        selectedDate.set(1987,7,8)
         curDate = selectedDate.time
-        startDate.set(1940, 0, 1)
+        startDate.set(1940, 0, 1,12,0,0)
 
         pvTime = TimePickerBuilder(this) { date, v -> //选中事件回调
             curDate = date
@@ -93,7 +95,7 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
     inner class ProxyClick {
         fun next() {
             val intent = Intent(this@BornActivity, SingleSelectActivity::class.java)
-            App.userInfo?.born = Date(mViewModel.year.get()!!.toInt(),mViewModel.month.get()!!.toInt(),mViewModel.day.get()!!.toInt()).time
+            App.userInfo?.born = curDate.time
             intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.HEIGHT.type)
             startActivity(intent)
         }

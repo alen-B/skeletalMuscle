@@ -176,8 +176,7 @@
     <string name="unit_angle">°</string>
     <string name="high_knee_guide_title1">接下来我将引导您完成连接</string>
 
-    <string name="high_knee_guide_step1_link_device">第一步\n连接设备</string>
-    <string name="high_knee_guide_step1_check_device">第二步\n检查设备</string>
+    <string name="high_knee_guide_step1_link_device">第一步\n检测设备是否已开启</string>
 
     <string name="high_knee_guide_step2_title">连接中,请稍等</string>
     <string name="high_knee_guide_step2_connect_wristband">连接智能手环</string>
@@ -219,6 +218,9 @@
     <string name="high_knee_guide_step11_right_hand_grips_checked">右手握力器检测完成</string>
 
     <string name="high_knee_main_title">您现在处于暖身激活阶段,继续努力！</string>
+    <string name="high_knee_main_title_fat_burning">您现在处于高效燃脂阶段,继续努力！</string>
+    <string name="high_knee_main_title_cardio">您现在处于心肺提升阶段,继续努力！</string>
+    <string name="high_knee_main_title_break">您现在处于极限突破阶段,继续努力！</string>
     <string name="high_knee_main_complete">结束</string>
     <string name="high_knee_main_stop">暂停</string>
     <string name="high_knee_main_continue">继续</string>
@@ -255,6 +257,8 @@
     <string name="setting_sys_setting">系统设置</string>
     <string name="setting_export_report">导出报告</string>
     <string name="setting_userinfo_des">管理您的基础信息或修改资料等。</string>
+    <string name="setting_device_des">管理您的智能设备信息。</string>
+
     <string name="setting_avatar">头像</string>
     <string name="setting_user_name">姓名</string>
     <string name="setting_mobile">手机号</string>
@@ -263,6 +267,12 @@
     <string name="setting_weight">体重</string>
     <string name="setting_height">身高</string>
     <string name="setting_waist_lin">腰围</string>
+
+    <string name="setting_device_smart_watch">智能手表</string>
+    <string name="setting_device_left_knee">左膝</string>
+    <string name="setting_device_right_knee">又膝</string>
+    <string name="setting_device_status_connected">已连接</string>
+    <string name="setting_device_status_disconnect">未连接</string>
 
 
     <string name="request_bluetooth_permission_reject">蓝牙权限被拒绝</string>

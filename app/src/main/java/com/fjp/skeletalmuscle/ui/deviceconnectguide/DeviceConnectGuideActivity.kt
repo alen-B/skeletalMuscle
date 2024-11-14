@@ -21,7 +21,7 @@ import com.fjp.skeletalmuscle.viewmodel.state.DeviceConnectViewModel
 import com.lxj.xpopup.XPopup
 
 class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, ActivityDeviceConnectGuideBinding>() {
-    private val fragments = arrayListOf<Fragment>(HighKneeGuideStep1Fragment.newInstance(), HighKneeGuideStep2Fragment.newInstance(),HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance(),  HighKneeGuideStep8Fragment.newInstance(), HighKneeGuideStep9Fragment.newInstance(), HighKneeGuideStep10Fragment.newInstance(), HighKneeGuideStep11Fragment.newInstance())
+    private val fragments = arrayListOf<Fragment>(HighKneeGuideStep1Fragment.newInstance(), HighKneeGuideStep2Fragment.newInstance(),HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance(),  )
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()

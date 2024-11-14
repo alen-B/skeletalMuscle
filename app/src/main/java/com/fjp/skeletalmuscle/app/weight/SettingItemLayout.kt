@@ -23,22 +23,25 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
         val typeAttay = context.obtainStyledAttributes(attrs, R.styleable.SettingItemLayout)
         val title = typeAttay.getString(R.styleable.SettingItemLayout_title)
         val value = typeAttay.getString(R.styleable.SettingItemLayout_value)
-        val isFirst = typeAttay.getBoolean(R.styleable.SettingItemLayout_isFirst, false)
-        val isLast = typeAttay.getBoolean(R.styleable.SettingItemLayout_isLast, false)
+        val roundTop = typeAttay.getBoolean(R.styleable.SettingItemLayout_roundTop, false)
+        val roundBottom = typeAttay.getBoolean(R.styleable.SettingItemLayout_roundBottom, false)
         typeAttay.recycle()
         val mainLL = findViewById<LinearLayoutCompat>(R.id.mainLl)
         titleTv = findViewById(R.id.titleTv)
         valueTv = findViewById(R.id.valueTv)
         titleTv.text = title
         valueTv.text = value
-        if (isFirst) {
+        if (roundTop) {
             mainLL.setBackgroundResource(R.drawable.bg_white_top_round_20)
         }
-        if (isLast) {
+        if (roundBottom) {
             mainLL.setBackgroundResource(R.drawable.bg_white_bottom_round_20)
         }
-        if (!isLast && !isFirst) {
+        if (!roundTop && !roundBottom) {
             mainLL.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+        }
+        if(roundTop && roundBottom){
+            mainLL.setBackgroundResource(R.drawable.bg_white_round_20)
         }
 
     }

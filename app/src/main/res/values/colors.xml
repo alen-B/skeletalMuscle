@@ -17,7 +17,9 @@
     <color name="color_331c1c1c">#331C1C1C</color>
     <color name="color_cc1c1c1c">#cc1C1C1C</color>
     <color name="color_801c1c1c">#801C1C1C</color>
+    <color name="color_e7e7e7">#E7E7E7</color>
     <color name="color_blue">#4E71FF</color>
+
     <color name="color_4e71ff">#4E71FF</color>
     <color name="color_1a4e71ff">#1A4E71FF</color>
     <color name="color_3d4e71ff">#3d4E71FF</color>
@@ -26,13 +28,41 @@
     <color name="color_e64e71ff">#e64E71FF</color>
     <color name="color_994e71ff">#994E71FF</color>
     <color name="color_cc4e71ff">#cc4E71FF</color>
-    <color name="color_e7e7e7">#E7E7E7</color>
+
     <color name="color_ffc019">#FFC019</color>
+    <color name="color_1affc019">#1AFFC019</color>
+    <color name="color_3dffc019">#3DFFC019</color>
+    <color name="color_80ffc019">#80FFC019</color>
+    <color name="color_b3ffc019">#b3FFC019</color>
+    <color name="color_e6ffc019">#e6FFC019</color>
+
+    <color name="color_ff824c">#FF824C</color>
+    <color name="color_1aff824c">#1AFF824C</color>
+    <color name="color_3dff824c">#3DFF824C</color>
+    <color name="color_80ff824c">#80FF824C</color>
+    <color name="color_b3ff824c">#b3FF824C</color>
+    <color name="color_e6ff824c">#e6FF824C</color>
+    <color name="color_4dff824c">#4DFF824C</color>
+
+
+
+    <color name="color_ff574c">#FF574C</color>
+    <color name="color_1aff574c">#1AFF574C</color>
+    <color name="color_3dff574c">#3DFF574C</color>
+    <color name="color_80ff574c">#80FF574C</color>
+    <color name="color_b3ff574c">#b3FF574C</color>
+    <color name="color_e6ff574c">#e6FF574C</color>
+    <color name="color_4dff574c">#4DFF574C</color>
+
+
+
     <color name="color_ffe49c">#ffe49c</color>
+    <color name="color_ccfcefce">#CCFCEFCE</color>
+    <color name="color_fcf1d7">#FCF1D7</color>
+    <color name="color_ccffc019">#CCFFC019</color>
     <color name="color_cacaca">#CACACA</color>
     <color name="color_e5e5e5">#E5E5E5</color>
-    <color name="color_ff824c">#FF824C</color>
-    <color name="color_ff574c">#FF574C</color>
+
     <color name="color_c5c2c2">#c5c2c2</color>
     <color name="color_f5f5f5">#f5f5f5</color>
     <color name="color_cfd1d1">#CFD1D1</color>

@@ -129,7 +129,9 @@
         <activity
             android:name=".ui.user.BornActivity"
             android:exported="true"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape" >
+
+        </activity>
         <activity
             android:name=".ui.user.InputNameActivity"
             android:exported="true"

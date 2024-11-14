@@ -34,9 +34,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             }
 //        mViewModel.sportsData.add(MainSports(SportsType.DUMBBELL,"99"))
 //        mViewModel.sportsData.add(MainSports(SportsType.PLANK,"88"))
-        mainSportsRateAdapter = MainSportsRateAdapter(mViewModel.sportsData as ArrayList<MainSports>,0)
-        mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), mainSportsRateAdapter)
-        mDatabind.recyclerView.addItemDecoration(SpaceItemDecoration( 12.dp.toInt(),0))
+
         setMainTitle()
     }
 
@@ -47,7 +45,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             val curDay = DatetimeUtil.getCurDate2Str()
             val todaySports = it.sports[curDay]
             todaySports?.let {highKneeSports ->
+                mViewModel.sportsData.clear()
                 mViewModel.sportsData.add(MainSports(SportsType.HIGH_KNEE,highKneeSports))
+//                mViewModel.sportsData.add(MainSports(SportsType.DUMBBELL,highKneeSports))
+//                mViewModel.sportsData.add(MainSports(SportsType.PLANK,highKneeSports))
+                mainSportsRateAdapter = MainSportsRateAdapter(mViewModel.sportsData as ArrayList<MainSports>,0)
+                mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), mainSportsRateAdapter)
+                mDatabind.recyclerView.addItemDecoration(SpaceItemDecoration( 12.dp.toInt(),0))
                 mViewModel.sportsTime.set(DatetimeUtil.formSportTime(highKneeSports.time))
                 mViewModel.curScore.set(highKneeSports.score.toString())
                 mViewModel.heat.set(highKneeSports.calories.toString())

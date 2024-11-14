@@ -15,7 +15,7 @@ class HighKneeViewModel:SMBaseViewModel() {
     val heartRate = ObservableField("")
     val leftLegAngle = ObservableField("")
     val rightLegAngle = ObservableField("")
-    val leftLegCount = ObservableField("")
-    val rightLegCount = ObservableField("")
+    val leftLegCount = ObservableField("0")
+    val rightLegCount = ObservableField("0")
     val maxTime = App.sportsTime//单位分钟
 }

@@ -23,6 +23,7 @@ import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
+import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SEX
 import com.lxj.xpopup.XPopup
@@ -38,7 +39,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private var isRunning: Boolean = false
     private var pauseTime: Long = 0
     private val handler = Handler(Looper.getMainLooper())
-    private val LIFT_THRESHOLD = 16.6f // 抬起动作的阈值
+    private val LIFT_THRESHOLD = 30f // 抬起动作的阈值
 
     private var leftLegLifted = false
     private var rightLegLifted = false
@@ -87,6 +88,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         }
     }
 
+    var curHeartRateLevel: HeartRateLevel=HeartRateLevel.WARMUP_TIME
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -197,7 +199,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         }
 
         fun clickComplete() {
-            completed()
+            showCompletedDialog()
         }
 
         fun clickStop() {
@@ -234,11 +236,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     override fun leftHandGripsConnected() {
-        TODO("Not yet implemented")
     }
 
     override fun rightHandGripsConnected() {
-        TODO("Not yet implemented")
     }
 
     override fun onLeftLegData(data: ByteArray) {
@@ -259,13 +259,22 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         // 更新周期内最大的pitch值
         if (pitch > leftLegmaxPitchInCycle) {
             leftLegmaxPitchInCycle = pitch
-            leftIsDescending = false // 当pitch值达到新的高点时，重置下降标记
+            // 当pitch值达到新的高点时，重置下降标记
+            leftIsDescending = false
         }
         // 检查是否开始下降
         // 检查是否开始下降
         if (pitch < leftLastPitch) {
+            if (!leftIsDescending) {
+                if (abs(pitch) > LIFT_THRESHOLD) {
+                    mViewModel.leftLegAngle.set("L ${leftLegmaxPitchInCycle.toInt()}°")
+                    leftLegLifts++
+                    leftLegAngleSum += leftLegmaxPitchInCycle.toDouble()
+                    mViewModel.leftLegCount.set(leftLegLifts.toString())
+                    getAvgScore(abs(leftLegmaxPitchInCycle))
+                }
+            }
             leftIsDescending = true
-
         }
         // 如果已经开始下降，并且当前pitch值比较低，认为一个周期结束
         if (leftIsDescending && pitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
@@ -276,30 +285,37 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                     mediaPlayer_low!!.start()
                 }
             }
-            detectLift(leftLegmaxPitchInCycle, true)
             // 重置周期内最大的pitch值和下降标记
             leftLegmaxPitchInCycle = 0f
-            leftIsDescending = false
+//            leftIsDescending = false
         }
         // 更新上一个pitch值
         leftLastPitch = pitch
-        mViewModel.leftLegAngle.set("L ${pitch.toInt()}°")
-        val leftlevel = calculateLevelFromAngle(pitch)
+        setLeftCurLevelByPitch(pitch)
+    }
+    fun setLeftCurLevelByPitch(pitch:Float){
+        val leftLevel = calculateLevelFromAngle(pitch)
         if (leftOldLevel != -1) {
             leftLevelViews[leftOldLevel].setImageDrawable(null)
         }
-        leftLevelViews[leftlevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
-        leftOldLevel = leftlevel
-
+        if(curHeartRateLevel == HeartRateLevel.WARMUP_TIME){
+            leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
+        }else if(curHeartRateLevel == HeartRateLevel.FAT_BURNING_TIME){
+            leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_fat_burning))
+        }else if(curHeartRateLevel == HeartRateLevel.CARDIO_TIME){
+            leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_cardio))
+        }else if(curHeartRateLevel == HeartRateLevel.BREAK_TIME){
+            leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_break))
+        }
+        leftOldLevel = leftLevel
     }
-
     override fun onRightLegData(data: ByteArray) {
         if (!isRunning) {
             return
         }
         val pitch = DeviceDataParse.parseData2Pitch(data)
-        val roll = DeviceDataParse.parseData2Roll(data)
-        val yaw = DeviceDataParse.parseData2Yaw(data)
+//        val roll = DeviceDataParse.parseData2Roll(data)
+//        val yaw = DeviceDataParse.parseData2Yaw(data)
         if (pitch > 90) {
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放
@@ -314,33 +330,50 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         }
         // 检查是否开始下降
         if (pitch < rightLastPitch) {
+            if (!rightIsDescending) {
+                if (abs(pitch) > LIFT_THRESHOLD) {
+                    rightLegLifts++
+                    mViewModel.rightLegAngle.set("R ${rightLastPitch.toInt()}°")
+                    rightLegAngleSum += abs(rightLegmaxPitchInCycle).toDouble()
+                    mViewModel.rightLegCount.set(rightLegLifts.toString())
+                    getAvgScore(abs(rightLegmaxPitchInCycle))
+                }
+            }
             rightIsDescending = true
         }
         // 如果已经开始下降，并且当前pitch值比较低，认为一个周期结束
         if (rightIsDescending && pitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
             // 周期结束，检查最大pitch值是否在25到30之间
-            if (rightLegmaxPitchInCycle >= 25 && rightLegmaxPitchInCycle <= 30) {
+            if (rightLegmaxPitchInCycle in 25.0..30.0) {
                 // 播放提示音
-                if (mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying()) {
+                if (mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying) {
                     mediaPlayer_low!!.start()
                 }
             }
-            detectLift(rightLegmaxPitchInCycle, false)
             // 重置周期内最大的pitch值和下降标记
             rightLegmaxPitchInCycle = 0f
-            rightIsDescending = false
+//            rightIsDescending = false
         }
         // 更新上一个pitch值
         rightLastPitch = pitch
 
-        mViewModel.rightLegAngle.set("R ${pitch.toInt()}°")
+        setRightCurLevelByPitch(pitch)
+    }
+    fun setRightCurLevelByPitch(pitch:Float){
         val rightLevel = calculateLevelFromAngle(pitch)
         if (rightOldLevel != -1) {
             rightLevelViews[rightOldLevel].setImageDrawable(null)
         }
-        rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
+        if(curHeartRateLevel == HeartRateLevel.WARMUP_TIME){
+            rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
+        }else if(curHeartRateLevel == HeartRateLevel.FAT_BURNING_TIME){
+            rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_fat_burning))
+        }else if(curHeartRateLevel == HeartRateLevel.CARDIO_TIME){
+            rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_cardio))
+        }else if(curHeartRateLevel == HeartRateLevel.BREAK_TIME){
+            rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_break))
+        }
         rightOldLevel = rightLevel
-
     }
 
     override fun onGTSData(data: ByteArray) {
@@ -366,12 +399,32 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             // 更新区间时间，每次心率读数都假设是10秒钟的时间
             if (heartRatePercentage < 0.6) {
                 warmupTime += 10
+                if(curHeartRateLevel!= HeartRateLevel.WARMUP_TIME){
+                    showWarmupUI()
+                }
+                curHeartRateLevel = HeartRateLevel.WARMUP_TIME
+                mViewModel.title.set(getString(R.string.high_knee_main_title))
             } else if (heartRatePercentage >= 0.6 && heartRatePercentage < 0.7) {
                 fatBurningTime += 10
+                if(curHeartRateLevel!= HeartRateLevel.FAT_BURNING_TIME){
+                    showFatBurningUI()
+                }
+                curHeartRateLevel = HeartRateLevel.FAT_BURNING_TIME
+                mViewModel.title.set(getString(R.string.high_knee_main_title_fat_burning))
             } else if (heartRatePercentage >= 0.7 && heartRatePercentage < 0.8) {
                 cardioTime += 10
+                if(curHeartRateLevel!= HeartRateLevel.CARDIO_TIME){
+                    showCardioUI()
+                }
+                curHeartRateLevel = HeartRateLevel.CARDIO_TIME
+                mViewModel.title.set(getString(R.string.high_knee_main_title_cardio))
             } else {
                 breakTime += 10
+                if(curHeartRateLevel!= HeartRateLevel.BREAK_TIME){
+                    showBreakUI()
+                }
+                curHeartRateLevel = HeartRateLevel.BREAK_TIME
+                mViewModel.title.set(getString(R.string.high_knee_main_title_break))
             }
             // 计算卡路里消耗
             caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds.toFloat() / 60, isMale)
@@ -380,20 +433,99 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             //高效燃脂 fatBurningTime 秒
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
-            println("消耗 caloriesBurned 千卡:  " + caloriesBurned)
-            println("暖身激活时间:  " + warmupTime)
-            println("高效燃脂:  " + fatBurningTime)
-            println("心肺提升时间:  " + cardioTime)
-            println("极限突破:  " + breakTime)
+            println("===消耗 caloriesBurned 千卡:  " + caloriesBurned)
+            println("===暖身激活时间:  " + warmupTime)
+            println("===高效燃脂:  " + fatBurningTime)
+            println("===心肺提升时间:  " + cardioTime)
+            println("===极限突破:  " + breakTime)
         }
     }
 
+
+    private fun showWarmupUI() {
+        mDatabind.stopBtn.setBackgroundResource(R.drawable.btn_blue_selector)
+        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this,R.color.color_blue))
+        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this,R.color.color_ccc6d1fc))
+        mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
+        mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
+        mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
+        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_e64e71ff_8)
+        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_b34e71ff_8)
+        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_804e71ff_8)
+        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_3d4e71ff_8)
+        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_1a4e71ff_8)
+
+        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_e64e71ff_8)
+        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_b34e71ff_8)
+        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_804e71ff_8)
+        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_3d4e71ff_8)
+        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_1a4e71ff_8)
+
+    }
+    private fun showFatBurningUI() {
+
+        mDatabind.stopBtn.setBackgroundResource(R.drawable.bg_btn_fat_burning)
+        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this,R.color.color_ccffc019))
+        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this,R.color.color_ccfcefce))
+        mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_fat_burning)
+        mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_fat_burning)
+        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_fat_burning)
+        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_fat_burning)
+        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_fat_burning)
+        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_fat_burning)
+        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_fat_burning)
+
+        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_fat_burning)
+        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_fat_burning)
+        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_fat_burning)
+        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_fat_burning)
+        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_fat_burning)
+
+    }
+    private fun showCardioUI() {
+
+        mDatabind.stopBtn.setBackgroundResource(R.drawable.bg_btn_cardio)
+        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this,R.color.color_ff824c))
+        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this,R.color.color_3dff824c))
+        mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_cardio)
+        mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_cardio)
+        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_cardio)
+        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_cardio)
+        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_cardio)
+        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_cardio)
+        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_cardio)
+
+        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_cardio)
+        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_cardio)
+        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_cardio)
+        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_cardio)
+        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_cardio)
+
+    }
+
+    private fun showBreakUI() {
+
+        mDatabind.stopBtn.setBackgroundResource(R.drawable.bg_btn_break)
+        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this,R.color.color_ff574c))
+        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this,R.color.color_1aff574c))
+        mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_break)
+        mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_break)
+        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_break)
+        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_break)
+        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_break)
+        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_break)
+        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_break)
+
+        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_break)
+        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_break)
+        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_break)
+        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_break)
+        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_break)
+    }
     override fun onLeftHandGripsData(data: ByteArray) {
-        TODO("Not yet implemented")
     }
 
     override fun onRightHandGripsData(data: ByteArray) {
-        TODO("Not yet implemented")
     }
 
     private fun calculateCaloriesBurned(age: Int, weight: Double, heartRate: Int, exerciseTimeMinutes: Float, isMale: Boolean): Double {
@@ -428,19 +560,19 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     var standardAction = 0
-    fun getCurScore(pitch: Float): Int {
-        if (pitch in 85.0..95.0) {
+    private fun getCurScore(pitch: Float): Int {
+        if (pitch in 80.0..95.0) {
             if (standardAction != 0) {
                 return 101
             }
             return 100
-        } else if ((pitch in 75.0..84.0) || (pitch >= 96 && pitch < 105)) {
+        } else if ((pitch in 65.0..79.0) || (pitch >= 96 && pitch < 105)) {
             standardAction++
             if (standardAction != 0) {
                 return 81
             }
             return 80
-        } else if ((pitch in 60.0..74.0) || (pitch in 106.0..120.0)) {
+        } else if ((pitch in 50.0..64.0) || (pitch in 106.0..120.0)) {
             standardAction = 0
             return 50
         } else {
@@ -452,7 +584,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private fun getAvgScore(pitch: Float) {
         val curScore = getCurScore(pitch)
         sportsTotalScore += curScore
-        sportsAvgScore = ((sportsTotalScore / ((rightLegLifts + rightLegLifts) * 100f)) * 100).toInt()
+        sportsAvgScore = ((sportsTotalScore / ((leftLegLifts + rightLegLifts) * 100f)) * 100).toInt()
         mDatabind.scoreViewTv.text = Math.min(sportsAvgScore, 100).toString()
     }
 
@@ -489,14 +621,14 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     fun showExitDialog() {
         AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要退出吗？").setPositiveButton("确定") { dialog, which ->
-            BleManager.getInstance().disconnectAllDevice()
-            BleManager.getInstance().destroy()
+//            BleManager.getInstance().disconnectAllDevice()
+//            BleManager.getInstance().destroy()
             finish() // 关闭所有 Activity 并退出应用
         }.setNegativeButton("取消", null).show()
     }
 
     fun showCompletedDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动码？").setPositiveButton("确定") { dialog, which ->
+        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动吗？").setPositiveButton("确定") { dialog, which ->
             BleManager.getInstance().disconnectAllDevice()
             BleManager.getInstance().destroy()
             completed()

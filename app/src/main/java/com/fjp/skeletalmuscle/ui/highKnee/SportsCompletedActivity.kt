@@ -21,7 +21,7 @@ class SportsCompletedActivity : BaseActivity<SportsCompletedViewModel, ActivityS
         mDatabind.click = ProxyClick()
         mViewModel.title.set(getString(R.string.sports_completed_title))
         val sportsCompleted = intent.getParcelableExtra<HighKneeSports>(Constants.INTENT_COMPLETED)
-        sportsCompleted?.let {curSports->
+        sportsCompleted?.let { curSports ->
             mDatabind.sportsTimeTv.text = String.format(getString(R.string.sports_completed_sports_time), App.sportsTime)
             mDatabind.countNumberTv.text = curSports.times.toString()
             mDatabind.heartRateNumberTv.text = "${curSports.minHeartRate}-${curSports.maxHeartRate}"
@@ -37,25 +37,33 @@ class SportsCompletedActivity : BaseActivity<SportsCompletedViewModel, ActivityS
                 CacheUtil.setSports(sports)
             } else {
                 val todaySports = sports.sports[DatetimeUtil.getCurDate2Str()]
-                todaySports?.let {
-                    it.times = curSports.times
-                    it.time = curSports.time
-                    it.score=(curSports.score+it.score)/2
-                    it.warmupTime = curSports.warmupTime+it.warmupTime
-                    it.fatBurningTime = curSports.fatBurningTime+it.fatBurningTime
-                    it.cardioTime = curSports.cardioTime+it.cardioTime
-                    it.breakTime = curSports.breakTime+it.breakTime
-                    var maxHeartRate =curSports.maxHeartRate
-                    if(curSports.maxHeartRate>maxHeartRate){
+                if (todaySports == null) {
+                    sports.sports[DatetimeUtil.getCurDate2Str()] = curSports
+                    CacheUtil.setSports(sports)
+                } else {
+                    println("===:"+todaySports)
+                    println("===:"+curSports)
+                    todaySports.times = curSports.times+todaySports.times
+                    todaySports.time = curSports.time+todaySports.time
+                    todaySports.score = (curSports.score + todaySports.score) / 2
+                    todaySports.warmupTime = curSports.warmupTime + todaySports.warmupTime
+                    todaySports.fatBurningTime = curSports.fatBurningTime + todaySports.fatBurningTime
+                    todaySports.cardioTime = curSports.cardioTime + todaySports.cardioTime
+                    todaySports.breakTime = curSports.breakTime + todaySports.breakTime
+                    var maxHeartRate = curSports.maxHeartRate
+                    if (curSports.maxHeartRate > maxHeartRate) {
                         maxHeartRate = curSports.maxHeartRate
                     }
-                    it.maxHeartRate = maxHeartRate
-                    var minHeartRate =curSports.minHeartRate
-                    if(curSports.minHeartRate<minHeartRate){
+                    todaySports.maxHeartRate = maxHeartRate
+                    var minHeartRate = curSports.minHeartRate
+                    if (curSports.minHeartRate < minHeartRate) {
                         minHeartRate = curSports.minHeartRate
                     }
-                    it.minHeartRate = minHeartRate
+                    todaySports.minHeartRate = minHeartRate
+                    sports.sports[DatetimeUtil.getCurDate2Str()] = todaySports
+                    CacheUtil.setSports(sports)
                 }
+
             }
         }
 
