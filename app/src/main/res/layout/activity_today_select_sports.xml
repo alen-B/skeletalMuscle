@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.fjp.skeletalmuscle.viewmodel.state.TodaySelectSuportsViewModel" />
+            type="com.fjp.skeletalmuscle.viewmodel.state.TodaySelectSportsViewModel" />
 
         <variable
             name="click"
@@ -24,192 +24,148 @@
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
-
-        <FrameLayout
-            android:id="@+id/legFl"
+        <TextView
+            android:id="@+id/sportsTypeTv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->click.clickHeightLeg()}"
-            app:layout_constraintBottom_toTopOf="@+id/shareBtn"
-            app:layout_constraintEnd_toStartOf="@+id/dumbbellFl"
-            app:layout_constraintHorizontal_chainStyle="spread"
+            android:textSize="38sp"
+            android:textColor="@color/white"
+            android:text="@string/today_sports_type"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout">
-
-            <ImageView
-                android:id="@+id/legIv"
-                android:layout_width="310dp"
-                android:layout_height="350dp"
-                android:background="@drawable/select_sports_leg"
-                tools:ignore="ContentDescription" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/legDetailCl"
-                android:layout_width="389dp"
-                android:layout_height="409dp"
-                android:background="@drawable/select_sports_detail_bg"
-                android:padding="20dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/legDetailIconIv"
-                    android:layout_width="95dp"
-                    android:layout_height="160dp"
-                    android:background="@drawable/select_sport_detail_leg"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/legTitleTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="55dp"
-                    android:text="@string/today_sports_data_type1"
-                    android:textColor="@color/color_1c1c1c"
-                    android:textSize="30sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/legDetailIconIv" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/today_sports_height_leg_detail"
-                    android:textColor="@color/color_331c1c1c"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/legTitleTv" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/dumbbellFl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->click.clickDumbbell()}"
-            app:layout_constraintBottom_toTopOf="@+id/shareBtn"
-            app:layout_constraintEnd_toStartOf="@+id/plankFl"
-            app:layout_constraintStart_toEndOf="@+id/legFl"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout">
-
-            <ImageView
-                android:id="@+id/dumbbellIv"
-                android:layout_width="310dp"
-                android:layout_height="350dp"
-                android:background="@drawable/select_sports_dumbbell"
-                tools:ignore="ContentDescription" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/dumbbellCl"
-                android:layout_width="389dp"
-                android:layout_height="409dp"
-                android:background="@drawable/select_sports_detail_bg"
-                android:padding="20dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/dumbbellIconIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="160dp"
-                    android:background="@drawable/select_sport_detail_dumbbell"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="20dp"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/dumbbellTitleTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="55dp"
-                    android:text="@string/today_sports_data_type2"
-                    android:textColor="@color/color_1c1c1c"
-                    android:textSize="30sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dumbbellIconIv" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/today_sports_dumbbell_detail"
-                    android:textColor="@color/color_331c1c1c"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dumbbellTitleTv" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/plankFl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->click.clickPlank()}"
-            app:layout_constraintBottom_toTopOf="@+id/shareBtn"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/dumbbellFl"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/startBtn"
+            app:layout_constraintTop_toBottomOf="@+id/sportsTypeTv"/>
 
-            <ImageView
-                android:id="@+id/plankIv"
-                android:layout_width="310dp"
-                android:layout_height="350dp"
-                android:background="@drawable/select_sports_plank"
-                tools:ignore="ContentDescription" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/plankDetailCl"
-                android:layout_width="389dp"
-                android:layout_height="409dp"
-                android:background="@drawable/select_sports_detail_bg"
-                android:padding="20dp"
-                android:visibility="gone">
+<!--        <FrameLayout-->
+<!--            android:id="@+id/dumbbellFl"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:onClick="@{()->click.clickDumbbell()}"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/shareBtn"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/plankFl"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/legFl"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/title_layout">-->
 
-                <ImageView
-                    android:id="@+id/plankDetailIconIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
-                    android:background="@drawable/select_sport_detail_plank"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/dumbbellIv"-->
+<!--                android:layout_width="310dp"-->
+<!--                android:layout_height="350dp"-->
+<!--                android:background="@drawable/select_sports_dumbbell"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-                <TextView
-                    android:id="@+id/plankTitleTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="55dp"
-                    android:text="@string/today_sports_data_type3"
-                    android:textColor="@color/color_1c1c1c"
-                    android:textSize="30sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/plankDetailIconIv" />
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:id="@+id/dumbbellCl"-->
+<!--                android:layout_width="389dp"-->
+<!--                android:layout_height="409dp"-->
+<!--                android:background="@drawable/select_sports_detail_bg"-->
+<!--                android:padding="20dp"-->
+<!--                android:visibility="gone">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/today_sports_plank_detail"
-                    android:textColor="@color/color_331c1c1c"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/plankTitleTv" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
+<!--                <ImageView-->
+<!--                    android:id="@+id/dumbbellIconIv"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="160dp"-->
+<!--                    android:background="@drawable/select_sport_detail_dumbbell"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    tools:ignore="ContentDescription" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/dumbbellTitleTv"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:layout_marginTop="55dp"-->
+<!--                    android:text="@string/today_sports_data_type2"-->
+<!--                    android:textColor="@color/color_1c1c1c"-->
+<!--                    android:textSize="30sp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/dumbbellIconIv" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:text="@string/today_sports_dumbbell_detail"-->
+<!--                    android:textColor="@color/color_331c1c1c"-->
+<!--                    android:textSize="20sp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/dumbbellTitleTv" />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </FrameLayout>-->
+
+<!--        <FrameLayout-->
+<!--            android:id="@+id/plankFl"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:onClick="@{()->click.clickPlank()}"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/shareBtn"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/dumbbellFl"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/title_layout">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/plankIv"-->
+<!--                android:layout_width="310dp"-->
+<!--                android:layout_height="350dp"-->
+<!--                android:background="@drawable/select_sports_plank"-->
+<!--                tools:ignore="ContentDescription" />-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:id="@+id/plankDetailCl"-->
+<!--                android:layout_width="389dp"-->
+<!--                android:layout_height="409dp"-->
+<!--                android:background="@drawable/select_sports_detail_bg"-->
+<!--                android:padding="20dp"-->
+<!--                android:visibility="gone">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/plankDetailIconIv"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="100dp"-->
+<!--                    android:background="@drawable/select_sport_detail_plank"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    tools:ignore="ContentDescription" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/plankTitleTv"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:layout_marginTop="55dp"-->
+<!--                    android:text="@string/today_sports_data_type3"-->
+<!--                    android:textColor="@color/color_1c1c1c"-->
+<!--                    android:textSize="30sp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/plankDetailIconIv" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:text="@string/today_sports_plank_detail"-->
+<!--                    android:textColor="@color/color_331c1c1c"-->
+<!--                    android:textSize="20sp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/plankTitleTv" />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </FrameLayout>-->
         <io.alterac.blurkit.BlurLayout
             android:id="@+id/blurLayout"
             android:layout_width="144dp"
@@ -218,7 +174,7 @@
             app:blk_blurRadius="25"
             app:blk_cornerRadius="20dp"
             app:blk_fps="0"
-            app:layout_constraintBottom_toBottomOf="@+id/shareBtn"
+            app:layout_constraintBottom_toBottomOf="@+id/startBtn"
             app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
@@ -231,7 +187,7 @@
         </io.alterac.blurkit.BlurLayout>
 
         <Button
-            android:id="@+id/shareBtn"
+            android:id="@+id/startBtn"
             style="@style/SMButtonNext"
             android:layout_width="502dp"
             android:layout_height="144dp"

@@ -10,30 +10,38 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.clj.fastble.BleManager
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
+import com.fjp.skeletalmuscle.app.ext.dp
+import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySelectSportsBinding
 import com.fjp.skeletalmuscle.app.util.AnimUtil
 import com.fjp.skeletalmuscle.app.util.PermissionUtils
 import com.fjp.skeletalmuscle.app.util.PermissionUtils.hasPermission
 import com.fjp.skeletalmuscle.app.util.PermissionUtils.requestPermission
-import com.fjp.skeletalmuscle.viewmodel.state.TodaySelectSuportsViewModel
+import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
+import com.fjp.skeletalmuscle.data.model.bean.TodaySportsType
+import com.fjp.skeletalmuscle.ui.user.adapter.TodaySportsTypeAdapter
+import com.fjp.skeletalmuscle.viewmodel.state.TodaySelectSportsViewModel
 import me.hgj.jetpackmvvm.base.appContext
 
 
-class TodaySelectSportsActivity : BaseActivity<TodaySelectSuportsViewModel, ActivityTodaySelectSportsBinding>() {
+class TodaySelectSportsActivity : BaseActivity<TodaySelectSportsViewModel, ActivityTodaySelectSportsBinding>(), TodaySportsTypeAdapter.SelectedSports {
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.title.set(getString(R.string.today_sports_title))
         mViewModel.leftImg.set(R.drawable.title_icon_sports_record)
         findViewById<TextView>(R.id.titleTv).setTextColor(ContextCompat.getColor(appContext, R.color.white))
+        val todaySportsTypeAdapter = TodaySportsTypeAdapter(mViewModel.sportsType.get()!!, 0, this)
+        mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), todaySportsTypeAdapter)
+        mDatabind.recyclerView.addItemDecoration(SpaceItemDecoration(12.dp.toInt(), 0))
     }
 
     override fun createObserver() {
@@ -56,52 +64,7 @@ class TodaySelectSportsActivity : BaseActivity<TodaySelectSuportsViewModel, Acti
             checkBluetoothPermission()
         }
 
-        fun clickHeightLeg() {
-            if (mDatabind.legDetailCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.legDetailCl, mDatabind.legIv)
-            } else {
-                mViewModel.sportsType.set(SportsType.HIGH_KNEE)
-                rotateAndSwitchViews(mDatabind.legIv, mDatabind.legDetailCl)
-            }
 
-            if (mDatabind.dumbbellCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.dumbbellCl, mDatabind.dumbbellIv)
-            }
-
-            if (mDatabind.plankDetailCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.plankDetailCl, mDatabind.plankIv)
-            }
-        }
-
-        fun clickDumbbell() {
-            if (mDatabind.dumbbellCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.dumbbellCl, mDatabind.dumbbellIv)
-            } else {
-                mViewModel.sportsType.set(SportsType.DUMBBELL)
-                rotateAndSwitchViews(mDatabind.dumbbellIv, mDatabind.dumbbellCl)
-            }
-            if (mDatabind.legDetailCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.legDetailCl, mDatabind.legIv)
-            }
-            if (mDatabind.plankDetailCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.plankDetailCl, mDatabind.plankIv)
-            }
-        }
-
-        fun clickPlank() {
-            if (mDatabind.plankDetailCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.plankDetailCl, mDatabind.plankIv)
-            } else {
-                mViewModel.sportsType.set(SportsType.PLANK)
-                rotateAndSwitchViews(mDatabind.plankIv, mDatabind.plankDetailCl)
-            }
-            if (mDatabind.legDetailCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.legDetailCl, mDatabind.legIv)
-            }
-            if (mDatabind.dumbbellCl.isVisible) {
-                rotateAndSwitchViews(mDatabind.dumbbellCl, mDatabind.dumbbellIv)
-            }
-        }
     }
 
 
@@ -114,12 +77,7 @@ class TodaySelectSportsActivity : BaseActivity<TodaySelectSuportsViewModel, Acti
             val advertisePermission = hasPermission(this, android.Manifest.permission.BLUETOOTH_ADVERTISE)
             val connectPermission = hasPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT)
 
-            if (!bluetoothPermission||
-                !coarseLocationPermission ||
-                !accessLocationPermission ||
-                !scanPermission ||
-                !advertisePermission ||
-                !connectPermission) {
+            if (!bluetoothPermission || !coarseLocationPermission || !accessLocationPermission || !scanPermission || !advertisePermission || !connectPermission) {
                 // 有一个或多个权限未授予，需要申请权限
                 PermissionUtils.requestPermission(this, arrayOf(
                     android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -146,7 +104,7 @@ class TodaySelectSportsActivity : BaseActivity<TodaySelectSuportsViewModel, Acti
 
     fun startExericisePlanActivity() {
         val intent = Intent(this@TodaySelectSportsActivity, ExercisePlanActivity::class.java)
-        App.sportsType = mViewModel.sportsType.get()!!.type
+        App.sportsType = mViewModel.curSports.type.type
         startActivity(intent)
     }
 
@@ -202,9 +160,9 @@ class TodaySelectSportsActivity : BaseActivity<TodaySelectSuportsViewModel, Acti
         startActivity(intent)
     }
 
-
-    private fun rotateAndSwitchViews(iv: View, cl: View) {
-        AnimUtil.flipAnimatorYViewShow(iv, cl, 500)
+    override fun onSelected(sportsType: TodaySportsType) {
+        mViewModel.curSports = sportsType
     }
+
 
 }

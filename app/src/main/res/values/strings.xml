@@ -104,6 +104,8 @@
     <!--    选择您今天想完成的运动-->
     <string name="today_sports_title">选择您今天想完成的运动</string>
     <string name="today_sports_start">选择运动计划</string>
+    <string name="today_sports_exercise_intensity_mid">中强度</string>
+    <string name="today_sports_type">选择运动类型</string>
     <string name="today_sports_height_leg_detail">此运动主要针对下肢肌群，特别是股四头肌、腹直肌及背部肌群，能够有效增强心肺功能及耐力。</string>
     <string name="today_sports_dumbbell_detail">哑铃训练主要强化上肢肌群以及胸背部肌群，有助于提升上肢力量并改善心肺功能。</string>
     <string name="today_sports_plank_detail">该运动主要作用于腹肌和背肌，能够有效减少腹部脂肪堆积，促进核心力量发展。</string>

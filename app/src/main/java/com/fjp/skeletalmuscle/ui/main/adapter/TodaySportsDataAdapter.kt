@@ -1,7 +1,6 @@
 package com.fjp.skeletalmuscle.ui.main.adapter
 
 import android.graphics.Color
-import android.graphics.DashPathEffect
 import androidx.core.content.ContextCompat
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -9,7 +8,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.setAdapterAnimation
 import com.fjp.skeletalmuscle.app.util.SettingUtil
 import com.fjp.skeletalmuscle.data.model.bean.TodaySports
-import com.fjp.skeletalmuscle.data.model.bean.TodaySportsType
+import com.fjp.skeletalmuscle.data.model.bean.TodayDetailSportsType
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
@@ -33,45 +32,45 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
     }
 
     override fun convert(holder: BaseViewHolder, item: TodaySports) {
-        muscleProportionVisiable(holder,item.type == TodaySportsType.MUSCLE_PROPORTION)
-        aerobicVisiable(holder,item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION)
+        muscleProportionVisiable(holder,item.type == TodayDetailSportsType.MUSCLE_PROPORTION)
+        aerobicVisiable(holder,item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION)
         
-        holder.setVisible(R.id.lineChart, item.type == TodaySportsType.Heart_RATE)
-        holder.setVisible(R.id.arrow2Iv, !(item.type == TodaySportsType.MUSCLE_PROPORTION || item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION))
-        holder.setVisible(R.id.arrow1Iv, !(item.type == TodaySportsType.MUSCLE_PROPORTION || item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION))
-        holder.setVisible(R.id.sport_timeTv, !(item.type == TodaySportsType.MUSCLE_PROPORTION || item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION))
-        holder.setVisible(R.id.sport_timeUnitTv, !(item.type == TodaySportsType.MUSCLE_PROPORTION || item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION))
-        holder.setVisible(R.id.sport_kilocalorieTv, !(item.type == TodaySportsType.MUSCLE_PROPORTION || item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION))
-        holder.setVisible(R.id.sport_kilocalorieUnitTv, !(item.type == TodaySportsType.MUSCLE_PROPORTION || item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION))
-        holder.setVisible(R.id.detailIv, !(item.type == TodaySportsType.MUSCLE_PROPORTION || item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION))
-        if (item.type == TodaySportsType.HIGH_KNEE) {
+        holder.setVisible(R.id.lineChart, item.type == TodayDetailSportsType.Heart_RATE)
+        holder.setVisible(R.id.arrow2Iv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
+        holder.setVisible(R.id.arrow1Iv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
+        holder.setVisible(R.id.sport_timeTv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
+        holder.setVisible(R.id.sport_timeUnitTv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
+        holder.setVisible(R.id.sport_kilocalorieTv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
+        holder.setVisible(R.id.sport_kilocalorieUnitTv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
+        holder.setVisible(R.id.detailIv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
+        if (item.type == TodayDetailSportsType.HIGH_KNEE) {
             holder.setText(R.id.sportTypeTv, appContext.getString(R.string.today_sports_data_type1))
             holder.setVisible(R.id.chart, true)
             initBarChart(holder)
-        } else if (item.type == TodaySportsType.DUMBBELL) {
+        } else if (item.type == TodayDetailSportsType.DUMBBELL) {
             holder.setText(R.id.sportTypeTv, appContext.getString(R.string.today_sports_data_type2))
             holder.setVisible(R.id.chart, true)
             initBarChart(holder)
 
-        } else if (item.type == TodaySportsType.Plank) {
+        } else if (item.type == TodayDetailSportsType.Plank) {
             holder.setVisible(R.id.chart, true)
             initBarChart(holder)
             holder.setText(R.id.sportTypeTv, appContext.getString(R.string.today_sports_data_type3))
 
-        } else if (item.type == TodaySportsType.DURATION_OF_EXERCISE) {
+        } else if (item.type == TodayDetailSportsType.DURATION_OF_EXERCISE) {
             holder.setVisible(R.id.chart, true)
             initBarChart(holder)
             holder.setText(R.id.sportTypeTv, appContext.getString(R.string.today_sports_data_type5))
-        } else if (item.type == TodaySportsType.Heart_RATE) {
+        } else if (item.type == TodayDetailSportsType.Heart_RATE) {
             holder.setVisible(R.id.chart, false)
             initLineChat(holder)
             holder.setText(R.id.sportTypeTv, appContext.getString(R.string.today_sports_data_type4))
 
-        } else if (item.type == TodaySportsType.MUSCLE_PROPORTION) {
+        } else if (item.type == TodayDetailSportsType.MUSCLE_PROPORTION) {
             holder.setVisible(R.id.chart, false)
             holder.setText(R.id.sportTypeTv, appContext.getString(R.string.today_sports_data_type6))
 
-        } else if (item.type == TodaySportsType.AEROBIC_ENERGY_CONSUMPTION) {
+        } else if (item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION) {
             holder.setVisible(R.id.chart, false)
             holder.setText(R.id.sportTypeTv, appContext.getString(R.string.today_sports_data_type7))
 

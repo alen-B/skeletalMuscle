@@ -5,10 +5,10 @@ package com.fjp.skeletalmuscle.data.model.bean
  *Time:2024/10/24
  *Description:
  */
-class TodaySports(val type:TodaySportsType) {
+class TodaySports(val type:TodayDetailSportsType) {
 
 }
-enum class TodaySportsType(val value:Int){
+enum class TodayDetailSportsType(val value:Int){
     HIGH_KNEE(0),//高抬腿
     DUMBBELL(1),//哑铃
     Plank(2),//平板支撑
