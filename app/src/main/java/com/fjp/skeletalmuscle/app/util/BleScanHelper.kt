@@ -6,14 +6,10 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.*
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
-import android.os.ParcelUuid
 import android.util.Log
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.os.postDelayed
 import com.fjp.skeletalmuscle.data.model.BleDevice
 
 //扫描到的设备列表

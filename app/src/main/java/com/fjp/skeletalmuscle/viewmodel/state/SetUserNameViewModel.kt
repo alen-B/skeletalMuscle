@@ -4,5 +4,5 @@ import androidx.databinding.ObservableField
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
 
 class SetUserNameViewModel : SMBaseViewModel() {
-    val userName = ObservableField("")
+    val data = ObservableField("")
 }

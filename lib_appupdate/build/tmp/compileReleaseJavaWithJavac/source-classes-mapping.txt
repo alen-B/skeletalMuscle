@@ -1,0 +1,2 @@
+com/dessage/appupdate/BuildConfig.java
+ com.dessage.appupdate.BuildConfig

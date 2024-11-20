@@ -1,6 +1,5 @@
 package com.fjp.skeletalmuscle.ui.highKnee
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity

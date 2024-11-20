@@ -11,12 +11,12 @@ import com.afollestad.date.month
 import com.afollestad.date.year
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.util.Constants
-import com.fjp.skeletalmuscle.databinding.ActivitySportsRecordBinding
-import com.fjp.skeletalmuscle.app.ext.dp
-import com.fjp.skeletalmuscle.ui.main.adapter.SportsRecordLegAdapter
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
+import com.fjp.skeletalmuscle.databinding.ActivitySportsRecordBinding
+import com.fjp.skeletalmuscle.ui.main.adapter.SportsRecordLegAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.SportsRecordViewModel
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis

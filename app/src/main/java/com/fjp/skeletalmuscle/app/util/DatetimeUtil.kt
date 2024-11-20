@@ -3,6 +3,9 @@ package com.fjp.skeletalmuscle.app.util
 import android.annotation.SuppressLint
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -15,6 +18,8 @@ import java.util.*
 object DatetimeUtil {
 
     val DATE_PATTERN = "yyyy-MM-dd"
+    val DATE_PATTERN2 = "yyyy年MM月dd日"
+    val DATE_PATTERN3 = "yyyy年MM月"
     var DATE_PATTERN_SS = "yyyy-MM-dd HH:mm:ss"
     var DATE_PATTERN_MM = "yyyy-MM-dd HH:mm"
 
@@ -118,5 +123,31 @@ object DatetimeUtil {
             minutes > 0 -> "$minutes Min"
             else -> "$remainingSecondsAfterMinutes sec"
         }
+    }
+    fun getCurWeek():String {
+        val today = LocalDate.now()
+        val startOfWeek = getStartOfWeek(today)
+        val endOfWeek = getEndOfWeek(today)
+
+        val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN2)
+        val startDateFormatted = startOfWeek.format(formatter)
+        val endDateFormatted = endOfWeek.format(formatter)
+        return startDateFormatted+ endDateFormatted
+    }
+
+    fun getCurMonth():String{
+        val date = Date()
+        val formatter = SimpleDateFormat(DATE_PATTERN3)
+        return formatter.format(date)
+    }
+
+    private fun getStartOfWeek(currentDate: LocalDate): LocalDate {
+        val dayOfWeek = currentDate.dayOfWeek
+        return currentDate.minusDays((dayOfWeek.value - 1).toLong())
+    }
+
+    private fun getEndOfWeek(currentDate: LocalDate): LocalDate {
+        val dayOfWeek = currentDate.dayOfWeek
+        return currentDate.plusDays((DayOfWeek.SATURDAY.value - dayOfWeek.value).toLong())
     }
 }

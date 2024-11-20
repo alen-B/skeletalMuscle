@@ -1,6 +1,5 @@
 package com.fjp.skeletalmuscle.app.event
 
-import com.fjp.skeletalmuscle.data.model.bean.CollectBus
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.callback.livedata.event.EventLiveData
 
@@ -11,16 +10,14 @@ import me.hgj.jetpackmvvm.callback.livedata.event.EventLiveData
  */
 class EventViewModel : BaseViewModel() {
 
-    //全局收藏，在任意一个地方收藏或取消收藏，监听该值的界面都会收到消息
-    val collectEvent = EventLiveData<CollectBus>()
-
-    //分享文章通知
-    val shareArticleEvent = EventLiveData<Boolean>()
 
     //添加TODO通知
     val todoEvent = EventLiveData<Boolean>()
 
     //开始运动，关闭之前的选择运动和运动数据设置activity
     val  startSports= EventLiveData<Boolean>()
+
+    val  updatePhoneEvent= EventLiveData<String>()
+    val  updateUserNameEvent= EventLiveData<String>()
 
 }

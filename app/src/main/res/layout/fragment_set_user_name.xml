@@ -9,7 +9,7 @@
         type="com.fjp.skeletalmuscle.viewmodel.state.SetUserNameViewModel" />
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.setting.SetUserNameFragment.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.setting.SetUserNameAndPhoneFragment.ProxyClick" />
 
     </data>
 
@@ -17,17 +17,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_f5f5f5"
-        tools:context=".ui.setting.SetUserNameFragment">
+        tools:context=".ui.setting.SetUserNameAndPhoneFragment">
 
         <EditText
-            android:text="@{viewModel.userName}"
+            android:text="@={viewModel.data}"
             android:layout_width="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:paddingStart="23dp"
+            android:paddingEnd="23dp"
             android:background="@drawable/bg_white_round_20"
             app:layout_constraintTop_toTopOf="parent"
             android:gravity="center_vertical"
-            android:layout_height="70dp" />
+            android:layout_height="70dp"
+            android:importantForAutofill="no" />
         <Button
             android:id="@+id/nextBtn"
             style="@style/SMButtonNext"

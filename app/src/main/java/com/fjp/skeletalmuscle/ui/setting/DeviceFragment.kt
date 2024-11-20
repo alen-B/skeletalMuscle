@@ -6,9 +6,7 @@ import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.databinding.FragmentSettingDeviceBinding
-import com.fjp.skeletalmuscle.databinding.FragmentUserInfoBinding
 import com.fjp.skeletalmuscle.viewmodel.state.DeviceViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.UserInfoViewModel
 
 class DeviceFragment : BaseFragment<DeviceViewModel,FragmentSettingDeviceBinding>() {
 

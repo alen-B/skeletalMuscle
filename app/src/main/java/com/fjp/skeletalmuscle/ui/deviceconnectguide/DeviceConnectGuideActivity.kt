@@ -6,17 +6,13 @@ import androidx.fragment.app.Fragment
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.ext.init
+import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
 import com.fjp.skeletalmuscle.databinding.ActivityDeviceConnectGuideBinding
-import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep10Fragment
-import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep11Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep1Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep2Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep4Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep6Fragment
-import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep8Fragment
-import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep9Fragment
 import com.fjp.skeletalmuscle.ui.highKnee.HighKneeMainActivity
-import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
 import com.fjp.skeletalmuscle.viewmodel.state.DeviceConnectViewModel
 import com.lxj.xpopup.XPopup
 

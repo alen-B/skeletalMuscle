@@ -9,11 +9,11 @@ import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.app.weight.pop.AddSportsTypePop
 import com.fjp.skeletalmuscle.data.model.bean.Sports
 import com.fjp.skeletalmuscle.databinding.ActivitySuportsBinding
 import com.fjp.skeletalmuscle.ui.main.MainActivity
 import com.fjp.skeletalmuscle.ui.user.adapter.SportsTypeAdapter
-import com.fjp.skeletalmuscle.app.weight.pop.AddSportsTypePop
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.SuportsViewModel
 import com.lxj.xpopup.XPopup

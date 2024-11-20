@@ -6,7 +6,6 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep1Binding
-import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep1ViewModel
 
 class HighKneeGuideStep1Fragment : BaseFragment<HighKneeGuideStep1ViewModel,FragmentHightKneeGuideStep1Binding>() {

@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -20,13 +19,12 @@ import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.databinding.ActivityTodaySelectSportsBinding
-import com.fjp.skeletalmuscle.app.util.AnimUtil
 import com.fjp.skeletalmuscle.app.util.PermissionUtils
 import com.fjp.skeletalmuscle.app.util.PermissionUtils.hasPermission
 import com.fjp.skeletalmuscle.app.util.PermissionUtils.requestPermission
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.data.model.bean.TodaySportsType
+import com.fjp.skeletalmuscle.databinding.ActivityTodaySelectSportsBinding
 import com.fjp.skeletalmuscle.ui.user.adapter.TodaySportsTypeAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySelectSportsViewModel
 import me.hgj.jetpackmvvm.base.appContext

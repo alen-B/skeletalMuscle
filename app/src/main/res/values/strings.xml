@@ -54,6 +54,8 @@
     <string name="sports_customer">自定义</string>
     <string name="add">添加</string>
     <string name="sure">确定</string>
+    <string name="take_photo">拍照</string>
+    <string name="album">相册</string>
     <string name="cancel">取消</string>
     <string name="please_look_video">请观看演示视频</string>
     <!--    首页-->
@@ -260,6 +262,8 @@
     <string name="setting_export_report">导出报告</string>
     <string name="setting_userinfo_des">管理您的基础信息或修改资料等。</string>
     <string name="setting_device_des">管理您的智能设备信息。</string>
+    <string name="setting_system_des">管理您的系统信息和版本信息等。</string>
+    <string name="setting_export_report_des">导出您的运动报告。</string>
 
     <string name="setting_avatar">头像</string>
     <string name="setting_user_name">姓名</string>
@@ -269,13 +273,23 @@
     <string name="setting_weight">体重</string>
     <string name="setting_height">身高</string>
     <string name="setting_waist_lin">腰围</string>
+    <string name="setting_sex_man">男</string>
+    <string name="setting_sex_woman">女</string>
 
     <string name="setting_device_smart_watch">智能手表</string>
     <string name="setting_device_left_knee">左膝</string>
     <string name="setting_device_right_knee">又膝</string>
     <string name="setting_device_status_connected">已连接</string>
     <string name="setting_device_status_disconnect">未连接</string>
-
+    <string name="setting_system_voice_interaction">语音交互</string>
+    <string name="setting_system_update_version">版本升级</string>
+    <string name="setting_system_update_version_update">立即更新</string>
+    <string name="setting_system_update_version_disupdate">暂不更新</string>
+    <string name="setting_update_version_content">[更新内容]</string>
+    <string name="setting_current_week">本周</string>
+    <string name="setting_current_month">本月</string>
+    <string name="setting_customer_time">自定义时间</string>
+    <string name="setting_export">导出</string>
 
     <string name="request_bluetooth_permission_reject">蓝牙权限被拒绝</string>
     <string name="request_bluetooth_permission_go_setting">去设置</string>

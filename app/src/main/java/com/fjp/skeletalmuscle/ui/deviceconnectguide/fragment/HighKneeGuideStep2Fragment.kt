@@ -6,9 +6,9 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.DeviceType
+import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep2Binding
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
-import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep2ViewModel
 import me.hgj.jetpackmvvm.base.appContext
 

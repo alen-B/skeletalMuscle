@@ -16,12 +16,12 @@ import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectViewModel
 
 class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleSelectBinding>() {
-    val HeightDefaultIndex = 35
-    val WeightDefaultIndex = 20
-    val WaistLineDefaultIndex = 20
-    val DayOneWeekDefaultIndex = 3
-    val SupportTtimeDefaultIndex = 2
-    lateinit var singleSelectAdapter: SingleSelectAdapter
+    private val HeightDefaultIndex = 35
+    private val WeightDefaultIndex = 20
+    private val WaistLineDefaultIndex = 20
+    private val DayOneWeekDefaultIndex = 3
+    private val SupportTtimeDefaultIndex = 2
+    private lateinit var singleSelectAdapter: SingleSelectAdapter
     var singleSelectType: Int? = 0
     var currIndex = 0
     override fun initView(savedInstanceState: Bundle?) {

@@ -7,7 +7,6 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityCalendarBinding
-import com.fjp.skeletalmuscle.app.weight.calendar.SMWeekBar
 import com.fjp.skeletalmuscle.viewmodel.state.CalendarViewModel
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView

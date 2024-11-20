@@ -85,6 +85,16 @@ object CacheUtil {
         return kv.encode("first", first)
     }
 
+    fun setVoiceInteraction(isOpen: Boolean): Boolean {
+        val kv = MMKV.mmkvWithID("app")
+        return kv.encode("voiceInteraction", isOpen)
+    }
+
+    fun getVoiceInteraction(): Boolean {
+        val kv = MMKV.mmkvWithID("app")
+        return kv.decodeBool("voiceInteraction", true)
+    }
+
     /**
      * 首页是否开启获取指定文章
      */

@@ -11,11 +11,11 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.util.DeviceType
+import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityExercisePlanBinding
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
 import com.fjp.skeletalmuscle.ui.highKnee.HighKneeMainActivity
-import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.viewmodel.state.ExercisePlanViewModel
 import me.hgj.jetpackmvvm.base.appContext
 

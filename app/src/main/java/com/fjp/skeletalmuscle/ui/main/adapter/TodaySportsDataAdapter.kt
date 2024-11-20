@@ -7,8 +7,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.setAdapterAnimation
 import com.fjp.skeletalmuscle.app.util.SettingUtil
-import com.fjp.skeletalmuscle.data.model.bean.TodaySports
 import com.fjp.skeletalmuscle.data.model.bean.TodayDetailSportsType
+import com.fjp.skeletalmuscle.data.model.bean.TodaySports
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description

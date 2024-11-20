@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
-import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDetailBinding
 import com.fjp.skeletalmuscle.app.ext.dp
+import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDetailBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDetailFragmentViewModel
 import com.github.mikephil.charting.components.Description

@@ -17,13 +17,13 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
-import com.fjp.skeletalmuscle.app.util.DeviceType
-import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
-import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
+import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
+import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
+import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SEX
 import com.lxj.xpopup.XPopup

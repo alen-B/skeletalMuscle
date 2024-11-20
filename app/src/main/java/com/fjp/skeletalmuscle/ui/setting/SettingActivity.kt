@@ -1,11 +1,11 @@
 package com.fjp.skeletalmuscle.ui.setting
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.ActivityInfo
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.databinding.ActivitySettingBinding
 import com.fjp.skeletalmuscle.viewmodel.state.SettingViewModel
 
@@ -19,9 +19,16 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
         mDatabind.click = ProxyClick()
         mViewModel.title.set(getString(R.string.setting_title))
         mViewModel.userInfo.set(App.userInfo)
+
     }
 
 
+    override fun createObserver() {
+        super.createObserver()
+        eventViewModel.updateUserNameEvent.observeInActivity(this,{
+            mViewModel.userInfo.set(App.userInfo)
+        })
+    }
     inner class ProxyClick {
 
         fun clickUserInfo() {
@@ -76,12 +83,12 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
         }catch (e:Exception){
             println(e.message)
         }
-
-
     }
 
     override fun onResume() {
         super.onResume()
+        //解决拍照后变成竖屏显示的问题
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         mDatabind.blurLayout.startBlur()
     }
 
@@ -90,4 +97,7 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
         mDatabind.blurLayout.pauseBlur()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

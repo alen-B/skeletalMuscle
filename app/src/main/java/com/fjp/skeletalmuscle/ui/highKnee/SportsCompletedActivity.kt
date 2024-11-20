@@ -7,10 +7,10 @@ import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DatetimeUtil
-import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
-import com.fjp.skeletalmuscle.databinding.ActivitySportsCompletedBinding
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
+import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
 import com.fjp.skeletalmuscle.data.model.bean.TodayhignKneeSports
+import com.fjp.skeletalmuscle.databinding.ActivitySportsCompletedBinding
 import com.fjp.skeletalmuscle.viewmodel.state.SportsCompletedViewModel
 import com.lxj.xpopup.XPopup
 

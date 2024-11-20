@@ -6,10 +6,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
-import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
-import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.databinding.ActivityDiseaseBinding
 import com.fjp.skeletalmuscle.ui.user.adapter.DiseaseAdapter
 import com.fjp.skeletalmuscle.ui.user.adapter.DiseaseDetailAdapter
