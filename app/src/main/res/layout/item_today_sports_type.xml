@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginEnd="16dp"
     android:id="@+id/itemCl"
-
     android:minWidth="70dp">
     <FrameLayout
         android:id="@+id/legFl"
@@ -30,6 +29,7 @@
             android:id="@+id/legDetailCl"
             android:layout_width="389dp"
             android:layout_height="409dp"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/bg_white_round_20"
             android:visibility="gone">
             <ImageView

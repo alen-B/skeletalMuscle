@@ -27,9 +27,16 @@ class TodaySportsTypeAdapter(data: ArrayList<TodaySportsType>, var defaultIndex:
     }
 
     override fun convert(holder: BaseViewHolder, item: TodaySportsType) {
-        holder.setImageResource(R.id.legIv, R.drawable.select_sports_leg)
+
         holder.setText(R.id.titleTv, item.title)
         holder.setText(R.id.des, item.des)
+        if(item.type == SportsType.HIGH_KNEE){
+            holder.setImageResource(R.id.legIv, R.drawable.select_sports_leg)
+        }else if(item.type == SportsType.DUMBBELL){
+            holder.setImageResource(R.id.legIv, R.drawable.select_sports_dumbbell)
+        }else if(item.type == SportsType.PLANK){
+            holder.setImageResource(R.id.legIv, R.drawable.select_sports_plank)
+        }
         addExerciseIntensityView(holder.getView<LinearLayoutCompat>(R.id.exerciseIntensityLL),item.exerciseIntensity)
 
         if (item.isDetail) {
