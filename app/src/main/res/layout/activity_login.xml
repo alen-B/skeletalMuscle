@@ -65,6 +65,7 @@
             android:importantForAutofill="no"
             android:inputType="phone"
             android:maxLength="13"
+            android:text="@{viewModel.phone}"
             android:paddingStart="36dp"
             android:paddingEnd="36dp"
             android:textColor="@color/color_1c1c1c"

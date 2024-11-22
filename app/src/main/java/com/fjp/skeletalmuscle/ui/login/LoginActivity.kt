@@ -30,7 +30,9 @@ import me.hgj.jetpackmvvm.ext.util.isPhone
 
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
+
         mDatabind.viewModel = mViewModel
+        mViewModel.phone.set(intent.getStringExtra(Constants.INTENT_KEY_PHONE))
         mDatabind.click = ProxyClick()
         mViewModel.title.set(resources.getString(R.string.login_title))
         mViewModel.showRightImg.set(true)
@@ -92,7 +94,9 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 }
 
                 else -> {
-                    startActivity(Intent(this@LoginActivity, InputNameActivity::class.java))
+                    val intent = Intent(this@LoginActivity, InputNameActivity::class.java)
+                    intent.flags =Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
                     App.userInfo?.phone = mViewModel.phone.get()!!
                     finish()
                 }

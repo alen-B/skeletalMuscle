@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.alterac.blurkit.BlurLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/blurLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#aa000000"
+        tools:context=".ui.setting.ChangeAccountActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="93dp"
+            android:layout_marginTop="35dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/leftIv"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="35dp"
+                android:background="@drawable/title_left_default_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/change_account_title"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/leftIv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="147dp"
+                android:layout_height="66dp"
+                android:layout_marginEnd="35dp"
+                android:background="@drawable/bg_4dcacaca_round_35"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/tipIv"
+                    android:layout_width="42dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/title_tip_white"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="@color/color_4dcacaca" />
+
+                <ImageView
+                    android:id="@+id/settingIv"
+                    android:layout_width="42dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/title_setting"
+                    tools:ignore="ContentDescription" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@+id/backIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+
+        <ImageView
+            android:id="@+id/backIv"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:background="@drawable/bg_back"
+            android:onClick="@{()-> click.clickFinish()}"
+            android:scaleType="center"
+            android:src="@drawable/arrow_right"
+            android:layout_margin="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</io.alterac.blurkit.BlurLayout>

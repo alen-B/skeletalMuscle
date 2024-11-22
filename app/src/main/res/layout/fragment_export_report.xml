@@ -136,13 +136,22 @@
                 android:text="@string/setting_customer_time"
                 android:layout_height="70dp"/>
             <TextView
-                android:id="@+id/curCustomerTv"
+                android:id="@+id/curCustomerStartTv"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
+                android:onClick="@{()-> click.clickCustomerStart()}"
                 android:textSize="24sp"
                 android:textColor="@color/color_801c1c1c"
                 android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/curCustomerEndTv"
+                    android:layout_width="wrap_content"
+                    android:gravity="start"
+                    android:onClick="@{()-> click.clickCustomerEnd()}"
+                    android:textSize="24sp"
+                    android:textColor="@color/color_801c1c1c"
+                    android:layout_height="wrap_content"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <Button
                 android:id="@+id/exportBtn"

@@ -5,9 +5,11 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
@@ -30,6 +32,15 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
+    <queries package="${applicationId}">
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE"></action>
+        </intent>
+        <intent>
+            <action android:name="android.media.action.ACTION_VIDEO_CAPTURE"></action>
+        </intent>
+    </queries>
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -41,10 +52,13 @@
         android:theme="@style/Theme.SkeletalMuscle"
         tools:targetApi="31">
         <activity
+            android:name=".ui.setting.ChangeAccountActivity"
+            android:screenOrientation="landscape"
+            android:exported="true" />
+        <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
-            android:screenOrientation="landscape"
-            >
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,12 +67,12 @@
         </activity>
         <activity
             android:name=".ui.login.ServiceAgreementActivity"
-            android:screenOrientation="landscape"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.setting.SettingActivity"
-            android:screenOrientation="landscape"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="landscape">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -69,8 +83,8 @@
         </activity>
         <activity
             android:name=".ui.highKnee.SportsCompletedActivity"
-            android:screenOrientation="landscape"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="landscape">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -138,9 +152,7 @@
         <activity
             android:name=".ui.user.BornActivity"
             android:exported="true"
-            android:screenOrientation="landscape" >
-
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".ui.user.InputNameActivity"
             android:exported="true"
@@ -152,8 +164,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
@@ -172,16 +183,5 @@
             android:name="design_height_in_dp"
             android:value="800" />
     </application>
-    <queries package="${applicationId}">
-        <intent>
-            <action android:name="android.media.action.IMAGE_CAPTURE">
 
-            </action>
-        </intent>
-        <intent>
-            <action android:name="android.media.action.ACTION_VIDEO_CAPTURE">
-
-            </action>
-        </intent>
-    </queries>
 </manifest>

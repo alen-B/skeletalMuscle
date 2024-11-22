@@ -8,9 +8,11 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.preference.PreferenceManager
+import android.telephony.TelephonyManager
 import android.view.View
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.weight.loadCallBack.LoadingCallback
 import com.kingja.loadsir.core.LoadService
@@ -179,4 +181,8 @@ object SettingUtil {
         }
     }
 
+    fun getDeviceId(context:Context): String? {
+        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
+        return telephonyManager!!.deviceId
+    }
 }

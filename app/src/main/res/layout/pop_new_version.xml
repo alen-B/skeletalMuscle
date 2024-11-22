@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.alterac.blurkit.BlurLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/blurLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#aa000000"
+        android:padding="35dp"
+        tools:context=".ui.setting.ChangeAccountActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="93dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/leftIv"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/title_left_default_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/new_version_title"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/leftIv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="147dp"
+                android:layout_height="66dp"
+                android:background="@drawable/bg_4dcacaca_round_35"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/tipIv"
+                    android:layout_width="42dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/title_tip_white"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="@color/color_4dcacaca" />
+
+                <ImageView
+                    android:id="@+id/settingIv"
+                    android:layout_width="42dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/title_setting"
+                    tools:ignore="ContentDescription" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingTop="48dp"
+            android:paddingBottom="48dp"
+            android:paddingStart="56dp"
+            android:background="@drawable/bg_new_version"
+            android:paddingEnd="56dp"
+            app:layout_constraintBottom_toTopOf="@+id/updateBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" >
+            <TextView
+                android:id="@+id/versionDiscoveryTv"
+                android:layout_width="wrap_content"
+                android:textSize="46sp"
+                android:text="@string/new_version_discovery"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/versionTv"
+                android:layout_width="wrap_content"
+                android:textSize="46sp"
+                android:text="V 2.51"
+                android:textColor="@color/color_222"
+                android:background="@drawable/bg_ffc019_round_20"
+                app:layout_constraintStart_toEndOf="@+id/versionDiscoveryTv"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/contentTitleTv"
+                android:layout_width="wrap_content"
+                android:textSize="34sp"
+                android:text="@string/setting_update_version_content"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/versionDiscoveryTv"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/contentTv"
+                android:layout_width="wrap_content"
+                android:textSize="32sp"
+                android:text="@string/setting_update_version_content"
+                android:textColor="@color/color_222"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contentTitleTv"
+                android:layout_height="wrap_content"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/cancelBtn"
+            style="@style/SMButton"
+            android:layout_width="240dp"
+            android:text="@string/setting_system_update_version_disupdate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/updateBtn"
+            android:background="@drawable/bg_cacaca_round_20"
+            android:layout_margin="35dp" />
+        <Button
+            android:id="@+id/updateBtn"
+            style="@style/SMButton"
+            android:layout_width="240dp"
+            android:text="@string/setting_system_update_version_update"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="35dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</io.alterac.blurkit.BlurLayout>

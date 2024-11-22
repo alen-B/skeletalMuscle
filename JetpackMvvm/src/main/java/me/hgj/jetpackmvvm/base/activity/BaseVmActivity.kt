@@ -41,7 +41,10 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
             setContentView(layoutId())
         })
         init(savedInstanceState)
+        initTitleView()
     }
+
+    abstract fun initTitleView()
 
     private fun init(savedInstanceState: Bundle?) {
         mViewModel = createViewModel()
