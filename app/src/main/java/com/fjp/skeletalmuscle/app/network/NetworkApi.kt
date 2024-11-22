@@ -15,12 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-/**
- * 作者　: hegaojian
- * 时间　: 2019/12/23
- * 描述　: 网络请求构建器，继承BasenetworkApi 并实现setHttpClientBuilder/setRetrofitBuilder方法，
- * 在这里可以添加拦截器，设置构造器可以对Builder做任意操作
- */
+
 
 
 //双重校验锁式-单例 封装NetApiService 方便直接快速调用简单的接口

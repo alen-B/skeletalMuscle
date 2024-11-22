@@ -1,5 +1,10 @@
 package com.fjp.skeletalmuscle.data.repository.request
 
+import com.fjp.skeletalmuscle.app.network.apiService
+import com.fjp.skeletalmuscle.data.model.bean.ApiResponse
+import com.fjp.skeletalmuscle.data.model.bean.LoginResponse
+import com.fjp.skeletalmuscle.data.model.bean.UserInfo
+
 /**
  * 作者　: hegaojian
  * 时间　: 2020/5/4
@@ -29,19 +34,12 @@ class HttpRequestManger {
 //        }
 //    }
 //
-//    /**
-//     * 注册并登陆
-//     */
-//    suspend fun register(username: String, password: String): ApiResponse<UserInfo> {
-//        val registerData = apiService.register(username, password, password)
-//        //判断注册结果 注册成功，调用登录接口
-//        if (registerData.isSucces()) {
-//            return apiService.login(username, password)
-//        } else {
-//            //抛出错误异常
-//            throw AppException(registerData.errorCode, registerData.errorMsg)
-//        }
-//    }
+    /**
+     * 注册并登陆
+     */
+    suspend fun login(mobile: String, code: String): ApiResponse<LoginResponse> {
+            return apiService.login(mobile, code)
+    }
 //
 //    /**
 //     * 获取项目标题数据

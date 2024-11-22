@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/warmupTime"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="@color/color_4e71ff"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/fatBurningTime"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="@color/color_ffc019"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/cardioTime"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="@color/color_ff824c"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/breakTime"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="@color/color_ff574c"
+        android:layout_height="match_parent" />
+</androidx.appcompat.widget.LinearLayoutCompat>

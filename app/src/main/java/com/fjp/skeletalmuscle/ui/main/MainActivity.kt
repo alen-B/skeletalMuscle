@@ -2,30 +2,28 @@ package com.fjp.skeletalmuscle.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
-import com.fjp.skeletalmuscle.app.ext.dp
-import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.util.CacheUtil
-import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DatetimeUtil
-import com.fjp.skeletalmuscle.app.weight.pop.ChangeAccountPop
 import com.fjp.skeletalmuscle.app.weight.pop.NewVersionPop
-import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
-import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.data.model.bean.MainSports
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityMainBinding
-import com.fjp.skeletalmuscle.ui.login.LoginActivity
-import com.fjp.skeletalmuscle.ui.setting.SettingActivity
+import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
+import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsDumbbellFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsHighKneeFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsPlankFragment
 import com.fjp.skeletalmuscle.ui.user.adapter.MainSportsRateAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.MainViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SEX
 import com.lxj.xpopup.XPopup
+import com.zhpan.indicator.enums.IndicatorStyle
+import me.hgj.jetpackmvvm.ext.util.dp2px
 import java.time.LocalDateTime
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
@@ -36,9 +34,31 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mDatabind.click = ProxyClick()
         mViewModel.showSetting.set(true)
 
-//        mViewModel.sportsData.add(MainSports(SportsType.DUMBBELL,"99"))
-//        mViewModel.sportsData.add(MainSports(SportsType.PLANK,"88"))
+        val fragments =arrayListOf<Fragment>(MainSportsHighKneeFragment.newInstance(), MainSportsDumbbellFragment.newInstance(),MainSportsPlankFragment.newInstance())
+        val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager,lifecycle,fragments)
+        mDatabind.viewpager.adapter = viewpagerAdapter
+        mDatabind.indicatorView.apply {
+            setSliderColor(getColor(R.color.color_e9e9e9),getColor(R.color.color_blue))
+            setPageSize(viewpagerAdapter.count)
+            setSliderWidth(8f)
+            setSliderHeight(8f)
+            setIndicatorStyle(IndicatorStyle.CIRCLE)
+            notifyDataChanged()
+        }
+        mDatabind.viewpager.pageMargin=dp2px(16)
+        mDatabind.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                mDatabind.indicatorView.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
 
+            override fun onPageSelected(position: Int) {
+                mDatabind.indicatorView.onPageSelected(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
         setMainTitle()
 //        showNewVersionPop()
     }
@@ -54,9 +74,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 mViewModel.sportsData.add(MainSports(SportsType.HIGH_KNEE,highKneeSports))
 //                mViewModel.sportsData.add(MainSports(SportsType.DUMBBELL,highKneeSports))
 //                mViewModel.sportsData.add(MainSports(SportsType.PLANK,highKneeSports))
-                mainSportsRateAdapter = MainSportsRateAdapter(mViewModel.sportsData as ArrayList<MainSports>,0)
-                mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), mainSportsRateAdapter)
-                mDatabind.recyclerView.addItemDecoration(SpaceItemDecoration( 12.dp.toInt(),0))
+//                mainSportsRateAdapter = MainSportsRateAdapter(mViewModel.sportsData as ArrayList<MainSports>,0)
+//                mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), mainSportsRateAdapter)
+//                mDatabind.recyclerView.addItemDecoration(SpaceItemDecoration( 12.dp.toInt(),0))
                 mViewModel.sportsTime.set(DatetimeUtil.formSportTime(highKneeSports.time))
                 mViewModel.curScore.set(highKneeSports.score.toString())
                 mViewModel.heat.set(highKneeSports.calories.toString())
@@ -97,6 +117,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     }
     inner class ProxyClick{
+        fun startSportsRvaluation(){
+            startActivity(Intent(this@MainActivity,TodaySelectSportsActivity::class.java))
+        }
         fun startSports(){
             startActivity(Intent(this@MainActivity,TodaySelectSportsActivity::class.java))
         }
@@ -104,7 +127,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
            startActivity(Intent(this@MainActivity, CalendarActivity::class.java))
         }
         fun clickTodaySports(){
-            startActivity(Intent(this@MainActivity,TodaySportsActivity::class.java))
+
         }
     }
 

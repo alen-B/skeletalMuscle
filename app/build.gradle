@@ -122,7 +122,7 @@ dependencies {
     implementation 'com.github.Jasonchenlijian:FastBle:2.4.0'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'io.github.lucksiege:pictureselector:v3.11.2'
-
+    implementation 'com.github.zhpanvip:viewpagerindicator:1.2.3'
     implementation 'com.github.aicareles:Android-BLE:3.3.1'
     implementation project(path: ':lib_appupdate')
 

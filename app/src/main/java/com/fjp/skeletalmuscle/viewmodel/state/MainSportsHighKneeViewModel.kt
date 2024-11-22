@@ -1,24 +1,16 @@
 package com.fjp.skeletalmuscle.viewmodel.state
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.ViewModel
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
 import com.fjp.skeletalmuscle.app.util.DatetimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.MainSports
-import java.util.Calendar
 import java.util.Date
 
-/**
- *Author:Mr'x
- *Time:2024/10/19
- *Description:
- */
-class MainViewModel : SMBaseViewModel() {
-    val sportsData = mutableListOf<MainSports>()
-    val currentDay = ObservableField(DatetimeUtil.formatDate(Date(),DatetimeUtil.DATE_PATTERN2))
-    val curScore = ObservableField("0")
+class MainSportsHighKneeViewModel : SMBaseViewModel() {
+    val curScore = ObservableField("90")
     val sportsTime = ObservableField("0")
     val heartRate = ObservableField("0")
     val endurance = ObservableField("0")
     val heat = ObservableField("0")
-
 }

@@ -60,11 +60,15 @@
     <string name="please_look_video">请观看演示视频</string>
     <!--    首页-->
     <string name="main_start_sports">运动处方</string>
+    <string name="main_start_sports_evaluation">运动测评</string>
     <string name="main_score">今日得分</string>
     <string name="main_my_data">今日数据</string>
+    <string name="main_my_sports_data">今日数据</string>
     <string name="main_sports_time">运动时长</string>
     <string name="main_heart_rate">心率区间</string>
+    <string name="main_heart_avg">平均心率</string>
     <string name="main_endurance">心肺耐力</string>
+    <string name="main_dumbbell_weight">哑铃重量</string>
     <string name="main_heat">消耗热量</string>
     <string name="main_min">分钟</string>
     <string name="main_times">次</string>
@@ -305,6 +309,9 @@
     <string name="bluetooth_scaning_device_start_connect">开始连接设备...</string>
     <string name="bluetooth_scaning_device_connect_fail">尝试连接失败，请重试！</string>
     <string name="bluetooth_scaning_device_connect_success">连接成功</string>
+    <string name="main_sports_high_knee_strong_time">强度与时间</string>
+
+    <string name="loading_login">"正在登录中..."</string>
 
 
 </resources>

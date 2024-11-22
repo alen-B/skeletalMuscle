@@ -11,8 +11,8 @@ import me.hgj.jetpackmvvm.base.appContext
  *Description:
  */
 class LoginViewModel : SMBaseViewModel() {
-    val phone = ObservableField("")
-    val verificationCode = ObservableField("")
+    val mobile = ObservableField("")
+    val verificationCode = ObservableField("127127")
     val verificationCodeisEnabled = ObservableField(true)
     val verificationCodeText = ObservableField(appContext.getString(R.string.login_get_verification_code))
     val agreement = ObservableField(false)

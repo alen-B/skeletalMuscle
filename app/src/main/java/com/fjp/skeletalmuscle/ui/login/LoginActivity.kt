@@ -11,6 +11,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.CompoundButton
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -21,18 +22,22 @@ import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityLoginBinding
 import com.fjp.skeletalmuscle.ui.user.InputNameActivity
+import com.fjp.skeletalmuscle.viewmodel.request.RequestLoginViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.LoginViewModel
 import com.jay.phone_text_watcher.PhoneTextWatcher
 import com.jay.phone_text_watcher.TextChangeCallback
 import me.hgj.jetpackmvvm.base.appContext
+import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.ext.util.isPhone
 
 
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
+    private val reqeustLoginViewModel:RequestLoginViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
 
         mDatabind.viewModel = mViewModel
-        mViewModel.phone.set(intent.getStringExtra(Constants.INTENT_KEY_PHONE))
+
+        mViewModel.mobile.set(intent.getStringExtra(Constants.INTENT_KEY_PHONE))
         mDatabind.click = ProxyClick()
         mViewModel.title.set(resources.getString(R.string.login_title))
         mViewModel.showRightImg.set(true)
@@ -42,7 +47,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         // 设置格式化输入的回调
         phoneTextWatcherSpace.setTextChangedCallback(object : TextChangeCallback() {
             override fun afterTextChanged(s: String?, isPhoneNumberValid: Boolean) {
-                mViewModel.phone.set(s)
+                mViewModel.mobile.set(s)
             }
         })
 
@@ -83,10 +88,19 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         mDatabind.agreementTv.text = spannableStringBuilder
     }
 
+    override fun createObserver() {
+        super.createObserver()
+        reqeustLoginViewModel.loginResult.observe(this,{resultState->
+            parseState(resultState,{
+                println(it)
+            })
+
+        })
+    }
     inner class ProxyClick {
         fun login() {
             when {
-                (!mViewModel.phone.get().isPhone()) -> showToast(getString(R.string.login_input_success_phone))
+                (!mViewModel.mobile.get().isPhone()) -> showToast(getString(R.string.login_input_success_phone))
                 mViewModel.verificationCode.get()!!.isEmpty() -> showToast(getString(R.string.login_input_code))
                 (!mViewModel.agreement.get()!!) -> {
                     showToast(getString(R.string.login_agreement_no_checked))
@@ -97,15 +111,16 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                     val intent = Intent(this@LoginActivity, InputNameActivity::class.java)
                     intent.flags =Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
-                    App.userInfo?.phone = mViewModel.phone.get()!!
+                    App.userInfo?.phone = mViewModel.mobile.get()!!
                     finish()
+//                    reqeustLoginViewModel.loginReq(mViewModel.mobile.get()!!,mViewModel.verificationCode.get()!!)
                 }
             }
 
         }
 
         fun requestVerificationCode() {
-            if (!mViewModel.phone.get().isPhone()) {
+            if (!mViewModel.mobile.get().isPhone()) {
                 showToast(getString(R.string.login_input_success_phone))
                 return
             }

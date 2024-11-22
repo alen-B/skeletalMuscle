@@ -1,5 +1,12 @@
 package com.fjp.skeletalmuscle.app.network
 
+import com.fjp.skeletalmuscle.data.model.bean.ApiResponse
+import com.fjp.skeletalmuscle.data.model.bean.LoginResponse
+import com.fjp.skeletalmuscle.data.model.bean.UserInfo
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
+
 /**
  * 作者　: hegaojian
  * 时间　: 2019/12/23
@@ -8,19 +15,19 @@ package com.fjp.skeletalmuscle.app.network
 interface ApiService {
 
     companion object {
-        const val SERVER_URL = "https://wanandroid.com/"
+        const val SERVER_URL = "http://8.141.25.141:8003/"
         const val SERVER_URL1 = "https://wanandroid.com/"
     }
 
     /**
      * 登录
      */
-//    @FormUrlEncoded
-//    @POST("user/login")
-//    suspend fun login(
-//        @Field("username") username: String,
-//        @Field("password") pwd: String
-//    ): ApiResponse<UserInfo>
+    @FormUrlEncoded
+    @POST("login")
+    suspend fun login(
+        @Field("mobile") mobile: String,
+        @Field("code") code: String
+    ): ApiResponse<LoginResponse>
 //
 //    /**
 //     * 注册
