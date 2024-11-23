@@ -82,7 +82,7 @@
     <!--  当天运动  -->
     <string name="today_sports_data_title">看看今日运动数据吧</string>
     <string name="today_sports_data_share">分享</string>
-    <string name="today_sports_data_recorde">运动记录</string>
+    <string name="today_sports_data_recorde">运动日历</string>
     <string name="today_sports_data_type1">高抬腿运动</string>
     <string name="today_sports_data_type2">哑铃运动</string>
     <string name="today_sports_data_type3">平板支撑</string>
@@ -90,6 +90,13 @@
     <string name="today_sports_data_type5">运动时长</string>
     <string name="today_sports_data_type6">肌肉比例</string>
     <string name="today_sports_data_type7">有氧能耗</string>
+    <string name="today_sports_data_exercise_amount">运动量</string>
+    <string name="today_sports_data_up_times">上举次数</string>
+    <string name="today_sports_data_expand_chest_amount">扩胸次数</string>
+    <string name="today_sports_data_avg_angle">平均角度</string>
+    <string name="today_sports_data_avg">平均</string>
+    <string name="today_sports_data_max">最高</string>
+    <string name="today_sports_data_leg_angle">抬腿角度</string>
     <string name="today_sports_data_min">/分钟</string>
     <string name="today_sports_data_kilocalorie">/千卡</string>
     <!--运动详情-->
@@ -99,13 +106,14 @@
     <string name="today_sports_detail_active">暖身激活</string>
     <string name="today_sports_detail_time">时长(分钟)</string>
     <string name="today_sports_detail_kilocalorie">消耗(千卡)</string>
+    <string name="today_sports_detail_calorie">消耗卡路里</string>
     <string name="today_sports_detail_heart_time">心率(次)</string>
     <string name="today_sports_detail_average">平均:</string>
     <string name="today_sports_detail_max">最高:</string>
     <!--    运动记录-->
     <string name="sports_record_pre_day">前一天</string>
     <string name="sports_record_next_day">后一天</string>
-    <string name="sports_record_sport_time">运动强度与时间</string>
+    <string name="sports_record_sport_time">强度与时间</string>
 
     <!--    选择您今天想完成的运动-->
     <string name="today_sports_title">选择您今天想完成的运动</string>
@@ -234,6 +242,7 @@
     <string name="high_knee_main_continue">继续</string>
     <string name="high_knee_main_sport_time">运动时间</string>
     <string name="high_knee_main_heart">心率</string>
+    <string name="high_knee_main_heart_rate_trend">心率趋势</string>
 
     <string name="device_off_line_right_knee_title">右膝需要重新连接</string>
     <string name="device_off_line_left_knee_title">左膝需要重新连接</string>

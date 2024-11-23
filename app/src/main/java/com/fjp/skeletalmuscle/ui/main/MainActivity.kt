@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         mViewModel.showSetting.set(true)
 
         val fragments =arrayListOf<Fragment>(MainSportsHighKneeFragment.newInstance(), MainSportsDumbbellFragment.newInstance(),MainSportsPlankFragment.newInstance())
-        val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager,lifecycle,fragments)
+        val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager,0.93f,fragments)
         mDatabind.viewpager.adapter = viewpagerAdapter
         mDatabind.indicatorView.apply {
             setSliderColor(getColor(R.color.color_e9e9e9),getColor(R.color.color_blue))

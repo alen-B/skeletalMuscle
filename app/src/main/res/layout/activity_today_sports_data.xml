@@ -22,13 +22,23 @@
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+            app:layout_constraintBottom_toTopOf="@+id/indicator_view"
             android:layout_width="match_parent"
             android:scrollbars="none"
-            android:layout_height="wrap_content"/>
+            android:layout_height="0dp"/>
+        <com.zhpan.indicator.IndicatorView
+            android:id="@+id/indicator_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+            />
         <io.alterac.blurkit.BlurLayout
             android:id="@+id/blurLayout"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +51,7 @@
         <ImageView
             android:layout_width="144dp"
             android:src="@drawable/arrow_right"
-            android:background="@drawable/bg_back"
+            android:background="@drawable/bg_back_gray"
             android:onClick="@{()-> click.finish()}"
             android:scaleType="center"
             android:layout_height="144dp"/>
@@ -57,7 +67,7 @@
             android:onClick="@{()-> click.clickShare()}" />
 
         <Button
-            style="@style/SMButtonPre"
+            style="@style/SMButtonNext"
             android:layout_width="240dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="35dp"

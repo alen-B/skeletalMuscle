@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDumbbellViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsDumbbellFragment.ProxyClick" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_gray_round_20"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="24dp"
+        tools:context=".ui.main.fragment.MainSportsHighKneeFragment">
+
+        <TextView
+            android:id="@+id/sportsTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:text="@string/today_sports_data_type2"
+            android:textColor="@color/color_cc1c1c1c"
+            android:textSize="@dimen/second_title_size"
+            app:drawableStartCompat="@drawable/main_sports_weightlifting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/totalScoreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="分"
+            android:textColor="@color/color_cacaca"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintBaseline_toBaselineOf="@+id/curScoreTv"
+            app:layout_constraintBottom_toBottomOf="@+id/curScoreTv"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/curScoreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.curScore}"
+            android:textColor="@color/colorAccent"
+            android:textSize="56sp"
+            app:layout_constraintBottom_toBottomOf="@+id/sportsTitleTv"
+            app:layout_constraintEnd_toStartOf="@+id/totalScoreTv"
+            app:layout_constraintTop_toTopOf="@+id/sportsTitleTv" />
+
+        <!-- 运动时长-->
+        <View
+            android:id="@+id/sportTimeView"
+            android:layout_width="165dp"
+            android:layout_height="165dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/curScoreTv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/main_sports_time"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintStart_toStartOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/today_sports_time"
+            app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
+            app:layout_constraintStart_toStartOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/minTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_min"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
+            app:layout_constraintStart_toEndOf="@+id/sportsTimeTv" />
+
+        <TextView
+            android:id="@+id/sportsTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@{viewModel.sportsTime}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/minTv"
+            app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
+            app:layout_constraintStart_toStartOf="@+id/sportTimeView" />
+
+        <!-- 哑铃重量-->
+        <View
+            android:id="@+id/weightView"
+            android:layout_width="165dp"
+            android:layout_height="165dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintEnd_toEndOf="@+id/sportTimeView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportTimeView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/exercise_plan_dumbbell_weight"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintStart_toStartOf="@+id/weightView"
+            app:layout_constraintTop_toTopOf="@+id/weightView" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/today_sports_dumbbell"
+            app:layout_constraintBottom_toBottomOf="@+id/weightView"
+            app:layout_constraintStart_toStartOf="@+id/weightView"
+            app:layout_constraintTop_toTopOf="@+id/weightView"
+            tools:ignore="ContentDescription" />
+
+
+        <TextView
+            android:id="@+id/weightTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@{viewModel.endurance}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toBottomOf="@+id/weightView"
+            app:layout_constraintStart_toStartOf="@+id/weightView" />
+
+        <TextView
+            android:id="@+id/kgTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/unit_kg"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintBottom_toBottomOf="@+id/weightTv"
+            app:layout_constraintStart_toEndOf="@+id/weightTv" />
+
+        <!-- 消耗卡路里-->
+        <View
+            android:id="@+id/calorieView"
+            android:layout_width="347dp"
+            android:layout_height="165dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintStart_toEndOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
+
+        <TextView
+            android:id="@+id/calorieTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/today_sports_detail_calorie"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintStart_toStartOf="@+id/calorieView"
+            app:layout_constraintTop_toTopOf="@+id/calorieView" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:onClick="@{()-> click.clickCalorie()}"
+            android:scaleType="center"
+            android:src="@drawable/main_date_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/calorieView"
+            app:layout_constraintTop_toTopOf="@+id/calorieView"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/today_sports_calorie"
+            app:layout_constraintBottom_toBottomOf="@+id/calorieView"
+            app:layout_constraintStart_toStartOf="@+id/calorieView"
+            app:layout_constraintTop_toTopOf="@+id/calorieView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/kilocalorieTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_kilocalorie"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintBottom_toBottomOf="@+id/calorieView"
+            app:layout_constraintStart_toEndOf="@+id/calorieTv" />
+
+        <TextView
+            android:id="@+id/calorieTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@{viewModel.heat}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/kilocalorieTv"
+            app:layout_constraintBottom_toBottomOf="@+id/calorieView"
+            app:layout_constraintStart_toStartOf="@+id/calorieView" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/calorieBarChat"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calorieTv"
+            app:layout_constraintEnd_toEndOf="@+id/calorieView"
+            app:layout_constraintStart_toEndOf="@+id/kilocalorieTv"
+            app:layout_constraintTop_toBottomOf="@+id/calorieTitleTv" />
+        <!-- 运动量-->
+        <View
+            android:id="@+id/exerciseAmountView"
+            android:layout_width="347dp"
+            android:layout_height="165dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintStart_toEndOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/weightView" />
+
+        <TextView
+            android:id="@+id/exerciseAmountTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/today_sports_data_exercise_amount"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintStart_toStartOf="@+id/exerciseAmountView"
+            app:layout_constraintTop_toTopOf="@+id/exerciseAmountView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/today_sports_data_up_times"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintStart_toStartOf="@+id/exerciseAmountView"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseAmountTitleTv" />
+
+        <TextView
+            android:id="@+id/upliftTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="115"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="@+id/exerciseAmountView"
+            app:layout_constraintStart_toStartOf="@+id/exerciseAmountView" />
+        <TextView
+            android:id="@+id/upliftUnitTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_times"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintBaseline_toBaselineOf="@+id/upliftTv"
+            app:layout_constraintBottom_toBottomOf="@+id/upliftTv"
+            app:layout_constraintStart_toEndOf="@+id/upliftTv" />
+
+        <View
+            android:id="@+id/midLine"
+            android:layout_width="1dp"
+            android:layout_height="81dp"
+            android:background="@color/color_331c1c1c"
+            app:layout_constraintBottom_toBottomOf="@+id/exerciseAmountView"
+            app:layout_constraintEnd_toEndOf="@+id/exerciseAmountView"
+            app:layout_constraintStart_toStartOf="@+id/exerciseAmountView"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseAmountTitleTv" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="39dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/today_sports_data_expand_chest_amount"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintStart_toStartOf="@+id/midLine"
+            app:layout_constraintTop_toBottomOf="@+id/exerciseAmountTitleTv" />
+        <TextView
+            android:id="@+id/expandChestTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="39dp"
+            android:layout_marginBottom="12dp"
+            android:text="115"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="@+id/exerciseAmountView"
+            app:layout_constraintStart_toStartOf="@+id/midLine" />
+        <TextView
+            android:id="@+id/expandChestTvUnitTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_times"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintBaseline_toBaselineOf="@+id/expandChestTv"
+            app:layout_constraintBottom_toBottomOf="@+id/expandChestTv"
+            app:layout_constraintStart_toEndOf="@+id/expandChestTv" />
+        <!-- 心率-->
+        <View
+            android:id="@+id/heartRateView"
+            android:layout_width="0dp"
+            android:layout_height="165dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/exerciseAmountView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
+
+        <TextView
+            android:id="@+id/heartRateTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/high_knee_main_heart"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/heartRateView"
+            app:layout_constraintTop_toTopOf="@+id/heartRateView" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:onClick="@{()-> click.clickHeartRate()}"
+            android:scaleType="center"
+            android:src="@drawable/main_date_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/heartRateView"
+            app:layout_constraintTop_toTopOf="@+id/heartRateView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/avgLabTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/today_sports_data_avg"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintStart_toStartOf="@+id/heartRateTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/heartRateTitleTv" />
+
+        <TextView
+            android:id="@+id/avgHeartRateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="112"
+            android:textColor="@color/color_222"
+            android:textSize="48sp"
+            app:layout_constraintStart_toStartOf="@+id/heartRateTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/avgLabTv" />
+
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/heartRateLineChart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/avgHeartRateTv"
+            app:layout_constraintEnd_toEndOf="@+id/heartRateView"
+            app:layout_constraintStart_toEndOf="@+id/avgLabTv"
+            app:layout_constraintTop_toBottomOf="@+id/heartRateTitleTv" />
+        <!-- 抬腿角度-->
+        <View
+            android:id="@+id/legAngleView"
+            android:layout_width="0dp"
+            android:layout_height="165dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/exerciseAmountView"
+            app:layout_constraintTop_toBottomOf="@+id/sportTimeView" />
+
+        <TextView
+            android:id="@+id/legAngleTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/today_sports_data_avg_angle"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/legAngleView"
+            app:layout_constraintTop_toTopOf="@+id/legAngleView" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:onClick="@{()-> click.clickLegAngle()}"
+            android:scaleType="center"
+            android:src="@drawable/main_date_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/legAngleView"
+            app:layout_constraintTop_toTopOf="@+id/legAngleView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/avgUpliftIv"
+            android:layout_width="76dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textSize="@dimen/normal_size"
+            android:text="@string/exercise_plan_uplift"
+            android:textColor="@color/color_e8a800"
+            android:background="@drawable/bg_ffc019_20_round_20"
+            app:layout_constraintStart_toStartOf="@+id/legAngleTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/legAngleTitleTv"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/avgRightTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="90°"
+            android:textColor="@color/color_222"
+            android:textSize="48sp"
+            app:layout_constraintBaseline_toBottomOf="@+id/avgUpliftIv"
+            app:layout_constraintBottom_toBottomOf="@+id/avgUpliftIv"
+            app:layout_constraintStart_toEndOf="@+id/avgUpliftIv" />
+
+        <TextView
+            android:id="@+id/avgLeftIv"
+            android:layout_width="76dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textSize="@dimen/normal_size"
+            android:text="@string/exercise_plan_expand_chest"
+            android:textColor="@color/color_4e71ff"
+            android:background="@drawable/bg_294e71ff_round_20"
+            app:layout_constraintStart_toStartOf="@+id/legAngleTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/avgUpliftIv"
+            tools:ignore="ContentDescription" />
+
+
+        <TextView
+            android:id="@+id/avgLeftTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="90°"
+            android:textColor="@color/color_222"
+            android:textSize="48sp"
+            app:layout_constraintBaseline_toBottomOf="@+id/avgLeftIv"
+            app:layout_constraintBottom_toBottomOf="@+id/avgLeftIv"
+            app:layout_constraintStart_toEndOf="@+id/avgLeftIv" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/legAngleLineChart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/avgLeftTv"
+            app:layout_constraintEnd_toEndOf="@+id/legAngleView"
+            app:layout_constraintStart_toEndOf="@+id/avgLeftTv"
+            app:layout_constraintTop_toBottomOf="@+id/legAngleTitleTv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

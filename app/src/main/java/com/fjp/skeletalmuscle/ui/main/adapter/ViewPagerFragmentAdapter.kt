@@ -10,7 +10,7 @@ import androidx.lifecycle.Lifecycle
  *Time:2024/11/22
  *Description:
  */
-class ViewPagerFragmentAdapter(fragment: FragmentManager, var lifecycle: Lifecycle, private var fragmentList: List<Fragment>) : FragmentPagerAdapter(fragment) {
+class ViewPagerFragmentAdapter(fragment: FragmentManager, val pageWidth:Float ,private var fragmentList: List<Fragment>) : FragmentPagerAdapter(fragment) {
     override fun getCount(): Int {
        return fragmentList.size
     }
@@ -20,6 +20,6 @@ class ViewPagerFragmentAdapter(fragment: FragmentManager, var lifecycle: Lifecyc
     }
 
     override fun getPageWidth(position: Int): Float {
-        return 0.93f
+        return pageWidth
     }
 }

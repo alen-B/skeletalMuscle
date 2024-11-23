@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.TodaySportsSplicingSupportViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsSplicingSupportFragment.ProxyClick" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_gray_round_20"
+        android:padding="24dp"
+        tools:context=".ui.main.fragment.MainSportsHighKneeFragment">
+
+        <TextView
+            android:id="@+id/sportsTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:text="@string/today_sports_data_type3"
+            android:textColor="@color/color_cc1c1c1c"
+            android:textSize="@dimen/second_title_size"
+            app:drawableStartCompat="@drawable/main_sports_flat_support"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/totalScoreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="分"
+            android:textColor="@color/color_cacaca"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintBaseline_toBaselineOf="@+id/curScoreTv"
+            app:layout_constraintBottom_toBottomOf="@+id/curScoreTv"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/curScoreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.curScore}"
+            android:textColor="@color/colorAccent"
+            android:textSize="56sp"
+            app:layout_constraintBottom_toBottomOf="@+id/sportsTitleTv"
+            app:layout_constraintEnd_toStartOf="@+id/totalScoreTv"
+            app:layout_constraintTop_toTopOf="@+id/sportsTitleTv" />
+
+        <!-- 运动时长-->
+        <View
+            android:id="@+id/sportTimeView"
+            android:layout_width="165dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/curScoreTv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/main_sports_time"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintStart_toStartOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/today_sports_time"
+            app:layout_constraintStart_toStartOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/minTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_min"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sportsTimeTv"
+            app:layout_constraintBottom_toBottomOf="@+id/sportsTimeTv"
+            app:layout_constraintStart_toEndOf="@+id/sportsTimeTv" />
+
+        <TextView
+            android:id="@+id/sportsTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="110dp"
+            android:text="@{viewModel.sportsTime}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintStart_toStartOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
+
+
+        <!-- 消耗卡路里-->
+        <View
+            android:id="@+id/calorieView"
+            android:layout_width="347dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sportTimeView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
+
+        <TextView
+            android:id="@+id/calorieTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/today_sports_detail_calorie"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintStart_toStartOf="@+id/calorieView"
+            app:layout_constraintTop_toTopOf="@+id/calorieView" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:onClick="@{()-> click.clickCalorie()}"
+            android:scaleType="center"
+            android:src="@drawable/main_date_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/calorieView"
+            app:layout_constraintTop_toTopOf="@+id/calorieView"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/today_sports_calorie"
+            app:layout_constraintStart_toStartOf="@+id/calorieView"
+            app:layout_constraintTop_toTopOf="@+id/calorieView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/kilocalorieTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/main_kilocalorie"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintBaseline_toBaselineOf="@+id/calorieTv"
+            app:layout_constraintBottom_toBottomOf="@+id/calorieView"
+            app:layout_constraintStart_toEndOf="@+id/calorieTv" />
+
+        <TextView
+            android:id="@+id/calorieTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="110dp"
+            android:layout_marginBottom="12dp"
+            android:text="@{viewModel.heat}"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintStart_toStartOf="@+id/calorieView"
+            app:layout_constraintTop_toTopOf="@+id/calorieView" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/calorieBarChat"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/calorieView"
+            app:layout_constraintStart_toStartOf="@+id/calorieView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calorieTv" />
+
+        <!-- 心率-->
+        <View
+            android:id="@+id/heartRateView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/calorieView"
+            app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
+
+        <TextView
+            android:id="@+id/heartRateTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/high_knee_main_heart"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/normal_size"
+            app:layout_constraintStart_toStartOf="@+id/heartRateView"
+            app:layout_constraintTop_toTopOf="@+id/heartRateView" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:onClick="@{()-> click.clickHeartRate()}"
+            android:scaleType="center"
+            android:src="@drawable/main_date_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/heartRateView"
+            app:layout_constraintTop_toTopOf="@+id/heartRateView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/avgLabTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/today_sports_data_avg"
+            android:textColor="@color/color_801c1c1c"
+            android:textSize="@dimen/des_size"
+            app:layout_constraintStart_toStartOf="@+id/heartRateTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/heartRateTitleTv" />
+
+        <TextView
+            android:id="@+id/avgHeartRateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="112"
+            android:textColor="@color/color_222"
+            android:textSize="48sp"
+            app:layout_constraintStart_toStartOf="@+id/heartRateTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/avgLabTv" />
+
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/heartRateLineChart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/heartRateView"
+            app:layout_constraintEnd_toEndOf="@+id/heartRateView"
+            app:layout_constraintStart_toStartOf="@+id/heartRateView"
+            app:layout_constraintTop_toBottomOf="@+id/avgHeartRateTv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

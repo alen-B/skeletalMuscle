@@ -28,6 +28,7 @@
     <color name="color_e64e71ff">#e64E71FF</color>
     <color name="color_994e71ff">#994E71FF</color>
     <color name="color_cc4e71ff">#cc4E71FF</color>
+    <color name="color_294e71ff">#294E71FF</color>
 
     <color name="color_ffc019">#FFC019</color>
     <color name="color_1affc019">#1AFFC019</color>
@@ -78,6 +79,7 @@
     <color name="color_cc585858">#CC585858</color>
     <color name="color_1a000000">#1a000000</color>
     <color name="color_b2e0e6ff">#B2E0E6FF</color>
+    <color name="color_e8a800">#E8A800</color>
 
 
 </resources>

@@ -2,8 +2,10 @@ package com.fjp.skeletalmuscle.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.dp
@@ -12,7 +14,16 @@ import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.data.model.bean.TodaySports
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySportsDataBinding
 import com.fjp.skeletalmuscle.ui.main.adapter.TodaySportsDataAdapter
+import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
+import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsDumbbellFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsHighKneeFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsPlankFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsDumbbellFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsHighKneeFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsSplicingSupportFragment
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDataViewModel
+import com.zhpan.indicator.enums.IndicatorStyle
+import me.hgj.jetpackmvvm.ext.util.dp2px
 
 class TodaySportsActivity :BaseActivity<TodaySportsDataViewModel,ActivityTodaySportsDataBinding>() {
     lateinit var todaySportsDataAdapter:TodaySportsDataAdapter
@@ -20,15 +31,31 @@ class TodaySportsActivity :BaseActivity<TodaySportsDataViewModel,ActivityTodaySp
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.today_sports_data_title))
         mDatabind.click = ProxyClick()
-        todaySportsDataAdapter = TodaySportsDataAdapter(mViewModel.dataArr as ArrayList<TodaySports>, clickItem = { item ->
-            if(item.type.value<5){
-                val intent = Intent(this@TodaySportsActivity,TodaySportsDetailActivity::class.java)
-                startActivity(intent)
+        val fragments =arrayListOf<Fragment>(TodaySportsHighKneeFragment.newInstance(), TodaySportsDumbbellFragment.newInstance(),TodaySportsSplicingSupportFragment.newInstance())
+        val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager,1f,fragments)
+        mDatabind.viewpager.adapter = viewpagerAdapter
+        mDatabind.indicatorView.apply {
+            setSliderColor(getColor(R.color.color_e9e9e9),getColor(R.color.color_blue))
+            setPageSize(viewpagerAdapter.count)
+            setSliderWidth(8f)
+            setSliderHeight(8f)
+            setIndicatorStyle(IndicatorStyle.CIRCLE)
+            notifyDataChanged()
+        }
+        mDatabind.viewpager.pageMargin=dp2px(16)
+        mDatabind.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                mDatabind.indicatorView.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 
+            override fun onPageSelected(position: Int) {
+                mDatabind.indicatorView.onPageSelected(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
         })
-        mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), todaySportsDataAdapter)
-        mDatabind.recyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
 
     override fun onResume() {
