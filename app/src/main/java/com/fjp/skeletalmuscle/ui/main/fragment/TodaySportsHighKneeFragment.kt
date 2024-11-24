@@ -7,9 +7,13 @@ import androidx.core.content.ContextCompat
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.FragmentMainSportsHighKneeBinding
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsHighKneeBinding
 import com.fjp.skeletalmuscle.ui.main.TodaySportsActivity
+import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
+import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.MainSportsHighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsHighKneeViewModel
 import com.github.mikephil.charting.charts.BarChart
@@ -267,23 +271,19 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
 
     inner class ProxyClick {
         fun clickCalorie() {
-            //TODO 消耗卡路里详情
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.HIGH_KNEE ,ChartType.BURN_CALORIES)
         }
 
         fun clickHeartRate() {
-            //TODO 心率趋势
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.HIGH_KNEE ,ChartType.HEART_RATE_TREND)
         }
 
         fun clickLegAngle() {
-            //TODO 抬腿角度详情
-        }
-
-        fun clickTodaySports() {
-            startActivity(Intent(activity, TodaySportsActivity::class.java))
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.HIGH_KNEE ,ChartType.LEG_LIFTING_ANGLE)
         }
 
         fun clickStrengthAndTime() {
-            //TODO 强度与时间
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.HIGH_KNEE ,ChartType.INTENSITY_AND_TIME)
         }
     }
 }

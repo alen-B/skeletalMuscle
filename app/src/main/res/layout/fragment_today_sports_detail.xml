@@ -9,7 +9,7 @@
             type="com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDetailFragmentViewModel" />
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.main.TodaySportsDetailFragment.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsDetailFragment.ProxyClick" />
 
     </data>
     <ScrollView
@@ -20,56 +20,16 @@
         android:layout_height="match_parent"
         android:paddingStart="25dp"
         android:paddingEnd="25dp"
-        tools:context=".ui.main.TodaySportsDetailFragment">
-        <ImageView
-            android:id="@+id/arrow1Iv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/sport_timeTv"
-            android:layout_marginBottom="14dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/main_arrow_up"
-            tools:ignore="ContentDescription" />
-        <TextView
-            android:id="@+id/sport_timeTv"
-            android:layout_width="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/arrow1Iv"
-            android:textColor="@color/color_1c1c1c"
-            android:layout_marginStart="8dp"
-            android:text="22"
-            android:textSize="66sp"
-            android:layout_height="wrap_content"/>
+        tools:context=".ui.main.fragment.TodaySportsDetailFragment">
 
-        <TextView
-            android:id="@+id/sport_timeUnitTv"
-            android:layout_width="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@+id/sport_timeTv"
-            app:layout_constraintStart_toEndOf="@+id/sport_timeTv"
-            android:textColor="@color/color_801c1c1c"
-            android:layout_marginStart="8dp"
-            android:text="@string/today_sports_data_min"
-            android:textSize="24sp"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/arrow2Iv"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="54dp"
-            app:layout_constraintStart_toEndOf="@+id/sport_timeUnitTv"
-            app:layout_constraintBottom_toBottomOf="@+id/sport_kilocalorieTv"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/main_arrow_up"
-            />
         <TextView
             android:id="@+id/sport_kilocalorieTv"
             android:layout_width="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/arrow2Iv"
+            app:layout_constraintStart_toStartOf="parent"
             android:textColor="@color/color_1c1c1c"
             android:text="22"
+            android:visibility="gone"
             android:textSize="66sp"
             android:layout_height="wrap_content"/>
 
@@ -80,79 +40,157 @@
             app:layout_constraintStart_toEndOf="@+id/sport_kilocalorieTv"
             android:textColor="@color/color_801c1c1c"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             android:layout_marginStart="8dp"
             android:text="@string/today_sports_data_kilocalorie"
             android:textSize="24sp"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/timeTv"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sport_kilocalorieUnitTv"
-            android:text="@string/today_sports_detail_time"
-            android:textSize="20sp"
-            android:textColor="@color/color_801c1c1c"
-            android:layout_height="wrap_content"/>
+
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"
+            android:visibility="gone"
             android:layout_width="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeTv"
+            app:layout_constraintTop_toBottomOf="@+id/sport_kilocalorieUnitTv"
             android:layout_height="230dp"/>
-        <TextView
-            android:id="@+id/kilocalorieTv"
-            android:layout_width="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barChart"
-            android:text="@string/today_sports_detail_kilocalorie"
-            android:textSize="20sp"
-            android:textColor="@color/color_801c1c1c"
-            android:layout_height="wrap_content"/>
+
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/horizontalBarChart"
             android:layout_width="0dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="140dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kilocalorieTv"
-            android:layout_height="160dp"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="280dp"/>
         <TextView
-            android:id="@+id/heartTimeTv"
+            android:id="@+id/avgLabTv"
             android:layout_width="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalBarChart"
-            android:text="@string/today_sports_detail_heart_time"
+            android:text="@string/today_sports_detail_average"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:layout_marginTop="42dp"
+            android:textColor="@color/color_801c1c1c"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/avgHeartTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/avgLabTv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/avgLabTv"
+            android:text="112"
+            android:textSize="60sp"
+            android:visibility="gone"
+            android:layout_marginTop="42dp"
+            android:textColor="@color/color_1c1c1c"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/maxTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/avgHeartTv"
+            app:layout_constraintTop_toTopOf="@+id/avgLabTv"
+            android:text="@string/today_sports_detail_max"
+            android:layout_marginStart="32dp"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:textColor="@color/color_801c1c1c"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/maxHeartRateTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/maxTv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/maxTv"
+            android:text="142"
+            android:textSize="60sp"
+            android:visibility="gone"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/color_1c1c1c"
+            android:layout_height="wrap_content"/>
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/heartRateLineChart"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/maxHeartRateTv"
+            android:layout_marginBottom="160dp"
+            android:layout_height="220dp"/>
+
+        <TextView
+            android:id="@+id/leftLegAvgAngleTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalBarChart"
+            android:text="@string/today_sports_detail_left_leg_avg_angle"
+            android:visibility="gone"
             android:textSize="20sp"
             android:layout_marginTop="42dp"
             android:textColor="@color/color_801c1c1c"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/maxTv"
+            android:id="@+id/leftLegAvgAngleValueTv"
             android:layout_width="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/heartTimeTv"
-            android:text="@string/today_sports_detail_max"
+            app:layout_constraintStart_toEndOf="@+id/leftLegAvgAngleTv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/leftLegAvgAngleTv"
+            android:text="90°"
+            android:visibility="gone"
+            android:textSize="60sp"
+            android:layout_marginTop="42dp"
+            android:textColor="@color/color_1c1c1c"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/rightLegAvgAngleTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/leftLegAvgAngleValueTv"
+            app:layout_constraintTop_toTopOf="@+id/leftLegAvgAngleTv"
+            android:text="@string/today_sports_detail_right_leg_avg_angle"
+            android:visibility="gone"
             android:textSize="20sp"
             android:textColor="@color/color_801c1c1c"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/averageTv"
+            android:id="@+id/rightLegAvgAngleValueTv"
             android:layout_width="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/maxTv"
-            app:layout_constraintTop_toTopOf="@+id/heartTimeTv"
-            android:text="@string/today_sports_detail_max"
-            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/rightLegAvgAngleTv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/rightLegAvgAngleTv"
+            android:text="90°"
+            android:visibility="gone"
+            android:textSize="60sp"
             android:layout_marginEnd="20dp"
+            android:textColor="@color/color_1c1c1c"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/rightLegTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:drawableStartCompat="@drawable/right_leg_angle_reactangle"
+            app:layout_constraintTop_toTopOf="@+id/rightLegAvgAngleTv"
+            android:text="@string/today_sports_detail_right_leg"
+            android:visibility="gone"
+            android:textSize="20sp"
             android:textColor="@color/color_801c1c1c"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/leftLegTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/rightLegTv"
+            app:drawableStartCompat="@drawable/left_leg_angle_reactangle"
+            app:layout_constraintTop_toTopOf="@+id/rightLegAvgAngleTv"
+            android:text="@string/today_sports_detail_right_leg"
+            android:layout_marginEnd="32dp"
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:textColor="@color/color_801c1c1c"
+            android:layout_height="wrap_content"/>
+
         <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChart"
+            android:id="@+id/angleLineChart"
             android:layout_width="0dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/heartTimeTv"
+            app:layout_constraintTop_toBottomOf="@+id/leftLegTv"
             android:layout_marginBottom="160dp"
             android:layout_height="220dp"/>
 

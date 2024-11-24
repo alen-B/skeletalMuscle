@@ -98,7 +98,7 @@
     <string name="today_sports_data_max">最高</string>
     <string name="today_sports_data_leg_angle">抬腿角度</string>
     <string name="today_sports_data_min">/分钟</string>
-    <string name="today_sports_data_kilocalorie">/千卡</string>
+    <string name="today_sports_data_kilocalorie">千卡</string>
     <!--运动详情-->
     <string name="today_sports_detail_break_through">极限突破</string>
     <string name="today_sports_detail_heart_enhancement">心肺提升</string>
@@ -108,8 +108,13 @@
     <string name="today_sports_detail_kilocalorie">消耗(千卡)</string>
     <string name="today_sports_detail_calorie">消耗卡路里</string>
     <string name="today_sports_detail_heart_time">心率(次)</string>
-    <string name="today_sports_detail_average">平均:</string>
-    <string name="today_sports_detail_max">最高:</string>
+    <string name="today_sports_detail_average">平均</string>
+    <string name="today_sports_detail_max">最高</string>
+    <string name="today_sports_detail_left_leg_avg_angle">左腿平均</string>
+    <string name="today_sports_detail_right_leg_avg_angle">右腿平均</string>
+    <string name="today_sports_detail_left_leg">左腿</string>
+    <string name="today_sports_detail_right_leg">右腿</string>
+    <string name="today_sports_detail_all_sports_kilocalorie">所有运动消耗卡路里</string>
     <!--    运动记录-->
     <string name="sports_record_pre_day">前一天</string>
     <string name="sports_record_next_day">后一天</string>

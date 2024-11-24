@@ -4,20 +4,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
-import com.fjp.skeletalmuscle.databinding.FragmentMainSportsHighKneeBinding
-import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDumbbellBinding
-import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsHighKneeBinding
-import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsSplicingSupportBinding
+import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsPlankBinding
 import com.fjp.skeletalmuscle.ui.main.TodaySportsActivity
-import com.fjp.skeletalmuscle.viewmodel.state.MainSportsHighKneeViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDumbbellViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsHighKneeViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsSplicingSupportViewModel
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.LineChart
+import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
+import com.fjp.skeletalmuscle.viewmodel.state.ChartType
+import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsPlankViewModel
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -33,10 +28,10 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
-class TodaySportsSplicingSupportFragment : BaseFragment<TodaySportsSplicingSupportViewModel, FragmentTodaySportsSplicingSupportBinding>() {
+class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, FragmentTodaySportsPlankBinding>() {
 
     companion object {
-        fun newInstance() = TodaySportsSplicingSupportFragment()
+        fun newInstance() = TodaySportsPlankFragment()
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -177,23 +172,12 @@ class TodaySportsSplicingSupportFragment : BaseFragment<TodaySportsSplicingSuppo
 
     inner class ProxyClick {
         fun clickCalorie() {
-            //TODO 消耗卡路里详情
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.PLANK ,ChartType.BURN_CALORIES)
         }
 
         fun clickHeartRate() {
-            //TODO 心率趋势
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.PLANK ,ChartType.HEART_RATE_TREND)
         }
 
-        fun clickLegAngle() {
-            //TODO 抬腿角度详情
-        }
-
-        fun clickTodaySports() {
-            startActivity(Intent(activity, TodaySportsActivity::class.java))
-        }
-
-        fun clickStrengthAndTime() {
-            //TODO 强度与时间
-        }
     }
 }

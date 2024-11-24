@@ -7,10 +7,14 @@ import androidx.core.content.ContextCompat
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.FragmentMainSportsHighKneeBinding
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDumbbellBinding
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsHighKneeBinding
 import com.fjp.skeletalmuscle.ui.main.TodaySportsActivity
+import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
+import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.MainSportsHighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDumbbellViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsHighKneeViewModel
@@ -269,23 +273,17 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
 
     inner class ProxyClick {
         fun clickCalorie() {
-            //TODO 消耗卡路里详情
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL ,ChartType.BURN_CALORIES)
+
         }
 
         fun clickHeartRate() {
-            //TODO 心率趋势
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL ,ChartType.HEART_RATE_TREND)
         }
 
         fun clickLegAngle() {
-            //TODO 抬腿角度详情
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL ,ChartType.LEG_LIFTING_ANGLE)
         }
 
-        fun clickTodaySports() {
-            startActivity(Intent(activity, TodaySportsActivity::class.java))
-        }
-
-        fun clickStrengthAndTime() {
-            //TODO 强度与时间
-        }
     }
 }

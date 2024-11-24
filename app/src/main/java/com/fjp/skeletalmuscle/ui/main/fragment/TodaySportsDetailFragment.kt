@@ -1,13 +1,15 @@
-package com.fjp.skeletalmuscle.ui.main
+package com.fjp.skeletalmuscle.ui.main.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDetailBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
+import com.fjp.skeletalmuscle.viewmodel.state.DateType
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDetailFragmentViewModel
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
@@ -26,21 +28,61 @@ import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
 
-class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
+class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
 
+    companion object{
+        fun newInstance(chartType:Int, dateType: DateType) = TodaySportsDetailFragment(chartType,dateType)
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        initBarChart()
-        initHorizontalBarChart()
-        initLineChart()
-        mDatabind.maxTv.text = getString(R.string.today_sports_detail_max)+" 142"
-        mDatabind.averageTv.text = getString(R.string.today_sports_detail_average)+" 111"
+        when (type) {
+            ChartType.BURN_CALORIES.type -> {
+                showCaloriesView()
+
+            }
+            ChartType.HEART_RATE_TREND.type -> {
+                showHeartRatetrendView()
+
+            }
+            ChartType.LEG_LIFTING_ANGLE.type -> {
+                showLegAngleView()
+            }
+            ChartType.INTENSITY_AND_TIME.type -> {
+                mDatabind.horizontalBarChart.visibility= View.VISIBLE
+                initHorizontalBarChart()
+            }
+        }
     }
 
+    private fun showLegAngleView() {
+        mDatabind.leftLegAvgAngleTv.visibility = View.VISIBLE
+        mDatabind.leftLegAvgAngleValueTv.visibility = View.VISIBLE
+        mDatabind.rightLegAvgAngleTv.visibility = View.VISIBLE
+        mDatabind.rightLegAvgAngleValueTv.visibility = View.VISIBLE
+        mDatabind.rightLegTv.visibility = View.VISIBLE
+        mDatabind.leftLegTv.visibility = View.VISIBLE
+        mDatabind.angleLineChart.visibility = View.VISIBLE
+        initLegAngleLineChart()
+    }
+
+    private fun showCaloriesView() {
+        mDatabind.sportKilocalorieTv.visibility= View.VISIBLE
+        mDatabind.sportKilocalorieUnitTv.visibility= View.VISIBLE
+        mDatabind.barChart.visibility= View.VISIBLE
+        initBarChart()
+    }
+    private fun showHeartRatetrendView() {
+        mDatabind.avgLabTv.visibility= View.VISIBLE
+        mDatabind.maxTv.visibility= View.VISIBLE
+        mDatabind.avgHeartTv.visibility= View.VISIBLE
+        mDatabind.maxHeartRateTv.visibility= View.VISIBLE
+        mDatabind.heartRateLineChart.visibility= View.VISIBLE
+        initHeartRatelineChart()
+    }
     private fun getFormatterData(type: ChartType): Array<String> {
-        return if (type == ChartType.BarChart || type == ChartType.LineChart) {
+        return if (type == ChartType.BURN_CALORIES || type == ChartType.HEART_RATE_TREND|| type ==ChartType.LEG_LIFTING_ANGLE) {
             val formatterData = Array(24) { "00:00" }
             for (i: Int in 1..24) {
                 if (i < 10) {
@@ -56,6 +98,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
     }
 
+
     private fun initBarChart() {
         val barChart = mDatabind.barChart
         barChart.legend.isEnabled = false
@@ -70,16 +113,16 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textSize = 18.dp
+        xAxis.textSize = 14f
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
-        val dayFormatterData = getFormatterData(ChartType.LineChart)
+        val dayFormatterData = getFormatterData(ChartType.BURN_CALORIES)
         //设置底部文字显示格式化
         xAxis.valueFormatter = IndexAxisValueFormatter(dayFormatterData)
         //设置左边轴样式
         val axisLeft = barChart.axisLeft
         axisLeft.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        axisLeft.textSize = 18.dp
+        axisLeft.textSize = 14f
         axisLeft.axisMinimum = 0f
         axisLeft.enableGridDashedLine(2f,1f,0f)
         axisLeft.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -130,7 +173,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         xAxis.textSize = 24.dp
         xAxis.labelCount = 4
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        val dayFormatterData = getFormatterData(ChartType.HBarChart)
+        val dayFormatterData = getFormatterData(ChartType.INTENSITY_AND_TIME)
         xAxis.valueFormatter = IndexAxisValueFormatter(dayFormatterData)
         val axisLeft = horizontalBarChart.axisLeft
         axisLeft.enableGridDashedLine(2f,1f,0f)
@@ -146,7 +189,6 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         for (i in 0 until 4) {
             val num = (Math.random() * 180).toFloat()
             values.add(BarEntry(i.toFloat(), num))
-
         }
 
         val dataSets = ArrayList<IBarDataSet>()
@@ -161,7 +203,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 //            }
 //        }
         val barData = BarData(dataSets)
-        barData.barWidth = 0.4f
+        barData.barWidth = 0.3f
         horizontalBarChart.data = barData
         val description = Description()
         description.text = ""//去掉描述，必须设置为空字符串，要不然还会显示
@@ -171,8 +213,8 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
     }
 
-    private fun initLineChart() {
-        val lineChart = mDatabind.lineChart
+    private fun initHeartRatelineChart() {
+        val lineChart = mDatabind.heartRateLineChart
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
         lineChart.isDragEnabled = false
@@ -207,9 +249,9 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
         lineDataSet.setDrawCircles(false)
-        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
+        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
         // text size of values
@@ -230,12 +272,107 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         // set color of filled area
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
-            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
+            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_red)
             lineDataSet.fillDrawable = drawable
         } else {
             lineDataSet.fillColor = Color.BLACK
         }
         dataSets.add(lineDataSet)
+        val barData = LineData(dataSets)
+        lineChart.data = barData
+        lineChart.setNoDataText("暂无数据")
+        lineChart.animateY(500)
+    }
+
+    private fun initLegAngleLineChart() {
+        val lineChart = mDatabind.angleLineChart
+        lineChart.legend.isEnabled=false
+        lineChart.setTouchEnabled(false)
+        lineChart.isDragEnabled = false
+        lineChart.setScaleEnabled(false)
+        lineChart.setDrawBorders(false)
+        lineChart.setDrawGridBackground(false)
+        val description = Description()
+        description.text = ""
+        lineChart.description = description
+        val xAxis = lineChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawLabels(true)
+        xAxis.enableGridDashedLine(2f,1f,0f)
+
+        val leftAxis = lineChart.axisLeft
+        leftAxis.setDrawGridLines(true)
+        leftAxis.enableGridDashedLine(2f,1f,0f)
+        leftAxis.enableAxisLineDashedLine(2f,1f,0f)
+        leftAxis.setDrawLabels(true)
+        leftAxis.setDrawAxisLine(false)
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+
+        val rightAxis: YAxis = lineChart.axisRight
+        rightAxis.gridLineWidth = 0.5f
+        rightAxis.gridColor = ContextCompat.getColor(appContext,R.color.color_gray)
+        rightAxis.isEnabled = false
+
+        val values = ArrayList<Entry>()
+        val values2 = ArrayList<Entry>()
+
+        for (i in 0 until 8) {
+            val num = (Math.random() * 180).toFloat() - 30
+            values.add(BarEntry(i.toFloat(), num))
+        }
+        for (i in 0 until 8) {
+            val num = (Math.random() * 100).toFloat() - 30
+            values2.add(BarEntry(i.toFloat(), num))
+        }
+        val dataSets = ArrayList<ILineDataSet>()
+        val lineDataSet = LineDataSet(values, "千卡")
+        lineDataSet.setDrawIcons(false)
+        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawValues(false)
+        lineDataSet.color = appContext.getColor(R.color.color_blue)
+        // draw selection line as dashed
+        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
+
+        // set the filled area
+        lineDataSet.setDrawFilled(true)
+        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+        if (Utils.getSDKInt() >= 18) {
+            // drawables only supported on api level 18 and above
+            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
+            lineDataSet.fillDrawable = drawable
+        } else {
+            lineDataSet.fillColor = Color.BLACK
+        }
+
+        val lineDataSet2 = LineDataSet(values2, "千卡")
+        lineDataSet2.setDrawIcons(false)
+        lineDataSet2.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet2.setDrawCircles(false)
+        lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
+        lineDataSet2.setDrawCircleHole(false)
+        lineDataSet2.setDrawValues(false)
+        // draw selection line as dashed
+        lineDataSet2.enableDashedHighlightLine(10f, 5f, 0f)
+
+        // set the filled area
+        lineDataSet2.setDrawFilled(true)
+        lineDataSet2.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+        if (Utils.getSDKInt() >= 18) {
+            // drawables only supported on api level 18 and above
+            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_yellow)
+            lineDataSet2.fillDrawable = drawable
+        } else {
+            lineDataSet2.fillColor = Color.BLACK
+        }
+
+        // set color of filled area
+
+        dataSets.add(lineDataSet)
+        dataSets.add(lineDataSet2)
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")

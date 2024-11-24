@@ -1,26 +1,16 @@
 package com.fjp.skeletalmuscle.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
-import com.fjp.skeletalmuscle.app.ext.dp
-import com.fjp.skeletalmuscle.app.ext.init
-import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
-import com.fjp.skeletalmuscle.data.model.bean.TodaySports
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySportsDataBinding
 import com.fjp.skeletalmuscle.ui.main.adapter.TodaySportsDataAdapter
 import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
-import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsDumbbellFragment
-import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsHighKneeFragment
-import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsPlankFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsDumbbellFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsHighKneeFragment
-import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsSplicingSupportFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsPlankFragment
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDataViewModel
 import com.zhpan.indicator.enums.IndicatorStyle
 import me.hgj.jetpackmvvm.ext.util.dp2px
@@ -31,7 +21,7 @@ class TodaySportsActivity :BaseActivity<TodaySportsDataViewModel,ActivityTodaySp
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.today_sports_data_title))
         mDatabind.click = ProxyClick()
-        val fragments =arrayListOf<Fragment>(TodaySportsHighKneeFragment.newInstance(), TodaySportsDumbbellFragment.newInstance(),TodaySportsSplicingSupportFragment.newInstance())
+        val fragments =arrayListOf<Fragment>(TodaySportsHighKneeFragment.newInstance(), TodaySportsDumbbellFragment.newInstance(),TodaySportsPlankFragment.newInstance())
         val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager,1f,fragments)
         mDatabind.viewpager.adapter = viewpagerAdapter
         mDatabind.indicatorView.apply {

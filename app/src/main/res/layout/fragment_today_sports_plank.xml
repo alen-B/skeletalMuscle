@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.fjp.skeletalmuscle.viewmodel.state.TodaySportsSplicingSupportViewModel" />
+            type="com.fjp.skeletalmuscle.viewmodel.state.TodaySportsPlankViewModel" />
 
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsSplicingSupportFragment.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsPlankFragment.ProxyClick" />
 
     </data>
 
