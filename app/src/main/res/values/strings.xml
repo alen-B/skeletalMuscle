@@ -75,6 +75,7 @@
     <string name="main_rate">/分</string>
     <string name="main_kilocalorie">千卡</string>
     <string name="main_total_score">/100</string>
+    <string name="times_of_minute">次/分</string>
     <!--    日历-->
     <string name="calendar_title">运动打卡日记</string>
     <string name="calendar_pre_month">前一月</string>
@@ -85,7 +86,7 @@
     <string name="today_sports_data_recorde">运动日历</string>
     <string name="today_sports_data_type1">高抬腿运动</string>
     <string name="today_sports_data_type2">哑铃运动</string>
-    <string name="today_sports_data_type3">平板支撑</string>
+    <string name="today_sports_data_type3">平板支撑运动</string>
     <string name="today_sports_data_type4">心率区间</string>
     <string name="today_sports_data_type5">运动时长</string>
     <string name="today_sports_data_type6">肌肉比例</string>
@@ -118,7 +119,16 @@
     <!--    运动记录-->
     <string name="sports_record_pre_day">前一天</string>
     <string name="sports_record_next_day">后一天</string>
-    <string name="sports_record_sport_time">强度与时间</string>
+    <string name="sports_record_sport_time">运动强度与时间</string>
+    <string name="sports_record_all_sports_score">今日运动得分</string>
+    <string name="sports_record_all_sports_time">总运动</string>
+    <string name="sports_record_total_consumption">总消耗</string>
+    <string name="sports_record_avg_heart_rate">平均心率</string>
+    <string name="sports_record_avg_high_angle">抬腿平均角度</string>
+    <string name="sports_record_avg">平均:</string>
+    <string name="sports_record_max">最高:</string>
+    <string name="sports_record_upleft">上举:</string>
+    <string name="sports_record_expand_chest">扩胸:</string>
 
     <!--    选择您今天想完成的运动-->
     <string name="today_sports_title">选择您今天想完成的运动</string>

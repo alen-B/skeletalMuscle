@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="173dp"
+    android:layout_width="206dp"
     android:layout_height="102dp"
     android:paddingStart="14dp"
     android:paddingEnd="14dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:background="@drawable/bg_gray_round_20">
+    android:background="@drawable/bg_white_round_20">
 
     <TextView
         android:id="@+id/titleTv"
@@ -28,7 +28,7 @@
         android:text="28"
         android:layout_marginEnd="6dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/unitTv"
-        app:layout_constraintEnd_toStartOf="@+id/unitTv"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/unitTv"
@@ -37,6 +37,6 @@
         android:textColor="@color/color_1c1c1c"
         android:textSize="20sp"
         android:text="分钟"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numberTv"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

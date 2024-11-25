@@ -18,6 +18,7 @@ import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.databinding.ActivitySportsRecordBinding
 import com.fjp.skeletalmuscle.ui.main.adapter.SportsRecordLegAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.SportsRecordViewModel
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -44,13 +45,16 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
         calendar.set(year,month,day)
 
         mViewModel.title.set("看看${year}年${month}月${day}日运动记录吧")
-        mViewModel.leftImg.set(R.drawable.title_icon_sports_record)
-        findViewById<TextView>(R.id.titleTv).setTextColor(ContextCompat.getColor(appContext,R.color.white))
+        mDatabind.circleProgressView.setScore(75)
+        mDatabind.allSportsSRIL.setValue("34")
         setCalendarTitle()
         initSportsLeg()
         initSportsDumbbell()
         initSportsPlank()
-        initLineChart()
+        initLineChart( mDatabind.lineChart)
+        initLineChart(mDatabind.dumbbellAngleLineChart)
+        initLineChart(mDatabind.dumbbellHeartRateLineChart)
+        initLineChart(mDatabind.plankHeartRateLineChart)
     }
 
 
@@ -59,13 +63,13 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
         mDatabind.dumbbellRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
     private fun initSportsPlank() {
-        mDatabind.plankRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.plankSportsDate))
-        mDatabind.plankRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
+//        mDatabind.plankRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.plankSportsDate))
+//        mDatabind.plankRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
 
     private fun initSportsLeg() {
-        mDatabind.legRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.legSportsDate))
-        mDatabind.legRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
+//        mDatabind.legRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.legSportsDate))
+//        mDatabind.legRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
 
     fun setCalendarTitle(){
@@ -74,8 +78,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
         mViewModel.dumbbellSportsTime.set("${calendar.month}月${calendar.dayOfMonth}日")
         mViewModel.plankSportsTime.set("${calendar.month}月${calendar.dayOfMonth}日")
     }
-    private fun initLineChart() {
-        val lineChart = mDatabind.lineChart
+    private fun initLineChart(lineChart: LineChart) {
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
         lineChart.isDragEnabled = false
@@ -115,7 +118,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
         lineDataSet.setDrawIcons(false)
         lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         lineDataSet.setDrawCircles(false)
-        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
+        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
         // text size of values
@@ -136,7 +139,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
         // set color of filled area
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
-            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
+            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_red)
             lineDataSet.fillDrawable = drawable
         } else {
             lineDataSet.fillColor = Color.BLACK
