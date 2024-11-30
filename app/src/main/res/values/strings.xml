@@ -210,6 +210,7 @@
     <string name="high_knee_guide_step1_link_device">第一步\n检测设备是否已开启</string>
 
     <string name="high_knee_guide_step2_title">连接中,请稍等</string>
+    <string name="high_knee_guide_reconnect">点击重连</string>
     <string name="high_knee_guide_step2_connect_wristband">连接智能手环</string>
     <string name="high_knee_guide_step2_wear_wristband">· 佩戴手环</string>
     <string name="high_knee_guide_step2_long_press">· 长按开关键连接</string>
@@ -335,7 +336,22 @@
     <string name="bluetooth_scaning_device_connect_success">连接成功</string>
     <string name="main_sports_high_knee_strong_time">强度与时间</string>
 
-    <string name="loading_login">"正在登录中..."</string>
+    <string name="loading_login">正在登录中...</string>
+    <string name="sports_assessment_selected">选择测评</string>
+    <string name="sports_assessment_tip_title">测评贴士</string>
+    <string name="sports_assessment_result">综合测评结果</string>
+    <string name="sports_assessment_history">历史结果</string>
+    <string name="sports_assessment_grip">握力运动</string>
+    <string name="sports_assessment_sit_up">起坐运动</string>
+    <string name="sports_assessment_waistline">腰围</string>
+    <string name="sports_assessment_weight">体重</string>
+    <string name="sports_assessment_high_leg">高抬腿运动</string>
+    <string name="sports_assessment_tip_des">定期科学评估能够精准了解您的身体情况，为您量身定制更高效的运动指南，助力更安全的健身效果。</string>
+    <string name="sports_assessment_type_weight_waistline">体重/腰围</string>
+    <string name="sports_assessment_type_weight">当前体重</string>
+    <string name="sports_assessment_type_waistline">当前腰围</string>
+
+    <string name="selected_waistline_weight_title">请您选择您的体重和腰围</string>
 
 
 </resources>

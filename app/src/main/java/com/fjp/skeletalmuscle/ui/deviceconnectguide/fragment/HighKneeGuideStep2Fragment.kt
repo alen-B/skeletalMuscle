@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
@@ -20,6 +21,7 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
+        mDatabind.click = Proxy()
         mViewModel.title.set(getString(R.string.high_knee_guide_step2_title))
         mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
         (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
@@ -30,22 +32,27 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
         super.onResume()
         val GTSDevice = SMBleManager.connectedDevices.get(DeviceType.GTS)
         if (GTSDevice == null) {
-            SMBleManager.scanDevices(DeviceType.GTS.value, DeviceType.GTS, object : SMBleManager.DeviceStatusListener {
-                override fun disConnected() {
-                    appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
-                }
-
-                override fun connected() {
-                    appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))
-                    showConnectedView()
-                }
-
-            })
+            connectDevice()
         } else {
             showConnectedView()
         }
     }
 
+    fun connectDevice(){
+        SMBleManager.scanDevices(DeviceType.GTS.value, DeviceType.GTS, object : SMBleManager.DeviceStatusListener {
+            override fun disConnected() {
+                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
+                mDatabind.reconnectBtn.visibility= View.VISIBLE
+            }
+
+            override fun connected() {
+                mDatabind.reconnectBtn.visibility= View.GONE
+                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))
+                showConnectedView()
+            }
+
+        })
+    }
     fun showConnectedView() {
         try {
             mViewModel.leftImg.set(R.drawable.title_left_default_icon)
@@ -63,10 +70,10 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
 
     }
 
-    override fun initData() {
-        super.initData()
-
+    inner class Proxy{
+        fun clickReconnect(){
+            connectDevice()
+        }
     }
-
 
 }

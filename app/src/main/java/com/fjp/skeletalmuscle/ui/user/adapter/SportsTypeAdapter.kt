@@ -11,7 +11,7 @@ import me.hgj.jetpackmvvm.base.appContext
 
 class SportsTypeAdapter( data: ArrayList<Sports>, var clickItem: (item: Sports) -> Unit) :
     BaseQuickAdapter<Sports, BaseViewHolder>(
-        R.layout.item_single_select, data
+        R.layout.item_assessment_type, data
     ) {
     init {
         setAdapterAnimation(SettingUtil.getListMode())

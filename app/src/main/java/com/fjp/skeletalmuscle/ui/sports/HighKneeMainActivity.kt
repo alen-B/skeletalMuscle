@@ -1,4 +1,4 @@
-package com.fjp.skeletalmuscle.ui.highKnee
+package com.fjp.skeletalmuscle.ui.sports
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -241,13 +241,15 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     override fun rightHandGripsConnected() {
     }
 
-    override fun onLeftLegData(data: ByteArray) {
+    override fun onLeftDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
         }
         val pitch = DeviceDataParse.parseData2Pitch(data)
-//        val roll = DeviceDataParse.parseData2Roll(data)
-//        val yaw = DeviceDataParse.parseData2Yaw(data)
+        val roll = DeviceDataParse.parseData2Roll(data)
+        val yaw = DeviceDataParse.parseData2Yaw(data)
+        println("===leftroll:${roll}")
+        println("===leftyaw:${yaw}")
         // 检查pitch是否大于100度
         if (pitch > 90) {
             // 抬腿过高，播放提示音
@@ -262,7 +264,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             // 当pitch值达到新的高点时，重置下降标记
             leftIsDescending = false
         }
-        // 检查是否开始下降
+
         // 检查是否开始下降
         if (pitch < leftLastPitch) {
             if (!leftIsDescending) {
@@ -271,6 +273,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                     leftLegLifts++
                     leftLegAngleSum += leftLegmaxPitchInCycle.toDouble()
                     mViewModel.leftLegCount.set(leftLegLifts.toString())
+                    if(rightLegLifts!=0){
+                        println("=====左腿最大角度："+leftLegmaxPitchInCycle+"    右腿角度"+rightLastPitch)
+                    }
                     getAvgScore(abs(leftLegmaxPitchInCycle))
                 }
             }
@@ -309,13 +314,15 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         }
         leftOldLevel = leftLevel
     }
-    override fun onRightLegData(data: ByteArray) {
+    override fun onRightDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
         }
         val pitch = DeviceDataParse.parseData2Pitch(data)
-//        val roll = DeviceDataParse.parseData2Roll(data)
-//        val yaw = DeviceDataParse.parseData2Yaw(data)
+        val roll = DeviceDataParse.parseData2Roll(data)
+        val yaw = DeviceDataParse.parseData2Yaw(data)
+        println("===rightroll:${roll}")
+        println("===rightyaw:${yaw}")
         if (pitch > 90) {
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放
@@ -337,6 +344,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                     rightLegAngleSum += abs(rightLegmaxPitchInCycle).toDouble()
                     mViewModel.rightLegCount.set(rightLegLifts.toString())
                     getAvgScore(abs(rightLegmaxPitchInCycle))
+                    if(leftLegLifts!=0){
+                        println("=====又腿最大角度："+rightLegmaxPitchInCycle+"    左腿角度"+leftLastPitch)
+                    }
                 }
             }
             rightIsDescending = true

@@ -9,7 +9,7 @@
             type="com.fjp.skeletalmuscle.viewmodel.state.SportsCompletedViewModel" />
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.highKnee.SportsCompletedActivity.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.sports.SportsCompletedActivity.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
         android:paddingStart="35dp"
         android:paddingEnd="35dp"
         android:paddingBottom="35dp"
-        tools:context=".ui.highKnee.SportsCompletedActivity">
+        tools:context=".ui.sports.SportsCompletedActivity">
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />

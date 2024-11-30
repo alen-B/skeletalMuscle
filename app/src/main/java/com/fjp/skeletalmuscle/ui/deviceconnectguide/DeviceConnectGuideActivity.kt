@@ -12,12 +12,13 @@ import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep1F
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep2Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep4Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep6Fragment
-import com.fjp.skeletalmuscle.ui.highKnee.HighKneeMainActivity
+import com.fjp.skeletalmuscle.ui.sports.DumbbellMainActivity
+import com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity
 import com.fjp.skeletalmuscle.viewmodel.state.DeviceConnectViewModel
 import com.lxj.xpopup.XPopup
 
 class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, ActivityDeviceConnectGuideBinding>() {
-    private val fragments = arrayListOf<Fragment>(HighKneeGuideStep1Fragment.newInstance(), HighKneeGuideStep2Fragment.newInstance(),HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance(),  )
+    private val fragments = arrayListOf<Fragment>(HighKneeGuideStep1Fragment.newInstance(), HighKneeGuideStep2Fragment.newInstance(),HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance())
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -51,6 +52,7 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
             }
             mDatabind.viewpager.setCurrentItem(mDatabind.viewpager.currentItem - 1, true)
         }
+
     }
 
     fun showVideoPop(){

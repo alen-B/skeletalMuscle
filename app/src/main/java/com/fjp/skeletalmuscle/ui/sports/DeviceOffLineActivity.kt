@@ -1,4 +1,4 @@
-package com.fjp.skeletalmuscle.ui.highKnee
+package com.fjp.skeletalmuscle.ui.sports
 
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R

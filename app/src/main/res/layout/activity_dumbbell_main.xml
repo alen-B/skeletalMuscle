@@ -6,11 +6,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel" />
+            type="com.fjp.skeletalmuscle.viewmodel.state.DumbbellViewModel" />
 
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.sports.DumbbellMainActivity.ProxyClick" />
     </data>
 <!--    @drawable/bg_step1-->
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -40,8 +40,8 @@ object SMBleManager {
         fun leftHandGripsConnected()
         fun rightHandGripsConnected()
 
-        fun onLeftLegData(data: ByteArray)
-        fun onRightLegData(data: ByteArray)
+        fun onLeftDeviceData(data: ByteArray)
+        fun onRightDeviceData(data: ByteArray)
         fun onGTSData(data: ByteArray)
         fun onLeftHandGripsData(data: ByteArray)
         fun onRightHandGripsData(data: ByteArray)
@@ -174,10 +174,10 @@ object SMBleManager {
                     if (deviceName.startsWith(DeviceType.GTS.value)) {
                         it.onGTSData(data)
                     } else if (deviceName.startsWith(DeviceType.LEFT_LEG.value)) {
-                        it.onLeftLegData(data)
+                        it.onLeftDeviceData(data)
 
                     } else if (deviceName.startsWith(DeviceType.RIGHT_LEG.value)) {
-                        it.onRightLegData(data)
+                        it.onRightDeviceData(data)
                     } else if (deviceName.startsWith(DeviceType.LEFT_HAND_GRIPS.value)){
                         it.onLeftHandGripsData(data)
                     }else if (deviceName.startsWith(DeviceType.RIGHT_HAND_GRIPS.value)){

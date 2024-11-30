@@ -10,14 +10,14 @@
 
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.highKnee.DeviceOffLineActivity.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.sports.DeviceOffLineActivity.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:background="#66000000"
         android:layout_height="match_parent"
-        tools:context=".ui.highKnee.DeviceOffLineActivity">
+        tools:context=".ui.sports.DeviceOffLineActivity">
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />

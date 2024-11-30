@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep4ViewModel" />
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep4Fragment.Proxy" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,6 +90,17 @@
             android:textColor="@color/color_332c2c2c"
             android:layout_height="wrap_content"/>
 
-
+        <Button
+            android:id="@+id/reconnectBtn"
+            style="@style/SMButtonPre"
+            android:visibility="gone"
+            android:layout_width="240dp"
+            android:layout_marginEnd="547dp"
+            android:layout_marginBottom="45dp"
+            android:onClick="@{()-> click.clickReconnect()}"
+            android:background="@drawable/bg_yellow_round_20"
+            android:text="@string/high_knee_guide_reconnect"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/preBtn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

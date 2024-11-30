@@ -6,20 +6,15 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.databinding.ViewDataBinding
 import com.fjp.skeletalmuscle.R
-import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.ext.dismissLoadingExt
 import com.fjp.skeletalmuscle.app.ext.showLoadingExt
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.weight.pop.ChangeAccountPop
-import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
 import com.fjp.skeletalmuscle.data.model.bean.Account
-import com.fjp.skeletalmuscle.ui.highKnee.HighKneeMainActivity
 import com.fjp.skeletalmuscle.ui.login.LoginActivity
-import com.fjp.skeletalmuscle.ui.setting.ChangeAccountActivity
 import com.fjp.skeletalmuscle.ui.setting.SettingActivity
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.activity.BaseVmDbActivity
-import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.jessyan.autosize.AutoSizeCompat
 

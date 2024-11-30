@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.SelectedWaistlineAndWeightViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.sports.SelectedWaistlineAndWeightActivity.ProxyClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="48dp"
+        android:paddingStart="48dp"
+        android:paddingBottom="48dp"
+        tools:context=".ui.sports.SelectedWaistlineAndWeightActivity">
+        <include
+            layout="@layout/layout_title"
+            app:viewModel="@{viewModel}" />
+        <TextView
+            android:id="@+id/weightTv"
+            android:layout_width="wrap_content"
+            android:text="@string/sports_assessment_type_weight"
+            android:textColor="@color/color_cc1c1c1c"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="36sp"
+            app:layout_constraintTop_toTopOf="@+id/weightRView"
+            app:layout_constraintBottom_toBottomOf="@+id/weightRView"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/weightRView"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            app:layout_constraintStart_toEndOf="@+id/weightTv"
+            android:layout_width="0dp"
+            android:scrollbars="none"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/waistlineTv"
+            android:layout_width="wrap_content"
+            android:text="@string/sports_assessment_type_waistline"
+            android:textColor="@color/color_cc1c1c1c"
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/waistlineRView"
+            app:layout_constraintBottom_toBottomOf="@+id/waistlineRView"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/waistlineRView"
+            android:layout_marginStart="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/weightRView"
+            app:layout_constraintStart_toEndOf="@+id/waistlineTv"
+            android:layout_width="0dp"
+            android:layout_marginTop="32dp"
+            android:scrollbars="none"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/nextBtn"
+            style="@style/SMButtonNext"
+            android:layout_width="240dp"
+            android:text="@string/exercise_plan_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:noRepeatClick="@{()-> click.clickComplete()}" />
+        <io.alterac.blurkit.BlurLayout
+            android:id="@+id/blurLayout"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:onClick="@{()-> click.clickFinish()}"
+            app:blk_blurRadius="25"
+            app:blk_cornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:background="@drawable/bg_back_gray"
+                android:onClick="@{()-> click.clickFinish()}"
+                android:scaleType="center"
+                android:src="@drawable/arrow_right" />
+        </io.alterac.blurkit.BlurLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

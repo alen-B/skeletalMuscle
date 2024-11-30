@@ -1,16 +1,19 @@
 package com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep6Binding
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep6ViewModel
+import me.hgj.jetpackmvvm.base.appContext
 
 class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, FragmentHightKneeGuideStep6Binding>() {
 
@@ -20,6 +23,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
+        mDatabind.click = Proxy()
     }
 
     override fun onResume() {
@@ -89,14 +93,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             mViewModel.title.set(getString(R.string.high_knee_guide_step6_title))
-            SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG,object: SMBleManager.DeviceStatusListener{
-                override fun disConnected() {
-                }
-
-                override fun connected() {
-                    showConnectedView()
-                }
-            })
+            connectDevice()
         }
 
     }
@@ -130,6 +127,27 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
         }
 
     }
+    fun connectDevice(){
+        SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG,object: SMBleManager.DeviceStatusListener{
+            override fun disConnected() {
+                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
+                mDatabind.reconnectBtn.visibility= View.VISIBLE
+            }
 
+            override fun connected() {
+                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))
+                mDatabind.reconnectBtn.visibility= View.GONE
+                showConnectedView()
+            }
+        })
+    }
+    inner class Proxy{
+        fun  clickReconnect(){
+            connectDevice()
+        }
+
+    }
 
 }
+
+

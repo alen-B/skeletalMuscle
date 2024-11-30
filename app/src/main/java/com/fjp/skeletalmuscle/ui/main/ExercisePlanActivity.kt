@@ -15,7 +15,8 @@ import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityExercisePlanBinding
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
-import com.fjp.skeletalmuscle.ui.highKnee.HighKneeMainActivity
+import com.fjp.skeletalmuscle.ui.sports.DumbbellMainActivity
+import com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ExercisePlanViewModel
 import me.hgj.jetpackmvvm.base.appContext
 
@@ -231,10 +232,10 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
         mDatabind.device1Iv.setBackgroundResource(R.drawable.bg_white_round_20)
     }
 
-    override fun onLeftLegData(data: ByteArray) {
+    override fun onLeftDeviceData(data: ByteArray) {
     }
 
-    override fun onRightLegData(data: ByteArray) {
+    override fun onRightDeviceData(data: ByteArray) {
     }
 
     override fun onGTSData(data: ByteArray) {
