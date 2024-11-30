@@ -1,4 +1,4 @@
-package com.fjp.skeletalmuscle.ui.sports
+package com.fjp.skeletalmuscle.ui.assessment
 
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentTypeSelectedBinding
-import com.fjp.skeletalmuscle.ui.sports.adapter.AssessmentTypeAdapter
+import com.fjp.skeletalmuscle.ui.assessment.adapter.AssessmentTypeAdapter
 import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentTypeSelectedViewModel
 

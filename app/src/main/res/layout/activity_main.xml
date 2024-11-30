@@ -169,7 +169,7 @@
           android:layout_width="0dp"
           android:layout_height="144dp"
           android:background="@drawable/bg_yellow_round_20"
-          android:onClick="@{()-> click.startSportsRvaluation()}"
+          android:onClick="@{()-> click.startSportsAssessment()}"
           android:text="@string/main_start_sports_evaluation"
           android:textColor="@color/white"
           android:textSize="40sp"

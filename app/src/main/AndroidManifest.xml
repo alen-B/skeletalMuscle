@@ -59,22 +59,33 @@
         android:theme="@style/Theme.SkeletalMuscle"
         tools:targetApi="31">
         <activity
-            android:name=".ui.sports.SelectedWaistlineAndWeightActivity"
-            android:exported="true"
-            android:screenOrientation="landscape">
-        </activity>
-        <activity
-            android:name=".ui.sports.SportsAssessmentTypeSelectedActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.sports.SportsAssessmentActivity"
-            android:exported="true"
-            android:screenOrientation="landscape">
+            android:name=".ui.assessment.SportsAssessmentsHistoryActivity"
+            android:screenOrientation="landscape"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.assessment.SelectedWaistlineAndWeightActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".ui.assessment.SportsAssessmentTypeSelectedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.assessment.SportsAssessmentResultActivity"
+            android:exported="true"
+            android:screenOrientation="landscape">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ui.setting.ChangeAccountActivity"
@@ -122,6 +133,10 @@
         </activity>
         <activity
             android:name=".ui.sports.DeviceOffLineActivity"
+            android:exported="true"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.assessment.SportsAssessmentActivity"
             android:exported="true"
             android:screenOrientation="landscape" />
         <activity

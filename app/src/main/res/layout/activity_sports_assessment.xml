@@ -4,203 +4,287 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentViewModel" />
 
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.sports.SportsAssessmentActivity.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentActivity.ProxyClick" />
     </data>
-
+<!--    @drawable/bg_step1-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="35dp"
-        android:paddingEnd="35dp"
-        android:paddingBottom="35dp"
-        tools:context=".ui.sports.SportsAssessmentActivity">
-
+        android:background="#11000000"
+        tools:context=".ui.sports.HighKneeMainActivity">
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="34dp"
-            android:layout_marginBottom="34dp"
-            android:background="@drawable/bg_white_round_20"
-            android:paddingStart="32dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="32dp"
-            android:paddingBottom="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/selectedBtn"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lLC"
+            android:layout_width="140dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout">
-
+            android:layout_marginStart="35dp"
+            android:background="@drawable/bg_white_round_20"
+            android:gravity="center_horizontal"
+            android:paddingBottom="12dp"
+            android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/lCurDataTv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/main_start_sports_evaluation"
-                android:textColor="@color/color_cc1c1c1c"
-                android:textSize="38sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="7dp"
-                android:text="@string/sports_assessment_history"
-                android:textColor="@color/color_801c1c1c"
-                android:textSize="26sp"
-                app:drawableEndCompat="@drawable/setting_arrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/assessmentResultLl"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="70dp"
-                android:background="@drawable/bg_gray_round_20"
-                android:orientation="vertical"
-                android:paddingStart="24dp"
-                android:paddingBottom="30dp"
-                android:paddingTop="15dp"
-                app:layout_constraintEnd_toStartOf="@+id/chartLl"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintBottom_toTopOf="@+id/resultTv"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintTop_toTopOf="parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="@string/sports_assessment_result"
-                    android:textSize="@dimen/normal_size"
-                    android:textColor="@color/color_cc1c1c1c"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/timeTv"
-                    android:layout_width="wrap_content"
-                    android:text="2024-11-28 18:00:00"
-                    android:textSize="@dimen/des_size"
-                    android:textColor="@color/color_801c1c1c"
-                    android:layout_height="wrap_content"/>
-                <com.fjp.skeletalmuscle.app.weight.DashboardView
-                    android:id="@+id/dashboard"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/chartLl"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/bg_gray_round_20"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintBottom_toBottomOf="@+id/assessmentResultLl"
-                app:layout_constraintStart_toEndOf="@+id/assessmentResultLl"
-                app:layout_constraintTop_toTopOf="@+id/assessmentResultLl">
-                <com.github.mikephil.charting.charts.RadarChart
-                    android:id="@+id/radarChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
-            <TextView
-                android:id="@+id/resultTv"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:drawablePadding="20dp"
-                android:drawableStart="@drawable/sports_assessement_result"
-                android:layout_width="wrap_content"
+                android:textColor="@color/color_222"
+                android:textSize="40sp"
+                android:text="@{viewModel.leftLegAngle}"
                 android:layout_height="wrap_content"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <io.alterac.blurkit.BlurLayout
-            android:id="@+id/backIv"
-            android:layout_width="144dp"
-            android:layout_height="144dp"
-            android:onClick="@{()-> click.clickFinish()}"
-            app:blk_blurRadius="25"
-            app:blk_cornerRadius="20dp"
-            app:blk_fps="0"
-            app:layout_constraintBottom_toBottomOf="@+id/selectedBtn"
-            app:layout_constraintStart_toStartOf="parent">
-
             <ImageView
-                android:layout_width="144dp"
-                android:layout_height="144dp"
-                android:background="@drawable/bg_back_gray"
-                android:onClick="@{()-> click.clickFinish()}"
-                android:scaleType="center"
-                android:src="@drawable/arrow_right"
+                android:id="@+id/lIv1"
+                android:layout_width="110dp"
+                android:layout_marginTop="24dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_e64e71ff_8"
                 tools:ignore="ContentDescription" />
-        </io.alterac.blurkit.BlurLayout>
+            <ImageView
+                android:id="@+id/lIv2"
+                android:layout_width="110dp"
+                android:layout_marginTop="2dp"
+                android:scaleType="centerCrop"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_b34e71ff_8"
+                tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/lIv3"
+                android:layout_width="110dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_804e71ff_8"
+                tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/lIv4"
+                android:layout_width="110dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_3d4e71ff_8"
+                tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/lIv5"
+                android:layout_width="110dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_1a4e71ff_8"
+                tools:ignore="ContentDescription" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <View
+            android:id="@+id/lTimesView"
+            android:layout_width="140dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="35dp"
+            android:background="@drawable/bg_3d4e71ff_20"
+            app:layout_constraintTop_toBottomOf="@+id/lLC"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="70dp"/>
+        <TextView
+            android:id="@+id/lTimesTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/lTimesView"
+            app:layout_constraintBottom_toBottomOf="@+id/lTimesView"
+            app:layout_constraintStart_toStartOf="@+id/lTimesView"
+            app:layout_constraintEnd_toEndOf="@+id/lTimesView"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:textColor="@color/color_222"
+            android:textSize="50sp"
+            android:text="@{viewModel.leftLegCount}"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/lUnitTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/lTimesTv"
+            app:layout_constraintStart_toEndOf="@+id/lTimesTv"
+            android:text="@string/main_times"
+            android:textColor="@color/color_222"
+            android:textSize="26sp"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/rLC"
+            android:layout_width="140dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="35dp"
+            android:paddingBottom="12dp"
+            android:background="@drawable/bg_white_round_20"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/rCurDataTv"
+            android:text="@{viewModel.rightLegAngle}"
+            android:layout_width="wrap_content"
+            android:textColor="@color/color_222"
+            android:textSize="40sp"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/rIv1"
+            android:layout_width="110dp"
+            android:layout_marginTop="24dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_e64e71ff_8"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/rIv2"
+            android:layout_width="110dp"
+            android:layout_marginTop="2dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_b34e71ff_8"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/rIv3"
+            android:layout_width="110dp"
+            android:layout_marginTop="2dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_804e71ff_8"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/rIv4"
+            android:layout_width="110dp"
+            android:layout_marginTop="2dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_3d4e71ff_8"
+            tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/rIv5"
+            android:layout_width="110dp"
+            android:layout_marginTop="2dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_1a4e71ff_8"
+            tools:ignore="ContentDescription" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <View
+            android:id="@+id/rTimesView"
+            android:layout_width="140dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="35dp"
+            android:background="@drawable/bg_3d4e71ff_20"
+            app:layout_constraintTop_toBottomOf="@+id/rLC"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="70dp"/>
+        <TextView
+            android:id="@+id/rTimesTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/rTimesView"
+            app:layout_constraintBottom_toBottomOf="@+id/rTimesView"
+            app:layout_constraintStart_toStartOf="@+id/rTimesView"
+            app:layout_constraintEnd_toEndOf="@+id/rTimesView"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:textColor="@color/color_222"
+            android:textSize="50sp"
+            android:text="@{viewModel.rightLegCount}"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/rUnitTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/rTimesTv"
+            app:layout_constraintStart_toEndOf="@+id/rTimesTv"
+            android:text="@string/main_times"
+            android:textColor="@color/color_222"
+            android:textSize="26sp"
+            android:layout_height="wrap_content"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <View
+            android:id="@+id/dataView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@+id/backIv"
+            app:layout_constraintEnd_toStartOf="@+id/countdownTv"
+            app:layout_constraintTop_toTopOf="@+id/countdownTv"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/bg_white_round_20"
-            app:layout_constraintBottom_toBottomOf="@+id/selectedBtn"
-            app:layout_constraintEnd_toStartOf="@+id/selectedBtn"
-            app:layout_constraintStart_toEndOf="@+id/backIv"
-            app:layout_constraintTop_toTopOf="@+id/selectedBtn">
+            android:background="@drawable/bg_white_80_round_20"
+            android:layout_height="144dp"/>
+        <TextView
+            android:id="@+id/sportsTimeTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/dataView"
+            app:layout_constraintTop_toTopOf="@+id/dataView"
+            android:text="@string/main_sports_time"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="16dp"
+            android:textSize="25sp"
+            android:textColor="@color/color_222"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/timeNumTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/dataView"
+            app:layout_constraintTop_toBottomOf="@+id/sportsTimeTv"
+            android:layout_marginTop="17dp"
+            android:text="@{viewModel.curTime}"
+            android:layout_marginStart="25dp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/main_timer"
+            android:textSize="50sp"
+            android:textColor="@color/color_222"
+            android:layout_height="wrap_content"/>
+        <View
+            android:id="@+id/midLine"
+            android:layout_width="2dp"
+            app:layout_constraintStart_toStartOf="@+id/dataView"
+            app:layout_constraintEnd_toEndOf="@+id/dataView"
+            app:layout_constraintTop_toTopOf="@+id/dataView"
+            android:background="@color/color_332c2c2c"
+            app:layout_constraintBottom_toBottomOf="@+id/dataView"
+            android:layout_height="88dp"/>
+        <TextView
+            android:id="@+id/heartTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/midLine"
+            app:layout_constraintTop_toTopOf="@+id/sportsTimeTv"
+            android:text="@string/sports_assessment_high_leg_times"
+            android:textSize="25sp"
+            android:layout_marginStart="25dp"
+            android:textColor="@color/color_222"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/sportsNumberTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/midLine"
+            android:layout_marginStart="25dp"
+            android:text="@{viewModel.sportsNumber}"
+            app:layout_constraintTop_toBottomOf="@+id/heartTv"
+            android:layout_marginTop="17dp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/sports_assessment_times"
+            android:textSize="50sp"
+            android:textColor="@color/color_222"
+            android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:id="@+id/iconIv"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="22dp"
-                android:background="@drawable/bg_gray_round_20"
-                android:scaleType="center"
-                android:src="@drawable/sports_assessment_tip"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tipTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/sports_assessment_tip_title"
-                android:textColor="@color/color_cc1c1c1c"
-                android:textSize="22sp"
-                app:layout_constraintStart_toEndOf="@+id/iconIv"
-                app:layout_constraintTop_toTopOf="@+id/iconIv" />
-
-            <TextView
-                android:id="@+id/tipDesTv"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="22dp"
-                android:text="@string/sports_assessment_tip_des"
-                android:textColor="@color/color_801c1c1c"
-                android:textSize="22sp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iconIv"
-                app:layout_constraintTop_toBottomOf="@+id/tipTitleTv" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/selectedBtn"
+        <ImageView
+            android:id="@+id/backIv"
+            android:layout_width="144dp"
+            android:background="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{()-> click.clickFinish()}"
+            app:layout_constraintTop_toTopOf="@+id/countdownTv"
+            android:layout_marginStart="35dp"
+            android:layout_height="144dp"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/countdownTv"
             style="@style/SMButton"
             android:layout_width="240dp"
-            android:onClick="@{()-> click.clickSelectedAssessmentPorts()}"
-            android:text="@string/sports_assessment_selected"
+            android:layout_marginBottom="45dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="35dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

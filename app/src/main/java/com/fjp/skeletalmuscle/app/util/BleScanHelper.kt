@@ -10,7 +10,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
-import com.fjp.skeletalmuscle.data.model.BleDevice
+import com.fjp.skeletalmuscle.data.model.bean.BleDevice
 
 //扫描到的设备列表
 public val mBleDeviceList = ArrayList<BleDevice>()

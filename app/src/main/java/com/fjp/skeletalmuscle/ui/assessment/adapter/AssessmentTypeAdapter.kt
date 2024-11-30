@@ -1,4 +1,4 @@
-package com.fjp.skeletalmuscle.ui.sports.adapter
+package com.fjp.skeletalmuscle.ui.assessment.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder

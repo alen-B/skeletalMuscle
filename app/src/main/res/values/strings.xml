@@ -1,5 +1,21 @@
 <resources>
     <string name="app_name">SkeletalMuscle</string>
+    <string name="month_1">1月</string>
+    <string name="month_2">2月</string>
+    <string name="month_3">3月</string>
+    <string name="month_4">4月</string>
+    <string name="month_5">5月</string>
+    <string name="month_6">6月</string>
+    <string name="month_7">7月</string>
+    <string name="month_8">8月</string>
+    <string name="month_9">9月</string>
+    <string name="month_10">10月</string>
+    <string name="month_11">11月</string>
+    <string name="month_12">12月</string>
+    <string name="times">次数</string>
+    <string name="weight_kg">体重(kg)</string>
+
+
     <!--    登录界面-->
     <string name="login_login">登 录</string>
     <string name="login_title">请输入手机号获取验证码</string>
@@ -352,6 +368,27 @@
     <string name="sports_assessment_type_waistline">当前腰围</string>
 
     <string name="selected_waistline_weight_title">请您选择您的体重和腰围</string>
+    <string name="sports_assessment_title">请运动一分钟</string>
+    <string name="sports_assessment_title_hand_grips">请握三次握力器</string>
+    <string name="sports_assessment_high_leg_times">有效抬腿次数</string>
+    <string name="sports_assessment_sit_up_times">起坐次数</string>
+    <string name="sports_assessment_max_grip">握力最大值</string>
+
+
+    <string name="sports_assessment_history_title">历史运动测评结果</string>
+    <string name="sports_assessment_history_pre_year">前一年</string>
+    <string name="sports_assessment_history_next_year">后一年</string>
+    <string name="sports_assessment_history_max_grips">握力巅峰</string>
+    <string name="sports_assessment_history_sit_up_times">坐起次数</string>
+    <string name="sports_assessment_history_high_leg_times">高抬腿次数</string>
+    <string name="sports_assessment_history_assessment">运动测评指标</string>
+    <string name="sports_assessment_history_weight_and_bmi">体重和BMI趋势图</string>
+    <string name="sports_assessment_history_weight">体重</string>
+    <string name="sports_assessment_history_bmi">BMI</string>
+    <string name="sports_assessment_history_waist">腰围示意图</string>
+    <string name="sports_assessment_history_result_max_grips">握力运动最高</string>
+    <string name="sports_assessment_history_result_max_sit_up_times">一分钟起坐运动次数</string>
+    <string name="sports_assessment_history_result_high_leg_times">一分钟有效高抬腿运动次数</string>
 
 
 </resources>

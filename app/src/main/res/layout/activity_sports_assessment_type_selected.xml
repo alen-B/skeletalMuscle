@@ -11,7 +11,7 @@
             type="com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentTypeSelectedViewModel" />
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.sports.SportsAssessmentTypeSelectedActivity.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentTypeSelectedActivity.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

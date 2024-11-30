@@ -10,7 +10,7 @@
 
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.sports.SelectedWaistlineAndWeightActivity.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.assessment.SelectedWaistlineAndWeightActivity.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
         android:paddingEnd="48dp"
         android:paddingStart="48dp"
         android:paddingBottom="48dp"
-        tools:context=".ui.sports.SelectedWaistlineAndWeightActivity">
+        tools:context=".ui.assessment.SelectedWaistlineAndWeightActivity">
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />

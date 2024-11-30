@@ -1,4 +1,4 @@
-package com.fjp.skeletalmuscle.data.model
+package com.fjp.skeletalmuscle.data.model.bean
 
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.le.ScanRecord

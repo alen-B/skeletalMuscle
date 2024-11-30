@@ -1,29 +1,32 @@
-package com.fjp.skeletalmuscle.ui.sports
+package com.fjp.skeletalmuscle.ui.assessment.fragment
 
-import android.content.Intent
 import android.graphics.Color
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.fjp.skeletalmuscle.R
-import com.fjp.skeletalmuscle.app.base.BaseActivity
-import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentBinding
-import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentViewModel
+import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.databinding.FragmentAssessmentResultBinding
+import com.fjp.skeletalmuscle.viewmodel.state.AssessmentResultViewModel
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
+import me.hgj.jetpackmvvm.base.appContext
 
+class AssessmentResultFragment(val curMonth:Int) : BaseFragment<AssessmentResultViewModel,FragmentAssessmentResultBinding>() {
 
-class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, ActivitySportsAssessmentBinding>() {
+    companion object {
+        fun newInstance(curMonth:Int) = AssessmentResultFragment(curMonth)
+    }
+
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.viewModel = mViewModel
-        mDatabind.click = ProxyClick()
-        //TODO 根据测评状态来显示，如果测评没做完，提示用户继续做其他测评，如果做完了
-//        mViewModel.title.set()
+        mDatabind.viewModel=mViewModel
         initRadarChart()
     }
 
@@ -41,14 +44,19 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         xAxis.textSize = 9f
         xAxis.yOffset = 0f
         xAxis.xOffset = 0f
-        val mActivities = arrayOf(getString(R.string.sports_assessment_grip), getString(R.string.sports_assessment_sit_up), getString(R.string.sports_assessment_waistline), getString(R.string.sports_assessment_high_leg))
-        xAxis.valueFormatter = object:ValueFormatter(){
+        val mActivities = arrayOf(getString(R.string.sports_assessment_history_result_max_grips),
+            getString(R.string.sports_assessment_history_result_max_sit_up_times),
+            getString(R.string.sports_assessment_waistline),
+            getString(R.string.sports_assessment_weight),
+            getString(R.string.sports_assessment_history_result_high_leg_times),
+        )
+        xAxis.valueFormatter = object: ValueFormatter(){
             override fun getFormattedValue(value: Float): String {
                 return mActivities[value.toInt() % mActivities.size]
             }
         }
 
-        xAxis.textColor = getColor(R.color.color_801c1c1c)
+        xAxis.textColor = appContext.getColor(R.color.color_801c1c1c)
 
         val yAxis = chart.yAxis
         yAxis.setLabelCount(5, false)
@@ -85,8 +93,8 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         set1.isDrawHighlightCircleEnabled = true
         set1.setDrawHighlightIndicators(false)
         val set2 = RadarDataSet(entries2, "This Week")
-        set2.color =getColor(R.color.color_1a4e71ff)
-        set2.fillColor = getColor(R.color.color_1a4e71ff)
+        set2.color = appContext.getColor(R.color.color_1a4e71ff)
+        set2.fillColor = appContext.getColor(R.color.color_1a4e71ff)
         set2.setDrawFilled(true)
         set2.fillAlpha = 180
         set2.lineWidth = 1f
@@ -103,14 +111,5 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         mDatabind.radarChart.invalidate()
     }
 
-    inner class ProxyClick {
 
-        fun clickFinish(){
-            finish()
-        }
-        fun clickSelectedAssessmentPorts(){
-            val intent =Intent(this@SportsAssessmentActivity,SelectedWaistlineAndWeightActivity::class.java)
-            startActivity(intent)
-        }
-    }
 }

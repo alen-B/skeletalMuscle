@@ -19,7 +19,7 @@ import com.fjp.skeletalmuscle.app.util.BleScanHelper
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
-import com.fjp.skeletalmuscle.data.model.BleDevice
+import com.fjp.skeletalmuscle.data.model.bean.BleDevice
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep4Binding
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity

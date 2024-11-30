@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
@@ -18,6 +17,7 @@ import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
 import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsDumbbellFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsHighKneeFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsPlankFragment
+import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
 import com.fjp.skeletalmuscle.ui.user.adapter.MainSportsRateAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.MainViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SEX
@@ -117,8 +117,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     }
     inner class ProxyClick{
-        fun startSportsRvaluation(){
-            startActivity(Intent(this@MainActivity,TodaySelectSportsActivity::class.java))
+        fun startSportsAssessment(){
+            startActivity(Intent(this@MainActivity, SportsAssessmentResultActivity::class.java))
         }
         fun startSports(){
             startActivity(Intent(this@MainActivity,TodaySelectSportsActivity::class.java))

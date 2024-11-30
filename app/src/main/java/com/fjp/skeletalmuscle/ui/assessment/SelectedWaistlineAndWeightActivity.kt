@@ -1,6 +1,5 @@
-package com.fjp.skeletalmuscle.ui.sports
+package com.fjp.skeletalmuscle.ui.assessment
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,8 +8,7 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.databinding.ActivitySelectedWaistlineAndWeightBinding
-import com.fjp.skeletalmuscle.ui.sports.adapter.WaistlineAndWeightAdapter
-import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
+import com.fjp.skeletalmuscle.ui.assessment.adapter.WaistlineAndWeightAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.SelectedWaistlineAndWeightViewModel
 
 class SelectedWaistlineAndWeightActivity : BaseActivity<SelectedWaistlineAndWeightViewModel, ActivitySelectedWaistlineAndWeightBinding>() {
