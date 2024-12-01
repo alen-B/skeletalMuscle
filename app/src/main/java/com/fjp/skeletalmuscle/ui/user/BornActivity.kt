@@ -11,7 +11,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.Constants
-import com.fjp.skeletalmuscle.app.util.DatetimeUtil
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.databinding.ActivityBornBinding
 import com.fjp.skeletalmuscle.viewmodel.state.BornViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
@@ -38,13 +38,13 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
         val startDate: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"))
         val endDate: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"))
         //endDate.set(2020,1,1);
-        selectedDate.set(1987,7,8)
+        selectedDate.set(1987, 7, 8)
         curDate = selectedDate.time
-        startDate.set(1940, 0, 1,12,0,0)
+        startDate.set(1940, 0, 1, 12, 0, 0)
 
         pvTime = TimePickerBuilder(this) { date, v -> //选中事件回调
             curDate = date
-            val formatDate = DatetimeUtil.formatDate(date,DatetimeUtil.DATE_PATTERN)
+            val formatDate = DateTimeUtil.formatDate(date, DateTimeUtil.DATE_PATTERN)
             val dateArray = formatDate.split("-")
             mViewModel.year.set(dateArray[0])
             mViewModel.month.set(dateArray[1])
@@ -73,12 +73,12 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
             val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM)
             //去掉默认的maring
             params.leftMargin = 0
-            params.rightMargin =0
+            params.rightMargin = 0
             pvTime.dialogContainerLayout.layoutParams = params
 
             val dialogWindow = mDialog.window
             if (dialogWindow != null) {
-                val lp =dialogWindow.attributes
+                val lp = dialogWindow.attributes
                 val dm = resources.displayMetrics
                 //设置横屏，占满屏幕宽度
                 lp.width = dm.widthPixels
@@ -94,7 +94,7 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
     inner class ProxyClick {
         fun next() {
             val intent = Intent(this@BornActivity, SingleSelectActivity::class.java)
-            App.userInfo?.born = curDate.time
+            App.userInfo?.birthday = DateTimeUtil.formatDate(curDate,DateTimeUtil.DATE_PATTERN)
             intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.HEIGHT.type)
             startActivity(intent)
         }

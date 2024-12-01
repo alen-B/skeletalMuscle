@@ -13,16 +13,16 @@ import com.fjp.skeletalmuscle.viewmodel.state.SplashViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SplashActivity : BaseActivity<SplashViewModel,ActivitySplashBinding>() {
+class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         lifecycleScope.launch {
             delay(2000)
-            if(CacheUtil.isLogin()){
-                App.userInfo = CacheUtil.getUser()!!
-                startActivity(Intent(this@SplashActivity,MainActivity::class.java))
-            }else{
-                startActivity(Intent(this@SplashActivity,LoginActivity::class.java))
+            if (CacheUtil.isLogin() && CacheUtil.getUser()!=null) {
+                App.userInfo=CacheUtil.getUser()!!
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            } else {
+                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
             }
             finish()
         }

@@ -25,19 +25,19 @@ import java.io.IOException
  */
 fun AppCompatActivity.showMessage(message: String, title: String = "温馨提示", positiveButtonText: String = "确定", positiveAction: () -> Unit = {}, negativeButtonText: String = "", negativeAction: () -> Unit = {}) {
     MaterialDialog(this).cancelable(true).lifecycleOwner(this).show {
-            title(text = title)
-            message(text = message)
-            positiveButton(text = positiveButtonText) {
-                positiveAction.invoke()
-            }
-            if (negativeButtonText.isNotEmpty()) {
-                negativeButton(text = negativeButtonText) {
-                    negativeAction.invoke()
-                }
-            }
-            getActionButton(WhichButton.POSITIVE).updateTextColor(SettingUtil.getColor(this@showMessage))
-            getActionButton(WhichButton.NEGATIVE).updateTextColor(SettingUtil.getColor(this@showMessage))
+        title(text = title)
+        message(text = message)
+        positiveButton(text = positiveButtonText) {
+            positiveAction.invoke()
         }
+        if (negativeButtonText.isNotEmpty()) {
+            negativeButton(text = negativeButtonText) {
+                negativeAction.invoke()
+            }
+        }
+        getActionButton(WhichButton.POSITIVE).updateTextColor(SettingUtil.getColor(this@showMessage))
+        getActionButton(WhichButton.NEGATIVE).updateTextColor(SettingUtil.getColor(this@showMessage))
+    }
 }
 
 /**
@@ -51,19 +51,19 @@ fun AppCompatActivity.showMessage(message: String, title: String = "温馨提示
 fun Fragment.showMessage(message: String, title: String = "温馨提示", positiveButtonText: String = "确定", positiveAction: () -> Unit = {}, negativeButtonText: String = "", negativeAction: () -> Unit = {}) {
     activity?.let {
         MaterialDialog(it).cancelable(true).lifecycleOwner(viewLifecycleOwner).show {
-                title(text = title)
-                message(text = message)
-                positiveButton(text = positiveButtonText) {
-                    positiveAction.invoke()
-                }
-                if (negativeButtonText.isNotEmpty()) {
-                    negativeButton(text = negativeButtonText) {
-                        negativeAction.invoke()
-                    }
-                }
-                getActionButton(WhichButton.POSITIVE).updateTextColor(SettingUtil.getColor(it))
-                getActionButton(WhichButton.NEGATIVE).updateTextColor(SettingUtil.getColor(it))
+            title(text = title)
+            message(text = message)
+            positiveButton(text = positiveButtonText) {
+                positiveAction.invoke()
             }
+            if (negativeButtonText.isNotEmpty()) {
+                negativeButton(text = negativeButtonText) {
+                    negativeAction.invoke()
+                }
+            }
+            getActionButton(WhichButton.POSITIVE).updateTextColor(SettingUtil.getColor(it))
+            getActionButton(WhichButton.NEGATIVE).updateTextColor(SettingUtil.getColor(it))
+        }
     }
 }
 
@@ -125,7 +125,7 @@ inline fun <reified T> List<T>?.getChild(position: Int): T? {
     }
 }
 
-fun Context.showToast(message:String){
-    Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+fun Context.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 

@@ -10,7 +10,7 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  */
 class BornViewModel : SMBaseViewModel() {
     val born = ObservableField("")
-    val year = ObservableField("1978")
+    val year = ObservableField("1987")
     val month = ObservableField("08")
     val day = ObservableField("08")
 

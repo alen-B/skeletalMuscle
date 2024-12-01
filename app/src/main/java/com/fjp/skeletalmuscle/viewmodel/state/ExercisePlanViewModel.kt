@@ -9,7 +9,7 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  *Time:2024/10/26
  *Description:
  */
-class ExercisePlanViewModel: SMBaseViewModel() {
+class ExercisePlanViewModel : SMBaseViewModel() {
     val sportsIcon = ObservableField(R.drawable.exercise_plan_height_leg)
     val sportsType = ObservableField("")
     val sportsTime = ObservableField("10")

@@ -9,7 +9,7 @@ import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.databinding.ActivityInputNameBinding
 import com.fjp.skeletalmuscle.viewmodel.state.InputNameViewModel
 
-class InputNameActivity  : BaseActivity<InputNameViewModel, ActivityInputNameBinding>() {
+class InputNameActivity : BaseActivity<InputNameViewModel, ActivityInputNameBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -20,13 +20,13 @@ class InputNameActivity  : BaseActivity<InputNameViewModel, ActivityInputNameBin
     }
 
     inner class ProxyClick {
-        fun next(){
-            if(mViewModel.name.get()!!.isEmpty()){
+        fun next() {
+            if (mViewModel.name.get()!!.isEmpty()) {
                 showToast(getString(R.string.input_name_tips))
                 return
             }
             App.userInfo?.name = mViewModel.name.get().toString()
-            startActivity(Intent(this@InputNameActivity,SelectGenderActivity::class.java))
+            startActivity(Intent(this@InputNameActivity, SelectGenderActivity::class.java))
 
         }
     }

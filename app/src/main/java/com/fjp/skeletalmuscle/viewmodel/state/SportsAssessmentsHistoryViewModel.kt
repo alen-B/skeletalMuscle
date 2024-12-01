@@ -8,6 +8,6 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  *Time:2024/11/30
  *Description:
  */
-class SportsAssessmentsHistoryViewModel:SMBaseViewModel() {
+class SportsAssessmentsHistoryViewModel : SMBaseViewModel() {
     val calendarTitle = ObservableField<String>("")
 }

@@ -12,13 +12,14 @@ import me.hgj.jetpackmvvm.base.appContext
  */
 class SuportsViewModel : SMBaseViewModel() {
     val dataArr = mutableListOf<Sports>()
+
     init {
-        dataArr.add(Sports(appContext.getString(R.string.sports_type_no),false))
-        dataArr.add(Sports(appContext.getString(R.string.sports_type_run),false))
-        dataArr.add(Sports(appContext.getString(R.string.sports_type_hie),false))
-        dataArr.add(Sports(appContext.getString(R.string.sports_type_jumping_rope),false))
-        dataArr.add(Sports(appContext.getString(R.string.sports_type_badminton),false))
-        dataArr.add(Sports(appContext.getString(R.string.sports_type_jumping_exercises),false))
+        dataArr.add(Sports(appContext.getString(R.string.sports_type_no), false))
+        dataArr.add(Sports(appContext.getString(R.string.sports_type_run), false))
+        dataArr.add(Sports(appContext.getString(R.string.sports_type_hie), false))
+        dataArr.add(Sports(appContext.getString(R.string.sports_type_jumping_rope), false))
+        dataArr.add(Sports(appContext.getString(R.string.sports_type_badminton), false))
+        dataArr.add(Sports(appContext.getString(R.string.sports_type_jumping_exercises), false))
     }
 
 }

@@ -6,9 +6,11 @@
     tools:ignore="LabelFor">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentTypeSelectedViewModel" />
+
         <variable
             name="click"
             type="com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentTypeSelectedActivity.ProxyClick" />
@@ -33,7 +35,7 @@
             app:layout_constraintBottom_toTopOf="@+id/nextBtn"
             android:layout_width="match_parent"
             android:scrollbars="none"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/nextBtn"
@@ -43,6 +45,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             bind:noRepeatClick="@{()-> click.clickStart()}" />
+
         <io.alterac.blurkit.BlurLayout
             android:id="@+id/blurLayout"
             android:layout_width="144dp"

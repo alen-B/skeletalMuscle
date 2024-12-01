@@ -6,7 +6,7 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
-import com.fjp.skeletalmuscle.app.util.DatetimeUtil
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
 import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
 import com.fjp.skeletalmuscle.data.model.bean.TodayhignKneeSports
@@ -28,23 +28,23 @@ class SportsCompletedActivity : BaseActivity<SportsCompletedViewModel, ActivityS
             mDatabind.heatNumberTv.text = curSports.calories.toString()
             mViewModel.score.set(curSports.score.toString())
             println(curSports.toString())
-            mDatabind.timeTv.text = DatetimeUtil.formSportTime(curSports.time)
+            mDatabind.timeTv.text = DateTimeUtil.formSportTime(curSports.time)
             var sports = CacheUtil.getSports()
             if (sports == null) {
                 val map = mutableMapOf<String, HighKneeSports>()
-                map[DatetimeUtil.getCurDate2Str()] = curSports
+                map[DateTimeUtil.getCurDate2Str()] = curSports
                 sports = TodayhignKneeSports(sports = map)
                 CacheUtil.setSports(sports)
             } else {
-                val todaySports = sports.sports[DatetimeUtil.getCurDate2Str()]
+                val todaySports = sports.sports[DateTimeUtil.getCurDate2Str()]
                 if (todaySports == null) {
-                    sports.sports[DatetimeUtil.getCurDate2Str()] = curSports
+                    sports.sports[DateTimeUtil.getCurDate2Str()] = curSports
                     CacheUtil.setSports(sports)
                 } else {
-                    println("===:"+todaySports)
-                    println("===:"+curSports)
-                    todaySports.times = curSports.times+todaySports.times
-                    todaySports.time = curSports.time+todaySports.time
+                    println("===:" + todaySports)
+                    println("===:" + curSports)
+                    todaySports.times = curSports.times + todaySports.times
+                    todaySports.time = curSports.time + todaySports.time
                     todaySports.score = (curSports.score + todaySports.score) / 2
                     todaySports.warmupTime = curSports.warmupTime + todaySports.warmupTime
                     todaySports.fatBurningTime = curSports.fatBurningTime + todaySports.fatBurningTime
@@ -60,7 +60,7 @@ class SportsCompletedActivity : BaseActivity<SportsCompletedViewModel, ActivityS
                         minHeartRate = curSports.minHeartRate
                     }
                     todaySports.minHeartRate = minHeartRate
-                    sports.sports[DatetimeUtil.getCurDate2Str()] = todaySports
+                    sports.sports[DateTimeUtil.getCurDate2Str()] = todaySports
                     CacheUtil.setSports(sports)
                 }
 

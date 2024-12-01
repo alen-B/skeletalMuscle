@@ -8,6 +8,6 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  *Time:2024/11/1
  *Description:
  */
-class SportsCompletedViewModel:SMBaseViewModel() {
+class SportsCompletedViewModel : SMBaseViewModel() {
     val score = ObservableField("78")
 }

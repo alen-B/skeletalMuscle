@@ -25,7 +25,6 @@ import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
 import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
 import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.SEX
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.util.DateUtils
 import me.hgj.jetpackmvvm.util.NumberUtils
@@ -88,7 +87,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         }
     }
 
-    var curHeartRateLevel: HeartRateLevel=HeartRateLevel.WARMUP_TIME
+    var curHeartRateLevel: HeartRateLevel = HeartRateLevel.WARMUP_TIME
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -96,9 +95,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         startTimer()
         //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
-            age = DateUtils.calculateAge(Date(it.born), Date(System.currentTimeMillis()))
-            weight = NumberUtils.extractNumbers(it.weight)[0].toDouble()
-            isMale = it.sex == SEX.MAN.value
+            age = DateUtils.calculateAge(Date(it.birthday), Date(System.currentTimeMillis()))
+            weight = it.weight.toDouble()
+            isMale = it.sex == getString(R.string.setting_sex_man)
         }
 
 
@@ -273,8 +272,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                     leftLegLifts++
                     leftLegAngleSum += leftLegmaxPitchInCycle.toDouble()
                     mViewModel.leftLegCount.set(leftLegLifts.toString())
-                    if(rightLegLifts!=0){
-                        println("=====左腿最大角度："+leftLegmaxPitchInCycle+"    右腿角度"+rightLastPitch)
+                    if (rightLegLifts != 0) {
+                        println("=====左腿最大角度：" + leftLegmaxPitchInCycle + "    右腿角度" + rightLastPitch)
                     }
                     getAvgScore(abs(leftLegmaxPitchInCycle))
                 }
@@ -298,22 +297,24 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         leftLastPitch = pitch
         setLeftCurLevelByPitch(pitch)
     }
-    fun setLeftCurLevelByPitch(pitch:Float){
+
+    fun setLeftCurLevelByPitch(pitch: Float) {
         val leftLevel = calculateLevelFromAngle(pitch)
         if (leftOldLevel != -1) {
             leftLevelViews[leftOldLevel].setImageDrawable(null)
         }
-        if(curHeartRateLevel == HeartRateLevel.WARMUP_TIME){
+        if (curHeartRateLevel == HeartRateLevel.WARMUP_TIME) {
             leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
-        }else if(curHeartRateLevel == HeartRateLevel.FAT_BURNING_TIME){
+        } else if (curHeartRateLevel == HeartRateLevel.FAT_BURNING_TIME) {
             leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_fat_burning))
-        }else if(curHeartRateLevel == HeartRateLevel.CARDIO_TIME){
+        } else if (curHeartRateLevel == HeartRateLevel.CARDIO_TIME) {
             leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_cardio))
-        }else if(curHeartRateLevel == HeartRateLevel.BREAK_TIME){
+        } else if (curHeartRateLevel == HeartRateLevel.BREAK_TIME) {
             leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_break))
         }
         leftOldLevel = leftLevel
     }
+
     override fun onRightDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
@@ -344,8 +345,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                     rightLegAngleSum += abs(rightLegmaxPitchInCycle).toDouble()
                     mViewModel.rightLegCount.set(rightLegLifts.toString())
                     getAvgScore(abs(rightLegmaxPitchInCycle))
-                    if(leftLegLifts!=0){
-                        println("=====又腿最大角度："+rightLegmaxPitchInCycle+"    左腿角度"+leftLastPitch)
+                    if (leftLegLifts != 0) {
+                        println("=====又腿最大角度：" + rightLegmaxPitchInCycle + "    左腿角度" + leftLastPitch)
                     }
                 }
             }
@@ -369,18 +370,19 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
         setRightCurLevelByPitch(pitch)
     }
-    fun setRightCurLevelByPitch(pitch:Float){
+
+    fun setRightCurLevelByPitch(pitch: Float) {
         val rightLevel = calculateLevelFromAngle(pitch)
         if (rightOldLevel != -1) {
             rightLevelViews[rightOldLevel].setImageDrawable(null)
         }
-        if(curHeartRateLevel == HeartRateLevel.WARMUP_TIME){
+        if (curHeartRateLevel == HeartRateLevel.WARMUP_TIME) {
             rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
-        }else if(curHeartRateLevel == HeartRateLevel.FAT_BURNING_TIME){
+        } else if (curHeartRateLevel == HeartRateLevel.FAT_BURNING_TIME) {
             rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_fat_burning))
-        }else if(curHeartRateLevel == HeartRateLevel.CARDIO_TIME){
+        } else if (curHeartRateLevel == HeartRateLevel.CARDIO_TIME) {
             rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_cardio))
-        }else if(curHeartRateLevel == HeartRateLevel.BREAK_TIME){
+        } else if (curHeartRateLevel == HeartRateLevel.BREAK_TIME) {
             rightLevelViews[rightLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_break))
         }
         rightOldLevel = rightLevel
@@ -409,28 +411,28 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             // 更新区间时间，每次心率读数都假设是10秒钟的时间
             if (heartRatePercentage < 0.6) {
                 warmupTime += 10
-                if(curHeartRateLevel!= HeartRateLevel.WARMUP_TIME){
+                if (curHeartRateLevel != HeartRateLevel.WARMUP_TIME) {
                     showWarmupUI()
                 }
                 curHeartRateLevel = HeartRateLevel.WARMUP_TIME
                 mViewModel.title.set(getString(R.string.high_knee_main_title))
             } else if (heartRatePercentage >= 0.6 && heartRatePercentage < 0.7) {
                 fatBurningTime += 10
-                if(curHeartRateLevel!= HeartRateLevel.FAT_BURNING_TIME){
+                if (curHeartRateLevel != HeartRateLevel.FAT_BURNING_TIME) {
                     showFatBurningUI()
                 }
                 curHeartRateLevel = HeartRateLevel.FAT_BURNING_TIME
                 mViewModel.title.set(getString(R.string.high_knee_main_title_fat_burning))
             } else if (heartRatePercentage >= 0.7 && heartRatePercentage < 0.8) {
                 cardioTime += 10
-                if(curHeartRateLevel!= HeartRateLevel.CARDIO_TIME){
+                if (curHeartRateLevel != HeartRateLevel.CARDIO_TIME) {
                     showCardioUI()
                 }
                 curHeartRateLevel = HeartRateLevel.CARDIO_TIME
                 mViewModel.title.set(getString(R.string.high_knee_main_title_cardio))
             } else {
                 breakTime += 10
-                if(curHeartRateLevel!= HeartRateLevel.BREAK_TIME){
+                if (curHeartRateLevel != HeartRateLevel.BREAK_TIME) {
                     showBreakUI()
                 }
                 curHeartRateLevel = HeartRateLevel.BREAK_TIME
@@ -454,8 +456,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     private fun showWarmupUI() {
         mDatabind.stopBtn.setBackgroundResource(R.drawable.btn_blue_selector)
-        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this,R.color.color_blue))
-        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this,R.color.color_ccc6d1fc))
+        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this, R.color.color_blue))
+        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this, R.color.color_ccc6d1fc))
         mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
@@ -472,11 +474,12 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         mDatabind.rIv5.setBackgroundResource(R.drawable.bg_1a4e71ff_8)
 
     }
+
     private fun showFatBurningUI() {
 
         mDatabind.stopBtn.setBackgroundResource(R.drawable.bg_btn_fat_burning)
-        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this,R.color.color_ccffc019))
-        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this,R.color.color_ccfcefce))
+        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this, R.color.color_ccffc019))
+        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this, R.color.color_ccfcefce))
         mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_fat_burning)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_fat_burning)
         mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_fat_burning)
@@ -492,11 +495,12 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_fat_burning)
 
     }
+
     private fun showCardioUI() {
 
         mDatabind.stopBtn.setBackgroundResource(R.drawable.bg_btn_cardio)
-        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this,R.color.color_ff824c))
-        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this,R.color.color_3dff824c))
+        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this, R.color.color_ff824c))
+        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this, R.color.color_3dff824c))
         mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_cardio)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_cardio)
         mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_cardio)
@@ -516,8 +520,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private fun showBreakUI() {
 
         mDatabind.stopBtn.setBackgroundResource(R.drawable.bg_btn_break)
-        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this,R.color.color_ff574c))
-        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this,R.color.color_1aff574c))
+        mDatabind.progressBar.setProgressDrawableColor(ContextCompat.getColor(this, R.color.color_ff574c))
+        mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this, R.color.color_1aff574c))
         mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_break)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_break)
         mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_break)
@@ -532,6 +536,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_break)
         mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_break)
     }
+
     override fun onLeftHandGripsData(data: ByteArray) {
     }
 

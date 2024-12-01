@@ -15,24 +15,24 @@ import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDataViewModel
 import com.zhpan.indicator.enums.IndicatorStyle
 import me.hgj.jetpackmvvm.ext.util.dp2px
 
-class TodaySportsActivity :BaseActivity<TodaySportsDataViewModel,ActivityTodaySportsDataBinding>() {
-    lateinit var todaySportsDataAdapter:TodaySportsDataAdapter
+class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityTodaySportsDataBinding>() {
+    lateinit var todaySportsDataAdapter: TodaySportsDataAdapter
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.today_sports_data_title))
         mDatabind.click = ProxyClick()
-        val fragments =arrayListOf<Fragment>(TodaySportsHighKneeFragment.newInstance(), TodaySportsDumbbellFragment.newInstance(),TodaySportsPlankFragment.newInstance())
-        val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager,1f,fragments)
+        val fragments = arrayListOf<Fragment>(TodaySportsHighKneeFragment.newInstance(), TodaySportsDumbbellFragment.newInstance(), TodaySportsPlankFragment.newInstance())
+        val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 1f, fragments)
         mDatabind.viewpager.adapter = viewpagerAdapter
         mDatabind.indicatorView.apply {
-            setSliderColor(getColor(R.color.color_e9e9e9),getColor(R.color.color_blue))
+            setSliderColor(getColor(R.color.color_e9e9e9), getColor(R.color.color_blue))
             setPageSize(viewpagerAdapter.count)
             setSliderWidth(8f)
             setSliderHeight(8f)
             setIndicatorStyle(IndicatorStyle.CIRCLE)
             notifyDataChanged()
         }
-        mDatabind.viewpager.pageMargin=dp2px(16)
+        mDatabind.viewpager.pageMargin = dp2px(16)
         mDatabind.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 mDatabind.indicatorView.onPageScrolled(position, positionOffset, positionOffsetPixels)
@@ -57,14 +57,17 @@ class TodaySportsActivity :BaseActivity<TodaySportsDataViewModel,ActivityTodaySp
         super.onPause()
         mDatabind.blurLayout.pauseBlur()
     }
-    inner class ProxyClick{
-        fun clickShare(){
+
+    inner class ProxyClick {
+        fun clickShare() {
 
         }
-        fun clickSportsRecord(){
+
+        fun clickSportsRecord() {
 
         }
-        fun finish(){
+
+        fun finish() {
             this@TodaySportsActivity.finish()
         }
     }

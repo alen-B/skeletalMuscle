@@ -10,7 +10,7 @@ import me.hgj.jetpackmvvm.base.appContext
  *Time:2024/10/29
  *Description:
  */
-class DeviceOffLineViewModel:SMBaseViewModel() {
+class DeviceOffLineViewModel : SMBaseViewModel() {
     val braceletTitle = ObservableField(appContext.getString(R.string.device_off_line_bracelet_connected))
     val leftKneeTitle = ObservableField(appContext.getString(R.string.device_off_line_left_knee_connected))
     val rightKneeTitle = ObservableField(appContext.getString(R.string.device_off_line_right_knee_connected))

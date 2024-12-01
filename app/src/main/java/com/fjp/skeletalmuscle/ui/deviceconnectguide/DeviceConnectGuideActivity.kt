@@ -10,12 +10,12 @@ import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
 import com.fjp.skeletalmuscle.databinding.ActivityDeviceConnectGuideBinding
+import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentActivity
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep1Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep2Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep4Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep6Fragment
 import com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity
-import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentActivity
 import com.fjp.skeletalmuscle.viewmodel.state.DeviceConnectViewModel
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.util.get

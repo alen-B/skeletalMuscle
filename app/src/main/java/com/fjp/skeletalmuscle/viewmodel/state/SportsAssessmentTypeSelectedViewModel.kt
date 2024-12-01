@@ -9,9 +9,6 @@ import me.hgj.jetpackmvvm.base.appContext
  *Time:2024/11/30
  *Description:
  */
-class SportsAssessmentTypeSelectedViewModel:SMBaseViewModel(){
-    val dataArr = mutableListOf<String>(appContext.getString(R.string.sports_assessment_high_leg),
-        appContext.getString(R.string.sports_assessment_type_weight_waistline),
-        appContext.getString(R.string.sports_assessment_sit_up),
-        appContext.getString(R.string.sports_assessment_grip))
+class SportsAssessmentTypeSelectedViewModel : SMBaseViewModel() {
+    val dataArr = mutableListOf<String>(appContext.getString(R.string.sports_assessment_high_leg), appContext.getString(R.string.sports_assessment_type_weight_waistline), appContext.getString(R.string.sports_assessment_sit_up), appContext.getString(R.string.sports_assessment_grip))
 }

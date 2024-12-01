@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep8ViewModel" />
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:background="@drawable/bg_step1"
         android:layout_height="match_parent">
+
         <include
             layout="@layout/layout_title"
             android:layout_marginStart="35dp"
@@ -22,6 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
             android:layout_height="93dp" />
+
         <ImageView
             android:id="@+id/iconIv"
             android:layout_width="516dp"
@@ -31,16 +34,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="318dp"
             tools:ignore="ContentDescription" />
-            <TextView
-                android:id="@+id/step1Tv"
-                android:layout_width="wrap_content"
-                android:textSize="46sp"
-                android:layout_marginEnd="60dp"
-                android:text="@string/high_knee_guide_step1_link_device"
-                android:textColor="@color/color_1c1c1c"
-                app:layout_constraintEnd_toStartOf="@+id/step2Tv"
-                app:layout_constraintTop_toTopOf="@+id/step2Tv"
-                android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/step1Tv"
+            android:layout_width="wrap_content"
+            android:textSize="46sp"
+            android:layout_marginEnd="60dp"
+            android:text="@string/high_knee_guide_step1_link_device"
+            android:textColor="@color/color_1c1c1c"
+            app:layout_constraintEnd_toStartOf="@+id/step2Tv"
+            app:layout_constraintTop_toTopOf="@+id/step2Tv"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/step1_1Tv"
             android:layout_width="wrap_content"
@@ -52,7 +57,8 @@
             app:drawableStartCompat="@drawable/high_knee_guide8_connect"
             android:text="@string/exercise_plan_wrist_watch"
             android:textColor="@color/color_332c2c2c"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/step1_2Tv"
             android:layout_width="wrap_content"
@@ -64,7 +70,8 @@
             app:drawableStartCompat="@drawable/high_knee_guide8_connect"
             android:text="@string/exercise_plan_left_knee"
             android:textColor="@color/color_332c2c2c"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/step1_3Tv"
             android:layout_width="wrap_content"
@@ -76,7 +83,8 @@
             app:drawableStartCompat="@drawable/high_knee_guide8_connect"
             android:text="@string/exercise_plan_right_knee"
             android:textColor="@color/color_332c2c2c"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/step2Tv"
             android:layout_width="wrap_content"
@@ -86,7 +94,8 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="87dp"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/step2_1Tv"
             android:layout_width="wrap_content"
@@ -98,7 +107,8 @@
             android:text="@string/exercise_plan_wrist_watch"
             android:drawablePadding="16dp"
             android:textColor="@color/color_222"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/step2_2Tv"
             android:layout_width="wrap_content"
@@ -110,7 +120,8 @@
             app:drawableStartCompat="@drawable/guide1_step2_2"
             android:text="@string/exercise_plan_left_knee"
             android:textColor="@color/color_222"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/step2_3Tv"
             android:layout_width="wrap_content"
@@ -122,6 +133,6 @@
             app:drawableStartCompat="@drawable/guide1_step2_2"
             android:text="@string/exercise_plan_right_knee"
             android:textColor="@color/color_222"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

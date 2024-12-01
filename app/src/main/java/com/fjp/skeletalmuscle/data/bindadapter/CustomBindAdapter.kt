@@ -40,26 +40,19 @@ object CustomBindAdapter {
     @BindingAdapter(value = ["imageUrl"])
     @JvmStatic
     fun imageUrl(view: ImageView, url: String) {
-        Glide.with(view.context.applicationContext)
-            .load(url)
-            .transition(DrawableTransitionOptions.withCrossFade(500))
-            .into(view)
+        Glide.with(view.context.applicationContext).load(url).transition(DrawableTransitionOptions.withCrossFade(500)).into(view)
     }
 
     @BindingAdapter(value = ["circleImageUrl"])
     @JvmStatic
     fun circleImageUrl(view: ImageView, url: String) {
-        Glide.with(view.context.applicationContext)
-            .load(url)
-            .apply(RequestOptions.bitmapTransform(CircleCrop()))
-            .transition(DrawableTransitionOptions.withCrossFade(500))
-            .into(view)
+        Glide.with(view.context.applicationContext).load(url).apply(RequestOptions.bitmapTransform(CircleCrop())).transition(DrawableTransitionOptions.withCrossFade(500)).into(view)
     }
 
     @BindingAdapter("bitmap")
     @JvmStatic
-    fun setBitmap(imageView: ImageView, imageId:Int) {
-        imageView.setImageBitmap(BitmapFactory.decodeResource(imageView.resources,imageId))
+    fun setBitmap(imageView: ImageView, imageId: Int) {
+        imageView.setImageBitmap(BitmapFactory.decodeResource(imageView.resources, imageId))
     }
 
     @BindingAdapter(value = ["afterTextChanged"])

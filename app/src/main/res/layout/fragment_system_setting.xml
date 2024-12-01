@@ -4,20 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.SystemSettingViewModel" />
 
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.setting.SystemSettingFragment.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.setting.fragment.SystemSettingFragment.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:background="@color/color_f5f5f5"
         android:layout_height="wrap_content"
-        tools:context=".ui.setting.SystemSettingFragment">
+        tools:context=".ui.setting.fragment.SystemSettingFragment">
 
         <View
             android:id="@+id/rtView"
@@ -68,6 +69,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rtView"
             app:title="@string/setting_system_voice_interaction" />
+
         <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
             android:id="@+id/updateVersionLayout"
             android:layout_width="0dp"

@@ -13,5 +13,4 @@ data class CollectUiState(
     //收藏Id
     var id: Int = -1,
     //请求失败的错误信息
-    var errorMsg: String = ""
-)
+    var errorMsg: String = "")

@@ -15,7 +15,7 @@ import java.util.*
  * 描述　: 时间工具类
  */
 
-object DatetimeUtil {
+object DateTimeUtil {
 
     val DATE_PATTERN = "yyyy-MM-dd"
     val DATE_PATTERN2 = "yyyy年MM月dd日"
@@ -28,6 +28,7 @@ object DatetimeUtil {
      */
     val now: Date
         get() = Date(Date().time)
+
     /**
      * 获取现在时刻
      */
@@ -35,8 +36,8 @@ object DatetimeUtil {
         get() = formatDate(DATE_PATTERN, now)
 
 
-    fun getCurDate2Str():String{
-       return formatDate(System.currentTimeMillis(),DATE_PATTERN)
+    fun getCurDate2Str(): String {
+        return formatDate(System.currentTimeMillis(), DATE_PATTERN)
     }
 
     /**
@@ -52,6 +53,7 @@ object DatetimeUtil {
         }
 
     }
+
     /**
      * Date to Strin
      */
@@ -93,6 +95,7 @@ object DatetimeUtil {
         }
     }
 
+
     /**
      * 将时间戳转换为时间
      */
@@ -104,12 +107,12 @@ object DatetimeUtil {
     /**
      * 获得指定时间的日期
      */
-    fun getCustomTime(dateStr: String):Date{
-        return formatDate(DATE_PATTERN,dateStr)
+    fun getCustomTime(dateStr: String): Date {
+        return formatDate(DATE_PATTERN, dateStr)
     }
 
-    fun formSportTime(time:Long):String{
-        return String.format("%.1f",(time /(1000 * 60f)))
+    fun formSportTime(time: Long): String {
+        return String.format("%.1f", (time / (1000 * 60f)))
     }
 
     fun formatTime(seconds: Long): String {
@@ -124,7 +127,8 @@ object DatetimeUtil {
             else -> "$remainingSecondsAfterMinutes sec"
         }
     }
-    fun getCurWeek():String {
+
+    fun getCurWeek(): String {
         val today = LocalDate.now()
         val startOfWeek = getStartOfWeek(today)
         val endOfWeek = getEndOfWeek(today)
@@ -132,10 +136,10 @@ object DatetimeUtil {
         val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN2)
         val startDateFormatted = startOfWeek.format(formatter)
         val endDateFormatted = endOfWeek.format(formatter)
-        return startDateFormatted+ endDateFormatted
+        return startDateFormatted + endDateFormatted
     }
 
-    fun getCurMonth():String{
+    fun getCurMonth(): String {
         val date = Date()
         val formatter = SimpleDateFormat(DATE_PATTERN3)
         return formatter.format(date)

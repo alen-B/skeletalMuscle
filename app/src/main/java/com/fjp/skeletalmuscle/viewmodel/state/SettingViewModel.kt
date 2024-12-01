@@ -9,6 +9,6 @@ import com.fjp.skeletalmuscle.data.model.bean.UserInfo
  *Time:2024/11/1
  *Description:
  */
-class SettingViewModel:SMBaseViewModel() {
+class SettingViewModel : SMBaseViewModel() {
     val userInfo = ObservableField<UserInfo>()
 }

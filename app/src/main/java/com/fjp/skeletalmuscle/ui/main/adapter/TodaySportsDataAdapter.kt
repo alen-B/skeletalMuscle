@@ -32,9 +32,9 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
     }
 
     override fun convert(holder: BaseViewHolder, item: TodaySports) {
-        muscleProportionVisiable(holder,item.type == TodayDetailSportsType.MUSCLE_PROPORTION)
-        aerobicVisiable(holder,item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION)
-        
+        muscleProportionVisiable(holder, item.type == TodayDetailSportsType.MUSCLE_PROPORTION)
+        aerobicVisiable(holder, item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION)
+
         holder.setVisible(R.id.lineChart, item.type == TodayDetailSportsType.Heart_RATE)
         holder.setVisible(R.id.arrow2Iv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
         holder.setVisible(R.id.arrow1Iv, !(item.type == TodayDetailSportsType.MUSCLE_PROPORTION || item.type == TodayDetailSportsType.AEROBIC_ENERGY_CONSUMPTION))
@@ -85,7 +85,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
 
     private fun initLineChat(holder: BaseViewHolder) {
         val lineChart = holder.getView<LineChart>(R.id.lineChart)
-        lineChart.legend.isEnabled=false
+        lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
         lineChart.isDragEnabled = false
         lineChart.setScaleEnabled(false)
@@ -100,19 +100,19 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.gridLineWidth = 0.5f
-        leftAxis.gridColor = ContextCompat.getColor(appContext,R.color.color_gray)
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         leftAxis.isEnabled = false
 
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext,R.color.color_gray)
+        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         rightAxis.isEnabled = false
 
         val values = ArrayList<Entry>()
 
         for (i in 0 until 8) {
-                val num = (Math.random() * 180).toFloat() - 30
-                values.add(BarEntry(i.toFloat(), num))
+            val num = (Math.random() * 180).toFloat() - 30
+            values.add(BarEntry(i.toFloat(), num))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -161,15 +161,17 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
 
     }
 
-    private fun muscleProportionVisiable(holder:BaseViewHolder,visiable:Boolean){
+    private fun muscleProportionVisiable(holder: BaseViewHolder, visiable: Boolean) {
         holder.setVisible(R.id.circleIv, visiable)
         holder.setVisible(R.id.muscleProportionvalueTv, visiable)
         holder.setVisible(R.id.unitTv, visiable)
     }
-    private fun aerobicVisiable(holder:BaseViewHolder,visiable:Boolean){
+
+    private fun aerobicVisiable(holder: BaseViewHolder, visiable: Boolean) {
         holder.setVisible(R.id.aerobicBgIv, visiable)
         holder.setVisible(R.id.aerobicValTv, visiable)
     }
+
     private fun initBarChart(holder: BaseViewHolder) {
         val barChart = holder.getView<BarChart>(R.id.chart)
         barChart.setTouchEnabled(false)
@@ -186,20 +188,20 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         val leftAxis = barChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.gridLineWidth = 0.5f
-        leftAxis.gridColor = ContextCompat.getColor(appContext,R.color.color_gray)
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         leftAxis.isEnabled = false
-        leftAxis.enableGridDashedLine(2f,1f,0f)
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
 
         val rightAxis: YAxis = barChart.axisRight
         rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext,R.color.color_gray)
+        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         rightAxis.isEnabled = false
 
-        barChart.legend.isEnabled=false
+        barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
 
         for (i in 0 until 24) {
-            if (i <8 || i>20) {
+            if (i < 8 || i > 20) {
                 values.add(BarEntry(i.toFloat(), 0.0f))
             } else {
                 val num = (Math.random() * 180).toFloat()
@@ -212,15 +214,15 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         dataSets.add(barDataSet)
         barDataSet.setDrawIcons(false)
         barDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
-        if(holder.adapterPosition ==1){
+        if (holder.adapterPosition == 1) {
             barDataSet.color = ContextCompat.getColor(appContext, R.color.color_ffc019)
-        }else if(holder.adapterPosition ==2){
+        } else if (holder.adapterPosition == 2) {
             barDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         }
 
         barDataSet.setDrawValues(false)//不显示柱状图上数据
         val barData = BarData(dataSets)
-        barData.barWidth=0.4f
+        barData.barWidth = 0.4f
         barChart.data = barData
         barChart.setNoDataText("暂无数据")
         barChart.animateY(500)

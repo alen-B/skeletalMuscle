@@ -1,11 +1,33 @@
 package com.fjp.skeletalmuscle.app.network
 
 import com.fjp.skeletalmuscle.data.model.bean.ApiResponse
-import com.fjp.skeletalmuscle.data.model.bean.LoginResponse
+import com.fjp.skeletalmuscle.data.model.bean.DumbbellRequest
+import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
+import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegCalorieResult
+import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegHeartRateResult
+import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
+import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
+import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellExpandChestResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellHeartRateResult
+import com.fjp.skeletalmuscle.data.model.bean.SportTrendDumbbellUp
+import com.fjp.skeletalmuscle.data.model.bean.SportTrendDummbbellCalorie
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendFlatSupportCalorieResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendFlatSupportHeartRateResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeResult
+import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
+import okhttp3.MultipartBody
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Query
+
 
 /**
  * 作者　: hegaojian
@@ -24,259 +46,160 @@ interface ApiService {
      */
     @FormUrlEncoded
     @POST("login")
-    suspend fun login(
-        @Field("mobile") mobile: String,
-        @Field("code") code: String
-    ): ApiResponse<LoginResponse>
-//
-//    /**
-//     * 注册
-//     */
-//    @FormUrlEncoded
-//    @POST("user/register")
-//    suspend fun register(
-//        @Field("username") username: String, @Field("password") pwd: String, @Field(
-//            "repassword"
-//        ) rpwd: String
-//    ): ApiResponse<Any>
-//
-//    /**
-//     * 获取banner数据
-//     */
-//    @GET("banner/json")
-//    suspend fun getBanner(): ApiResponse<ArrayList<BannerResponse>>
-//
-//    /**
-//     * 获取置顶文章集合数据
-//     */
-//    @GET("article/top/json")
-//    suspend fun getTopAritrilList(): ApiResponse<ArrayList<AriticleResponse>>
-//
-//    /**
-//     * 获取首页文章数据
-//     */
-//    @GET("article/list/{page}/json")
-//    suspend fun getAritrilList(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
-//
-//    /**
-//     * 项目分类标题
-//     */
-//    @GET("project/tree/json")
-//    suspend fun getProjecTitle(): ApiResponse<ArrayList<ClassifyResponse>>
-//
-//    /**
-//     * 根据分类id获取项目数据
-//     */
-//    @GET("project/list/{page}/json")
-//    suspend fun getProjecDataByType(
-//        @Path("page") pageNo: Int,
-//        @Query("cid") cid: Int
-//    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
-//
-//    /**
-//     * 获取最新项目数据
-//     */
-//    @GET("article/listproject/{page}/json")
-//    suspend fun getProjecNewData(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
-//
-//    /**
-//     * 公众号分类
-//     */
-//    @GET("wxarticle/chapters/json")
-//    suspend fun getPublicTitle(): ApiResponse<ArrayList<ClassifyResponse>>
-//
-//    /**
-//     * 获取公众号数据
-//     */
-//    @GET("wxarticle/list/{id}/{page}/json")
-//    suspend fun getPublicData(
-//        @Path("page") pageNo: Int,
-//        @Path("id") id: Int
-//    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
-//
-//    /**
-//     * 获取热门搜索数据
-//     */
-//    @GET("hotkey/json")
-//    suspend fun getSearchData(): ApiResponse<ArrayList<SearchResponse>>
-//
-//    /**
-//     * 根据关键词搜索数据
-//     */
-//    @POST("article/query/{page}/json")
-//    suspend fun getSearchDataByKey(
-//        @Path("page") pageNo: Int,
-//        @Query("k") searchKey: String
-//    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
-//
-//    /**
-//     * 广场列表数据
-//     */
-//    @GET("user_article/list/{page}/json")
-//    suspend fun getSquareData(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
-//
-//    /**
-//     * 每日一问列表数据
-//     */
-//    @GET("wenda/list/{page}/json")
-//    suspend fun getAskData(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
-//
-//    /**
-//     * 获取体系数据
-//     */
-//    @GET("tree/json")
-//    suspend fun getSystemData(): ApiResponse<ArrayList<SystemResponse>>
-//
-//    /**
-//     * 知识体系下的文章数据
-//     */
-//    @GET("article/list/{page}/json")
-//    suspend fun getSystemChildData(
-//        @Path("page") pageNo: Int,
-//        @Query("cid") cid: Int
-//    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
-//
-//    /**
-//     * 获取导航数据
-//     */
-//    @GET("navi/json")
-//    suspend fun getNavigationData(): ApiResponse<ArrayList<NavigationResponse>>
-//
-//    /**
-//     * 收藏文章
-//     */
-//    @POST("lg/collect/{id}/json")
-//    suspend fun collect(@Path("id") id: Int): ApiResponse<Any?>
-//
-//    /**
-//     * 取消收藏文章
-//     */
-//    @POST("lg/uncollect_originId/{id}/json")
-//    suspend fun uncollect(@Path("id") id: Int): ApiResponse<Any?>
-//
-//    /**
-//     * 收藏网址
-//     */
-//    @POST("lg/collect/addtool/json")
-//    suspend fun collectUrl(
-//        @Query("name") name: String,
-//        @Query("link") link: String
-//    ): ApiResponse<CollectUrlResponse>
-//
-//    /**
-//     * 取消收藏网址
-//     */
-//    @POST("lg/collect/deletetool/json")
-//    suspend fun deletetool(@Query("id") id: Int): ApiResponse<Any?>
-//
-//    /**
-//     * 获取收藏文章数据
-//     */
-//    @GET("lg/collect/list/{page}/json")
-//    suspend fun getCollectData(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<CollectResponse>>>
-//
-//    /**
-//     * 获取收藏网址数据
-//     */
-//    @GET("lg/collect/usertools/json")
-//    suspend fun getCollectUrlData(): ApiResponse<ArrayList<CollectUrlResponse>>
-//
-//    /**
-//     * 获取他人分享文章列表数据
-//     */
-//    @GET("user/{id}/share_articles/{page}/json")
-//    suspend fun getShareByidData(
-//        @Path("id") id: Int,
-//        @Path("page") page: Int
-//    ): ApiResponse<ShareResponse>
-//
-//    /**
-//     * 获取当前账户的个人积分
-//     */
-//    @GET("lg/coin/userinfo/json")
-//    suspend fun getIntegral(): ApiResponse<IntegralResponse>
-//
-//    /**
-//     * 获取积分排行榜
-//     */
-//    @GET("coin/rank/{page}/json")
-//    suspend fun getIntegralRank(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<IntegralResponse>>>
-//
-//    /**
-//     * 获取积分历史
-//     */
-//    @GET("lg/coin/list/{page}/json")
-//    suspend fun getIntegralHistory(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<IntegralHistoryResponse>>>
-//
-//
-//    /**
-//     * 获取自己分享的文章列表数据
-//     */
-//    @GET("user/lg/private_articles/{page}/json")
-//    suspend fun getShareData(@Path("page") page: Int): ApiResponse<ShareResponse>
-//
-//
-//    /**
-//     *  删除自己分享的文章
-//     */
-//    @POST("lg/user_article/delete/{id}/json")
-//    suspend fun deleteShareData(@Path("id") id: Int): ApiResponse<Any?>
-//
-//    /**
-//     * 添加文章
-//     */
-//    @POST("lg/user_article/add/json")
-//    @FormUrlEncoded
-//    suspend fun addAriticle(
-//        @Field("title") title: String,
-//        @Field("link") content: String
-//    ): ApiResponse<Any?>
-//
-//    /**
-//     * 获取Todo列表数据 根据完成时间排序
-//     */
-//    @GET("/lg/todo/v2/list/{page}/json")
-//    suspend fun getTodoData(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<TodoResponse>>>
-//
-//    /**
-//     * 添加一个TODO
-//     */
-//    @POST("/lg/todo/add/json")
-//    @FormUrlEncoded
-//    suspend fun addTodo(
-//        @Field("title") title: String,
-//        @Field("content") content: String,
-//        @Field("date") date: String,
-//        @Field("type") type: Int,
-//        @Field("priority") priority: Int
-//    ): ApiResponse<Any?>
-//
-//    /**
-//     * 修改一个TODO
-//     */
-//    @POST("/lg/todo/update/{id}/json")
-//    @FormUrlEncoded
-//    suspend fun updateTodo(
-//        @Field("title") title: String,
-//        @Field("content") content: String,
-//        @Field("date") date: String,
-//        @Field("type") type: Int,
-//        @Field("priority") priority: Int,
-//        @Path("id") id: Int
-//    ): ApiResponse<Any?>
-//
-//    /**
-//     * 删除一个TODO
-//     */
-//    @POST("/lg/todo/delete/{id}/json")
-//    suspend fun deleteTodo(@Path("id") id: Int): ApiResponse<Any?>
-//
-//    /**
-//     * 完成一个TODO
-//     */
-//    @POST("/lg/todo/done/{id}/json")
-//    @FormUrlEncoded
-//    suspend fun doneTodo(@Path("id") id: Int, @Field("status") status: Int): ApiResponse<Any?>
+    suspend fun login(@Field("mobile") mobile: String, @Field("code") code: String): ApiResponse<UserInfo>
+
+    /**
+     * 获取验证码
+     */
+    @FormUrlEncoded
+    @POST("get_code")
+    suspend fun getCode(@Field("mobile") mobile: String): ApiResponse<String>
+
+    /**
+     * 保存用户信息
+     */
+    @POST("user/save_info")
+    suspend fun saveInfo(@Body userInfo: UserInfo): ApiResponse<String>
+
+    /**
+     * 保存测评细信息
+     *
+     */
+    @POST("assess/save")
+    suspend fun saveAssessment(@Body saveAssessment: SaveAssessmentRequest): ApiResponse<String>
+
+    /**
+     * 获取测评结果
+     *
+     */
+    @GET("assess/get_test")
+    suspend fun getAssessment(@Query("year") year: String): ApiResponse<String>
+
+    /**
+     * 高抬腿
+     *
+     */
+    @POST("sport/lift_leg")
+    suspend fun saveLiftLeg(@Body liftLegRequest: LiftLegRequest): ApiResponse<String>
+
+    /**
+     * 哑铃
+     *
+     */
+    @POST("sport/dumbbell")
+    suspend fun saveDumbbell(@Body dumbbellRequest: DumbbellRequest): ApiResponse<String>
+
+    /**
+     * 平板支撑
+     *
+     */
+    @POST("sport/flat_support")
+    suspend fun saveflatSupport(@Body flatSupportRequest: FlatSupportRequest): ApiResponse<String>
+
+    /**
+     * 今日运动所有数据获取
+     *time="2024-11-01"
+     */
+    @GET("sport/get_today_data")
+    suspend fun getTodayData(@Field("time") time: String): ApiResponse<TodayDataResult>
+
+    /**
+     * 高抬腿-卡路里趋势图
+     *
+     */
+    @GET("sport_trend/lift_leg_calorie")
+    suspend fun getLiftLegCalorie(@Field("type") type: String): ApiResponse<LiftLegCalorieResult>
+
+    /**
+     * 高抬腿-心率趋势图
+     *
+     */
+    @GET("sport_trend/lift_leg_heart_rate")
+    suspend fun getLiftLegHeartRate(@Field("type") type: String): ApiResponse<LiftLegHeartRateResult>
+
+    /**
+     * 高抬腿-抬腿趋势图
+     *
+     */
+    @GET("sport_trend/lift_leg")
+    suspend fun getSportTrendLiftLeg(@Field("type") type: String): ApiResponse<LiftLegTrendResult>
+
+    /**
+     *高抬腿-强度和时间
+     *
+     */
+    @GET("sport_trend/lift_leg_sport_time")
+    suspend fun getSportTrendLiftLegSportTime(@Field("type") type: String): ApiResponse<SportTrendLiftLegSportTimeResult>
+
+
+
+    /**
+     *卡路里趋势图
+     *
+     */
+    @GET("sport_trend/calorie")
+    suspend fun getSportTrendCalorie(@Field("type") type: String): ApiResponse<SportTrendCalorieResult>
+
+
+    /**
+     *哑铃-卡路里趋势图
+     *
+     */
+    @GET("sport_trend/dumbbell_calorie")
+    suspend fun getSportTrendDumbbellCalorie(@Field("type") type: String): ApiResponse<SportTrendDummbbellCalorie>
+
+
+
+
+    /**
+     *哑铃-心率趋势图
+     *
+     */
+    @GET("sport_trend/dumbbell_heart_rate")
+    suspend fun getSportTrendDumbbellHeartRate(@Field("type") type: String): ApiResponse<SportTrendDumbbellHeartRateResult>
+
+
+
+
+    /**
+     *哑铃-上举运动趋势图
+     *
+     */
+    @GET("sport_trend/dumbbell_up")
+    suspend fun getSportTrendDumbbellUp(@Field("type") type: String): ApiResponse<SportTrendDumbbellUp>
+
+
+
+
+
+    /**
+     *哑铃-扩胸运动趋势图
+     *
+     */
+    @GET("sport_trend/dumbbell_expand_chest")
+    suspend fun getSportTrendDumbbellExpandChest(@Field("type") type: String): ApiResponse<SportTrendDumbbellExpandChestResult>
+
+
+    /**
+     *平板支撑-卡路里趋势图
+     *
+     */
+    @GET("sport_trend/flat_support_calorie")
+    suspend fun getSportTrendFlatSupportCalorie(@Field("type") type: String): ApiResponse<SportTrendFlatSupportCalorieResult>
+
+
+    /**
+     *平板支撑-心率趋势图
+     *
+     */
+    @GET("sport_trend/flat_support_heart_rate")
+    suspend fun getSportTrendFlatSupportHeartRate(@Field("type") type: String): ApiResponse<SportTrendFlatSupportHeartRateResult>
+
+
+
+    @Multipart
+    @POST("http://8.141.25.141:8000/upload")
+    suspend fun uploadImg(@Part body: MultipartBody.Part): ApiResponse<String>
 
 
 }

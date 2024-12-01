@@ -8,49 +8,52 @@
     android:id="@+id/itemCl"
     android:background="@drawable/bg_gray_round_20"
     android:minWidth="70dp">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/defaultView"
-    android:layout_width="0dp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/sportTypeIv"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintVertical_chainStyle="spread"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/defaultView"
+        android:layout_width="0dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="ContentDescription" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/sportRateTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sportTypeIv"
-        app:layout_constraintBottom_toTopOf="@+id/unitTv"
-        tools:ignore="ContentDescription" />
+        <ImageView
+            android:id="@+id/sportTypeIv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/unitTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_rate"
-        android:textColor="@color/color_331c1c1c"
-        android:textSize="@dimen/text_size_5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sportRateTv"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="ContentDescription" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/sportRateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportTypeIv"
+            app:layout_constraintBottom_toTopOf="@+id/unitTv"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/unitTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_rate"
+            android:textColor="@color/color_331c1c1c"
+            android:textSize="@dimen/text_size_5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportRateTv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="ContentDescription" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
         android:id="@+id/sportTypeExpandIv"
         android:layout_width="wrap_content"
@@ -61,6 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/sportNameTv"
         android:layout_width="wrap_content"
@@ -106,6 +110,7 @@
             android:layout_marginEnd="10dp"
             app:rpbProgressColor="@color/colorAccent"
             app:rpbShowProgressText="false" />
+
         <TextView
             android:id="@+id/warmupTimeMinTv"
             android:layout_width="wrap_content"
@@ -185,6 +190,7 @@
             android:layout_marginEnd="10dp"
             app:rpbProgressColor="@color/color_ff824c"
             app:rpbShowProgressText="false" />
+
         <TextView
             android:id="@+id/cardioTimeTotalMinTv"
             android:layout_width="wrap_content"

@@ -7,7 +7,7 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  *Time:2024/11/30
  *Description:
  */
-class SelectedWaistlineAndWeightViewModel:SMBaseViewModel(){
+class SelectedWaistlineAndWeightViewModel : SMBaseViewModel() {
     val weightDataArr = mutableListOf<String>()
     val waistlineDataArr = mutableListOf<String>()
 }

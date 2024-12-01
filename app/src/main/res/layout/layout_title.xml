@@ -73,7 +73,8 @@
             android:textStyle="bold"
             android:visibility="@{viewModel.showRightText ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/curIndexTv"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:orientation="horizontal"
             android:layout_width="213dp"
@@ -84,30 +85,35 @@
             android:gravity="center"
             android:background="@drawable/bg_gray_round_35"
             android:layout_height="66dp">
+
             <ImageView
                 android:id="@+id/avatarIv"
                 android:layout_width="42dp"
                 android:layout_height="40dp"
                 android:background="@drawable/title_default_avatar"
                 tools:ignore="ContentDescription" />
+
             <View
                 android:layout_width="3dp"
                 android:layout_marginStart="14dp"
                 android:layout_marginEnd="14dp"
                 android:background="@color/color_cacaca"
-                android:layout_height="28dp"/>
+                android:layout_height="28dp" />
+
             <ImageView
                 android:id="@+id/tipIv"
                 android:layout_width="42dp"
                 android:layout_height="40dp"
                 android:background="@drawable/title_tip"
                 tools:ignore="ContentDescription" />
+
             <View
                 android:layout_width="3dp"
                 android:layout_marginStart="14dp"
                 android:layout_marginEnd="14dp"
                 android:background="@color/color_cacaca"
-                android:layout_height="28dp"/>
+                android:layout_height="28dp" />
+
             <ImageView
                 android:id="@+id/settingIv"
                 android:layout_width="42dp"

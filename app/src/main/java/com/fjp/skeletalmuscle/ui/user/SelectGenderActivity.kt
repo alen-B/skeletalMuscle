@@ -8,7 +8,6 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.databinding.ActivitySelectGenderBinding
-import com.fjp.skeletalmuscle.viewmodel.state.SEX
 import com.fjp.skeletalmuscle.viewmodel.state.SelectGenderViewModel
 
 class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectGenderBinding>() {
@@ -23,8 +22,8 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
 
     inner class ProxyClick {
         fun next() {
-            App.userInfo?.sex = mViewModel.sex.get()!!.value
-            startActivity(Intent(this@SelectGenderActivity,BornActivity::class.java))
+            App.userInfo?.sex = mViewModel.sex.get()!!
+            startActivity(Intent(this@SelectGenderActivity, BornActivity::class.java))
 
         }
 
@@ -34,27 +33,28 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
         }
 
         fun selectMan() {
-            mViewModel.sex.set(SEX.MAN)
+            mViewModel.sex.set(getString(R.string.setting_sex_man))
             mDatabind.manSelectedIv.visibility = View.VISIBLE
             mDatabind.man.background = AppCompatResources.getDrawable(this@SelectGenderActivity, R.drawable.bg_selected)
-            mDatabind.mainTv.setTextColor(AppCompatResources.getColorStateList(this@SelectGenderActivity,R.color.white))
+            mDatabind.mainTv.setTextColor(AppCompatResources.getColorStateList(this@SelectGenderActivity, R.color.white))
 
             mDatabind.womanSelectedIv.visibility = View.GONE
             mDatabind.woman.background = AppCompatResources.getDrawable(this@SelectGenderActivity, R.drawable.bg_normal)
-            mDatabind.womanTv.setTextColor(AppCompatResources.getColorStateList(this@SelectGenderActivity,R.color.color_1c1c1c))
+            mDatabind.womanTv.setTextColor(AppCompatResources.getColorStateList(this@SelectGenderActivity, R.color.color_1c1c1c))
         }
 
         fun selectWoMan() {
-            mViewModel.sex.set(SEX.WOMAN)
+            mViewModel.sex.set(getString(R.string.setting_sex_woman))
             mDatabind.womanSelectedIv.visibility = View.VISIBLE
             mDatabind.woman.background = AppCompatResources.getDrawable(this@SelectGenderActivity, R.drawable.bg_selected)
-            mDatabind.womanTv.setTextColor(AppCompatResources.getColorStateList(this@SelectGenderActivity,R.color.white))
+            mDatabind.womanTv.setTextColor(AppCompatResources.getColorStateList(this@SelectGenderActivity, R.color.white))
             mDatabind.manSelectedIv.visibility = View.GONE
             mDatabind.man.background = AppCompatResources.getDrawable(this@SelectGenderActivity, R.drawable.bg_normal)
-            mDatabind.mainTv.setTextColor(AppCompatResources.getColorStateList(this@SelectGenderActivity,R.color.color_1c1c1c))
+            mDatabind.mainTv.setTextColor(AppCompatResources.getColorStateList(this@SelectGenderActivity, R.color.color_1c1c1c))
 
         }
     }
+
     override fun createObserver() {
         super.createObserver()
 

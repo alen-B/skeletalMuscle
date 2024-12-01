@@ -1,4 +1,4 @@
-package com.fjp.skeletalmuscle.ui.setting
+package com.fjp.skeletalmuscle.ui.setting.fragment
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,7 +9,7 @@ import com.bigkoo.pickerview.view.TimePickerView
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.app.util.DatetimeUtil
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.databinding.FragmentExportReportBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ExportReportViewModel
 import me.hgj.jetpackmvvm.base.appContext
@@ -33,11 +33,11 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         }
 
         fun clickCustomerStart() {
-            showTimePicker(startDate,true)
+            showTimePicker(startDate, true)
         }
 
         fun clickCustomerEnd() {
-            showTimePicker(endDate,false)
+            showTimePicker(endDate, false)
         }
     }
 
@@ -45,10 +45,10 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         initStartDate()
-        mDatabind.curCustomerStartTv.text = DatetimeUtil.formatDate(startDate, DatetimeUtil.DATE_PATTERN2)
-        mDatabind.curCustomerEndTv.text = "-"+DatetimeUtil.formatDate(endDate, DatetimeUtil.DATE_PATTERN2)
-        mDatabind.curWeekTv.text = DatetimeUtil.getCurWeek()
-        mDatabind.curMonthTv.text = DatetimeUtil.getCurMonth()
+        mDatabind.curCustomerStartTv.text = DateTimeUtil.formatDate(startDate, DateTimeUtil.DATE_PATTERN2)
+        mDatabind.curCustomerEndTv.text = "-" + DateTimeUtil.formatDate(endDate, DateTimeUtil.DATE_PATTERN2)
+        mDatabind.curWeekTv.text = DateTimeUtil.getCurWeek()
+        mDatabind.curMonthTv.text = DateTimeUtil.getCurMonth()
         mDatabind.curWeekRB.setOnCheckedChangeListener { compoundButton, b ->
             if (b) {
                 mDatabind.customerTimeRB.isChecked = false
@@ -80,19 +80,19 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         val selectedCalendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"))
         val starCalendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"))
         val endCalendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"))
-        selectedCalendar.time=curDate
+        selectedCalendar.time = curDate
         starCalendar.set(2024, 10, 19, 12, 0, 0)
         pvTime = TimePickerBuilder(context) { date, v -> //选中事件回调
-            val formatDate = DatetimeUtil.formatDate(date, DatetimeUtil.DATE_PATTERN2)
+            val formatDate = DateTimeUtil.formatDate(date, DateTimeUtil.DATE_PATTERN2)
             if (isStart) {
-                if(date.time> endDate.time){
+                if (date.time > endDate.time) {
                     appContext.showToast(getString(R.string.setting_export_start_time_than_end_time))
                     return@TimePickerBuilder
                 }
                 startDate = date
                 mDatabind.curCustomerStartTv.text = formatDate
             } else {
-                if(date.time< startDate.time){
+                if (date.time < startDate.time) {
                     appContext.showToast(getString(R.string.setting_export_end_time_less_start_time))
                     return@TimePickerBuilder
                 }

@@ -9,7 +9,7 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  *Time:2024/10/29
  *Description:
  */
-class SportsAssessmentViewModel:SMBaseViewModel() {
+class SportsAssessmentViewModel : SMBaseViewModel() {
     val curTime = ObservableField("00:00")
     val curProgress = ObservableField("0")
     val sportsNumber = ObservableField("")

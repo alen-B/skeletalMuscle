@@ -15,7 +15,6 @@ import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityExercisePlanBinding
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
-import com.fjp.skeletalmuscle.ui.sports.DumbbellMainActivity
 import com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ExercisePlanViewModel
 import me.hgj.jetpackmvvm.base.appContext

@@ -5,15 +5,8 @@ import android.content.Intent
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
-import com.fjp.skeletalmuscle.app.ext.dp
-import com.fjp.skeletalmuscle.app.ext.init
-import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
-import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.ui.setting.SettingActivity
-import com.fjp.skeletalmuscle.ui.setting.adapter.AccountAdapter
 import com.lxj.xpopup.impl.FullScreenPopupView
 import io.alterac.blurkit.BlurLayout
 

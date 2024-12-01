@@ -23,7 +23,6 @@ import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
 import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentBinding
 import com.fjp.skeletalmuscle.ui.sports.SportsCompletedActivity
-import com.fjp.skeletalmuscle.viewmodel.state.SEX
 import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentViewModel
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.util.DateUtils
@@ -58,7 +57,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var leftLegmaxPitchInCycle = 0f // 记录周期内左腿最大的pitch值
     private var rightLegmaxPitchInCycle = 0f // 记录周期内右腿最大的pitch值
     private var age = 1
-    private var weight = 1.0
+    private var weight = 1
     private var isMale = true
     private var seconds = 0
     private var warmupTime = 0.0
@@ -96,9 +95,9 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         startTimer()
         //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
-            age = DateUtils.calculateAge(Date(it.born), Date(System.currentTimeMillis()))
-            weight = NumberUtils.extractNumbers(it.weight)[0].toDouble()
-            isMale = it.sex == SEX.MAN.value
+            age = DateUtils.calculateAge(Date(it.birthday), Date(System.currentTimeMillis()))
+            weight = it.weight
+            isMale = it.sex == getString(R.string.setting_sex_man)
         }
 
 

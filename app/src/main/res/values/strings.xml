@@ -14,6 +14,7 @@
     <string name="month_12">12月</string>
     <string name="times">次数</string>
     <string name="weight_kg">体重(kg)</string>
+    <string name="request_failed">请求失败</string>
 
 
     <!--    登录界面-->
@@ -31,6 +32,8 @@
     <string name="login_input_success_phone">手机号不正确</string>
     <string name="service_agreement_title">用户服务协议</string>
     <string name="privacy_policy_title">隐私政策</string>
+    <string name="login_get_verification_code_failed">获取验证码失败</string>
+    <string name="login_login_failed">登录失败</string>
 
     <string name="input_name_title">先让我们熟悉起来吧</string>
     <string name="input_name_tips">请输入姓名</string>
@@ -60,9 +63,10 @@
 
 
     <string name="disease_title">您是否曾被确诊或患有以下疾病？</string>
-    <string name="main_tip">运动小贴士</string>
     <string name="main_tip_detail">运动时应穿着宽松合适的运动服和鞋类，避免拖鞋，正确佩戴监测设备以确保数据准确。运动前进行充分热身，按计划进行心肺训练，运动后至少放松1分钟。如感到不适，立即停止并咨询家庭医生。</string>
-
+    <string name="main_tip">运动小贴士</string>
+    <string name="disease_please_input_disease">请输入运动疾病</string>
+    <string name="disease_please_selected_detail">请选择病情详情</string>
     <string name="previous_step">上一步</string>
     <string name="fill_in_later">稍后填写</string>
     <string name="next_step">下一步</string>
@@ -219,6 +223,7 @@
 
     <string name="unit_min">min</string>
     <string name="unit_kg">kg</string>
+    <string name="unit_cm">cm</string>
     <string name="unit_group">租</string>
     <string name="unit_angle">°</string>
     <string name="high_knee_guide_title1">接下来我将引导您完成连接</string>

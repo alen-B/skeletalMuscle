@@ -83,11 +83,7 @@ fun loadServiceInit(view: View, callback: () -> Unit): LoadService<Any> {
 }
 
 //绑定普通的Recyclerview
-fun RecyclerView.init(
-    layoutManger: RecyclerView.LayoutManager,
-    bindAdapter: RecyclerView.Adapter<*>,
-    isScroll: Boolean = true
-): RecyclerView {
+fun RecyclerView.init(layoutManger: RecyclerView.LayoutManager, bindAdapter: RecyclerView.Adapter<*>, isScroll: Boolean = true): RecyclerView {
     layoutManager = layoutManger
     setHasFixedSize(true)
     adapter = bindAdapter
@@ -96,11 +92,7 @@ fun RecyclerView.init(
 }
 
 //绑定SwipeRecyclerView
-fun SwipeRecyclerView.init(
-    layoutManger: RecyclerView.LayoutManager,
-    bindAdapter: RecyclerView.Adapter<*>,
-    isScroll: Boolean = true
-): SwipeRecyclerView {
+fun SwipeRecyclerView.init(layoutManger: RecyclerView.LayoutManager, bindAdapter: RecyclerView.Adapter<*>, isScroll: Boolean = true): SwipeRecyclerView {
     layoutManager = layoutManger
     setHasFixedSize(true)
     adapter = bindAdapter
@@ -164,16 +156,14 @@ fun BaseQuickAdapter<*, *>.setAdapterAnimation(mode: Int) {
     }
 }
 
-fun MagicIndicator.bindViewPager2(
-    viewPager: ViewPager2,
-    mStringList: List<String> = arrayListOf(),
-    action: (index: Int) -> Unit = {}) {
+fun MagicIndicator.bindViewPager2(viewPager: ViewPager2, mStringList: List<String> = arrayListOf(), action: (index: Int) -> Unit = {}) {
     val commonNavigator = CommonNavigator(appContext)
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
 
         override fun getCount(): Int {
-            return  mStringList.size
+            return mStringList.size
         }
+
         override fun getTitleView(context: Context, index: Int): IPagerTitleView {
             return ScaleTransitionPagerTitleView(appContext).apply {
                 //设置文本
@@ -191,6 +181,7 @@ fun MagicIndicator.bindViewPager2(
                 }
             }
         }
+
         override fun getIndicator(context: Context): IPagerIndicator {
             return LinePagerIndicator(context).apply {
                 mode = LinePagerIndicator.MODE_EXACTLY
@@ -215,11 +206,7 @@ fun MagicIndicator.bindViewPager2(
             action.invoke(position)
         }
 
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int
-        ) {
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             this@bindViewPager2.onPageScrolled(position, positionOffset, positionOffsetPixels)
         }
@@ -231,16 +218,11 @@ fun MagicIndicator.bindViewPager2(
     })
 }
 
-fun ViewPager2.init(
-    fragmentManager: FragmentManager,
-    lifecycle:Lifecycle,
-    fragments: ArrayList<Fragment>,
-    isUserInputEnabled: Boolean = true
-): ViewPager2 {
+fun ViewPager2.init(fragmentManager: FragmentManager, lifecycle: Lifecycle, fragments: ArrayList<Fragment>, isUserInputEnabled: Boolean = true): ViewPager2 {
     //是否可滑动
     this.isUserInputEnabled = isUserInputEnabled
     //设置适配器
-    adapter = object : FragmentStateAdapter(fragmentManager,lifecycle) {
+    adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
         override fun createFragment(position: Int) = fragments[position]
         override fun getItemCount() = fragments.size
     }
@@ -254,12 +236,8 @@ fun hideSoftKeyboard(activity: Activity?) {
     activity?.let { act ->
         val view = act.currentFocus
         view?.let {
-            val inputMethodManager =
-                act.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(
-                view.windowToken,
-                InputMethodManager.HIDE_NOT_ALWAYS
-            )
+            val inputMethodManager = act.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }
 }
@@ -267,13 +245,7 @@ fun hideSoftKeyboard(activity: Activity?) {
 /**
  * 加载列表数据
  */
-fun <T> loadListData(
-    data: ListDataUiState<T>,
-    baseQuickAdapter: BaseQuickAdapter<T, *>,
-    loadService: LoadService<*>,
-    recyclerView: SwipeRecyclerView,
-    swipeRefreshLayout: SwipeRefreshLayout
-) {
+fun <T> loadListData(data: ListDataUiState<T>, baseQuickAdapter: BaseQuickAdapter<T, *>, loadService: LoadService<*>, recyclerView: SwipeRecyclerView, swipeRefreshLayout: SwipeRefreshLayout) {
     swipeRefreshLayout.isRefreshing = false
     recyclerView.loadMoreFinish(data.isEmpty, data.hasMore)
     if (data.isSuccess) {

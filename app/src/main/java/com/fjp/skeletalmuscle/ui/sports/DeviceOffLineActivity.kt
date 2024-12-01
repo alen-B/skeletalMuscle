@@ -6,7 +6,7 @@ import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.databinding.ActivityDeviceOffLineBinding
 import com.fjp.skeletalmuscle.viewmodel.state.DeviceOffLineViewModel
 
-class DeviceOffLineActivity : BaseActivity<DeviceOffLineViewModel,ActivityDeviceOffLineBinding>() {
+class DeviceOffLineActivity : BaseActivity<DeviceOffLineViewModel, ActivityDeviceOffLineBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -14,8 +14,8 @@ class DeviceOffLineActivity : BaseActivity<DeviceOffLineViewModel,ActivityDevice
         mViewModel.leftImg.set(R.drawable.off_line)
     }
 
-    inner class ProxyClick{
-        fun clickReconnect(){
+    inner class ProxyClick {
+        fun clickReconnect() {
 
         }
     }

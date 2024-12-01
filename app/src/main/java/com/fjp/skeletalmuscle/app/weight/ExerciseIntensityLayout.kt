@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CompoundButton
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.fjp.skeletalmuscle.R
 
@@ -19,6 +18,7 @@ class ExerciseIntensityLayout(context: Context, attrs: AttributeSet) : LinearLay
     var fatBurningTimeTv: View
     var cardioTimeTv: View
     var breakTimeTv: View
+
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_exercise_intensity, this);
 

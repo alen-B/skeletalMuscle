@@ -8,7 +8,7 @@ import android.util.Log
  *Description:
  */
 object DeviceDataParse {
-     fun handleNotifyData(data: ByteArray?) {
+    fun handleNotifyData(data: ByteArray?) {
         Log.d("TEST", "Heart Rate: ccc, Blood Oxygen: ")
         if (data != null && data.size > 0) {
             // 通常第一个字节是错误码，如果数据正确，之后是实际的数据
@@ -26,6 +26,7 @@ object DeviceDataParse {
             Log.e("handleNotifyData", "Received empty or null data.")
         }
     }
+
     fun bytesToHexString(src: ByteArray?): String? {
         if (src == null || src.size == 0) {
             return ""
@@ -60,7 +61,7 @@ object DeviceDataParse {
         // 数据不匹配
     }
 
-    fun parseData2Pitch(data:ByteArray):Float {
+    fun parseData2Pitch(data: ByteArray): Float {
         if (data.size >= 20) {
             val pitch: Float = Math.abs(twoBytesToFloat(data[14], data[15]) + 100)
             val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
@@ -70,7 +71,8 @@ object DeviceDataParse {
         }
         return 0f
     }
-    fun parseData2Roll(data:ByteArray):Float {
+
+    fun parseData2Roll(data: ByteArray): Float {
         if (data.size >= 20) {
             val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
             // 检查pitch是否大于100度
@@ -78,7 +80,8 @@ object DeviceDataParse {
         }
         return 0f
     }
-    fun parseData2Yaw(data:ByteArray):Float {
+
+    fun parseData2Yaw(data: ByteArray): Float {
         if (data.size >= 20) {
             val yaw: Float = twoBytesToFloat(data[18], data[19])
             return yaw

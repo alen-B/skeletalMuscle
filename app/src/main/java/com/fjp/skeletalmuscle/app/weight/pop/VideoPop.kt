@@ -28,8 +28,8 @@ class VideoPop(context: Context, val listener: Listener) : FullScreenPopupView(c
         super.onCreate()
 
         val videoView = findViewById<VideoView>(R.id.videoView)
-        val videoUri = Uri.parse("android.resource://" +context.packageName + "/" + R.raw.tcsp)
-       videoView.setVideoURI(videoUri)
+        val videoUri = Uri.parse("android.resource://" + context.packageName + "/" + R.raw.tcsp)
+        videoView.setVideoURI(videoUri)
         videoView.start()
         videoView.setOnCompletionListener { // 当视频播放完成时关闭Dialog并跳转到新的Activity
             listener.jump(this)

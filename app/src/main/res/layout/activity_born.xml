@@ -69,6 +69,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/midView"
             app:layout_constraintStart_toEndOf="@+id/yearTv"
             app:layout_constraintTop_toTopOf="@+id/midView" />
+
         <TextView
             android:id="@+id/monthTv"
             android:layout_width="130dp"
@@ -97,6 +98,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/midView"
             app:layout_constraintStart_toEndOf="@+id/monthTv"
             app:layout_constraintTop_toTopOf="@+id/midView" />
+
         <TextView
             android:id="@+id/dayEt"
             android:layout_width="130dp"
@@ -125,6 +127,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/midView"
             app:layout_constraintStart_toEndOf="@+id/dayEt"
             app:layout_constraintTop_toTopOf="@+id/midView" />
+
         <Button
             android:id="@+id/nextBtn"
             style="@style/SMButtonNext"

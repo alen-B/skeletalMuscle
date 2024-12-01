@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.ChangeAccountViewModel" />
@@ -12,50 +13,55 @@
             name="click"
             type="com.fjp.skeletalmuscle.ui.setting.ChangeAccountActivity.ProxyClick" />
     </data>
+
     <io.alterac.blurkit.BlurLayout
         android:id="@+id/mainblur"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:blk_fps="0"
         android:background="#30ffffff">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingEnd="@dimen/main_padding_end"
-        android:paddingStart="@dimen/main_padding_start"
-        android:paddingBottom="@dimen/main_padding_bottom"
-        tools:context=".ui.setting.ChangeAccountActivity">
-        <include
-            layout="@layout/layout_title"
-            app:viewModel="@{viewModel}" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scrollbars="none"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/backIv"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
-        <io.alterac.blurkit.BlurLayout
-            android:id="@+id/backIv"
-            android:layout_width="144dp"
-            android:layout_height="144dp"
-            android:onClick="@{()-> click.clickFinish()}"
-            app:blk_blurRadius="25"
-            app:blk_cornerRadius="20dp"
-            app:blk_fps="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingEnd="@dimen/main_padding_end"
+            android:paddingStart="@dimen/main_padding_start"
+            android:paddingBottom="@dimen/main_padding_bottom"
+            tools:context=".ui.setting.ChangeAccountActivity">
+
+            <include
+                layout="@layout/layout_title"
+                app:viewModel="@{viewModel}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scrollbars="none"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/backIv"
+                app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+            <io.alterac.blurkit.BlurLayout
+                android:id="@+id/backIv"
                 android:layout_width="144dp"
                 android:layout_height="144dp"
-                android:background="@drawable/bg_back"
                 android:onClick="@{()-> click.clickFinish()}"
-                android:scaleType="center"
-                android:src="@drawable/arrow_right" />
-        </io.alterac.blurkit.BlurLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                app:blk_blurRadius="25"
+                app:blk_cornerRadius="20dp"
+                app:blk_fps="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:layout_width="144dp"
+                    android:layout_height="144dp"
+                    android:background="@drawable/bg_back"
+                    android:onClick="@{()-> click.clickFinish()}"
+                    android:scaleType="center"
+                    android:src="@drawable/arrow_right" />
+            </io.alterac.blurkit.BlurLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </io.alterac.blurkit.BlurLayout>
 </layout>

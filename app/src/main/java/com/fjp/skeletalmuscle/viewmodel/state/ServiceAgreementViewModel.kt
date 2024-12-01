@@ -7,4 +7,4 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  *Time:2024/11/5
  *Description:
  */
-class ServiceAgreementViewModel:SMBaseViewModel() {}
+class ServiceAgreementViewModel : SMBaseViewModel() {}

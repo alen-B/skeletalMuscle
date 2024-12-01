@@ -3,19 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.DeviceViewModel" />
 
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.setting.DeviceFragment.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.setting.fragment.DeviceFragment.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:background="@color/color_f5f5f5"
         android:layout_height="match_parent">
+
         <View
             android:id="@+id/rtView"
             android:layout_width="0dp"
@@ -54,6 +56,7 @@
             android:textSize="@dimen/text_size_4"
             app:layout_constraintBottom_toBottomOf="@+id/deviceIv"
             app:layout_constraintStart_toEndOf="@+id/deviceIv" />
+
         <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
             android:id="@+id/smartWatchLayout"
             android:layout_width="0dp"
@@ -76,6 +79,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/smartWatchLayout"
             app:title="@string/setting_device_left_knee" />
+
         <com.fjp.skeletalmuscle.app.weight.SettingItemLayout
             android:id="@+id/rightKneeLL"
             android:layout_width="0dp"

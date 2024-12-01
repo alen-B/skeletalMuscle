@@ -11,11 +11,11 @@ class ServiceAgreementActivity : BaseActivity<ServiceAgreementViewModel, Activit
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        val isServiceAgreemt =intent.getBooleanExtra(Constants.INTENT_IS_SERVICE_AGREEMENT,true)
-        if(isServiceAgreemt){
+        val isServiceAgreemt = intent.getBooleanExtra(Constants.INTENT_IS_SERVICE_AGREEMENT, true)
+        if (isServiceAgreemt) {
             mViewModel.title.set(getString(R.string.service_agreement_title))
             mDatabind.webview.loadUrl("file:///android_asset/serviceagreement.html")
-        }else{
+        } else {
             mViewModel.title.set(getString(R.string.privacy_policy_title))
             mDatabind.webview.loadUrl("file:///android_asset/privacypolicy.html")
         }

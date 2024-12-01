@@ -1,25 +1,15 @@
 package com.fjp.skeletalmuscle.ui.main.fragment
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
-import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
-import com.fjp.skeletalmuscle.databinding.FragmentMainSportsHighKneeBinding
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDumbbellBinding
-import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsHighKneeBinding
-import com.fjp.skeletalmuscle.ui.main.TodaySportsActivity
 import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
-import com.fjp.skeletalmuscle.viewmodel.state.MainSportsHighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDumbbellViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsHighKneeViewModel
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -49,6 +39,7 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
         initHeartRateLineChart()
         initLegAngleLineChart()
     }
+
     private fun initHeartRateLineChart() {
         val lineChart = mDatabind.heartRateLineChart
         lineChart.legend.isEnabled = false
@@ -65,12 +56,12 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.enableGridDashedLine(2f,1f,0f)
+        xAxis.enableGridDashedLine(2f, 1f, 0f)
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f,1f,0f)
-        leftAxis.enableAxisLineDashedLine(2f,1f,0f)
-        leftAxis.gridLineWidth =0f
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
+        leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -141,9 +132,9 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
 
         val leftAxis = barChart.axisLeft
         leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f,1f,0f)
-        leftAxis.enableAxisLineDashedLine(2f,1f,0f)
-        leftAxis.gridLineWidth =0f
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
+        leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -173,9 +164,10 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
         barChart.setNoDataText("暂无数据")
         barChart.animateY(500)
     }
+
     private fun initLegAngleLineChart() {
         val lineChart = mDatabind.legAngleLineChart
-        lineChart.legend.isEnabled=false
+        lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
         lineChart.isDragEnabled = false
         lineChart.setScaleEnabled(false)
@@ -189,19 +181,19 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.enableGridDashedLine(2f,1f,0f)
+        xAxis.enableGridDashedLine(2f, 1f, 0f)
 
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f,1f,0f)
-        leftAxis.enableAxisLineDashedLine(2f,1f,0f)
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext,R.color.color_gray)
+        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         rightAxis.isEnabled = false
 
         val values = ArrayList<Entry>()
@@ -268,21 +260,18 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
     }
 
 
-
-
-
     inner class ProxyClick {
         fun clickCalorie() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL ,ChartType.BURN_CALORIES)
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.BURN_CALORIES)
 
         }
 
         fun clickHeartRate() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL ,ChartType.HEART_RATE_TREND)
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.HEART_RATE_TREND)
         }
 
         fun clickLegAngle() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL ,ChartType.LEG_LIFTING_ANGLE)
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.LEG_LIFTING_ANGLE)
         }
 
     }

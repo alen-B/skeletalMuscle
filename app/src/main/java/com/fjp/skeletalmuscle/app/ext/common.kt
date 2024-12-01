@@ -10,9 +10,7 @@ import android.view.View
  *Description:
  */
 val Int.dp
-    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-        this.toFloat(),
-        Resources.getSystem().displayMetrics)
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics)
 
 fun <T : View> T.withTrigger(delay: Long = 600): T {
     triggerDelay = delay

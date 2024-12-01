@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.CalendarViewModel" />
+
         <variable
             name="click"
             type="com.fjp.skeletalmuscle.ui.main.CalendarActivity.ProxyClick" />
@@ -23,9 +25,11 @@
         android:paddingBottom="@dimen/main_padding_bottom"
         android:background="@color/color_f5f5f5"
         tools:ignore="RtlHardcoded,HardcodedText,RtlSymmetry,SmallSp">
+
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
+
         <TextView
             android:text="@string/calendar_pre_month"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +42,8 @@
             android:paddingStart="15dp"
             android:onClick="@{()-> click.clickPreMonth()}"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            android:layout_height="56dp"/>
+            android:layout_height="56dp" />
+
         <TextView
             android:id="@+id/titleTv"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +54,8 @@
             android:textSize="@dimen/text_size_2"
             android:text="@{viewModel.calendarTitle}"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            android:layout_height="56dp"/>
+            android:layout_height="56dp" />
+
         <TextView
             android:text="@string/calendar_next_month"
             android:gravity="center"
@@ -62,7 +68,7 @@
             android:paddingEnd="15dp"
             android:onClick="@{()-> click.clickNextMonth()}"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            android:layout_height="56dp"/>
+            android:layout_height="56dp" />
 
 
         <com.haibin.calendarview.CalendarLayout
@@ -110,6 +116,7 @@
                 app:year_view_month_text_size="@dimen/text_size_5"
                 app:year_view_scheme_color="#f17706" />
         </com.haibin.calendarview.CalendarLayout>
+
         <io.alterac.blurkit.BlurLayout
             android:id="@+id/blurLayout"
             app:layout_constraintStart_toStartOf="parent"
@@ -119,13 +126,14 @@
             android:layout_width="144dp"
             app:blk_blurRadius="25"
             android:layout_height="144dp">
+
             <ImageView
                 android:layout_width="144dp"
                 android:src="@drawable/arrow_right"
                 android:background="@drawable/bg_back"
                 android:onClick="@{()-> click.clickfinish()}"
                 android:scaleType="center"
-                android:layout_height="144dp"/>
+                android:layout_height="144dp" />
         </io.alterac.blurkit.BlurLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

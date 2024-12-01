@@ -15,9 +15,9 @@ class EventViewModel : BaseViewModel() {
     val todoEvent = EventLiveData<Boolean>()
 
     //开始运动，关闭之前的选择运动和运动数据设置activity
-    val  startSports= EventLiveData<Boolean>()
+    val startSports = EventLiveData<Boolean>()
 
-    val  updatePhoneEvent= EventLiveData<String>()
-    val  updateUserNameEvent= EventLiveData<String>()
+    val updatePhoneEvent = EventLiveData<String>()
+    val updateUserNameEvent = EventLiveData<String>()
 
 }

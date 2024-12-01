@@ -1,12 +1,7 @@
 package com.fjp.skeletalmuscle.ui.assessment.fragment
 
 import android.graphics.Color
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.databinding.FragmentAssessmentResultBinding
@@ -19,14 +14,14 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
 import me.hgj.jetpackmvvm.base.appContext
 
-class AssessmentResultFragment(val curMonth:Int) : BaseFragment<AssessmentResultViewModel,FragmentAssessmentResultBinding>() {
+class AssessmentResultFragment(val curMonth: Int) : BaseFragment<AssessmentResultViewModel, FragmentAssessmentResultBinding>() {
 
     companion object {
-        fun newInstance(curMonth:Int) = AssessmentResultFragment(curMonth)
+        fun newInstance(curMonth: Int) = AssessmentResultFragment(curMonth)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.viewModel=mViewModel
+        mDatabind.viewModel = mViewModel
         initRadarChart()
     }
 
@@ -44,13 +39,14 @@ class AssessmentResultFragment(val curMonth:Int) : BaseFragment<AssessmentResult
         xAxis.textSize = 9f
         xAxis.yOffset = 0f
         xAxis.xOffset = 0f
-        val mActivities = arrayOf(getString(R.string.sports_assessment_history_result_max_grips),
+        val mActivities = arrayOf(
+            getString(R.string.sports_assessment_history_result_max_grips),
             getString(R.string.sports_assessment_history_result_max_sit_up_times),
             getString(R.string.sports_assessment_waistline),
             getString(R.string.sports_assessment_weight),
             getString(R.string.sports_assessment_history_result_high_leg_times),
         )
-        xAxis.valueFormatter = object: ValueFormatter(){
+        xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return mActivities[value.toInt() % mActivities.size]
             }
@@ -66,7 +62,7 @@ class AssessmentResultFragment(val curMonth:Int) : BaseFragment<AssessmentResult
         yAxis.setDrawLabels(false)
 
         val l = chart.legend
-        l.isEnabled=false
+        l.isEnabled = false
     }
 
     private fun setData() {

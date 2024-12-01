@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel" />
@@ -12,15 +13,17 @@
             name="click"
             type="com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity.ProxyClick" />
     </data>
-<!--    @drawable/bg_step1-->
+    <!--    @drawable/bg_step1-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#11000000"
         tools:context=".ui.sports.HighKneeMainActivity">
+
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lLC"
             android:layout_width="140dp"
@@ -32,13 +35,15 @@
             android:gravity="center_horizontal"
             android:paddingBottom="12dp"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/lCurDataTv"
                 android:layout_width="wrap_content"
                 android:textColor="@color/color_222"
                 android:textSize="@dimen/text_size_2"
                 android:text="@{viewModel.leftLegAngle}"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <ImageView
                 android:id="@+id/lIv1"
                 android:layout_width="110dp"
@@ -47,6 +52,7 @@
                 android:scaleType="centerCrop"
                 android:background="@drawable/bg_e64e71ff_8"
                 tools:ignore="ContentDescription" />
+
             <ImageView
                 android:id="@+id/lIv2"
                 android:layout_width="110dp"
@@ -55,6 +61,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/bg_b34e71ff_8"
                 tools:ignore="ContentDescription" />
+
             <ImageView
                 android:id="@+id/lIv3"
                 android:layout_width="110dp"
@@ -63,6 +70,7 @@
                 android:scaleType="centerCrop"
                 android:background="@drawable/bg_804e71ff_8"
                 tools:ignore="ContentDescription" />
+
             <ImageView
                 android:id="@+id/lIv4"
                 android:layout_width="110dp"
@@ -71,6 +79,7 @@
                 android:scaleType="centerCrop"
                 android:background="@drawable/bg_3d4e71ff_8"
                 tools:ignore="ContentDescription" />
+
             <ImageView
                 android:id="@+id/lIv5"
                 android:layout_width="110dp"
@@ -80,6 +89,7 @@
                 android:background="@drawable/bg_1a4e71ff_8"
                 tools:ignore="ContentDescription" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <View
             android:id="@+id/lTimesView"
             android:layout_width="140dp"
@@ -88,7 +98,8 @@
             android:background="@drawable/bg_3d4e71ff_20"
             app:layout_constraintTop_toBottomOf="@+id/lLC"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_height="70dp"/>
+            android:layout_height="70dp" />
+
         <TextView
             android:id="@+id/lTimesTv"
             android:layout_width="wrap_content"
@@ -100,7 +111,8 @@
             android:textColor="@color/color_222"
             android:textSize="@dimen/text_size_1"
             android:text="@{viewModel.leftLegCount}"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/lUnitTv"
             android:layout_width="wrap_content"
@@ -109,7 +121,8 @@
             android:text="@string/main_times"
             android:textColor="@color/color_222"
             android:textSize="@dimen/text_size_4"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/rLC"
             android:layout_width="140dp"
@@ -121,54 +134,61 @@
             android:background="@drawable/bg_white_round_20"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/rCurDataTv"
-            android:text="@{viewModel.rightLegAngle}"
-            android:layout_width="wrap_content"
-            android:textColor="@color/color_222"
-            android:textSize="@dimen/text_size_2"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/rIv1"
-            android:layout_width="110dp"
-            android:layout_marginTop="24dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/bg_e64e71ff_8"
-            tools:ignore="ContentDescription" />
-        <ImageView
-            android:id="@+id/rIv2"
-            android:layout_width="110dp"
-            android:layout_marginTop="2dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/bg_b34e71ff_8"
-            tools:ignore="ContentDescription" />
-        <ImageView
-            android:id="@+id/rIv3"
-            android:layout_width="110dp"
-            android:layout_marginTop="2dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/bg_804e71ff_8"
-            tools:ignore="ContentDescription" />
-        <ImageView
-            android:id="@+id/rIv4"
-            android:layout_width="110dp"
-            android:layout_marginTop="2dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/bg_3d4e71ff_8"
-            tools:ignore="ContentDescription" />
-        <ImageView
-            android:id="@+id/rIv5"
-            android:layout_width="110dp"
-            android:layout_marginTop="2dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/bg_1a4e71ff_8"
-            tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/rCurDataTv"
+                android:text="@{viewModel.rightLegAngle}"
+                android:layout_width="wrap_content"
+                android:textColor="@color/color_222"
+                android:textSize="@dimen/text_size_2"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/rIv1"
+                android:layout_width="110dp"
+                android:layout_marginTop="24dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_e64e71ff_8"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/rIv2"
+                android:layout_width="110dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_b34e71ff_8"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/rIv3"
+                android:layout_width="110dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_804e71ff_8"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/rIv4"
+                android:layout_width="110dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_3d4e71ff_8"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/rIv5"
+                android:layout_width="110dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_1a4e71ff_8"
+                tools:ignore="ContentDescription" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <View
             android:id="@+id/rTimesView"
             android:layout_width="140dp"
@@ -177,7 +197,8 @@
             android:background="@drawable/bg_3d4e71ff_20"
             app:layout_constraintTop_toBottomOf="@+id/rLC"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="70dp"/>
+            android:layout_height="70dp" />
+
         <TextView
             android:id="@+id/rTimesTv"
             android:layout_width="wrap_content"
@@ -189,7 +210,8 @@
             android:textColor="@color/color_222"
             android:textSize="@dimen/text_size_1"
             android:text="@{viewModel.rightLegCount}"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/rUnitTv"
             android:layout_width="wrap_content"
@@ -198,7 +220,7 @@
             android:text="@string/main_times"
             android:textColor="@color/color_222"
             android:textSize="@dimen/text_size_4"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <View
             android:id="@+id/scoreView"
@@ -210,7 +232,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/rTimesView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="84dp"/>
+            android:layout_height="84dp" />
+
         <TextView
             android:id="@+id/scoreViewTv"
             android:layout_width="wrap_content"
@@ -222,7 +245,8 @@
             android:textColor="@color/color_222"
             android:textSize="70sp"
             android:text="88"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/scoreViewUnitTv"
             android:layout_width="wrap_content"
@@ -232,7 +256,8 @@
             android:text="@string/main_rate"
             android:textColor="@color/color_99222222"
             android:textSize="@dimen/text_size_3"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
             android:id="@+id/progressBar"
             android:layout_width="0dp"
@@ -245,6 +270,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:rpbProgressColor="@color/colorAccent"
             app:rpbShowProgressText="false" />
+
         <ImageView
             android:id="@+id/backIv"
             android:layout_width="144dp"
@@ -255,6 +281,7 @@
             android:layout_marginStart="35dp"
             android:layout_height="144dp"
             tools:ignore="ContentDescription" />
+
         <View
             android:id="@+id/dataView"
             android:layout_width="0dp"
@@ -264,7 +291,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_white_80_round_20"
-            android:layout_height="144dp"/>
+            android:layout_height="144dp" />
+
         <TextView
             android:id="@+id/sportsTimeTv"
             android:layout_width="wrap_content"
@@ -275,7 +303,8 @@
             android:layout_marginTop="16dp"
             android:textSize="@dimen/text_size_4"
             android:textColor="@color/color_222"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/timeNumTv"
             android:layout_width="wrap_content"
@@ -288,7 +317,8 @@
             app:drawableStartCompat="@drawable/main_timer"
             android:textSize="@dimen/text_size_1"
             android:textColor="@color/color_222"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <View
             android:id="@+id/midLine"
             android:layout_width="2dp"
@@ -297,7 +327,8 @@
             app:layout_constraintTop_toTopOf="@+id/dataView"
             android:background="@color/color_332c2c2c"
             app:layout_constraintBottom_toBottomOf="@+id/dataView"
-            android:layout_height="88dp"/>
+            android:layout_height="88dp" />
+
         <TextView
             android:id="@+id/heartTv"
             android:layout_width="wrap_content"
@@ -307,7 +338,8 @@
             android:textSize="@dimen/text_size_4"
             android:layout_marginStart="25dp"
             android:textColor="@color/color_222"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/heartNumTv"
             android:layout_width="wrap_content"
@@ -320,7 +352,8 @@
             app:drawableStartCompat="@drawable/main_heart"
             android:textSize="@dimen/text_size_1"
             android:textColor="@color/color_222"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/stopBtn"
             style="@style/SMButton"
@@ -333,6 +366,7 @@
             android:drawableEnd="@drawable/stop_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/completeBtn" />
+
         <Button
             android:id="@+id/completeBtn"
             style="@style/SMButtonNext"

@@ -19,8 +19,10 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivityLoginBinding
+import com.fjp.skeletalmuscle.ui.main.MainActivity
 import com.fjp.skeletalmuscle.ui.user.InputNameActivity
 import com.fjp.skeletalmuscle.viewmodel.request.RequestLoginViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.LoginViewModel
@@ -32,7 +34,7 @@ import me.hgj.jetpackmvvm.ext.util.isPhone
 
 
 class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
-    private val reqeustLoginViewModel:RequestLoginViewModel by viewModels()
+    private val reqeustLoginViewModel: RequestLoginViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
 
         mDatabind.viewModel = mViewModel
@@ -90,13 +92,34 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
     override fun createObserver() {
         super.createObserver()
-        reqeustLoginViewModel.loginResult.observe(this,{resultState->
-            parseState(resultState,{
-                println(it)
+        reqeustLoginViewModel.loginResult.observe(this) { resultState ->
+            parseState(resultState, {
+                if (it.name.isNullOrEmpty()) {//创建时间是0表示没有填写过个人信息
+                    val intent = Intent(this@LoginActivity, InputNameActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                }
+                App.userInfo= it
+                CacheUtil.setUser(it)
+                finish()
+            }, {
+                showToast(getString(R.string.login_login_failed))
             })
 
-        })
+        }
+        reqeustLoginViewModel.code.observe(this) { resultState ->
+            parseState(resultState, {
+                println(it)
+            }, {
+                showToast(getString(R.string.login_get_verification_code_failed))
+            })
+
+        }
     }
+
     inner class ProxyClick {
         fun login() {
             when {
@@ -108,12 +131,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 }
 
                 else -> {
-                    val intent = Intent(this@LoginActivity, InputNameActivity::class.java)
-                    intent.flags =Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
-                    App.userInfo?.phone = mViewModel.mobile.get()!!
-                    finish()
-//                    reqeustLoginViewModel.loginReq(mViewModel.mobile.get()!!,mViewModel.verificationCode.get()!!)
+                    reqeustLoginViewModel.loginReq(mViewModel.mobile.get()!!, mViewModel.verificationCode.get()!!)
                 }
             }
 
@@ -124,6 +142,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 showToast(getString(R.string.login_input_success_phone))
                 return
             }
+            reqeustLoginViewModel.codeReq(mViewModel.mobile.get()!!)
             startCountDown()
         }
 

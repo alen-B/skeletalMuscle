@@ -1,8 +1,12 @@
 package com.fjp.skeletalmuscle.data.model.bean
 
+import androidx.databinding.BaseObservable
+
 /**
  *Author:Mr'x
- *Time:2024/10/20
+ *Time:2024/11/22
  *Description:
  */
-class UserInfo(var name:String,var born:Long,var sex:Int,var height:String,var weight:String,var waist_line:String,var phone:String) {}
+data class UserInfo(var auth_token: String, var birthday: String, var created_at: Int, var disease: List<Disease>, var height: Int, var id: Int, var last_login_time: Int, var mobile: String, var name: String, var password: String, var sex: String, var sport_day_nums: Int, var sport_time: Int, var sports: List<String>, var status: Int, var updated_at: Int, var waistline: String, var weight: Int,var profile:String): BaseObservable()
+
+data class Disease(var child_disease_name: List<String>, var disease_name: String)

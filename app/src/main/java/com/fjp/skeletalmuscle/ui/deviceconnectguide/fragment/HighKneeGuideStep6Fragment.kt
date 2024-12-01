@@ -28,11 +28,11 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
 
     override fun onResume() {
         super.onResume()
-        if(App.sportsType == SportsType.HIGH_KNEE.type){
+        if (App.sportsType == SportsType.HIGH_KNEE.type) {
             initHighKnee()
-        }else if(App.sportsType == SportsType.DUMBBELL.type){
+        } else if (App.sportsType == SportsType.DUMBBELL.type) {
             initDumbbell()
-        }else if(App.sportsType == SportsType.HAND_GRIPS.type){
+        } else if (App.sportsType == SportsType.HAND_GRIPS.type) {
             initHandGrips()
         }
 
@@ -45,12 +45,12 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
         mDatabind.step22Tv.text = getString(R.string.dumbbell_connect_right_device_step2)
         mDatabind.step23Tv.text = getString(R.string.dumbbell_connect_right_device_step3)
         val rightLegDevice = SMBleManager.connectedDevices.get(DeviceType.RIGHT_DUMBBELL)
-        if(rightLegDevice!= null ){
+        if (rightLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
-        }else{
+        } else {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
-            SMBleManager.scanDevices(DeviceType.RIGHT_DUMBBELL.value, DeviceType.RIGHT_DUMBBELL,object: SMBleManager.DeviceStatusListener{
+            SMBleManager.scanDevices(DeviceType.RIGHT_DUMBBELL.value, DeviceType.RIGHT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
                 override fun disConnected() {
                 }
 
@@ -69,12 +69,12 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
         mDatabind.step22Tv.text = getString(R.string.hand_grips_connect_right_device_step2)
         mDatabind.step23Tv.text = getString(R.string.hand_grips_connect_right_device_step3)
         val rightLegDevice = SMBleManager.connectedDevices.get(DeviceType.RIGHT_HAND_GRIPS)
-        if(rightLegDevice!= null ){
+        if (rightLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
-        }else{
+        } else {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
-            SMBleManager.scanDevices(DeviceType.RIGHT_HAND_GRIPS.value, DeviceType.RIGHT_HAND_GRIPS,object: SMBleManager.DeviceStatusListener{
+            SMBleManager.scanDevices(DeviceType.RIGHT_HAND_GRIPS.value, DeviceType.RIGHT_HAND_GRIPS, object : SMBleManager.DeviceStatusListener {
                 override fun disConnected() {
                 }
 
@@ -87,9 +87,9 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
 
     private fun initHighKnee() {
         val rightLegDevice = SMBleManager.connectedDevices.get(DeviceType.RIGHT_LEG)
-        if(rightLegDevice!= null ){
+        if (rightLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
-        }else{
+        } else {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             mViewModel.title.set(getString(R.string.high_knee_guide_step6_title))
@@ -98,17 +98,17 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
 
     }
 
-    fun showConnectedView(){
+    fun showConnectedView() {
         try {
             setLayoutTitle()
             mViewModel.leftImg.set(R.drawable.title_left_default_icon)
             mDatabind.step2Tv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.high_knee_guide3_connected), null, null, null)
-            mDatabind.step2Tv.setTextColor(ContextCompat.getColor(requireContext(),R.color.color_1c1c1c))
-            mDatabind.step21Tv.setTextColor(ContextCompat.getColor(requireContext(),R.color.color_1c1c1c))
-            mDatabind.step22Tv.setTextColor(ContextCompat.getColor(requireContext(),R.color.color_1c1c1c))
-            mDatabind.step23Tv.setTextColor(ContextCompat.getColor(requireContext(),R.color.color_1c1c1c))
+            mDatabind.step2Tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_1c1c1c))
+            mDatabind.step21Tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_1c1c1c))
+            mDatabind.step22Tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_1c1c1c))
+            mDatabind.step23Tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_1c1c1c))
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
-        }catch(_:Exception){
+        } catch (_: Exception) {
 
         }
     }
@@ -118,31 +118,35 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
             SportsType.HIGH_KNEE.type -> {
                 mViewModel.title.set(getString(R.string.high_knee_guide_step5_title))
             }
+
             SportsType.DUMBBELL.type -> {
                 mViewModel.title.set(getString(R.string.dumbbell_connect_left_device_connect))
             }
+
             SportsType.HAND_GRIPS.type -> {
                 mViewModel.title.set(getString(R.string.hand_grips_connect_left_device_connected_title))
             }
         }
 
     }
-    fun connectDevice(){
-        SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG,object: SMBleManager.DeviceStatusListener{
+
+    fun connectDevice() {
+        SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
             override fun disConnected() {
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
-                mDatabind.reconnectBtn.visibility= View.VISIBLE
+                mDatabind.reconnectBtn.visibility = View.VISIBLE
             }
 
             override fun connected() {
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))
-                mDatabind.reconnectBtn.visibility= View.GONE
+                mDatabind.reconnectBtn.visibility = View.GONE
                 showConnectedView()
             }
         })
     }
-    inner class Proxy{
-        fun  clickReconnect(){
+
+    inner class Proxy {
+        fun clickReconnect() {
             connectDevice()
         }
 

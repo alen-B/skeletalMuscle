@@ -18,11 +18,12 @@ import me.hgj.jetpackmvvm.base.appContext
  *Time:2024/10/29
  *Description:
  */
-class SingleSelectedPop(context: Context,var type: SingleSelectType, val listener: Listener) : BottomPopupView(context) {
+class SingleSelectedPop(context: Context, var type: SingleSelectType, val listener: Listener) : BottomPopupView(context) {
     private lateinit var blurLayout: BlurLayout
     var curIndex = 0
+
     interface Listener {
-        fun onSelected(data:String,pop: SingleSelectedPop)
+        fun onSelected(data: String, pop: SingleSelectedPop)
     }
 
     override fun getImplLayoutId(): Int {
@@ -36,29 +37,24 @@ class SingleSelectedPop(context: Context,var type: SingleSelectType, val listene
         val sureTv = findViewById<TextView>(R.id.sureTv)
         val cancelTv = findViewById<TextView>(R.id.cancelTv)
         val titleTv = findViewById<TextView>(R.id.titleTv)
-        var curData = App.userInfo.height
-        if(type == SingleSelectType.HEIGHT){
+        if (type == SingleSelectType.HEIGHT) {
             titleTv.setText(R.string.setting_height)
-        }else if(type == SingleSelectType.WEIGHT){
+        } else if (type == SingleSelectType.WEIGHT) {
             titleTv.setText(R.string.setting_weight)
-            curData =App.userInfo.weight
-        }else if(type == SingleSelectType.WAIST_LINE){
+        } else if (type == SingleSelectType.WAIST_LINE) {
             titleTv.setText(R.string.setting_waist_lin)
-            curData =App.userInfo.waist_line
-        }else if(type == SingleSelectType.SEX){
-            curData = if(App.userInfo.sex==0) appContext.getString(R.string.setting_sex_woman) else appContext.getString(R.string.setting_sex_man)
+        } else if (type == SingleSelectType.SEX) {
             titleTv.setText(R.string.setting_sex)
         }
         val mOptionsItems: MutableList<String> = getData()
         wheelView.setTextSize(20F)
-        wheelView.adapter = ArrayWheelAdapter<String>(mOptionsItems)
-        wheelView.currentItem =mOptionsItems.indexOf(curData)
+        wheelView.adapter = ArrayWheelAdapter(mOptionsItems)
+        wheelView.currentItem = curIndex
         cancelTv.setOnClickListener { dismiss() }
-        sureTv.setOnClickListener { listener.onSelected(mOptionsItems[curIndex],this@SingleSelectedPop) }
+        sureTv.setOnClickListener { listener.onSelected(mOptionsItems[curIndex], this@SingleSelectedPop) }
         wheelView.setOnItemSelectedListener { index ->
             curIndex = index
-            //                listener.onSelected(mOptionsItems[index],this@SingleSelectedPop)
-            Toast.makeText(appContext, "" + mOptionsItems[index], Toast.LENGTH_SHORT).show()
+            listener.onSelected(mOptionsItems[index],this@SingleSelectedPop)
         }
     }
 
@@ -66,17 +62,31 @@ class SingleSelectedPop(context: Context,var type: SingleSelectType, val listene
         val list = mutableListOf<String>()
         if (type == SingleSelectType.HEIGHT) {
             for (i in 130..210) {
+                if(App.userInfo.height == i){
+                    curIndex = i-130
+                }
                 list.add("${i}cm")
             }
         } else if (type == SingleSelectType.WEIGHT) {
             for (i in 30..100) {
+                if(App.userInfo.weight == i){
+                    curIndex = i-30
+                }
                 list.add("${i}kg")
             }
         } else if (type == SingleSelectType.WAIST_LINE) {
             for (i in 70..120) {
+                if(App.userInfo.waistline.equals(i.toString())){
+                    curIndex = i-70
+                }
                 list.add("${i}cm")
             }
         } else if (type == SingleSelectType.SEX) {
+            if(App.userInfo?.sex.equals(context.getString(R.string.setting_sex_man))){
+                curIndex=0
+            }else{
+                curIndex=1
+            }
             list.add(context.getString(R.string.setting_sex_man))
             list.add(context.getString(R.string.setting_sex_woman))
         }

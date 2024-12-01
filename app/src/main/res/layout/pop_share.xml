@@ -3,155 +3,156 @@
     android:id="@+id/blurLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:padding="35dp"
-    android:background="#aa000000"
-    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/title_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="93dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="35dp"
+        android:background="#aa000000"
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/leftIv"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:background="@drawable/title_left_default_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="93dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/titleTv"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/leftIv"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/title_left_default_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/share_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/leftIv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/shareView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintBottom_toTopOf="@+id/shareBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/friendsLL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/bg_device_connected"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/shareView"
+            app:layout_constraintEnd_toStartOf="@+id/circleFriendsLL"
+            app:layout_constraintStart_toStartOf="@+id/shareView"
+            app:layout_constraintTop_toTopOf="@+id/shareView">
+
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_marginTop="70dp"
+                android:layout_height="130dp"
+                android:background="@drawable/friends" />
+
+            <TextView
+                android:id="@+id/friendsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/share_friends"
+                android:textColor="@color/color_222"
+                android:textSize="@dimen/text_size_3" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/circleFriendsLL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:text="@string/share_title"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_1"
+            android:background="@drawable/bg_device_connected"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/friendsLL"
+            app:layout_constraintEnd_toStartOf="@+id/localSaveLL"
+            app:layout_constraintStart_toEndOf="@+id/friendsLL"
+            app:layout_constraintTop_toTopOf="@+id/friendsLL">
+
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_marginTop="70dp"
+                android:layout_height="130dp"
+                android:background="@drawable/circle_of_friends" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share_circle_friends"
+                android:textColor="@color/color_222"
+                android:layout_marginTop="16dp"
+                android:textSize="@dimen/text_size_3" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/localSaveLL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_device_connected"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/friendsLL"
+            app:layout_constraintEnd_toEndOf="@+id/shareView"
+            app:layout_constraintStart_toEndOf="@+id/circleFriendsLL"
+            app:layout_constraintTop_toTopOf="@+id/friendsLL">
+
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_marginTop="70dp"
+                android:layout_height="130dp"
+                android:background="@drawable/save_img" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share_save_img"
+                android:textColor="@color/color_222"
+                android:layout_marginTop="16dp"
+                android:textSize="@dimen/text_size_3" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/shareBtn"
+            style="@style/SMButton"
+            android:layout_width="240dp"
+            android:layout_marginEnd="35dp"
+            android:drawableEnd="@drawable/exercise_plan_start_icon"
+            android:paddingEnd="24dp"
+            android:text="@string/share_completed"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/leftIv"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/shareView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/bg_white_round_20"
-        app:layout_constraintBottom_toTopOf="@+id/shareBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_layout" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/friendsLL"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/bg_device_connected"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/shareView"
-        app:layout_constraintEnd_toStartOf="@+id/circleFriendsLL"
-        app:layout_constraintStart_toStartOf="@+id/shareView"
-        app:layout_constraintTop_toTopOf="@+id/shareView">
-
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_marginTop="70dp"
-            android:layout_height="130dp"
-            android:background="@drawable/friends" />
-
-        <TextView
-            android:id="@+id/friendsTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/share_friends"
-            android:textColor="@color/color_222"
-            android:textSize="@dimen/text_size_3" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/circleFriendsLL"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/bg_device_connected"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/friendsLL"
-        app:layout_constraintEnd_toStartOf="@+id/localSaveLL"
-        app:layout_constraintStart_toEndOf="@+id/friendsLL"
-        app:layout_constraintTop_toTopOf="@+id/friendsLL">
-
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_marginTop="70dp"
-            android:layout_height="130dp"
-            android:background="@drawable/circle_of_friends" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share_circle_friends"
-            android:textColor="@color/color_222"
-            android:layout_marginTop="16dp"
-            android:textSize="@dimen/text_size_3" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/localSaveLL"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/bg_device_connected"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/friendsLL"
-        app:layout_constraintEnd_toEndOf="@+id/shareView"
-        app:layout_constraintStart_toEndOf="@+id/circleFriendsLL"
-        app:layout_constraintTop_toTopOf="@+id/friendsLL">
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_marginTop="70dp"
-            android:layout_height="130dp"
-            android:background="@drawable/save_img" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share_save_img"
-            android:textColor="@color/color_222"
-            android:layout_marginTop="16dp"
-            android:textSize="@dimen/text_size_3" />
-
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <Button
-        android:id="@+id/shareBtn"
-        style="@style/SMButton"
-        android:layout_width="240dp"
-        android:layout_marginEnd="35dp"
-        android:drawableEnd="@drawable/exercise_plan_start_icon"
-        android:paddingEnd="24dp"
-        android:text="@string/share_completed"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
 </io.alterac.blurkit.BlurLayout>

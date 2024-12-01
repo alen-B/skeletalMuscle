@@ -301,6 +301,7 @@
             android:textSize="@dimen/text_size_1"
             app:layout_constraintBottom_toBottomOf="@+id/exerciseAmountView"
             app:layout_constraintStart_toStartOf="@+id/exerciseAmountView" />
+
         <TextView
             android:id="@+id/upliftUnitTv"
             android:layout_width="wrap_content"
@@ -323,6 +324,7 @@
             app:layout_constraintEnd_toEndOf="@+id/exerciseAmountView"
             app:layout_constraintStart_toStartOf="@+id/exerciseAmountView"
             app:layout_constraintTop_toBottomOf="@+id/exerciseAmountTitleTv" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -333,6 +335,7 @@
             android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/midLine"
             app:layout_constraintTop_toBottomOf="@+id/exerciseAmountTitleTv" />
+
         <TextView
             android:id="@+id/expandChestTv"
             android:layout_width="wrap_content"
@@ -344,6 +347,7 @@
             android:textSize="@dimen/text_size_1"
             app:layout_constraintBottom_toBottomOf="@+id/exerciseAmountView"
             app:layout_constraintStart_toStartOf="@+id/midLine" />
+
         <TextView
             android:id="@+id/expandChestTvUnitTv"
             android:layout_width="wrap_content"

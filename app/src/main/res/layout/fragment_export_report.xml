@@ -4,20 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.ExportReportViewModel" />
 
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.setting.ExportReportFragment.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.setting.fragment.ExportReportFragment.ProxyClick" />
     </data>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:background="@color/color_f5f5f5"
-            android:layout_height="match_parent"
-            tools:context=".ui.setting.SystemSettingFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/color_f5f5f5"
+        android:layout_height="match_parent"
+        tools:context=".ui.setting.fragment.SystemSettingFragment">
 
         <View
             android:id="@+id/rtView"
@@ -57,75 +58,83 @@
             android:textSize="@dimen/text_size_4"
             app:layout_constraintBottom_toBottomOf="@+id/deviceIv"
             app:layout_constraintStart_toEndOf="@+id/deviceIv" />
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/curWeekLL"
-                android:layout_width="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rtView"
-                android:background="@drawable/bg_white_top_round_20"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:layout_height="wrap_content">
-                <RadioButton
-                    android:id="@+id/curWeekRB"
-                    android:layout_width="wrap_content"
-                    android:textSize="@dimen/text_size_4"
-                    android:drawablePadding="16dp"
-                    android:button="@null"
-                    android:drawableStart="@drawable/radio_button_selector"
-                    android:text="@string/setting_current_week"
-                    android:layout_height="70dp"/>
-                <TextView
-                    android:id="@+id/curWeekTv"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textSize="@dimen/text_size_4"
-                    android:textColor="@color/color_801c1c1c"
-                    android:layout_height="wrap_content"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/curMonthLL"
-                android:layout_width="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/curWeekLL"
-                android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="1dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:layout_height="wrap_content">
-                <RadioButton
-                    android:id="@+id/curMonthRB"
-                    android:layout_width="wrap_content"
-                    android:textSize="@dimen/text_size_4"
-                    android:drawablePadding="16dp"
-                    android:button="@null"
-                    android:drawableStart="@drawable/radio_button_selector"
-                    android:text="@string/setting_current_month"
-                    android:layout_height="70dp"/>
-                <TextView
-                    android:id="@+id/curMonthTv"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textSize="@dimen/text_size_4"
-                    android:textColor="@color/color_801c1c1c"
-                    android:layout_height="wrap_content"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/curCustomerLL"
-                android:layout_width="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/curMonthLL"
-                android:background="@drawable/bg_white_bottom_round_20"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="1dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/curWeekLL"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rtView"
+            android:background="@drawable/bg_white_top_round_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/curWeekRB"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_size_4"
+                android:drawablePadding="16dp"
+                android:button="@null"
+                android:drawableStart="@drawable/radio_button_selector"
+                android:text="@string/setting_current_week"
+                android:layout_height="70dp" />
+
+            <TextView
+                android:id="@+id/curWeekTv"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textSize="@dimen/text_size_4"
+                android:textColor="@color/color_801c1c1c"
+                android:layout_height="wrap_content" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/curMonthLL"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/curWeekLL"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="1dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/curMonthRB"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_size_4"
+                android:drawablePadding="16dp"
+                android:button="@null"
+                android:drawableStart="@drawable/radio_button_selector"
+                android:text="@string/setting_current_month"
+                android:layout_height="70dp" />
+
+            <TextView
+                android:id="@+id/curMonthTv"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textSize="@dimen/text_size_4"
+                android:textColor="@color/color_801c1c1c"
+                android:layout_height="wrap_content" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/curCustomerLL"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/curMonthLL"
+            android:background="@drawable/bg_white_bottom_round_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="1dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_height="wrap_content">
+
             <RadioButton
                 android:id="@+id/customerTimeRB"
                 android:layout_width="wrap_content"
@@ -134,7 +143,8 @@
                 android:button="@null"
                 android:drawableStart="@drawable/radio_button_selector"
                 android:text="@string/setting_customer_time"
-                android:layout_height="70dp"/>
+                android:layout_height="70dp" />
+
             <TextView
                 android:id="@+id/curCustomerStartTv"
                 android:layout_width="wrap_content"
@@ -143,25 +153,27 @@
                 android:onClick="@{()-> click.clickCustomerStart()}"
                 android:textSize="@dimen/text_size_4"
                 android:textColor="@color/color_801c1c1c"
-                android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/curCustomerEndTv"
-                    android:layout_width="wrap_content"
-                    android:gravity="start"
-                    android:onClick="@{()-> click.clickCustomerEnd()}"
-                    android:textSize="@dimen/text_size_4"
-                    android:textColor="@color/color_801c1c1c"
-                    android:layout_height="wrap_content"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <Button
-                android:id="@+id/exportBtn"
-                style="@style/SMButtonNext"
-                android:layout_width="240dp"
-                android:text="@string/setting_export"
-                android:drawableEnd="@drawable/export_arrow"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="35dp"
-                android:onClick="@{()-> click.clickExport()}" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/curCustomerEndTv"
+                android:layout_width="wrap_content"
+                android:gravity="start"
+                android:onClick="@{()-> click.clickCustomerEnd()}"
+                android:textSize="@dimen/text_size_4"
+                android:textColor="@color/color_801c1c1c"
+                android:layout_height="wrap_content" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/exportBtn"
+            style="@style/SMButtonNext"
+            android:layout_width="240dp"
+            android:text="@string/setting_export"
+            android:drawableEnd="@drawable/export_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="35dp"
+            android:onClick="@{()-> click.clickExport()}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

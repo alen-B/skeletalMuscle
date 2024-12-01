@@ -2,7 +2,6 @@ package com.fjp.skeletalmuscle.ui.main
 
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +31,7 @@ import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 import java.util.Calendar
 
-class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRecordBinding>() {
+class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsRecordBinding>() {
 
     val calendar = Calendar.getInstance()
     override fun initView(savedInstanceState: Bundle?) {
@@ -42,7 +41,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
 
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        calendar.set(year,month,day)
+        calendar.set(year, month, day)
 
         mViewModel.title.set("看看${year}年${month}月${day}日运动记录吧")
         mDatabind.circleProgressView.setScore(75)
@@ -51,7 +50,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
         initSportsLeg()
         initSportsDumbbell()
         initSportsPlank()
-        initLineChart( mDatabind.lineChart)
+        initLineChart(mDatabind.lineChart)
         initLineChart(mDatabind.dumbbellAngleLineChart)
         initLineChart(mDatabind.dumbbellHeartRateLineChart)
         initLineChart(mDatabind.plankHeartRateLineChart)
@@ -60,8 +59,9 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
 
     private fun initSportsDumbbell() {
         mDatabind.dumbbellRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.dumbbellSportsDate))
-        mDatabind.dumbbellRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
+        mDatabind.dumbbellRecyclerView.addItemDecoration(SpaceItemDecoration(16.dp.toInt(), 0))
     }
+
     private fun initSportsPlank() {
 //        mDatabind.plankRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.plankSportsDate))
 //        mDatabind.plankRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
@@ -72,12 +72,13 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
 //        mDatabind.legRecyclerView.addItemDecoration(SpaceItemDecoration( 16.dp.toInt(),0))
     }
 
-    fun setCalendarTitle(){
+    fun setCalendarTitle() {
         mViewModel.calendarTitle.set("${calendar.year}年${calendar.month}月${calendar.dayOfMonth}日")
         mViewModel.legSportsTime.set("${calendar.month}月${calendar.dayOfMonth}日")
         mViewModel.dumbbellSportsTime.set("${calendar.month}月${calendar.dayOfMonth}日")
         mViewModel.plankSportsTime.set("${calendar.month}月${calendar.dayOfMonth}日")
     }
+
     private fun initLineChart(lineChart: LineChart) {
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
@@ -93,11 +94,11 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.enableGridDashedLine(2f,1f,0f)
+        xAxis.enableGridDashedLine(2f, 1f, 0f)
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f,1f,0f)
-        leftAxis.enableAxisLineDashedLine(2f,1f,0f)
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0.5f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -150,23 +151,28 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel,ActivitySportsRe
         lineChart.setNoDataText("暂无数据")
         lineChart.animateY(500)
     }
-    inner class ProxyClick{
-        fun clickPreDay(){
+
+    inner class ProxyClick {
+        fun clickPreDay() {
             calendar.add(Calendar.DAY_OF_MONTH, -1)
             setCalendarTitle()
         }
-        fun clickNextDay(){
+
+        fun clickNextDay() {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
             setCalendarTitle()
         }
-        fun clickfinish(){
+
+        fun clickfinish() {
             this@SportsRecordActivity.finish()
         }
     }
+
     override fun onResume() {
         super.onResume()
         mDatabind.blurLayout.startBlur()
     }
+
     override fun onPause() {
         super.onPause()
         mDatabind.blurLayout.pauseBlur()

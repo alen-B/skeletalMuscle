@@ -4,12 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.databinding.FragmentMainSportsDumbbellBinding
-import com.fjp.skeletalmuscle.databinding.FragmentMainSportsHighKneeBinding
 import com.fjp.skeletalmuscle.ui.main.TodaySportsActivity
 import com.fjp.skeletalmuscle.viewmodel.state.MainSportsDumbbellViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.MainSportsHighKneeViewModel
 
-class MainSportsDumbbellFragment :BaseFragment<MainSportsDumbbellViewModel,FragmentMainSportsDumbbellBinding>() {
+class MainSportsDumbbellFragment : BaseFragment<MainSportsDumbbellViewModel, FragmentMainSportsDumbbellBinding>() {
 
     companion object {
         fun newInstance() = MainSportsDumbbellFragment()
@@ -21,8 +19,8 @@ class MainSportsDumbbellFragment :BaseFragment<MainSportsDumbbellViewModel,Fragm
     }
 
 
-    inner class ProxyClick{
-        fun clickTodaySports(){
+    inner class ProxyClick {
+        fun clickTodaySports() {
             startActivity(Intent(activity, TodaySportsActivity::class.java))
         }
     }

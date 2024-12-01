@@ -10,6 +10,7 @@
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.SingleSelectViewModel" />
+
         <variable
             name="click"
             type="com.fjp.skeletalmuscle.ui.user.SingleSelectActivity.ProxyClick" />
@@ -34,7 +35,7 @@
             app:layout_constraintBottom_toTopOf="@+id/nextBtn"
             android:layout_width="match_parent"
             android:scrollbars="none"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/nextBtn"

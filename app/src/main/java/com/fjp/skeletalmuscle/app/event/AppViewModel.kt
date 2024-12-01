@@ -13,7 +13,6 @@ class AppViewModel : BaseViewModel() {
     var userInfo = UnPeekLiveData.Builder<UserInfo>().setAllowNullValue(true).create()
 
 
-
     //App 列表动画
     var appAnimation = EventLiveData<Int>()
 

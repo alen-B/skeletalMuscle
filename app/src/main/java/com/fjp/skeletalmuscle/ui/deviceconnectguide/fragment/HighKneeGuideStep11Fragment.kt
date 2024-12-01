@@ -24,9 +24,9 @@ class HighKneeGuideStep11Fragment : BaseFragment<HighKneeGuideStep11ViewModel, F
 
     override fun onResume() {
         super.onResume()
-       if(App.sportsType == SportsType.DUMBBELL.type){
+        if (App.sportsType == SportsType.DUMBBELL.type) {
             initDumbbell()
-        }else if(App.sportsType == SportsType.HAND_GRIPS.type){
+        } else if (App.sportsType == SportsType.HAND_GRIPS.type) {
             initHandGrips()
         }
     }
@@ -38,6 +38,7 @@ class HighKneeGuideStep11Fragment : BaseFragment<HighKneeGuideStep11ViewModel, F
         mDatabind.step22Tv.text = getString(R.string.dumbbell_connect_right_device_step2)
         mDatabind.step23Tv.text = getString(R.string.dumbbell_connect_right_device_step3)
     }
+
     private fun initHandGrips() {
         mDatabind.step2Tv.text = getString(R.string.high_knee_guide_step11_right_hand_grips_checked)
         mDatabind.step21Tv.text = getString(R.string.hand_grips_connect_right_device_step1)

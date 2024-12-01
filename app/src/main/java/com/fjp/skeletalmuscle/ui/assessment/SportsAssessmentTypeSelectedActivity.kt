@@ -2,13 +2,9 @@ package com.fjp.skeletalmuscle.ui.assessment
 
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.app.base.BaseActivity
-import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentTypeSelectedBinding
 import com.fjp.skeletalmuscle.ui.assessment.adapter.AssessmentTypeAdapter
-import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentTypeSelectedViewModel
 
 class SportsAssessmentTypeSelectedActivity : BaseActivity<SportsAssessmentTypeSelectedViewModel, ActivitySportsAssessmentTypeSelectedBinding>() {
@@ -16,11 +12,11 @@ class SportsAssessmentTypeSelectedActivity : BaseActivity<SportsAssessmentTypeSe
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.click = ProxyClick()
-        mDatabind.viewModel =mViewModel
-       val singleSelectAdapter = AssessmentTypeAdapter(mViewModel.dataArr as ArrayList<String>,0, clickItem = { item, position ->
+        mDatabind.viewModel = mViewModel
+        val singleSelectAdapter = AssessmentTypeAdapter(mViewModel.dataArr as ArrayList<String>, 0, clickItem = { item, position ->
             currIndex = position
         })
-       val laoutManager = GridLayoutManager(this,2)
+        val laoutManager = GridLayoutManager(this, 2)
         mDatabind.recyclerView.layoutManager = laoutManager
         mDatabind.recyclerView.adapter = singleSelectAdapter
 

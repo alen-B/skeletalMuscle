@@ -7,6 +7,10 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.databinding.ActivitySettingBinding
+import com.fjp.skeletalmuscle.ui.setting.fragment.DeviceFragment
+import com.fjp.skeletalmuscle.ui.setting.fragment.ExportReportFragment
+import com.fjp.skeletalmuscle.ui.setting.fragment.SystemSettingFragment
+import com.fjp.skeletalmuscle.ui.setting.fragment.UserInfoFragment
 import com.fjp.skeletalmuscle.viewmodel.state.SettingViewModel
 
 class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>() {
@@ -25,10 +29,12 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
 
     override fun createObserver() {
         super.createObserver()
-        eventViewModel.updateUserNameEvent.observeInActivity(this,{
+        eventViewModel.updateUserNameEvent.observeInActivity(this) {
             mViewModel.userInfo.set(App.userInfo)
-        })
+            mViewModel.userInfo.get()?.notifyChange()
+        }
     }
+
     inner class ProxyClick {
 
         fun clickUserInfo() {
@@ -80,7 +86,7 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
             transaction.replace(R.id.rightFragment, fragment)
             transaction.addToBackStack(null)
             transaction.commit()
-        }catch (e:Exception){
+        } catch (e: Exception) {
             println(e.message)
         }
     }

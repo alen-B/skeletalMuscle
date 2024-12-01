@@ -10,6 +10,7 @@
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.InputNameViewModel" />
+
         <variable
             name="click"
             type="com.fjp.skeletalmuscle.ui.user.InputNameActivity.ProxyClick" />
@@ -32,8 +33,8 @@
             style="@style/SMEditText"
             android:layout_width="0dp"
             android:layout_height="140dp"
-            android:layout_marginStart="117dp"
-            android:layout_marginEnd="117dp"
+            android:layout_marginStart="69dp"
+            android:layout_marginEnd="69dp"
             android:hint="@string/input_name_hint"
             android:importantForAutofill="no"
             android:inputType="text"
@@ -43,12 +44,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:layout_width="240dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             bind:noRepeatClick="@{()-> click.next()}"
             android:text="@string/next_step"
-            style="@style/SMButtonNext"/>
+            style="@style/SMButtonNext" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

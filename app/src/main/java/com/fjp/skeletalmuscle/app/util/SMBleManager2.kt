@@ -24,59 +24,63 @@ import java.util.UUID
  */
 object SMBleManager2 {
     val TAG = "SMBleManager"
-    interface ConnectListener{
+
+    interface ConnectListener {
         fun connected()
         fun connectFailed()
     }
+
     val foundDevices: MutableList<BleDevice> = mutableListOf()
-    interface DeviceDataListener{
+
+    interface DeviceDataListener {
         fun onLeftLegData(data: ByteArray)
         fun onRightLegData(data: ByteArray)
         fun onGTSData(data: ByteArray)
         fun onLeftHandGripsData(data: ByteArray)
         fun onRightHandGripsData(data: ByteArray)
     }
+
     private val deviceDataListeners: MutableList<DeviceDataListener> = mutableListOf()
-  fun starScan(devicePrefix: String, deviceType: DeviceType,listener: ConnectListener){
-      App.mBle.startScan(object : BleScanCallback<BleDevice?>() {
-          override fun onLeScan(bleDevice: BleDevice?, rssi: Int, scanRecord: ByteArray?) {
-              //Scanned devices
-              bleDevice?.let {
-                  Log.d("BLE", "Found device: " + it.bleName)
-                  if (it.bleName != null && it.bleName.startsWith(devicePrefix)) {
-                      App.mBle.stopScan()
-                      foundDevices.add(it)
-                      connectToDevice(it, deviceType, listener)
+    fun starScan(devicePrefix: String, deviceType: DeviceType, listener: ConnectListener) {
+        App.mBle.startScan(object : BleScanCallback<BleDevice?>() {
+            override fun onLeScan(bleDevice: BleDevice?, rssi: Int, scanRecord: ByteArray?) {
+                //Scanned devices
+                bleDevice?.let {
+                    Log.d("BLE", "Found device: " + it.bleName)
+                    if (it.bleName != null && it.bleName.startsWith(devicePrefix)) {
+                        App.mBle.stopScan()
+                        foundDevices.add(it)
+                        connectToDevice(it, deviceType, listener)
 
-                  }
-              }
-          }
+                    }
+                }
+            }
 
-          override fun onStart() {
-              super.onStart()
-              appContext.showToast(appContext.getString(R.string.bluetooth_scaning))
-              SMBleManager.foundDevices.clear()
-          }
+            override fun onStart() {
+                super.onStart()
+                appContext.showToast(appContext.getString(R.string.bluetooth_scaning))
+                SMBleManager.foundDevices.clear()
+            }
 
-          override fun onStop() {
-              super.onStop()
-              if (foundDevices.isEmpty()) {
-                  Log.d("BLE", "No devices found with prefix: $devicePrefix")
-                  appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_not_find))
-              }
-          }
+            override fun onStop() {
+                super.onStop()
+                if (foundDevices.isEmpty()) {
+                    Log.d("BLE", "No devices found with prefix: $devicePrefix")
+                    appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_not_find))
+                }
+            }
 
-          override fun onScanFailed(errorCode: Int) {
-              super.onScanFailed(errorCode)
-              Log.e(TAG, "ScanFailed:errorCode$errorCode")
-              listener.connectFailed()
+            override fun onScanFailed(errorCode: Int) {
+                super.onScanFailed(errorCode)
+                Log.e(TAG, "ScanFailed:errorCode$errorCode")
+                listener.connectFailed()
 
-          }
-      })
-  }
+            }
+        })
+    }
 
     private fun connectToDevice(bleDevice: BleDevice, deviceType: DeviceType, listener: ConnectListener) {
-        App.mBle.connect(bleDevice,object: BleConnectCallback<BleDevice>() {
+        App.mBle.connect(bleDevice, object : BleConnectCallback<BleDevice>() {
             override fun onConnectionChanged(device: BleDevice?) {
 
             }
@@ -95,7 +99,7 @@ object SMBleManager2 {
                 super.onReady(device)
                 listener.connected()
                 device?.let {
-                    if(deviceType === DeviceType.GTS){
+                    if (deviceType === DeviceType.GTS) {
                         subscribeToNotifications(bleDevice, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_NOTIFY_CHAR)
                     }
                 }
@@ -104,7 +108,7 @@ object SMBleManager2 {
     }
 
     private fun subscribeToNotifications(bleDevice: BleDevice, gtsUuidService: String, gtsUuidNotifyChar: String) {
-        App.mBle.enableNotifyByUuid(bleDevice, true, UUID.fromString(gtsUuidService),UUID.fromString(gtsUuidNotifyChar), object : BleNotifyCallback<BleDevice?>() {
+        App.mBle.enableNotifyByUuid(bleDevice, true, UUID.fromString(gtsUuidService), UUID.fromString(gtsUuidNotifyChar), object : BleNotifyCallback<BleDevice?>() {
             override fun onChanged(device: BleDevice?, characteristic: BluetoothGattCharacteristic) {
                 val uuid = characteristic.uuid
                 BleLog.e(TAG, "onChanged==uuid:$uuid")
@@ -118,9 +122,9 @@ object SMBleManager2 {
 
                     } else if (deviceName.startsWith(DeviceType.RIGHT_LEG.value)) {
                         it.onRightLegData(characteristic.value)
-                    } else if (deviceName.startsWith(DeviceType.LEFT_HAND_GRIPS.value)){
+                    } else if (deviceName.startsWith(DeviceType.LEFT_HAND_GRIPS.value)) {
                         it.onLeftHandGripsData(characteristic.value)
-                    }else if (deviceName.startsWith(DeviceType.RIGHT_HAND_GRIPS.value)){
+                    } else if (deviceName.startsWith(DeviceType.RIGHT_HAND_GRIPS.value)) {
                         it.onRightLegData(characteristic.value)
                     }
 
@@ -130,7 +134,7 @@ object SMBleManager2 {
             fun onNotifySuccess(device: BleDevice) {
                 super.onNotifySuccess(device)
                 BleLog.e(TAG, "onNotifySuccess: " + device.bleName)
-                if(device.bleName.startsWith("GTS")){
+                if (device.bleName.startsWith("GTS")) {
                     writeDataToBleDevice(bleDevice)
                 }
             }

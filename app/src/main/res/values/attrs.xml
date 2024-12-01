@@ -2,7 +2,7 @@
 <resources>
     <attr name="title" format="string" />
     <declare-styleable name="SettingItemLayout">
-        <attr name="title"  />
+        <attr name="title" />
         <attr name="value" format="string" />
         <attr name="showBottomLine" format="boolean" />
         <attr name="roundTop" format="boolean" />
@@ -10,7 +10,7 @@
     </declare-styleable>
 
     <declare-styleable name="SportsRecordItemLayout">
-        <attr name="title"  />
+        <attr name="title" />
         <attr name="unit" format="string" />
     </declare-styleable>
 </resources>

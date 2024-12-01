@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/contentTv"
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_width="180dp"
+        android:layout_height="240dp"
         android:textStyle="bold"
         android:textColor="@color/color_1c1c1c"
         android:textSize="@dimen/text_size_2"
@@ -18,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/singleSelectedIv"
         android:layout_width="77dp"

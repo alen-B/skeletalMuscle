@@ -1,4 +1,4 @@
-package com.fjp.skeletalmuscle.ui.setting
+package com.fjp.skeletalmuscle.ui.setting.fragment
 
 import android.os.Bundle
 import android.widget.CompoundButton
@@ -6,7 +6,6 @@ import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.databinding.FragmentUpdateVersionBinding
 import com.fjp.skeletalmuscle.viewmodel.state.UpdateVersionViewModel
-import com.skeletalmuscle.appupdate.manager.HttpDownLoadManager
 
 class UpdateVersionFragment : BaseFragment<UpdateVersionViewModel, FragmentUpdateVersionBinding>(), CompoundButton.OnCheckedChangeListener {
 
@@ -17,15 +16,16 @@ class UpdateVersionFragment : BaseFragment<UpdateVersionViewModel, FragmentUpdat
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-       val isCheck = CacheUtil.getVoiceInteraction()
+        val isCheck = CacheUtil.getVoiceInteraction()
     }
 
-    inner class ProxyClick{
+    inner class ProxyClick {
 
-        fun clickUpdate(){
+        fun clickUpdate() {
 //            HttpDownLoadManager()
         }
-        fun clickDisUpdate(){
+
+        fun clickDisUpdate() {
             parentFragmentManager.popBackStack()
         }
     }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.fjp.skeletalmuscle.viewmodel.state.SelectedWaistlineAndWeightViewModel" />
@@ -20,9 +21,11 @@
         android:paddingStart="@dimen/main_padding_start"
         android:paddingBottom="@dimen/main_padding_bottom"
         tools:context=".ui.assessment.SelectedWaistlineAndWeightActivity">
+
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
+
         <TextView
             android:id="@+id/weightTv"
             android:layout_width="wrap_content"
@@ -32,7 +35,8 @@
             android:textSize="@dimen/text_size_2"
             app:layout_constraintTop_toTopOf="@+id/weightRView"
             app:layout_constraintBottom_toBottomOf="@+id/weightRView"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/weightRView"
             android:layout_marginStart="32dp"
@@ -41,7 +45,8 @@
             app:layout_constraintStart_toEndOf="@+id/weightTv"
             android:layout_width="0dp"
             android:scrollbars="none"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/waistlineTv"
             android:layout_width="wrap_content"
@@ -51,7 +56,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/waistlineRView"
             app:layout_constraintBottom_toBottomOf="@+id/waistlineRView"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/waistlineRView"
             android:layout_marginStart="32dp"
@@ -60,7 +66,7 @@
             android:layout_width="0dp"
             android:layout_marginTop="32dp"
             android:scrollbars="none"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/nextBtn"
@@ -70,6 +76,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:noRepeatClick="@{()-> click.clickComplete()}" />
+
         <io.alterac.blurkit.BlurLayout
             android:id="@+id/blurLayout"
             android:layout_width="144dp"

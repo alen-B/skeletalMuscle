@@ -12,18 +12,16 @@ import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
 
 
-class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>(), CalendarView.OnCalendarSelectListener,
-    CalendarView.OnYearChangeListener,
-    View.OnClickListener  {
+class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding>(), CalendarView.OnCalendarSelectListener, CalendarView.OnYearChangeListener, View.OnClickListener {
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.viewModel=mViewModel
-        mDatabind.click=ProxyClick()
+        mDatabind.viewModel = mViewModel
+        mDatabind.click = ProxyClick()
         mDatabind.calendarLayout.expand()
         mViewModel.title.set(getString(R.string.calendar_title))
         val map: MutableMap<String, Calendar?> = HashMap()
         val year: Int = mDatabind.calendarView.getCurYear()
         val month: Int = mDatabind.calendarView.getCurMonth()
-        setCalendarTitle(year,month)
+        setCalendarTitle(year, month)
 
         map[getSchemeCalendar(year, month, 3, -0xbf24db, "20").toString()] = getSchemeCalendar(year, month, 3, -0xbf24db, "20")
         map[getSchemeCalendar(year, month, 6, -0x196ec8, "33").toString()] = getSchemeCalendar(year, month, 6, -0x196ec8, "33")
@@ -39,12 +37,12 @@ class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>
         mDatabind.calendarView.setOnCalendarSelectListener(this)
         mDatabind.calendarView.setOnYearChangeListener(this)
         mDatabind.calendarView.setOnMonthChangeListener { year, month ->
-            setCalendarTitle(year,month)
+            setCalendarTitle(year, month)
         }
         mDatabind.calendarView.setWeekBar(com.fjp.skeletalmuscle.app.weight.calendar.SMWeekBar::class.java)
     }
 
-    private fun setCalendarTitle(year:Int,month:Int){
+    private fun setCalendarTitle(year: Int, month: Int) {
         mViewModel.calendarTitle.set("${year}年${month}月")
     }
 
@@ -58,12 +56,12 @@ class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>
 //        mDatabind.tvYear.text = calendar.year.toString();
 //        mDatabind.tvLunar.text = calendar.lunar;
 //        mYear = calendar.year
-        if(isClick){
+        if (isClick) {
 //            showToast("点击了"+calendar.month+"月"+calendar.day+"日")
-            val intent = Intent(this@CalendarActivity,SportsRecordActivity::class.java)
-            intent.putExtra(Constants.INTENT_KEY_YEAR,calendar.year)
-            intent.putExtra(Constants.INTENT_KEY_MONTH,calendar.month)
-            intent.putExtra(Constants.INTENT_KEY_DAY,calendar.day)
+            val intent = Intent(this@CalendarActivity, SportsRecordActivity::class.java)
+            intent.putExtra(Constants.INTENT_KEY_YEAR, calendar.year)
+            intent.putExtra(Constants.INTENT_KEY_MONTH, calendar.month)
+            intent.putExtra(Constants.INTENT_KEY_DAY, calendar.day)
             startActivity(intent)
         }
     }
@@ -77,6 +75,7 @@ class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>
         calendar.scheme = text
         return calendar
     }
+
     override fun onYearChange(year: Int) {
 //        mDatabind.tvMonthDay.setText(year.toString());
     }
@@ -84,22 +83,26 @@ class CalendarActivity : BaseActivity<CalendarViewModel,ActivityCalendarBinding>
     override fun onClick(p0: View?) {
     }
 
-    inner class ProxyClick{
-        fun clickPreMonth(){
+    inner class ProxyClick {
+        fun clickPreMonth() {
             mDatabind.calendarView.scrollToPre()
         }
-        fun clickNextMonth(){
+
+        fun clickNextMonth() {
             mDatabind.calendarView.scrollToNext()
         }
-        fun clickfinish(){
-           this@CalendarActivity.finish()
+
+        fun clickfinish() {
+            this@CalendarActivity.finish()
         }
 
     }
+
     override fun onResume() {
         super.onResume()
         mDatabind.blurLayout.startBlur()
     }
+
     override fun onPause() {
         super.onPause()
         mDatabind.blurLayout.pauseBlur()

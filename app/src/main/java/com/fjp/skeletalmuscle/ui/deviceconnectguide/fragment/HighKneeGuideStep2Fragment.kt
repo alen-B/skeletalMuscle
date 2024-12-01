@@ -38,21 +38,22 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
         }
     }
 
-    fun connectDevice(){
+    fun connectDevice() {
         SMBleManager.scanDevices(DeviceType.GTS.value, DeviceType.GTS, object : SMBleManager.DeviceStatusListener {
             override fun disConnected() {
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
-                mDatabind.reconnectBtn.visibility= View.VISIBLE
+                mDatabind.reconnectBtn.visibility = View.VISIBLE
             }
 
             override fun connected() {
-                mDatabind.reconnectBtn.visibility= View.GONE
+                mDatabind.reconnectBtn.visibility = View.GONE
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))
                 showConnectedView()
             }
 
         })
     }
+
     fun showConnectedView() {
         try {
             mViewModel.leftImg.set(R.drawable.title_left_default_icon)
@@ -70,8 +71,8 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
 
     }
 
-    inner class Proxy{
-        fun clickReconnect(){
+    inner class Proxy {
+        fun clickReconnect() {
             connectDevice()
         }
     }

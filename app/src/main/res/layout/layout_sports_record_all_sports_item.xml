@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <TextView
         android:id="@+id/valueTv"
         android:textSize="66sp"
@@ -13,7 +14,8 @@
         app:layout_constraintEnd_toStartOf="@+id/unitTv"
         android:text="46"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/unitTv"
         android:textSize="@dimen/text_size_3"
@@ -24,7 +26,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/valueTv"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/titleTv"
         android:textSize="@dimen/text_size_3"
@@ -34,5 +37,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

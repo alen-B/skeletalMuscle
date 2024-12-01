@@ -13,15 +13,17 @@ import io.alterac.blurkit.BlurLayout
  *Description:
  */
 class TakePhotoPop(context: Context, val listener: Listener) : BottomPopupView(context) {
-    companion object{
-        const val ALBUM=0
-        const val TAKE_PHOTO=1
-        const val CANCEL=2
+    companion object {
+        const val ALBUM = 0
+        const val TAKE_PHOTO = 1
+        const val CANCEL = 2
     }
+
     private lateinit var blurLayout: BlurLayout
     var curIndex = 0
+
     interface Listener {
-        fun onclickItem(index:Int,pop:TakePhotoPop)
+        fun onclickItem(index: Int, pop: TakePhotoPop)
     }
 
     override fun getImplLayoutId(): Int {
@@ -34,13 +36,13 @@ class TakePhotoPop(context: Context, val listener: Listener) : BottomPopupView(c
         val takePhotoTv = findViewById<TextView>(R.id.takePhotoTv)
         val cancelTv = findViewById<TextView>(R.id.cancelTv)
         albumTv.setOnClickListener {
-            listener.onclickItem(ALBUM,this)
+            listener.onclickItem(ALBUM, this)
         }
         takePhotoTv.setOnClickListener {
-            listener.onclickItem(TAKE_PHOTO,this)
+            listener.onclickItem(TAKE_PHOTO, this)
         }
         cancelTv.setOnClickListener {
-            listener.onclickItem(CANCEL,this)
+            listener.onclickItem(CANCEL, this)
         }
     }
 }

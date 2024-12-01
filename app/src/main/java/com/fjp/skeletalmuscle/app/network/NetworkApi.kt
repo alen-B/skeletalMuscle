@@ -16,8 +16,6 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 
-
-
 //双重校验锁式-单例 封装NetApiService 方便直接快速调用简单的接口
 val apiService: ApiService by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
     NetworkApi.INSTANCE.getApi(ApiService::class.java, ApiService.SERVER_URL)

@@ -28,10 +28,10 @@ import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
 
-class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
+class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
 
-    companion object{
-        fun newInstance(chartType:Int, dateType: DateType) = TodaySportsDetailFragment(chartType,dateType)
+    companion object {
+        fun newInstance(chartType: Int, dateType: DateType) = TodaySportsDetailFragment(chartType, dateType)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -42,15 +42,18 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
                 showCaloriesView()
 
             }
+
             ChartType.HEART_RATE_TREND.type -> {
                 showHeartRatetrendView()
 
             }
+
             ChartType.LEG_LIFTING_ANGLE.type -> {
                 showLegAngleView()
             }
+
             ChartType.INTENSITY_AND_TIME.type -> {
-                mDatabind.horizontalBarChart.visibility= View.VISIBLE
+                mDatabind.horizontalBarChart.visibility = View.VISIBLE
                 initHorizontalBarChart()
             }
         }
@@ -68,21 +71,23 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
     }
 
     private fun showCaloriesView() {
-        mDatabind.sportKilocalorieTv.visibility= View.VISIBLE
-        mDatabind.sportKilocalorieUnitTv.visibility= View.VISIBLE
-        mDatabind.barChart.visibility= View.VISIBLE
+        mDatabind.sportKilocalorieTv.visibility = View.VISIBLE
+        mDatabind.sportKilocalorieUnitTv.visibility = View.VISIBLE
+        mDatabind.barChart.visibility = View.VISIBLE
         initBarChart()
     }
+
     private fun showHeartRatetrendView() {
-        mDatabind.avgLabTv.visibility= View.VISIBLE
-        mDatabind.maxTv.visibility= View.VISIBLE
-        mDatabind.avgHeartTv.visibility= View.VISIBLE
-        mDatabind.maxHeartRateTv.visibility= View.VISIBLE
-        mDatabind.heartRateLineChart.visibility= View.VISIBLE
+        mDatabind.avgLabTv.visibility = View.VISIBLE
+        mDatabind.maxTv.visibility = View.VISIBLE
+        mDatabind.avgHeartTv.visibility = View.VISIBLE
+        mDatabind.maxHeartRateTv.visibility = View.VISIBLE
+        mDatabind.heartRateLineChart.visibility = View.VISIBLE
         initHeartRatelineChart()
     }
+
     private fun getFormatterData(type: ChartType): Array<String> {
-        return if (type == ChartType.BURN_CALORIES || type == ChartType.HEART_RATE_TREND|| type ==ChartType.LEG_LIFTING_ANGLE) {
+        return if (type == ChartType.BURN_CALORIES || type == ChartType.HEART_RATE_TREND || type == ChartType.LEG_LIFTING_ANGLE) {
             val formatterData = Array(24) { "00:00" }
             for (i: Int in 1..24) {
                 if (i < 10) {
@@ -124,7 +129,7 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
         axisLeft.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         axisLeft.textSize = 14f
         axisLeft.axisMinimum = 0f
-        axisLeft.enableGridDashedLine(2f,1f,0f)
+        axisLeft.enableGridDashedLine(2f, 1f, 0f)
         axisLeft.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         //设置右边轴样式
         val axisRight = barChart.axisRight
@@ -133,7 +138,7 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
 
         val values = ArrayList<BarEntry>()
         for (i in 0 until 24) {
-            if (i<8 || i >20) {
+            if (i < 8 || i > 20) {
                 values.add(BarEntry(i.toFloat(), 0.0f))
             } else {
                 val num = (Math.random() * 30).toFloat()
@@ -176,7 +181,7 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
         val dayFormatterData = getFormatterData(ChartType.INTENSITY_AND_TIME)
         xAxis.valueFormatter = IndexAxisValueFormatter(dayFormatterData)
         val axisLeft = horizontalBarChart.axisLeft
-        axisLeft.enableGridDashedLine(2f,1f,0f)
+        axisLeft.enableGridDashedLine(2f, 1f, 0f)
         axisLeft.isEnabled = false
         axisLeft.axisMinimum = 0f
         val axisRight = horizontalBarChart.axisRight
@@ -232,7 +237,7 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.gridLineWidth = 0.5f
-        leftAxis.enableGridDashedLine(2f,1f,0f)
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
@@ -243,7 +248,7 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
         val values = ArrayList<Entry>()
 
         for (i in 0 until 8) {
-            val num = 110+(Math.random() * 30).toFloat()
+            val num = 110 + (Math.random() * 30).toFloat()
             values.add(BarEntry(i.toFloat(), num))
         }
         val dataSets = ArrayList<ILineDataSet>()
@@ -286,7 +291,7 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
 
     private fun initLegAngleLineChart() {
         val lineChart = mDatabind.angleLineChart
-        lineChart.legend.isEnabled=false
+        lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
         lineChart.isDragEnabled = false
         lineChart.setScaleEnabled(false)
@@ -301,19 +306,19 @@ class TodaySportsDetailFragment(val type:Int,val dateType: DateType) : BaseFragm
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.setDrawLabels(true)
-        xAxis.enableGridDashedLine(2f,1f,0f)
+        xAxis.enableGridDashedLine(2f, 1f, 0f)
 
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f,1f,0f)
-        leftAxis.enableAxisLineDashedLine(2f,1f,0f)
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawLabels(true)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext,R.color.color_gray)
+        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         rightAxis.isEnabled = false
 
         val values = ArrayList<Entry>()

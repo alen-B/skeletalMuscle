@@ -7,4 +7,4 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  *Time:2024/11/11
  *Description:
  */
-class SplashViewModel:SMBaseViewModel() {}
+class SplashViewModel : SMBaseViewModel() {}

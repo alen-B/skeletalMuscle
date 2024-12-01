@@ -28,10 +28,11 @@ object SMBleManager {
     private val deviceListeners: MutableList<DeviceListener> = mutableListOf()
 
 
-    interface DeviceStatusListener{
+    interface DeviceStatusListener {
         fun disConnected()
         fun connected()
     }
+
     interface DeviceListener {
         fun GTSDisConnected()
         fun leftLegDisConnected()
@@ -58,15 +59,10 @@ object SMBleManager {
 
     init {
         BleManager.getInstance().init(App.instance)
-        BleManager.getInstance()
-            .enableLog(BuildConfig.DEBUG)
-            .setReConnectCount(3, 5000)
-            .setSplitWriteNum(20)
-            .setConnectOverTime(15000)
-            .operateTimeout = 15000
+        BleManager.getInstance().enableLog(BuildConfig.DEBUG).setReConnectCount(3, 5000).setSplitWriteNum(20).setConnectOverTime(15000).operateTimeout = 15000
     }
 
-    fun scanDevices(devicePrefix: String, deviceType: DeviceType,listener: DeviceStatusListener) {
+    fun scanDevices(devicePrefix: String, deviceType: DeviceType, listener: DeviceStatusListener) {
         BleManager.getInstance().scan(object : BleScanCallback() {
 
             override fun onScanStarted(success: Boolean) {
@@ -80,7 +76,7 @@ object SMBleManager {
                 Log.d("BLE", "Found device: " + bleDevice.name)
                 if (bleDevice.name != null && bleDevice.name.startsWith(devicePrefix)) {
                     foundDevices.add(bleDevice)
-                    connectToDevice(bleDevice,deviceType,listener)
+                    connectToDevice(bleDevice, deviceType, listener)
                     BleManager.getInstance().cancelScan() // 停止扫描
                 }
             }
@@ -100,7 +96,7 @@ object SMBleManager {
         })
     }
 
-    private fun connectToDevice(device: BleDevice, deviceType: DeviceType,listener: DeviceStatusListener) {
+    private fun connectToDevice(device: BleDevice, deviceType: DeviceType, listener: DeviceStatusListener) {
         BleManager.getInstance().connect(device, object : BleGattCallback() {
             override fun onStartConnect() {
                 // 连接开始，弹出Toast消息
@@ -116,8 +112,8 @@ object SMBleManager {
             override fun onConnectSuccess(bleDevice: BleDevice, gatt: BluetoothGatt, status: Int) {
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success) + bleDevice.name)
                 connectedDevices[deviceType] = bleDevice
-                println("connectedDevices[deviceType]:${connectedDevices[deviceType]}   name:"+bleDevice.name)
-                if(deviceType === DeviceType.GTS){
+                println("connectedDevices[deviceType]:${connectedDevices[deviceType]}   name:" + bleDevice.name)
+                if (deviceType === DeviceType.GTS) {
                     subscribeToNotifications(bleDevice, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_NOTIFY_CHAR)
                 }
                 listener.connected()
@@ -137,9 +133,9 @@ object SMBleManager {
                             it.rightLegDisConnected()
                         } else if (deviceType == DeviceType.GTS) {
                             it.GTSDisConnected()
-                        }else if(deviceType == DeviceType.LEFT_HAND_GRIPS){
+                        } else if (deviceType == DeviceType.LEFT_HAND_GRIPS) {
                             it.leftHandGripsConnected()
-                        }else if(deviceType == DeviceType.RIGHT_HAND_GRIPS){
+                        } else if (deviceType == DeviceType.RIGHT_HAND_GRIPS) {
                             it.rightHandGripsConnected()
                         }
 
@@ -151,13 +147,14 @@ object SMBleManager {
             }
         })
     }
+
     fun subscribeToNotifications(bleDevice: BleDevice, uuidService: String, uuidNotify: String) {
         val deviceName: String = bleDevice.name
         BleManager.getInstance().notify(bleDevice, uuidService, uuidNotify, object : BleNotifyCallback() {
             override fun onNotifySuccess() {
                 // 订阅成功，可以在这里发送获取数据的指令
-                Log.d("subscribeToNotifications", "deviceName:"+deviceName)
-                if(deviceName.startsWith("GTS")){
+                Log.d("subscribeToNotifications", "deviceName:" + deviceName)
+                if (deviceName.startsWith("GTS")) {
                     writeDataToBleDevice(bleDevice)
                 }
             }
@@ -178,9 +175,9 @@ object SMBleManager {
 
                     } else if (deviceName.startsWith(DeviceType.RIGHT_LEG.value)) {
                         it.onRightDeviceData(data)
-                    } else if (deviceName.startsWith(DeviceType.LEFT_HAND_GRIPS.value)){
+                    } else if (deviceName.startsWith(DeviceType.LEFT_HAND_GRIPS.value)) {
                         it.onLeftHandGripsData(data)
-                    }else if (deviceName.startsWith(DeviceType.RIGHT_HAND_GRIPS.value)){
+                    } else if (deviceName.startsWith(DeviceType.RIGHT_HAND_GRIPS.value)) {
                         it.onRightHandGripsData(data)
                     }
 
@@ -215,24 +212,28 @@ object SMBleManager {
             })
     }
 
-    fun highKneeLeftDeviceIsConnected():Boolean{
-       return connectedDevices[DeviceType.LEFT_LEG] !=null
-    }
-    fun highKneeRightDeviceIsConnected():Boolean{
-        return connectedDevices[DeviceType.RIGHT_LEG] !=null
-    }
-    fun dumbbellLeftDeviceIsConnected():Boolean{
-        return connectedDevices[DeviceType.LEFT_DUMBBELL] !=null
-    }
-    fun dumbbellRightDeviceIsConnected():Boolean{
-        return connectedDevices[DeviceType.RIGHT_DUMBBELL] !=null
+    fun highKneeLeftDeviceIsConnected(): Boolean {
+        return connectedDevices[DeviceType.LEFT_LEG] != null
     }
 
-    fun handGripsLeftdeviceisconnected():Boolean{
-        return connectedDevices[DeviceType.LEFT_HAND_GRIPS] !=null
+    fun highKneeRightDeviceIsConnected(): Boolean {
+        return connectedDevices[DeviceType.RIGHT_LEG] != null
     }
-    fun handGripsRightdeviceisconnected():Boolean{
-        return connectedDevices[DeviceType.RIGHT_HAND_GRIPS] !=null
+
+    fun dumbbellLeftDeviceIsConnected(): Boolean {
+        return connectedDevices[DeviceType.LEFT_DUMBBELL] != null
+    }
+
+    fun dumbbellRightDeviceIsConnected(): Boolean {
+        return connectedDevices[DeviceType.RIGHT_DUMBBELL] != null
+    }
+
+    fun handGripsLeftdeviceisconnected(): Boolean {
+        return connectedDevices[DeviceType.LEFT_HAND_GRIPS] != null
+    }
+
+    fun handGripsRightdeviceisconnected(): Boolean {
+        return connectedDevices[DeviceType.RIGHT_HAND_GRIPS] != null
     }
 
 }

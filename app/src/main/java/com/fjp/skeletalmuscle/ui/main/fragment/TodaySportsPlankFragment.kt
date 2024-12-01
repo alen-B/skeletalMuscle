@@ -1,15 +1,12 @@
 package com.fjp.skeletalmuscle.ui.main.fragment
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
-import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsPlankBinding
-import com.fjp.skeletalmuscle.ui.main.TodaySportsActivity
 import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsPlankViewModel
@@ -41,6 +38,7 @@ class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, Fragmen
         initCalorieBarChart()
         initHeartRateLineChart()
     }
+
     private fun initHeartRateLineChart() {
         val lineChart = mDatabind.heartRateLineChart
         lineChart.legend.isEnabled = false
@@ -57,12 +55,12 @@ class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, Fragmen
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.enableGridDashedLine(2f,1f,0f)
+        xAxis.enableGridDashedLine(2f, 1f, 0f)
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f,1f,0f)
-        leftAxis.enableAxisLineDashedLine(2f,1f,0f)
-        leftAxis.gridLineWidth =0f
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
+        leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -133,9 +131,9 @@ class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, Fragmen
 
         val leftAxis = barChart.axisLeft
         leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f,1f,0f)
-        leftAxis.enableAxisLineDashedLine(2f,1f,0f)
-        leftAxis.gridLineWidth =0f
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
+        leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -167,16 +165,13 @@ class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, Fragmen
     }
 
 
-
-
-
     inner class ProxyClick {
         fun clickCalorie() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.PLANK ,ChartType.BURN_CALORIES)
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.PLANK, ChartType.BURN_CALORIES)
         }
 
         fun clickHeartRate() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.PLANK ,ChartType.HEART_RATE_TREND)
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.PLANK, ChartType.HEART_RATE_TREND)
         }
 
     }

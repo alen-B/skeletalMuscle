@@ -22,7 +22,7 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
     lateinit var valueTv: TextView
     lateinit var avatarIv: ImageView
     lateinit var switch: Switch
-    lateinit var listener:CompoundButton.OnCheckedChangeListener
+    lateinit var listener: CompoundButton.OnCheckedChangeListener
 
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_item_setting, this);
@@ -33,7 +33,7 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
         val roundBottom = typeAttay.getBoolean(R.styleable.SettingItemLayout_roundBottom, false)
         typeAttay.recycle()
         val mainLL = findViewById<LinearLayoutCompat>(R.id.mainLl)
-        avatarIv= findViewById<ImageView>(R.id.avatarIv)
+        avatarIv = findViewById<ImageView>(R.id.avatarIv)
         titleTv = findViewById(R.id.titleTv)
         valueTv = findViewById(R.id.valueTv)
         switch = findViewById(R.id.sch)
@@ -48,13 +48,13 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
         if (!roundTop && !roundBottom) {
             mainLL.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         }
-        if(roundTop && roundBottom){
+        if (roundTop && roundBottom) {
             mainLL.setBackgroundResource(R.drawable.bg_white_round_20)
         }
 
-        switch.setOnCheckedChangeListener{ compoundButton, b ->
-            if(this@SettingItemLayout::listener.isInitialized){
-                listener.onCheckedChanged(compoundButton,b)
+        switch.setOnCheckedChangeListener { compoundButton, b ->
+            if (this@SettingItemLayout::listener.isInitialized) {
+                listener.onCheckedChanged(compoundButton, b)
             }
         }
 
@@ -68,12 +68,13 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
         titleTv.text = title
     }
 
-    fun showSwitch(listener: CompoundButton.OnCheckedChangeListener){
+    fun showSwitch(listener: CompoundButton.OnCheckedChangeListener) {
         switch.visibility = View.VISIBLE
         valueTv.visibility = View.GONE
         this.listener = listener
     }
-    fun setSwitchStatus(isChecked:Boolean){
-        switch.isChecked=isChecked
+
+    fun setSwitchStatus(isChecked: Boolean) {
+        switch.isChecked = isChecked
     }
 }

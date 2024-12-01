@@ -43,11 +43,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
 
 
         })
-        val pop = XPopup.Builder(this)
-            .dismissOnTouchOutside(true)
-            .dismissOnBackPressed(true)
-            .isDestroyOnDismiss(true).autoOpenSoftInput(false)
-            .asCustom(changeAccountPop)
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(changeAccountPop)
 
         pop.show()
 
@@ -72,7 +68,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
         dismissLoadingExt()
     }
 
-   /* *//**
+    /* */
+    /**
      * 在任何情况下本来适配正常的布局突然出现适配失效，适配异常等问题，只要重写 Activity 的 getResources() 方法
      */
     override fun getResources(): Resources {

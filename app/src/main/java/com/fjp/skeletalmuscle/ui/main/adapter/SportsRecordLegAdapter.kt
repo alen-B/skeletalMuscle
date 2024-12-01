@@ -8,18 +8,15 @@ import com.fjp.skeletalmuscle.app.util.SettingUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsRecord
 
 
-class SportsRecordLegAdapter(data: ArrayList<SportsRecord>) :
-    BaseQuickAdapter<SportsRecord, BaseViewHolder>(
-        R.layout.item_sports_record_leg, data
-    ) {
+class SportsRecordLegAdapter(data: ArrayList<SportsRecord>) : BaseQuickAdapter<SportsRecord, BaseViewHolder>(R.layout.item_sports_record_leg, data) {
     init {
         setAdapterAnimation(SettingUtil.getListMode())
     }
 
     override fun convert(holder: BaseViewHolder, item: SportsRecord) {
-        holder.setText(R.id.titleTv,item.name)
-        holder.setText(R.id.numberTv,item.value)
-        holder.setText(R.id.unitTv,item.unit)
+        holder.setText(R.id.titleTv, item.name)
+        holder.setText(R.id.numberTv, item.value)
+        holder.setText(R.id.unitTv, item.unit)
 
     }
 }

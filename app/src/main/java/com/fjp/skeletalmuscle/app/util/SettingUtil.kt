@@ -12,7 +12,6 @@ import android.telephony.TelephonyManager
 import android.view.View
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.weight.loadCallBack.LoadingCallback
 import com.kingja.loadsir.core.LoadService
@@ -54,6 +53,7 @@ object SettingUtil {
         //0 关闭动画 1.渐显 2.缩放 3.从下到上 4.从左到右 5.从右到左
         return kv.decodeInt("mode", 2)
     }
+
     /**
      * 设置列表动画模式
      */
@@ -61,6 +61,7 @@ object SettingUtil {
         val kv = MMKV.mmkvWithID("app")
         kv.encode("mode", mode)
     }
+
     /**
      * 获取是否请求置顶文章
      */
@@ -76,6 +77,7 @@ object SettingUtil {
         states[1] = intArrayOf()
         return ColorStateList(states, colors)
     }
+
     fun getColorStateList(color: Int): ColorStateList {
         val colors = intArrayOf(color, ContextCompat.getColor(appContext, R.color.color_gray))
         val states = arrayOfNulls<IntArray>(2)
@@ -172,7 +174,7 @@ object SettingUtil {
     /**
      * 设置loading的颜色 加载布局
      */
-    fun setLoadingColor(color:Int,loadsir: LoadService<Any>) {
+    fun setLoadingColor(color: Int, loadsir: LoadService<Any>) {
         loadsir.setCallBack(LoadingCallback::class.java) { _, view ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 view.findViewById<ProgressBar>(R.id.loading_progress).indeterminateTintMode = PorterDuff.Mode.SRC_ATOP
@@ -181,7 +183,7 @@ object SettingUtil {
         }
     }
 
-    fun getDeviceId(context:Context): String? {
+    fun getDeviceId(context: Context): String? {
         val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
         return telephonyManager!!.deviceId
     }

@@ -77,45 +77,47 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calendarTitleTv">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
 
-            <com.flyco.tablayout.SlidingTabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="13dp"
-                android:layout_marginEnd="25dp"
-                android:background="@drawable/bg_gray_round_15"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                app:tl_divider_color="@color/color_cfd1d1"
-                app:tl_divider_width="1dp"
-                app:tl_tab_space_equal="true"
-                app:tl_textsize="@dimen/text_size_3"
-                tl:tl_indicator_color="#fff"
-                tl:tl_indicator_corner_radius="10dp"
-                tl:tl_indicator_height="45dp"
-                tl:tl_indicator_margin_left="2dp"
-                tl:tl_indicator_margin_right="2dp"
-                tl:tl_indicator_style="BLOCK"
-                tl:tl_indicator_width="275dp"
-                tl:tl_textSelectColor="@color/color_blue"
-                tl:tl_textUnselectColor="@color/color_1c1c1c" />
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@drawable/bg_gray_round_15"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    app:tl_divider_color="@color/color_cfd1d1"
+                    app:tl_divider_width="1dp"
+                    app:tl_tab_space_equal="true"
+                    app:tl_textsize="@dimen/text_size_3"
+                    tl:tl_indicator_color="#fff"
+                    tl:tl_indicator_corner_radius="10dp"
+                    tl:tl_indicator_height="45dp"
+                    tl:tl_indicator_margin_left="2dp"
+                    tl:tl_indicator_margin_right="2dp"
+                    tl:tl_indicator_style="BLOCK"
+                    tl:tl_indicator_width="275dp"
+                    tl:tl_textSelectColor="@color/color_blue"
+                    tl:tl_textUnselectColor="@color/color_1c1c1c" />
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="657dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/bg_white_round_20"
-                app:layout_constraintBottom_toBottomOf="@+id/topBgView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="657dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_white_round_20"
+                    app:layout_constraintBottom_toBottomOf="@+id/topBgView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:paddingTop="24dp"
@@ -125,6 +127,7 @@
                     android:background="@drawable/bg_white_round_20"
                     android:paddingBottom="24dp"
                     android:layout_height="520dp">
+
                     <TextView
                         android:textSize="@dimen/text_size_3"
                         android:textColor="@color/color_1c1c1c"
@@ -132,7 +135,8 @@
                         android:text="@string/sports_assessment_history_assessment"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/gripTv"
                         android:textSize="@dimen/text_size_4"
@@ -143,7 +147,8 @@
                         android:drawablePadding="7dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/sitUpTv"
                         android:textSize="@dimen/text_size_4"
@@ -155,7 +160,8 @@
                         android:text="@string/sports_assessment_history_sit_up_times"
                         app:layout_constraintEnd_toStartOf="@+id/gripTv"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/highLegTv"
                         android:textSize="@dimen/text_size_4"
@@ -167,7 +173,8 @@
                         android:drawablePadding="7dp"
                         app:layout_constraintEnd_toStartOf="@+id/sitUpTv"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
@@ -177,7 +184,8 @@
                         android:textSize="@dimen/text_size_5"
                         android:textColor="@color/color_801c1c1c"
                         app:layout_constraintTop_toBottomOf="@+id/highLegTv"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +194,8 @@
                         android:layout_marginTop="10dp"
                         android:textColor="@color/color_801c1c1c"
                         app:layout_constraintTop_toBottomOf="@+id/highLegTv"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/sportsLineChart"
                         android:layout_width="0dp"
@@ -195,7 +204,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/highLegTv"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="160dp"
-                        android:layout_height="320dp"/>
+                        android:layout_height="320dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -207,6 +216,7 @@
                     android:background="@drawable/bg_white_round_20"
                     android:paddingBottom="24dp"
                     android:layout_height="520dp">
+
                     <TextView
                         android:textSize="@dimen/text_size_3"
                         android:textColor="@color/color_1c1c1c"
@@ -214,7 +224,8 @@
                         android:text="@string/sports_assessment_history_weight_and_bmi"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/bmiTv"
                         android:textSize="@dimen/text_size_4"
@@ -225,7 +236,8 @@
                         android:drawablePadding="7dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/weightTv"
                         android:textSize="@dimen/text_size_4"
@@ -237,7 +249,7 @@
                         android:drawablePadding="7dp"
                         app:layout_constraintEnd_toStartOf="@+id/bmiTv"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -247,7 +259,8 @@
                         android:textSize="@dimen/text_size_5"
                         android:textColor="@color/color_801c1c1c"
                         app:layout_constraintTop_toBottomOf="@+id/weightTv"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -256,7 +269,8 @@
                         android:textSize="@dimen/text_size_5"
                         android:textColor="@color/color_801c1c1c"
                         app:layout_constraintTop_toBottomOf="@+id/weightTv"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/weightLineChart"
                         android:layout_width="0dp"
@@ -265,7 +279,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/weightTv"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="160dp"
-                        android:layout_height="320dp"/>
+                        android:layout_height="320dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -278,6 +292,7 @@
                     android:paddingBottom="24dp"
                     android:layout_marginBottom="32dp"
                     android:layout_height="520dp">
+
                     <TextView
                         android:textSize="@dimen/text_size_3"
                         android:textColor="@color/color_1c1c1c"
@@ -285,7 +300,7 @@
                         android:text="@string/sports_assessment_history_waist"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/waistlineLineChart"
@@ -295,7 +310,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="160dp"
-                        android:layout_height="320dp"/>
+                        android:layout_height="320dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </ScrollView>

@@ -61,32 +61,18 @@
         <activity
             android:name=".ui.assessment.SportsAssessmentsHistoryActivity"
             android:screenOrientation="landscape"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ui.assessment.SelectedWaistlineAndWeightActivity"
             android:exported="true"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.assessment.SportsAssessmentTypeSelectedActivity"
             android:exported="false" />
         <activity
             android:name=".ui.assessment.SportsAssessmentResultActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.setting.ChangeAccountActivity"
             android:exported="true"
@@ -95,13 +81,10 @@
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="landscape">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.login.ServiceAgreementActivity"
@@ -110,27 +93,11 @@
         <activity
             android:name=".ui.setting.SettingActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.sports.SportsCompletedActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.sports.DeviceOffLineActivity"
             android:exported="true"
@@ -158,15 +125,7 @@
         <activity
             android:name=".ui.main.TodaySelectSportsActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.main.SportsRecordActivity"
             android:exported="false"
@@ -214,13 +173,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="landscape" />
 
         <meta-data
             android:name="design_width_in_dp"

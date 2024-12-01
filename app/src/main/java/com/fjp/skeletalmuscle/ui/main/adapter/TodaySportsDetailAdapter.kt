@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter
  *Time:2024/10/24
  *Description:
  */
-class TodaySportsDetailAdapter(fm: FragmentManager,val list:List<Fragment>) : FragmentPagerAdapter(fm) {
+class TodaySportsDetailAdapter(fm: FragmentManager, val list: List<Fragment>) : FragmentPagerAdapter(fm) {
     private val mTitles = arrayOf("日", "周", "月", "年", "总")
     override fun getCount(): Int {
         return list.size

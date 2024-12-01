@@ -676,6 +676,7 @@
             app:layout_constraintEnd_toEndOf="@+id/legAngleView"
             app:layout_constraintTop_toTopOf="@+id/legAngleView"
             tools:ignore="ContentDescription" />
+
         <ImageView
             android:id="@+id/avgRightIv"
             android:layout_width="40dp"

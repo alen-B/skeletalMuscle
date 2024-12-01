@@ -1,26 +1,19 @@
 package com.fjp.skeletalmuscle.app.weight.pop
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.VideoView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.init
-import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.data.model.bean.Account
-import com.fjp.skeletalmuscle.ui.login.LoginActivity
 import com.fjp.skeletalmuscle.ui.setting.SettingActivity
 import com.fjp.skeletalmuscle.ui.setting.adapter.AccountAdapter
 import com.lxj.xpopup.impl.FullScreenPopupView
 import io.alterac.blurkit.BlurLayout
-import me.hgj.jetpackmvvm.base.appContext
 
 /**
  *Author:Mr'x
@@ -32,7 +25,7 @@ class ChangeAccountPop(val context: Activity, val listener: Listener) : FullScre
     private lateinit var backIv: BlurLayout
 
     interface Listener {
-        fun onclick(account:Account,pop: ChangeAccountPop)
+        fun onclick(account: Account, pop: ChangeAccountPop)
     }
 
     override fun getImplLayoutId(): Int {
@@ -42,12 +35,12 @@ class ChangeAccountPop(val context: Activity, val listener: Listener) : FullScre
     override fun onCreate() {
         super.onCreate()
         val accounts = mutableListOf<Account>()
-            accounts.add(Account("冯大爷","15699999999",""))
-            accounts.add(Account("张大妈","15688888888",""))
-            accounts.add(Account("李大妈","15666666666",""))
-            accounts.add(Account("添加账号","",""))
+        accounts.add(Account("冯大爷", "15699999999", ""))
+        accounts.add(Account("张大妈", "15688888888", ""))
+        accounts.add(Account("李大妈", "15666666666", ""))
+        accounts.add(Account("添加账号", "", ""))
         val adapter = AccountAdapter(accounts) { account, _ ->
-            listener.onclick(account,this)
+            listener.onclick(account, this)
         }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.init(LinearLayoutManager(context, RecyclerView.HORIZONTAL, false), adapter)

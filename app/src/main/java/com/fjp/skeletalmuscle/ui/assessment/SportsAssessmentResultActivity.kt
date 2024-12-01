@@ -38,7 +38,7 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         xAxis.yOffset = 0f
         xAxis.xOffset = 0f
         val mActivities = arrayOf(getString(R.string.sports_assessment_grip), getString(R.string.sports_assessment_sit_up), getString(R.string.sports_assessment_waistline), getString(R.string.sports_assessment_high_leg))
-        xAxis.valueFormatter = object:ValueFormatter(){
+        xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return mActivities[value.toInt() % mActivities.size]
             }
@@ -54,7 +54,7 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         yAxis.setDrawLabels(false)
 
         val l = chart.legend
-        l.isEnabled=false
+        l.isEnabled = false
     }
 
     private fun setData() {
@@ -81,7 +81,7 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         set1.isDrawHighlightCircleEnabled = true
         set1.setDrawHighlightIndicators(false)
         val set2 = RadarDataSet(entries2, "This Week")
-        set2.color =getColor(R.color.color_1a4e71ff)
+        set2.color = getColor(R.color.color_1a4e71ff)
         set2.fillColor = getColor(R.color.color_1a4e71ff)
         set2.setDrawFilled(true)
         set2.fillAlpha = 180
@@ -101,11 +101,12 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
 
     inner class ProxyClick {
 
-        fun clickFinish(){
+        fun clickFinish() {
             finish()
         }
-        fun clickSelectedAssessmentPorts(){
-            val intent =Intent(this@SportsAssessmentResultActivity, SelectedWaistlineAndWeightActivity::class.java)
+
+        fun clickSelectedAssessmentPorts() {
+            val intent = Intent(this@SportsAssessmentResultActivity, SelectedWaistlineAndWeightActivity::class.java)
             startActivity(intent)
         }
     }

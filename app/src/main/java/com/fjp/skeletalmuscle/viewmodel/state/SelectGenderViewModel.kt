@@ -1,7 +1,9 @@
 package com.fjp.skeletalmuscle.viewmodel.state
 
 import androidx.databinding.ObservableField
+import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
+import me.hgj.jetpackmvvm.base.appContext
 
 /**
  *Author:Mr'x
@@ -9,11 +11,7 @@ import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
  *Description:
  */
 class SelectGenderViewModel : SMBaseViewModel() {
-    val sex = ObservableField<SEX>(SEX.MAN)
+    val sex = ObservableField(appContext.getString(R.string.setting_sex_man))
 
 
-}
-
-enum class SEX(val value:Int){
-    WOMAN(0),MAN(1)
 }

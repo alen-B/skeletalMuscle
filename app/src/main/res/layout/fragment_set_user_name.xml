@@ -4,12 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-    <variable
-        name="viewModel"
-        type="com.fjp.skeletalmuscle.viewmodel.state.SetUserNameViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.SetUserNameViewModel" />
+
         <variable
             name="click"
-            type="com.fjp.skeletalmuscle.ui.setting.SetUserNameAndPhoneFragment.ProxyClick" />
+            type="com.fjp.skeletalmuscle.ui.setting.fragment.SetUserNameAndPhoneFragment.ProxyClick" />
 
     </data>
 
@@ -17,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_f5f5f5"
-        tools:context=".ui.setting.SetUserNameAndPhoneFragment">
+        tools:context=".ui.setting.fragment.SetUserNameAndPhoneFragment">
 
         <EditText
             android:text="@={viewModel.data}"
@@ -31,6 +33,7 @@
             android:gravity="center_vertical"
             android:layout_height="70dp"
             android:importantForAutofill="no" />
+
         <Button
             android:id="@+id/nextBtn"
             style="@style/SMButtonNext"

@@ -8,7 +8,7 @@ import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.FragmentHightKneeGuideStep1Binding
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeGuideStep1ViewModel
 
-class HighKneeGuideStep1Fragment : BaseFragment<HighKneeGuideStep1ViewModel,FragmentHightKneeGuideStep1Binding>() {
+class HighKneeGuideStep1Fragment : BaseFragment<HighKneeGuideStep1ViewModel, FragmentHightKneeGuideStep1Binding>() {
 
     companion object {
         fun newInstance() = HighKneeGuideStep1Fragment()
@@ -16,12 +16,12 @@ class HighKneeGuideStep1Fragment : BaseFragment<HighKneeGuideStep1ViewModel,Frag
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
-        if( App.sportsType == SportsType.HIGH_KNEE.type){
-        //目前默认数据是高抬腿的不需要做处理
-        }else if(App.sportsType == SportsType.DUMBBELL.type){
+        if (App.sportsType == SportsType.HIGH_KNEE.type) {
+            //目前默认数据是高抬腿的不需要做处理
+        } else if (App.sportsType == SportsType.DUMBBELL.type) {
             initDumbbellView()
 
-        }else if(App.sportsType == SportsType.HAND_GRIPS.type){
+        } else if (App.sportsType == SportsType.HAND_GRIPS.type) {
             initHandGripsView()
         }
 

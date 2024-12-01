@@ -12,12 +12,12 @@ import com.fjp.skeletalmuscle.R;
 
 public class DashboardView extends View {
     private Paint paint;
-    private int maxCircleRadius=95;
-    private int minCircleRadius=70;
+    private int maxCircleRadius = 95;
+    private int minCircleRadius = 70;
 
 
-    private float pointerLength=20;
-    private float pointerAngle=90;
+    private float pointerLength = 20;
+    private float pointerAngle = 90;
     private Paint textPaint;
     private Paint pointerPaint;
     private String text = "力量流失";
@@ -54,7 +54,7 @@ public class DashboardView extends View {
         pointerPaint.setStrokeWidth(5);
         pointerPaint.setStrokeCap(Paint.Cap.ROUND);
         pointerPaint.setColor(getContext().getColor(R.color.white));
-        pointerPaint.setShadowLayer(3,3,3,getContext().getColor(R.color.color_801c1c1c));
+        pointerPaint.setShadowLayer(3, 3, 3, getContext().getColor(R.color.color_801c1c1c));
     }
 
 
@@ -159,6 +159,7 @@ public class DashboardView extends View {
         this.text = text;
         invalidate();
     }
+
     public void setPointerAngle(float angle) {
         this.pointerAngle = angle;
         invalidate();  // 调用此方法会触发重绘，使得角度改变时视图更新

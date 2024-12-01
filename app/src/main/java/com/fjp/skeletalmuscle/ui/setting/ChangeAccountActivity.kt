@@ -9,7 +9,6 @@ import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
-import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.databinding.ActivityChangeAccountBinding
 import com.fjp.skeletalmuscle.ui.login.LoginActivity
 import com.fjp.skeletalmuscle.ui.setting.adapter.AccountAdapter

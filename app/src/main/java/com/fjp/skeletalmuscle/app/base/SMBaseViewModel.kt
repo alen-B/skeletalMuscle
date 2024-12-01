@@ -9,7 +9,7 @@ import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
  *Time:2024/10/19
  *Description:
  */
-open class SMBaseViewModel:BaseViewModel() {
+open class SMBaseViewModel : BaseViewModel() {
     var title = ObservableField("")
     var showRightImg = ObservableField(false)
     var leftImg = ObservableField(R.drawable.title_left_default_icon)

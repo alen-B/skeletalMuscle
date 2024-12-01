@@ -24,13 +24,13 @@ object CacheUtil {
     /**
      * 设置账户信息
      */
-    fun setUser(userResponse: UserInfo?) {
+    fun setUser(userInfo: UserInfo?) {
         val kv = MMKV.mmkvWithID("app")
-        if (userResponse == null) {
+        if (userInfo == null) {
             kv.encode("user", "")
             setIsLogin(false)
         } else {
-            kv.encode("user", Gson().toJson(userResponse))
+            kv.encode("user", Gson().toJson(userInfo))
             setIsLogin(true)
         }
 

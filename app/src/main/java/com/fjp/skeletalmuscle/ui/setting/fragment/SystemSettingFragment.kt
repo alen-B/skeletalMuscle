@@ -1,4 +1,4 @@
-package com.fjp.skeletalmuscle.ui.setting
+package com.fjp.skeletalmuscle.ui.setting.fragment
 
 import android.os.Bundle
 import android.widget.CompoundButton
@@ -18,12 +18,12 @@ class SystemSettingFragment : BaseFragment<SystemSettingViewModel, FragmentSyste
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mDatabind.voiceInteractionLayout.showSwitch(this)
-       val isCheck = CacheUtil.getVoiceInteraction()
+        val isCheck = CacheUtil.getVoiceInteraction()
         mDatabind.voiceInteractionLayout.setSwitchStatus(isCheck)
     }
 
-    inner class ProxyClick{
-        fun clickUpdateVersion(){
+    inner class ProxyClick {
+        fun clickUpdateVersion() {
             val transaction = parentFragmentManager.beginTransaction()
             transaction.add(R.id.rightFragment, UpdateVersionFragment.newInstance())
             transaction.addToBackStack("UpdateVersionFragment")
@@ -31,6 +31,7 @@ class SystemSettingFragment : BaseFragment<SystemSettingViewModel, FragmentSyste
         }
 
     }
+
     override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
         CacheUtil.setVoiceInteraction(p1)
     }
