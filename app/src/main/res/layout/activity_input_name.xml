@@ -18,8 +18,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
+        android:paddingStart="@dimen/main_padding_start"
+        android:paddingEnd="@dimen/main_padding_end"
+        android:paddingBottom="@dimen/main_padding_bottom"
         android:background="@color/white"
         tools:context=".ui.user.InputNameActivity">
 
@@ -45,7 +46,6 @@
             android:layout_width="240dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="45dp"
             bind:noRepeatClick="@{()-> click.next()}"
             android:text="@string/next_step"
             style="@style/SMButtonNext"/>

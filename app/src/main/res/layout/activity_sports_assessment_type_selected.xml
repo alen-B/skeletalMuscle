@@ -17,8 +17,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
+        android:paddingStart="@dimen/main_padding_start"
+        android:paddingEnd="@dimen/main_padding_end"
+        android:paddingBottom="@dimen/main_padding_bottom"
         android:background="@color/white"
         tools:context=".ui.user.InputNameActivity">
 
@@ -38,7 +39,6 @@
             android:id="@+id/nextBtn"
             style="@style/SMButtonNext"
             android:layout_width="240dp"
-            android:layout_marginBottom="45dp"
             android:text="@string/exercise_plan_start"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,6 @@
             android:id="@+id/blurLayout"
             android:layout_width="144dp"
             android:layout_height="144dp"
-            android:layout_marginBottom="35dp"
             android:onClick="@{()-> click.clickFinish()}"
             app:blk_blurRadius="25"
             app:blk_cornerRadius="20dp"

@@ -18,8 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_blue"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
+        android:paddingStart="@dimen/main_padding_start"
+        android:paddingEnd="@dimen/main_padding_end"
+        android:paddingBottom="@dimen/main_padding_bottom"
         tools:context=".ui.main.ExercisePlanActivity">
 
         <include
@@ -690,7 +691,6 @@
             style="@style/SMButtonNext"
             android:layout_width="502dp"
             android:layout_height="144dp"
-            android:layout_marginBottom="35dp"
             android:enabled="false"
             android:background="@drawable/bg_start_sports"
             android:drawableEnd="@drawable/exercise_plan_start_icon"

@@ -20,8 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
+        android:paddingStart="@dimen/main_padding_start"
+        android:paddingEnd="@dimen/main_padding_end"
+        android:paddingBottom="@dimen/main_padding_bottom"
         tools:context=".ui.login.LoginActivity">
 
         <include
@@ -145,7 +146,6 @@
             android:id="@+id/loginBtn"
             style="@style/SMButtonNext"
             android:layout_width="0dp"
-            android:layout_marginBottom="48dp"
             android:text="@string/login_login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

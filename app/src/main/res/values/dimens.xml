@@ -5,4 +5,7 @@
       <dimen name="second_title_size">30sp</dimen>
       <dimen name="normal_size">24sp</dimen>
       <dimen name="des_size">20sp</dimen>
+      <dimen name="main_padding_start">48dp</dimen>
+      <dimen name="main_padding_end">48dp</dimen>
+      <dimen name="main_padding_bottom">48dp</dimen>
    </resources>

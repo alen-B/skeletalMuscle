@@ -17,8 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingStart="35dp"
-        android:paddingEnd="35dp"
+        android:paddingStart="@dimen/main_padding_start"
+        android:paddingEnd="@dimen/main_padding_end"
+        android:paddingBottom="@dimen/main_padding_bottom"
         tools:context=".ui.login.ServiceAgreementActivity">
         <include
             layout="@layout/layout_title"
@@ -35,7 +36,6 @@
             android:id="@+id/blurLayout"
             android:layout_width="144dp"
             android:layout_height="144dp"
-            android:layout_marginBottom="35dp"
             android:onClick="@{()-> click.clickFinish()}"
             app:blk_blurRadius="25"
             app:blk_cornerRadius="20dp"

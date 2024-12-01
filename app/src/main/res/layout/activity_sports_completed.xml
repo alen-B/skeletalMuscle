@@ -15,9 +15,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="35dp"
-        android:paddingEnd="35dp"
-        android:paddingBottom="35dp"
+        android:paddingStart="@dimen/main_padding_start"
+        android:paddingEnd="@dimen/main_padding_end"
+        android:paddingBottom="@dimen/main_padding_bottom"
         tools:context=".ui.sports.SportsCompletedActivity">
         <include
             layout="@layout/layout_title"
