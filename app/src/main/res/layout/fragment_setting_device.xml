@@ -41,7 +41,7 @@
             android:layout_marginStart="23dp"
             android:text="@string/setting_device_link"
             android:textColor="@color/color_cc1c1c1c"
-            android:textSize="30sp"
+            android:textSize="@dimen/text_size_3"
             app:layout_constraintStart_toEndOf="@+id/deviceIv"
             app:layout_constraintTop_toTopOf="@+id/deviceIv" />
 
@@ -51,7 +51,7 @@
             android:layout_marginStart="23dp"
             android:text="@string/setting_device_des"
             android:textColor="@color/color_cc1c1c1c"
-            android:textSize="24sp"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintBottom_toBottomOf="@+id/deviceIv"
             app:layout_constraintStart_toEndOf="@+id/deviceIv" />
         <com.fjp.skeletalmuscle.app.weight.SettingItemLayout

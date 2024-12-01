@@ -25,7 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="@dimen/second_title_size"
+            android:textSize="@dimen/text_size_3"
             android:text="@string/sports_assessment_result" />
 
         <com.github.mikephil.charting.charts.RadarChart

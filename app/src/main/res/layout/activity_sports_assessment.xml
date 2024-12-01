@@ -36,7 +36,7 @@
                 android:id="@+id/lCurDataTv"
                 android:layout_width="wrap_content"
                 android:textColor="@color/color_222"
-                android:textSize="40sp"
+                android:textSize="@dimen/text_size_2"
                 android:text="@{viewModel.leftLegAngle}"
                 android:layout_height="wrap_content"/>
             <ImageView
@@ -98,7 +98,7 @@
             app:layout_constraintEnd_toEndOf="@+id/lTimesView"
             app:layout_constraintHorizontal_chainStyle="packed"
             android:textColor="@color/color_222"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             android:text="@{viewModel.leftLegCount}"
             android:layout_height="wrap_content"/>
         <TextView
@@ -108,7 +108,7 @@
             app:layout_constraintStart_toEndOf="@+id/lTimesTv"
             android:text="@string/main_times"
             android:textColor="@color/color_222"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_4"
             android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/rLC"
@@ -126,7 +126,7 @@
             android:text="@{viewModel.rightLegAngle}"
             android:layout_width="wrap_content"
             android:textColor="@color/color_222"
-            android:textSize="40sp"
+            android:textSize="@dimen/text_size_2"
             android:layout_height="wrap_content"/>
         <ImageView
             android:id="@+id/rIv1"
@@ -187,7 +187,7 @@
             app:layout_constraintEnd_toEndOf="@+id/rTimesView"
             app:layout_constraintHorizontal_chainStyle="packed"
             android:textColor="@color/color_222"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             android:text="@{viewModel.rightLegCount}"
             android:layout_height="wrap_content"/>
         <TextView
@@ -197,7 +197,7 @@
             app:layout_constraintStart_toEndOf="@+id/rTimesTv"
             android:text="@string/main_times"
             android:textColor="@color/color_222"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_4"
             android:layout_height="wrap_content"/>
 
         <View
@@ -218,7 +218,7 @@
             android:text="@string/main_sports_time"
             android:layout_marginStart="25dp"
             android:layout_marginTop="16dp"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_4"
             android:textColor="@color/color_222"
             android:layout_height="wrap_content"/>
         <TextView
@@ -231,7 +231,7 @@
             android:layout_marginStart="25dp"
             android:drawablePadding="10dp"
             app:drawableStartCompat="@drawable/main_timer"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             android:textColor="@color/color_222"
             android:layout_height="wrap_content"/>
         <View
@@ -249,7 +249,7 @@
             app:layout_constraintStart_toStartOf="@+id/midLine"
             app:layout_constraintTop_toTopOf="@+id/sportsTimeTv"
             android:text="@string/sports_assessment_high_leg_times"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_4"
             android:layout_marginStart="25dp"
             android:textColor="@color/color_222"
             android:layout_height="wrap_content"/>
@@ -263,7 +263,7 @@
             android:layout_marginTop="17dp"
             android:drawablePadding="10dp"
             app:drawableStartCompat="@drawable/sports_assessment_times"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             android:textColor="@color/color_222"
             android:layout_height="wrap_content"/>
 

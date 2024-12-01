@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/sportsTitleTv"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/second_title_size"
+            android:textSize="@dimen/text_size_3"
             android:textColor="@color/color_cc1c1c1c"
             android:drawableStart="@drawable/main_sports_weightlifting"
             android:text="@string/today_sports_data_type2"
@@ -42,7 +42,7 @@
             android:gravity="center"
             android:text="分"
             android:textColor="@color/color_cacaca"
-            android:textSize="@dimen/normal_size"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBaseline_toBaselineOf="@+id/curScoreTv"
             app:layout_constraintBottom_toBottomOf="@+id/curScoreTv" />
@@ -67,7 +67,7 @@
             android:onClick="@{()-> click.clickTodaySports()}"
             android:text="@string/main_my_sports_data"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="30sp"
+            android:textSize="@dimen/text_size_3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/curScoreTv" />
         <ImageView
@@ -100,7 +100,7 @@
             android:gravity="center_vertical"
             android:text="@string/main_sports_time"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/sportTimeView"
             app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
 
@@ -123,7 +123,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/main_min"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
             app:layout_constraintEnd_toEndOf="@+id/sportTimeView" />
 
@@ -134,7 +134,7 @@
             android:layout_marginBottom="12dp"
             android:text="@{viewModel.sportsTime}"
             android:textColor="@color/black"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBaseline_toBaselineOf="@+id/minTv"
             app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
             app:layout_constraintEnd_toStartOf="@+id/minTv" />
@@ -160,7 +160,7 @@
             android:gravity="center_vertical"
             android:text="@string/main_heart_avg"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/heartRateView"
             app:layout_constraintTop_toTopOf="@+id/heartRateView" />
 
@@ -184,7 +184,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/main_times"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBottom_toBottomOf="@+id/heartRateView"
             app:layout_constraintEnd_toEndOf="@+id/heartRateView" />
 
@@ -195,7 +195,7 @@
             android:layout_marginBottom="12dp"
             android:text="@{viewModel.heartRate}"
             android:textColor="@color/black"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBaseline_toBaselineOf="@+id/timesTv"
             app:layout_constraintBottom_toBottomOf="@+id/heartRateView"
             app:layout_constraintEnd_toStartOf="@+id/timesTv" />
@@ -220,7 +220,7 @@
             android:gravity="center_vertical"
             android:text="@string/main_dumbbell_weight"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/weightView"
             app:layout_constraintTop_toTopOf="@+id/weightView" />
 
@@ -242,7 +242,7 @@
             android:layout_marginBottom="12dp"
             android:text="@{viewModel.endurance}"
             android:textColor="@color/black"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             android:layout_marginEnd="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/weightView"
             app:layout_constraintEnd_toStartOf="@+id/dumbbellWeightTv" />
@@ -254,7 +254,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/main_kilocalorie"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBottom_toBottomOf="@+id/weightTv"
             app:layout_constraintEnd_toEndOf="@+id/weightView" />
         <!-- 消耗热量-->
@@ -279,7 +279,7 @@
             android:gravity="center_vertical"
             android:text="@string/main_heat"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/heatView"
             app:layout_constraintTop_toTopOf="@+id/heatView" />
 
@@ -303,7 +303,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/main_kilocalorie"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBottom_toBottomOf="@+id/heatView"
             app:layout_constraintEnd_toEndOf="@+id/heatView" />
 
@@ -314,7 +314,7 @@
             android:layout_marginBottom="12dp"
             android:text="@{viewModel.heat}"
             android:textColor="@color/black"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBaseline_toBaselineOf="@+id/kilocalorieTv"
             app:layout_constraintBottom_toBottomOf="@+id/heatView"
             app:layout_constraintEnd_toStartOf="@+id/kilocalorieTv" />

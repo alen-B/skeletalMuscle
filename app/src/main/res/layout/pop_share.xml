@@ -33,7 +33,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/share_title"
             android:textColor="@color/white"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/leftIv"
             app:layout_constraintTop_toTopOf="parent" />
@@ -80,7 +80,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/share_friends"
             android:textColor="@color/color_222"
-            android:textSize="32sp" />
+            android:textSize="@dimen/text_size_3" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -109,7 +109,7 @@
             android:text="@string/share_circle_friends"
             android:textColor="@color/color_222"
             android:layout_marginTop="16dp"
-            android:textSize="32sp" />
+            android:textSize="@dimen/text_size_3" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -137,7 +137,7 @@
             android:text="@string/share_save_img"
             android:textColor="@color/color_222"
             android:layout_marginTop="16dp"
-            android:textSize="32sp" />
+            android:textSize="@dimen/text_size_3" />
 
 
 

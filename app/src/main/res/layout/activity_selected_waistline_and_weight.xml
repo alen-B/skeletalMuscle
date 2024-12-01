@@ -29,7 +29,7 @@
             android:text="@string/sports_assessment_type_weight"
             android:textColor="@color/color_cc1c1c1c"
             app:layout_constraintStart_toStartOf="parent"
-            android:textSize="36sp"
+            android:textSize="@dimen/text_size_2"
             app:layout_constraintTop_toTopOf="@+id/weightRView"
             app:layout_constraintBottom_toBottomOf="@+id/weightRView"
             android:layout_height="wrap_content"/>
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:text="@string/sports_assessment_type_waistline"
             android:textColor="@color/color_cc1c1c1c"
-            android:textSize="36sp"
+            android:textSize="@dimen/text_size_2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/waistlineRView"
             app:layout_constraintBottom_toBottomOf="@+id/waistlineRView"

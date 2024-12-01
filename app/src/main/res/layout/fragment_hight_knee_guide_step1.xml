@@ -46,7 +46,7 @@
         <TextView
             android:id="@+id/step1_1Tv"
             android:layout_width="wrap_content"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintStart_toStartOf="@+id/step1Tv"
             app:layout_constraintTop_toBottomOf="@+id/step1Tv"
             android:layout_marginTop="32dp"
@@ -58,7 +58,7 @@
         <TextView
             android:id="@+id/step1_2Tv"
             android:layout_width="wrap_content"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintStart_toStartOf="@+id/step1Tv"
             app:layout_constraintTop_toBottomOf="@+id/step1_1Tv"
             android:layout_marginTop="32dp"
@@ -70,7 +70,7 @@
         <TextView
             android:id="@+id/step1_3Tv"
             android:layout_width="wrap_content"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintStart_toStartOf="@+id/step1Tv"
             app:layout_constraintTop_toBottomOf="@+id/step1_2Tv"
             android:layout_marginTop="32dp"

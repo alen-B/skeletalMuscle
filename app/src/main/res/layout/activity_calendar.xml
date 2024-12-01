@@ -34,7 +34,7 @@
             android:textColor="@color/color_994e71ff"
             app:drawableStartCompat="@drawable/calendar_pre_month"
             android:background="@drawable/bg_white_round_15"
-            android:textSize="34sp"
+            android:textSize="@dimen/text_size_3"
             android:paddingStart="15dp"
             android:onClick="@{()-> click.clickPreMonth()}"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:textColor="@color/color_1c1c1c"
             android:textStyle="bold"
-            android:textSize="36sp"
+            android:textSize="@dimen/text_size_2"
             android:text="@{viewModel.calendarTitle}"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
             android:layout_height="56dp"/>
@@ -58,7 +58,7 @@
             android:textColor="@color/color_994e71ff"
             android:drawableEnd="@drawable/calendar_next_month"
             android:background="@drawable/bg_white_round_15"
-            android:textSize="34sp"
+            android:textSize="@dimen/text_size_3"
             android:paddingEnd="15dp"
             android:onClick="@{()-> click.clickNextMonth()}"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
@@ -87,7 +87,7 @@
                 app:current_month_lunar_text_color="#CFCFCF"
                 app:current_month_text_color="#333333"
                 android:background="@android:color/transparent"
-                app:day_text_size="36sp"
+                app:day_text_size="@dimen/text_size_2"
                 app:max_year="2124"
                 app:min_year="2024"
                 app:calendar_height="92dp"
@@ -107,7 +107,7 @@
                 app:year_view_day_text_color="#333333"
                 app:year_view_day_text_size="9sp"
                 app:year_view_month_text_color="#ff0000"
-                app:year_view_month_text_size="20sp"
+                app:year_view_month_text_size="@dimen/text_size_5"
                 app:year_view_scheme_color="#f17706" />
         </com.haibin.calendarview.CalendarLayout>
         <io.alterac.blurkit.BlurLayout

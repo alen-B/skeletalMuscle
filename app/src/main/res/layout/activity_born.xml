@@ -65,7 +65,7 @@
             android:layout_marginStart="6dp"
             android:text="@string/born_year"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="44sp"
+            android:textSize="@dimen/text_size_2"
             app:layout_constraintBottom_toBottomOf="@+id/midView"
             app:layout_constraintStart_toEndOf="@+id/yearTv"
             app:layout_constraintTop_toTopOf="@+id/midView" />
@@ -93,7 +93,7 @@
             android:layout_marginStart="6dp"
             android:text="@string/born_month"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="44sp"
+            android:textSize="@dimen/text_size_2"
             app:layout_constraintBottom_toBottomOf="@+id/midView"
             app:layout_constraintStart_toEndOf="@+id/monthTv"
             app:layout_constraintTop_toTopOf="@+id/midView" />
@@ -121,7 +121,7 @@
             android:layout_marginStart="6dp"
             android:text="@string/born_day"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="44sp"
+            android:textSize="@dimen/text_size_2"
             app:layout_constraintBottom_toBottomOf="@+id/midView"
             app:layout_constraintStart_toEndOf="@+id/dayEt"
             app:layout_constraintTop_toTopOf="@+id/midView" />

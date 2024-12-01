@@ -31,7 +31,7 @@
             android:drawablePadding="8dp"
             android:text="@string/today_sports_data_type2"
             android:textColor="@color/color_cc1c1c1c"
-            android:textSize="@dimen/second_title_size"
+            android:textSize="@dimen/text_size_3"
             app:drawableStartCompat="@drawable/main_sports_weightlifting"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:text="分"
             android:textColor="@color/color_cacaca"
-            android:textSize="@dimen/normal_size"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintBaseline_toBaselineOf="@+id/curScoreTv"
             app:layout_constraintBottom_toBottomOf="@+id/curScoreTv"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -78,7 +78,7 @@
             android:gravity="center_vertical"
             android:text="@string/main_sports_time"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/normal_size"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintStart_toStartOf="@+id/sportTimeView"
             app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
 
@@ -102,7 +102,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/main_min"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/des_size"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
             app:layout_constraintStart_toEndOf="@+id/sportsTimeTv" />
 
@@ -114,7 +114,7 @@
             android:layout_marginBottom="12dp"
             android:text="@{viewModel.sportsTime}"
             android:textColor="@color/black"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBaseline_toBaselineOf="@+id/minTv"
             app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
             app:layout_constraintStart_toStartOf="@+id/sportTimeView" />
@@ -138,7 +138,7 @@
             android:gravity="center_vertical"
             android:text="@string/exercise_plan_dumbbell_weight"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/normal_size"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintStart_toStartOf="@+id/weightView"
             app:layout_constraintTop_toTopOf="@+id/weightView" />
 
@@ -162,7 +162,7 @@
             android:layout_marginBottom="12dp"
             android:text="@{viewModel.endurance}"
             android:textColor="@color/black"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBottom_toBottomOf="@+id/weightView"
             app:layout_constraintStart_toStartOf="@+id/weightView" />
 
@@ -174,7 +174,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/unit_kg"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/des_size"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBottom_toBottomOf="@+id/weightTv"
             app:layout_constraintStart_toEndOf="@+id/weightTv" />
 
@@ -197,7 +197,7 @@
             android:gravity="center_vertical"
             android:text="@string/today_sports_detail_calorie"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/normal_size"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintStart_toStartOf="@+id/calorieView"
             app:layout_constraintTop_toTopOf="@+id/calorieView" />
 
@@ -231,7 +231,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/main_kilocalorie"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/des_size"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBottom_toBottomOf="@+id/calorieView"
             app:layout_constraintStart_toEndOf="@+id/calorieTv" />
 
@@ -243,7 +243,7 @@
             android:layout_marginBottom="12dp"
             android:text="@{viewModel.heat}"
             android:textColor="@color/black"
-            android:textSize="50sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBaseline_toBaselineOf="@+id/kilocalorieTv"
             app:layout_constraintBottom_toBottomOf="@+id/calorieView"
             app:layout_constraintStart_toStartOf="@+id/calorieView" />
@@ -275,7 +275,7 @@
             android:gravity="center_vertical"
             android:text="@string/today_sports_data_exercise_amount"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/normal_size"
+            android:textSize="@dimen/text_size_4"
             app:layout_constraintStart_toStartOf="@+id/exerciseAmountView"
             app:layout_constraintTop_toTopOf="@+id/exerciseAmountView" />
 
@@ -286,7 +286,7 @@
             android:layout_marginTop="12dp"
             android:text="@string/today_sports_data_up_times"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/des_size"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/exerciseAmountView"
             app:layout_constraintTop_toBottomOf="@+id/exerciseAmountTitleTv" />
 
@@ -298,7 +298,7 @@
             android:layout_marginBottom="12dp"
             android:text="115"
             android:textColor="@color/black"
-            android:textSize="48sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBottom_toBottomOf="@+id/exerciseAmountView"
             app:layout_constraintStart_toStartOf="@+id/exerciseAmountView" />
         <TextView
@@ -309,7 +309,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/main_times"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/des_size"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBaseline_toBaselineOf="@+id/upliftTv"
             app:layout_constraintBottom_toBottomOf="@+id/upliftTv"
             app:layout_constraintStart_toEndOf="@+id/upliftTv" />
@@ -330,7 +330,7 @@
             android:layout_marginTop="12dp"
             android:text="@string/today_sports_data_expand_chest_amount"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/des_size"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/midLine"
             app:layout_constraintTop_toBottomOf="@+id/exerciseAmountTitleTv" />
         <TextView
@@ -341,7 +341,7 @@
             android:layout_marginBottom="12dp"
             android:text="115"
             android:textColor="@color/black"
-            android:textSize="48sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBottom_toBottomOf="@+id/exerciseAmountView"
             app:layout_constraintStart_toStartOf="@+id/midLine" />
         <TextView
@@ -352,7 +352,7 @@
             android:layout_marginBottom="12dp"
             android:text="@string/main_times"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/des_size"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintBaseline_toBaselineOf="@+id/expandChestTv"
             app:layout_constraintBottom_toBottomOf="@+id/expandChestTv"
             app:layout_constraintStart_toEndOf="@+id/expandChestTv" />
@@ -376,7 +376,7 @@
             android:gravity="center_vertical"
             android:text="@string/high_knee_main_heart"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/heartRateView"
             app:layout_constraintTop_toTopOf="@+id/heartRateView" />
 
@@ -398,7 +398,7 @@
             android:layout_marginTop="28dp"
             android:text="@string/today_sports_data_avg"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="@dimen/des_size"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/heartRateTitleTv"
             app:layout_constraintTop_toBottomOf="@+id/heartRateTitleTv" />
 
@@ -408,7 +408,7 @@
             android:layout_height="wrap_content"
             android:text="112"
             android:textColor="@color/color_222"
-            android:textSize="48sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintStart_toStartOf="@+id/heartRateTitleTv"
             app:layout_constraintTop_toBottomOf="@+id/avgLabTv" />
 
@@ -443,7 +443,7 @@
             android:gravity="center_vertical"
             android:text="@string/today_sports_data_avg_angle"
             android:textColor="@color/color_801c1c1c"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/legAngleView"
             app:layout_constraintTop_toTopOf="@+id/legAngleView" />
 
@@ -464,7 +464,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:textSize="@dimen/normal_size"
+            android:textSize="@dimen/text_size_4"
             android:text="@string/exercise_plan_uplift"
             android:textColor="@color/color_e8a800"
             android:background="@drawable/bg_ffc019_20_round_20"
@@ -479,7 +479,7 @@
             android:layout_marginStart="10dp"
             android:text="90°"
             android:textColor="@color/color_222"
-            android:textSize="48sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBaseline_toBottomOf="@+id/avgUpliftIv"
             app:layout_constraintBottom_toBottomOf="@+id/avgUpliftIv"
             app:layout_constraintStart_toEndOf="@+id/avgUpliftIv" />
@@ -490,7 +490,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:textSize="@dimen/normal_size"
+            android:textSize="@dimen/text_size_4"
             android:text="@string/exercise_plan_expand_chest"
             android:textColor="@color/color_4e71ff"
             android:background="@drawable/bg_294e71ff_round_20"
@@ -506,7 +506,7 @@
             android:layout_marginStart="10dp"
             android:text="90°"
             android:textColor="@color/color_222"
-            android:textSize="48sp"
+            android:textSize="@dimen/text_size_1"
             app:layout_constraintBaseline_toBottomOf="@+id/avgLeftIv"
             app:layout_constraintBottom_toBottomOf="@+id/avgLeftIv"
             app:layout_constraintStart_toEndOf="@+id/avgLeftIv" />

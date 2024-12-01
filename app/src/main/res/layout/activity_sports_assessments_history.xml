@@ -38,7 +38,7 @@
             android:paddingStart="15dp"
             android:text="@string/sports_assessment_history_pre_year"
             android:textColor="@color/color_4e71ff"
-            android:textSize="34sp"
+            android:textSize="@dimen/text_size_3"
             app:drawableStartCompat="@drawable/calendar_pre_month"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_layout" />
@@ -50,7 +50,7 @@
             android:layout_marginTop="24dp"
             android:text="@{viewModel.calendarTitle}"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="@dimen/second_title_size"
+            android:textSize="@dimen/text_size_3"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
             android:paddingEnd="15dp"
             android:text="@string/sports_assessment_history_next_year"
             android:textColor="@color/color_4e71ff"
-            android:textSize="34sp"
+            android:textSize="@dimen/text_size_3"
             app:drawableEndCompat="@drawable/calendar_next_month"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_layout" />
@@ -95,7 +95,7 @@
                 app:tl_divider_color="@color/color_cfd1d1"
                 app:tl_divider_width="1dp"
                 app:tl_tab_space_equal="true"
-                app:tl_textsize="32sp"
+                app:tl_textsize="@dimen/text_size_3"
                 tl:tl_indicator_color="#fff"
                 tl:tl_indicator_corner_radius="10dp"
                 tl:tl_indicator_height="45dp"
@@ -126,7 +126,7 @@
                     android:paddingBottom="24dp"
                     android:layout_height="520dp">
                     <TextView
-                        android:textSize="@dimen/second_title_size"
+                        android:textSize="@dimen/text_size_3"
                         android:textColor="@color/color_1c1c1c"
                         android:layout_width="wrap_content"
                         android:text="@string/sports_assessment_history_assessment"
@@ -135,7 +135,7 @@
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:id="@+id/gripTv"
-                        android:textSize="@dimen/normal_size"
+                        android:textSize="@dimen/text_size_4"
                         android:textColor="@color/color_801c1c1c"
                         android:layout_width="wrap_content"
                         app:drawableStartCompat="@drawable/rectangle_red"
@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:id="@+id/sitUpTv"
-                        android:textSize="@dimen/normal_size"
+                        android:textSize="@dimen/text_size_4"
                         android:drawablePadding="7dp"
                         android:textColor="@color/color_801c1c1c"
                         android:layout_width="wrap_content"
@@ -158,7 +158,7 @@
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:id="@+id/highLegTv"
-                        android:textSize="@dimen/normal_size"
+                        android:textSize="@dimen/text_size_4"
                         android:textColor="@color/color_801c1c1c"
                         android:layout_width="wrap_content"
                         android:layout_marginEnd="32dp"
@@ -174,6 +174,7 @@
                         android:text="@string/times"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="32dp"
+                        android:textSize="@dimen/text_size_5"
                         android:textColor="@color/color_801c1c1c"
                         app:layout_constraintTop_toBottomOf="@+id/highLegTv"
                         android:layout_height="wrap_content"/>
@@ -181,6 +182,7 @@
                         android:layout_width="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:text="@string/unit_kg"
+                        android:textSize="@dimen/text_size_5"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/color_801c1c1c"
                         app:layout_constraintTop_toBottomOf="@+id/highLegTv"
@@ -206,7 +208,7 @@
                     android:paddingBottom="24dp"
                     android:layout_height="520dp">
                     <TextView
-                        android:textSize="@dimen/second_title_size"
+                        android:textSize="@dimen/text_size_3"
                         android:textColor="@color/color_1c1c1c"
                         android:layout_width="wrap_content"
                         android:text="@string/sports_assessment_history_weight_and_bmi"
@@ -215,7 +217,7 @@
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:id="@+id/bmiTv"
-                        android:textSize="@dimen/normal_size"
+                        android:textSize="@dimen/text_size_4"
                         android:textColor="@color/color_801c1c1c"
                         android:layout_width="wrap_content"
                         app:drawableStartCompat="@drawable/rectangle_purple"
@@ -226,7 +228,7 @@
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:id="@+id/weightTv"
-                        android:textSize="@dimen/normal_size"
+                        android:textSize="@dimen/text_size_4"
                         android:textColor="@color/color_801c1c1c"
                         android:layout_width="wrap_content"
                         android:layout_marginEnd="32dp"
@@ -242,6 +244,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         android:text="@string/weight_kg"
                         android:layout_marginTop="10dp"
+                        android:textSize="@dimen/text_size_5"
                         android:textColor="@color/color_801c1c1c"
                         app:layout_constraintTop_toBottomOf="@+id/weightTv"
                         android:layout_height="wrap_content"/>
@@ -250,6 +253,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:text="@string/sports_assessment_history_bmi"
                         android:layout_marginTop="10dp"
+                        android:textSize="@dimen/text_size_5"
                         android:textColor="@color/color_801c1c1c"
                         app:layout_constraintTop_toBottomOf="@+id/weightTv"
                         android:layout_height="wrap_content"/>
@@ -275,7 +279,7 @@
                     android:layout_marginBottom="32dp"
                     android:layout_height="520dp">
                     <TextView
-                        android:textSize="@dimen/second_title_size"
+                        android:textSize="@dimen/text_size_3"
                         android:textColor="@color/color_1c1c1c"
                         android:layout_width="wrap_content"
                         android:text="@string/sports_assessment_history_waist"

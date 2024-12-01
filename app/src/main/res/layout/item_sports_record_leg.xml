@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_cc1c1c1c"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_5"
         android:text="运动时长"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textColor="@color/color_1c1c1c"
-        android:textSize="52sp"
+        android:textSize="@dimen/text_size_1"
         android:text="28"
         android:layout_marginEnd="6dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/unitTv"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_1c1c1c"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_5"
         android:text="分钟"
         app:layout_constraintStart_toEndOf="@+id/numberTv"
         app:layout_constraintBottom_toBottomOf="parent"/>

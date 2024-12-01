@@ -68,7 +68,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/select_gender_man"
             android:textColor="@color/white"
-            android:textSize="40sp"
+            android:textSize="@dimen/text_size_2"
             app:layout_constraintEnd_toEndOf="@+id/man"
             app:layout_constraintStart_toStartOf="@+id/man"
             app:layout_constraintTop_toBottomOf="@+id/manIcon" />
@@ -112,7 +112,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/select_gender_woman"
             android:textColor="@color/color_1c1c1c"
-            android:textSize="40sp"
+            android:textSize="@dimen/text_size_2"
             app:layout_constraintEnd_toEndOf="@+id/woman"
             app:layout_constraintStart_toStartOf="@+id/woman"
             app:layout_constraintTop_toBottomOf="@+id/womanIcon" />

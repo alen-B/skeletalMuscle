@@ -12,7 +12,7 @@
         android:layout_height="240dp"
         android:textStyle="bold"
         android:textColor="@color/color_1c1c1c"
-        android:textSize="40sp"
+        android:textSize="@dimen/text_size_2"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

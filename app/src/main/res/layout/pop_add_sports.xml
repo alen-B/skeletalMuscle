@@ -11,7 +11,7 @@
         android:id="@+id/sportsNameEt"
         android:layout_height="88dp"
         android:layout_width="0dp"
-        android:textSize="40sp"
+        android:textSize="@dimen/text_size_2"
         android:layout_marginTop="18dp"
         android:inputType="text"
         android:layout_marginStart="45dp"

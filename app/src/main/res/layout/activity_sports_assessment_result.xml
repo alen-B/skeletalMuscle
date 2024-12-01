@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/main_start_sports_evaluation"
                 android:textColor="@color/color_cc1c1c1c"
-                android:textSize="38sp"
+                android:textSize="@dimen/text_size_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,7 +56,7 @@
                 android:drawablePadding="7dp"
                 android:text="@string/sports_assessment_history"
                 android:textColor="@color/color_801c1c1c"
-                android:textSize="26sp"
+                android:textSize="@dimen/text_size_4"
                 app:drawableEndCompat="@drawable/setting_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -80,14 +80,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:text="@string/sports_assessment_result"
-                    android:textSize="@dimen/normal_size"
+                    android:textSize="@dimen/text_size_4"
                     android:textColor="@color/color_cc1c1c1c"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/timeTv"
                     android:layout_width="wrap_content"
                     android:text="2024-11-28 18:00:00"
-                    android:textSize="@dimen/des_size"
+                    android:textSize="@dimen/text_size_5"
                     android:textColor="@color/color_801c1c1c"
                     android:layout_height="wrap_content"/>
                 <com.fjp.skeletalmuscle.app.weight.DashboardView
@@ -174,7 +174,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/sports_assessment_tip_title"
                 android:textColor="@color/color_cc1c1c1c"
-                android:textSize="22sp"
+                android:textSize="@dimen/text_size_4"
                 app:layout_constraintStart_toEndOf="@+id/iconIv"
                 app:layout_constraintTop_toTopOf="@+id/iconIv" />
 
@@ -186,7 +186,7 @@
                 android:layout_marginEnd="22dp"
                 android:text="@string/sports_assessment_tip_des"
                 android:textColor="@color/color_801c1c1c"
-                android:textSize="22sp"
+                android:textSize="@dimen/text_size_4"
                 android:layout_marginTop="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

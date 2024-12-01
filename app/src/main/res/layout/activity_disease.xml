@@ -52,7 +52,7 @@
             android:inputType="text"
             android:layout_marginTop="20dp"
             android:visibility="gone"
-            android:textSize="44sp"
+            android:textSize="@dimen/text_size_2"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:background="@drawable/bg_gray_round_20"

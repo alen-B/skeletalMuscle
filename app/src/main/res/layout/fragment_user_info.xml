@@ -52,7 +52,7 @@
                 android:layout_marginStart="23dp"
                 android:text="@string/setting_userinfo"
                 android:textColor="@color/color_cc1c1c1c"
-                android:textSize="30sp"
+                android:textSize="@dimen/text_size_3"
                 app:layout_constraintStart_toEndOf="@+id/userIv"
                 app:layout_constraintTop_toTopOf="@+id/userIv" />
 
@@ -62,7 +62,7 @@
                 android:layout_marginStart="23dp"
                 android:text="@string/setting_userinfo_des"
                 android:textColor="@color/color_cc1c1c1c"
-                android:textSize="24sp"
+                android:textSize="@dimen/text_size_4"
                 app:layout_constraintBottom_toBottomOf="@+id/userIv"
                 app:layout_constraintStart_toEndOf="@+id/userIv" />
 

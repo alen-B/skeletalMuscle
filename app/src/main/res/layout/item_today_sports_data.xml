@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_1c1c1c"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_3"
         android:layout_marginStart="8dp"
         android:text="高抬腿运动"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         android:textColor="@color/color_801c1c1c"
         android:layout_marginStart="8dp"
         android:text="@string/today_sports_data_min"
-        android:textSize="24sp"
+        android:textSize="@dimen/text_size_4"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"/>
     <TextView
@@ -85,7 +85,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="8dp"
         android:text="@string/today_sports_data_kilocalorie"
-        android:textSize="24sp"
+        android:textSize="@dimen/text_size_4"
         android:layout_height="wrap_content"/>
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
@@ -134,7 +134,7 @@
     <TextView
         android:id="@+id/unitTv"
         android:layout_width="wrap_content"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_3"
         android:visibility="gone"
         android:textColor="@color/color_1c1c1c"
         app:layout_constraintStart_toEndOf="@+id/muscleProportionvalueTv"
@@ -156,7 +156,7 @@
         android:layout_width="95dp"
         android:gravity="center"
         android:text="36.6"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_5"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/aerobicBgIv"
         app:layout_constraintBottom_toBottomOf="@+id/aerobicBgIv"
