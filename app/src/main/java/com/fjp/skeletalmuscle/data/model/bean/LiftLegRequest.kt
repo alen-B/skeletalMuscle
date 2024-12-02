@@ -6,15 +6,15 @@ package com.fjp.skeletalmuscle.data.model.bean
  *Description:
  */
 data class LiftLegRequest(
-    val calorie: List<Calorie>,
-    val cardiorespiratory_endurance: Int,
-    val efficient_grease_burning: Int,
-    val end_time: Int,
-    val extreme_breakthrough: Int,
-    val heart_lung_enhancement: Int,
-    val heart_rate: List<HeartRate>,
-    val record: List<Record>,
-    val score: Int,
-    val start_time: Int,
-    val warm_up_activation: Int
+    var calorie: MutableList<Calorie>,//消耗的卡路里
+    var end_time: Long,//结束时间
+    var heart_rate: MutableList<HeartRate>,//记录心率
+    var record: MutableList<Record>,//记录高抬腿数据
+    var score: Int,//分数
+    var start_time: Long,//开始时间
+    var cardiorespiratory_endurance: Double,//心肺耐力
+    var efficient_grease_burning: Int,//高效燃脂
+    var warm_up_activation: Int,//暖身激活
+    var extreme_breakthrough: Int,//极限突破
+    var heart_lung_enhancement: Int,//心肺提升
 )

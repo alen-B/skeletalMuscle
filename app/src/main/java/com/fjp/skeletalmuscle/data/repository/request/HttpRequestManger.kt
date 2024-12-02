@@ -19,6 +19,7 @@ import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendFlatSupportCalori
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendFlatSupportHeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeResult
 import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
+import com.fjp.skeletalmuscle.data.model.bean.result.UpdateImageResult
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -62,7 +63,7 @@ class HttpRequestManger {
     /**
      * 修改头像
      */
-    suspend fun uploadImg(body: MultipartBody.Part): ApiResponse<String> {
+    suspend fun uploadImg(body: MultipartBody.Part): UpdateImageResult {
         return apiService.uploadImg(body)
     }
     /**

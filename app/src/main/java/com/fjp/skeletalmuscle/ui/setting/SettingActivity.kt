@@ -1,17 +1,21 @@
 package com.fjp.skeletalmuscle.ui.setting
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
+import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.databinding.ActivitySettingBinding
+import com.fjp.skeletalmuscle.ui.login.LoginActivity
 import com.fjp.skeletalmuscle.ui.setting.fragment.DeviceFragment
 import com.fjp.skeletalmuscle.ui.setting.fragment.ExportReportFragment
 import com.fjp.skeletalmuscle.ui.setting.fragment.SystemSettingFragment
 import com.fjp.skeletalmuscle.ui.setting.fragment.UserInfoFragment
 import com.fjp.skeletalmuscle.viewmodel.state.SettingViewModel
+import com.lxj.xpopup.XPopup
 
 class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>() {
     private val USERINFO = 0
@@ -71,6 +75,18 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
 
         fun clickFinish() {
             this@SettingActivity.finish()
+        }
+
+        fun clickExit() {
+            val pop = XPopup.Builder(this@SettingActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
+                    CacheUtil.setUser(null)
+                    CacheUtil.setIsLogin(false)
+                    val intent = Intent(this@SettingActivity, LoginActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                }, { })
+
+            pop.show()
         }
     }
 

@@ -64,6 +64,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
             mDatabind.weightLayout.setValue(it.weight.toString())
             mDatabind.heightLayout.setValue(it.height.toString())
             mDatabind.waistLinLayout.setValue(it.waistline)
+            mDatabind.avatarLayout.setAvatarIv(it.profile)
         }
 
     }
@@ -83,6 +84,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
                 mDatabind.weightLayout.setValue(App.userInfo.weight.toString())
                 mDatabind.waistLinLayout.setValue(App.userInfo.waistline)
                 mDatabind.sexLayout.setValue(App.userInfo.sex)
+
                 CacheUtil.setUser(App.userInfo)
             }, {
                 appContext.showToast(getString(R.string.request_failed))
@@ -90,11 +92,14 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         }
 
         requestUserInfoViewModel.avatar.observe(this) {
-            parseState(it, {
+            appContext.showToast("更新成功")
+            mDatabind.avatarLayout.setAvatarIv(App.userInfo.profile)
+            App.userInfo.profile=it
+            CacheUtil.setUser(App.userInfo)
+        }
 
-            }, {
-                appContext.showToast(it.errorMsg)
-            })
+        requestUserInfoViewModel.updateImageFailed.observe(this) {
+            appContext.showToast("更新失败")
         }
     }
 

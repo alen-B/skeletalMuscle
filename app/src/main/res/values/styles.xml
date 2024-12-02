@@ -29,12 +29,13 @@
 
     <style name="SettingNavStyle">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_height">65dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingStart">25dp</item>
         <item name="android:textColor">@color/setting_lab</item>
         <item name="android:textSize">@dimen/text_size_4</item>
         <item name="android:drawablePadding">12dp</item>
     </style>
+
 
 </resources>

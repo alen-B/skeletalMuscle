@@ -8,38 +8,45 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import com.clj.fastble.BleManager
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
+import com.fjp.skeletalmuscle.data.model.bean.Calorie
+import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
 import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
+import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
+import com.fjp.skeletalmuscle.data.model.bean.Record
 import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
+import com.fjp.skeletalmuscle.viewmodel.request.RequestHighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel
 import com.lxj.xpopup.XPopup
+import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
-import me.hgj.jetpackmvvm.util.NumberUtils
 import java.util.Date
 import kotlin.math.abs
 import kotlin.math.ceil
 
 class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMainBinding>(), SMBleManager.DeviceListener {
+    var liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0)
+    private val requestHighKneeViewModel: RequestHighKneeViewModel by viewModels()
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
     private var isRunning: Boolean = false
     private var pauseTime: Long = 0
     private val handler = Handler(Looper.getMainLooper())
     private val LIFT_THRESHOLD = 30f // 抬起动作的阈值
-
     private var leftLegLifted = false
     private var rightLegLifted = false
     private var leftLegLifts = 0//左腿抬高了多少次
@@ -61,10 +68,10 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private var weight = 1.0
     private var isMale = true
     private var seconds = 0
-    private var warmupTime = 0.0
-    private var fatBurningTime = 0.0
-    private var cardioTime = 0.0
-    private var breakTime = 0.0
+    private var warmupTime = 0
+    private var fatBurningTime = 0
+    private var cardioTime = 0
+    private var breakTime = 0
     private var leftLastPitch = 0f // 左腿上一个pitch值
     private var rightLastPitch = 0f // 右腿上一个pitch值
 
@@ -95,11 +102,10 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         startTimer()
         //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
-            age = DateUtils.calculateAge(Date(it.birthday), Date(System.currentTimeMillis()))
+            age = DateUtils.calculateAge(DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, it.birthday), Date(System.currentTimeMillis()))
             weight = it.weight.toDouble()
             isMale = it.sex == getString(R.string.setting_sex_man)
         }
-
 
 //        showOffLinePop()
         leftLevelViews.add(mDatabind.lIv1)
@@ -181,14 +187,35 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     fun completed() {
-        pauseTimer()
         showToast("完成了运动")
         pauseTimer()
-        val intent = Intent(this@HighKneeMainActivity, SportsCompletedActivity::class.java)
-        val highKneeSports = HighKneeSports(elapsedTime, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
-        intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
-        startActivity(intent)
-        finish()
+        liftLegRequest.end_time = System.currentTimeMillis() / 1000
+        liftLegRequest.cardiorespiratory_endurance = getCardiorespiratorEndurance()
+        println("=====请求参数：" + liftLegRequest)
+        requestHighKneeViewModel.saveLiftLeg(liftLegRequest)
+
+    }
+
+    private fun getCardiorespiratorEndurance(): Double {
+        //TODO 心肺耐力需要计算
+        return 0.3
+    }
+
+    override fun createObserver() {
+        super.createObserver()
+        requestHighKneeViewModel.liftLegLiveData.observe(this) {
+            parseState(it, {
+                showToast("发送成功")
+//                val intent = Intent(this@HighKneeMainActivity, SportsCompletedActivity::class.java)
+//                val highKneeSports = HighKneeSports(elapsedTime, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
+//                intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
+//                startActivity(intent)
+//                finish()
+            }, {
+                showToast(getString(R.string.request_failed))
+            })
+
+        }
     }
 
     inner class ProxyClick {
@@ -214,11 +241,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             override fun reconnect(pop: DeviceOffLinePop) {
                 pop.dismiss()
             }
-
-
         })
         val pop = XPopup.Builder(this@HighKneeMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
-
         pop.show()
     }
 
@@ -270,11 +294,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 if (abs(pitch) > LIFT_THRESHOLD) {
                     mViewModel.leftLegAngle.set("L ${leftLegmaxPitchInCycle.toInt()}°")
                     leftLegLifts++
+                    liftLegRequest.record.add(Record(leftLegmaxPitchInCycle.toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
                     leftLegAngleSum += leftLegmaxPitchInCycle.toDouble()
                     mViewModel.leftLegCount.set(leftLegLifts.toString())
-                    if (rightLegLifts != 0) {
-                        println("=====左腿最大角度：" + leftLegmaxPitchInCycle + "    右腿角度" + rightLastPitch)
-                    }
                     getAvgScore(abs(leftLegmaxPitchInCycle))
                 }
             }
@@ -343,11 +365,10 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                     rightLegLifts++
                     mViewModel.rightLegAngle.set("R ${rightLastPitch.toInt()}°")
                     rightLegAngleSum += abs(rightLegmaxPitchInCycle).toDouble()
+                    liftLegRequest.record.add(Record(rightLegmaxPitchInCycle.toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
                     mViewModel.rightLegCount.set(rightLegLifts.toString())
                     getAvgScore(abs(rightLegmaxPitchInCycle))
-                    if (leftLegLifts != 0) {
-                        println("=====又腿最大角度：" + rightLegmaxPitchInCycle + "    左腿角度" + leftLastPitch)
-                    }
+
                 }
             }
             rightIsDescending = true
@@ -450,6 +471,12 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             println("===高效燃脂:  " + fatBurningTime)
             println("===心肺提升时间:  " + cardioTime)
             println("===极限突破:  " + breakTime)
+            liftLegRequest.heart_rate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
+            liftLegRequest.calorie.add(Calorie((caloriesBurned * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
+            liftLegRequest.heart_lung_enhancement = cardioTime
+            liftLegRequest.efficient_grease_burning = fatBurningTime
+            liftLegRequest.extreme_breakthrough = breakTime
+            liftLegRequest.warm_up_activation = warmupTime
         }
     }
 
@@ -601,6 +628,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         sportsTotalScore += curScore
         sportsAvgScore = ((sportsTotalScore / ((leftLegLifts + rightLegLifts) * 100f)) * 100).toInt()
         mDatabind.scoreViewTv.text = Math.min(sportsAvgScore, 100).toString()
+        liftLegRequest.score = sportsAvgScore.coerceAtMost(100)
     }
 
     private fun calculateLevelFromAngle(angle: Float): Int {
@@ -644,8 +672,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     fun showCompletedDialog() {
         AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动吗？").setPositiveButton("确定") { dialog, which ->
-            BleManager.getInstance().disconnectAllDevice()
-            BleManager.getInstance().destroy()
+//            BleManager.getInstance().disconnectAllDevice()
             completed()
         }.setNegativeButton("取消", null).show()
     }

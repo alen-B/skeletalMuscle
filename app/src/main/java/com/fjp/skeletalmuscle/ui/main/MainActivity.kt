@@ -2,11 +2,13 @@ package com.fjp.skeletalmuscle.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.pop.NewVersionPop
@@ -15,24 +17,26 @@ import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityMainBinding
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
 import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
-import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsDumbbellFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsHighKneeFragment
-import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsPlankFragment
 import com.fjp.skeletalmuscle.ui.user.adapter.MainSportsRateAdapter
+import com.fjp.skeletalmuscle.viewmodel.request.RequestMainViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.MainViewModel
 import com.lxj.xpopup.XPopup
 import com.zhpan.indicator.enums.IndicatorStyle
+import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.ext.util.dp2px
 import java.time.LocalDateTime
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+    private val requestMainViewModel: RequestMainViewModel by viewModels()
     lateinit var mainSportsRateAdapter: MainSportsRateAdapter
+    val fragments = mutableListOf<Fragment>()
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.showSetting.set(true)
 
-        val fragments = arrayListOf<Fragment>(MainSportsHighKneeFragment.newInstance(), MainSportsDumbbellFragment.newInstance(), MainSportsPlankFragment.newInstance())
+
         val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 0.93f, fragments)
         mDatabind.viewpager.adapter = viewpagerAdapter
         mDatabind.indicatorView.apply {
@@ -61,8 +65,25 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 //        showNewVersionPop()
     }
 
+
+    override fun createObserver() {
+        super.createObserver()
+        requestMainViewModel.mainLiveData.observe(this) {
+            parseState(it, {
+                mViewModel.curScore.set(it.score.toString())
+                if (it.sport_lift_leg!=null) {
+                    fragments.add(MainSportsHighKneeFragment.newInstance(it.sport_lift_leg))
+                }
+            }, {
+                it.printStackTrace()
+                showToast(getString(R.string.request_failed))
+            })
+        }
+    }
+
     override fun onResume() {
         super.onResume()
+        requestMainViewModel.getTodayData()
         val sports = CacheUtil.getSports()
         sports?.let {
             val curDay = DateTimeUtil.getCurDate2Str()

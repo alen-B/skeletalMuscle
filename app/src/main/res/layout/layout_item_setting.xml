@@ -26,7 +26,7 @@
         android:textColor="@color/color_801c1c1c"
         android:layout_height="wrap_content" />
 
-    <ImageView
+    <com.fjp.skeletalmuscle.app.weight.CircleImageView
         android:id="@+id/avatarIv"
         android:layout_width="50dp"
         android:visibility="gone"

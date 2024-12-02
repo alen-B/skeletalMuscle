@@ -77,4 +77,8 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
 }

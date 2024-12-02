@@ -66,7 +66,7 @@ data class SportLiftLeg(
     val heart_lung_enhancement: Int,
     val heart_rate: List<HeartRate>,
     val id: Int,
-    val left_times: Int,
+    val left_times: Long,
     val max_rate_value: Int,
     val min_rate_value: Int,
     val record: List<Record>,

@@ -185,8 +185,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         showToast("完成了运动")
         pauseTimer()
         val intent = Intent(this@DumbbellMainActivity, SportsCompletedActivity::class.java)
-        val highKneeSports = HighKneeSports(elapsedTime, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
-        intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
+//        val highKneeSports = HighKneeSports(elapsedTime, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
+//        intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
         startActivity(intent)
         finish()
     }

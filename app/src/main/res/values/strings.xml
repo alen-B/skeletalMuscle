@@ -325,6 +325,8 @@
     <string name="setting_waist_lin">腰围</string>
     <string name="setting_sex_man">男</string>
     <string name="setting_sex_woman">女</string>
+    <string name="setting_exit">退出登录</string>
+    <string name="setting_exit_content">您确定退出登录吗?</string>
 
     <string name="setting_device_smart_watch">智能手表</string>
     <string name="setting_device_left_knee">左膝</string>

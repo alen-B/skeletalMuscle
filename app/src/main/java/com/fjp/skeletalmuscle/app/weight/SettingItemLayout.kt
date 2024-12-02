@@ -10,6 +10,7 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
+import coil.load
 import com.fjp.skeletalmuscle.R
 
 /**
@@ -76,5 +77,10 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
 
     fun setSwitchStatus(isChecked: Boolean) {
         switch.isChecked = isChecked
+    }
+
+    fun setAvatarIv(path: String) {
+        avatarIv.visibility = View.VISIBLE
+        avatarIv.load(path)
     }
 }

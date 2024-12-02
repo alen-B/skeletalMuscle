@@ -77,7 +77,8 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
         val videoPop = VideoPop(this@DeviceConnectGuideActivity, object : VideoPop.Listener {
             override fun jump(pop: VideoPop) {
                 if (type == Constants.CONNECT_DEVICE_TYPE_EXERCISE) {
-                    startActivity(Intent(this@DeviceConnectGuideActivity, HighKneeMainActivity::class.java))
+                    val intent = Intent(this@DeviceConnectGuideActivity, HighKneeMainActivity::class.java)
+                    startActivity(intent)
                     eventViewModel.startSports.postValue(true)
                 } else {
                     startActivity(Intent(this@DeviceConnectGuideActivity, SportsAssessmentActivity::class.java))

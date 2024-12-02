@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.ContentInfoCompat.Flags
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
@@ -106,7 +107,8 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     inner class ProxyClick {
 
         fun clickStartSports() {
-            startActivity(Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java))
+           val intent = Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java)
+            startActivity(intent)
             eventViewModel.startSports.postValue(true)
         }
 

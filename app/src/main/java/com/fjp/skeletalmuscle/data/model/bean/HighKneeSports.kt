@@ -17,8 +17,8 @@ data class HighKneeSports(
     var times: Int,
     var calories: Double,
     var score: Int,
-    var warmupTime: Double,
-    var fatBurningTime: Double,
-    var cardioTime: Double,
-    var breakTime: Double,
+    var warmupTime: Int,
+    var fatBurningTime: Int,
+    var cardioTime: Int,
+    var breakTime: Int,
 ) : Parcelable
