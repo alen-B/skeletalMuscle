@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.SportLiftLeg
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsHighKneeBinding
 import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
@@ -25,16 +27,33 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
-class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, FragmentTodaySportsHighKneeBinding>() {
+class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment<TodaySportsHighKneeViewModel, FragmentTodaySportsHighKneeBinding>() {
 
     companion object {
-        fun newInstance() = TodaySportsHighKneeFragment()
+        fun newInstance(sportLiftLeg: SportLiftLeg) = TodaySportsHighKneeFragment(sportLiftLeg)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
+        mViewModel.curScore.set(sportLiftLeg.score.toString())
+        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportLiftLeg.end_time - sportLiftLeg.start_time))
+        mViewModel.endurance.set(sportLiftLeg.cardiorespiratory_endurance.toString())
+        mViewModel.heat.set((sportLiftLeg.sum_calorie / 1000).toString())
 
+        mDatabind.warmupTimePB.setProgressPercentage(((sportLiftLeg.warm_up_activation / (sportLiftLeg.end_time - sportLiftLeg.start_time)) * 100).toDouble(), true)
+        mDatabind.fatBurningTimePb.setProgressPercentage(((sportLiftLeg.efficient_grease_burning / (sportLiftLeg.end_time - sportLiftLeg.start_time)) * 100).toDouble(), true)
+        mDatabind.cardioTimePb.setProgressPercentage(((sportLiftLeg.heart_lung_enhancement / (sportLiftLeg.end_time - sportLiftLeg.start_time)) * 100).toDouble(), true)
+        mDatabind.breakTimePB.setProgressPercentage(((sportLiftLeg.extreme_breakthrough / (sportLiftLeg.end_time - sportLiftLeg.start_time)) * 100).toDouble(), true)
+        mDatabind.warmupTimeMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.warm_up_activation.toLong()) + "'"
+        mDatabind.fatBurningTimeMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.heart_lung_enhancement.toLong()) + "'"
+        mDatabind.cardioTimeTotalMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.cardiorespiratory_endurance.toLong()) + "'"
+        mDatabind.breakTimeTotalMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.extreme_breakthrough.toLong()) + "'"
+        mViewModel.totalCount.set((sportLiftLeg.left_times + sportLiftLeg.right_times).toString())
+        mViewModel.leftCount.set(sportLiftLeg.left_times.toString())
+        mViewModel.rightCount.set(sportLiftLeg.right_times.toString())
+        mViewModel.avgHeart.set(sportLiftLeg.avg_rate_value.toString())
+        mViewModel.maxHeart.set(sportLiftLeg.max_rate_value.toString())
         initCalorieBarChart()
         initHeartRateLineChart()
         initLegAngleLineChart()
@@ -74,9 +93,8 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until 8) {
-            val num = (Math.random() * 180).toFloat() - 30
-            values.add(BarEntry(i.toFloat(), num))
+        for (i in 0 until sportLiftLeg.heart_rate.size) {
+            values.add(BarEntry(i.toFloat(), sportLiftLeg.heart_rate[i].rate_value.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -147,10 +165,8 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
 
-        for (i in 0 until 4) {
-            val num = (Math.random() * 180).toFloat()
-            values.add(BarEntry(i.toFloat(), num))
-
+        for (i in 0..sportLiftLeg.calorie.size) {
+            values.add(BarEntry(i.toFloat(), sportLiftLeg.calorie[i].calorie.toFloat()))
         }
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "千卡")
@@ -199,13 +215,13 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
 
-        for (i in 0 until 8) {
-            val num = (Math.random() * 180).toFloat() - 30
-            values.add(BarEntry(i.toFloat(), num))
+        val leftLegRecord = sportLiftLeg.record.filter { it.type == 1 }
+        for (i in leftLegRecord.indices) {
+            values.add(BarEntry(i.toFloat(), leftLegRecord[i].degree.toFloat()))
         }
-        for (i in 0 until 8) {
-            val num = (Math.random() * 100).toFloat() - 30
-            values2.add(BarEntry(i.toFloat(), num))
+        val rightLegRecord = sportLiftLeg.record.filter { it.type == 2 }
+        for (i in rightLegRecord.indices) {
+            values2.add(BarEntry(i.toFloat(), rightLegRecord[i].degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")

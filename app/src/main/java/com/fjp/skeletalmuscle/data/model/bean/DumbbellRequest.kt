@@ -1,5 +1,8 @@
 package com.fjp.skeletalmuscle.data.model.bean
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  *Author:Mr'x
  *Time:2024/12/1
@@ -14,19 +17,19 @@ data class DumbbellRequest(
     val start_time: Int,
     val weight: Int
 )
-
+@Parcelize
 data class Calorie(
     val calorie: Int,//卡路里
     val record_time: String//时间
-)
-
+): Parcelable
+@Parcelize
 data class HeartRate(
     val rate_value: Int,//心率
     val record_time: String//时间
-)
-
+): Parcelable
+@Parcelize
 data class Record(
     val degree: Int,//抬腿角度
     val record_time: String,//抬腿时间
     val type: Int //抬腿类型1左腿，2右腿
-)
+): Parcelable

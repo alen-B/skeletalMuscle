@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsPlankBinding
 import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
@@ -25,16 +27,20 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
-class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, FragmentTodaySportsPlankBinding>() {
+class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFragment<TodaySportsPlankViewModel, FragmentTodaySportsPlankBinding>() {
 
     companion object {
-        fun newInstance() = TodaySportsPlankFragment()
+        fun newInstance(sportFlatSupport: SportFlatSupport) = TodaySportsPlankFragment(sportFlatSupport)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-
+        mViewModel.curScore.set(sportFlatSupport.score.toString())
+        mViewModel.curScore.set(sportFlatSupport.score.toString())
+        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportFlatSupport.end_time - sportFlatSupport.start_time))
+        mViewModel.heat.set(sportFlatSupport.avg_rate_value.toString())
+        mViewModel.calorie.set(sportFlatSupport.sum_calorie.toString())
         initCalorieBarChart()
         initHeartRateLineChart()
     }
@@ -73,9 +79,8 @@ class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, Fragmen
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until 8) {
-            val num = (Math.random() * 180).toFloat() - 30
-            values.add(BarEntry(i.toFloat(), num))
+        for (i in 0 until sportFlatSupport.heart_rate.size) {
+            values.add(BarEntry(i.toFloat(), sportFlatSupport.heart_rate[i].rate_value.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -146,9 +151,8 @@ class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, Fragmen
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
 
-        for (i in 0 until 4) {
-            val num = (Math.random() * 180).toFloat()
-            values.add(BarEntry(i.toFloat(), num))
+        for (i in 0 until sportFlatSupport.calorie.size) {
+            values.add(BarEntry(i.toFloat(), sportFlatSupport.calorie[i].calorie.toFloat()))
 
         }
         val dataSets = ArrayList<IBarDataSet>()

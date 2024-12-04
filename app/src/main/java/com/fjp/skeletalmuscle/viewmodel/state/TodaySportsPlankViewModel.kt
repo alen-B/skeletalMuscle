@@ -9,4 +9,5 @@ class TodaySportsPlankViewModel : SMBaseViewModel() {
     val heartRate = ObservableField("0")
     val endurance = ObservableField("0.32")
     val heat = ObservableField("0")
+    val calorie = ObservableField("0")
 }

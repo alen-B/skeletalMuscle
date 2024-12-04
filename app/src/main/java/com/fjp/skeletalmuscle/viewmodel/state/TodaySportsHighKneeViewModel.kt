@@ -9,4 +9,9 @@ class TodaySportsHighKneeViewModel : SMBaseViewModel() {
     val heartRate = ObservableField("0")
     val endurance = ObservableField("0.32")
     val heat = ObservableField("0")
+    val totalCount = ObservableField("0")
+    val leftCount = ObservableField("0")
+    val rightCount = ObservableField("0")
+    val avgHeart = ObservableField("0")
+    val maxHeart = ObservableField("0")
 }

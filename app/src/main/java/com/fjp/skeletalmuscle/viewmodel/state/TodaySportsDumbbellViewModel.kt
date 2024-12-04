@@ -7,6 +7,11 @@ class TodaySportsDumbbellViewModel : SMBaseViewModel() {
     val curScore = ObservableField("90")
     val sportsTime = ObservableField("30")
     val heartRate = ObservableField("0")
-    val endurance = ObservableField("0.32")
+    val weight = ObservableField("0.32")
     val heat = ObservableField("0")
+    val calorie = ObservableField("0")
+    val upTimes = ObservableField("0")
+    val upDegree = ObservableField("0")
+    val expandChestDegree = ObservableField("0")
+    val expandChestTimes = ObservableField("0")
 }

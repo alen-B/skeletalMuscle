@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.SportDumbbell
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDumbbellBinding
 import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
@@ -25,15 +27,24 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
-class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, FragmentTodaySportsDumbbellBinding>() {
+class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragment<TodaySportsDumbbellViewModel, FragmentTodaySportsDumbbellBinding>() {
 
     companion object {
-        fun newInstance() = TodaySportsDumbbellFragment()
+        fun newInstance(sportDumbbell: SportDumbbell) = TodaySportsDumbbellFragment(sportDumbbell)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
+        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportDumbbell.end_time - sportDumbbell.start_time))
+        mViewModel.curScore.set(sportDumbbell.score.toString())
+        mViewModel.heartRate.set(sportDumbbell.avg_rate_value.toString())
+        mViewModel.weight.set(sportDumbbell.weight.toString())
+        mViewModel.calorie.set((sportDumbbell.sum_calorie/1000).toString())
+        mViewModel.upTimes.set(sportDumbbell.up_times.toString())
+        mViewModel.expandChestTimes.set(sportDumbbell.expand_chest_times.toString())
+        mViewModel.upDegree.set(sportDumbbell.avg_up_degree.toString()+"°")
+        mViewModel.expandChestDegree.set(sportDumbbell.avg_expand_chest_degree.toString()+"°")
 
         initCalorieBarChart()
         initHeartRateLineChart()
@@ -74,9 +85,8 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until 8) {
-            val num = (Math.random() * 180).toFloat() - 30
-            values.add(BarEntry(i.toFloat(), num))
+        for (i in 0 until sportDumbbell.calorie.size) {
+            values.add(BarEntry(i.toFloat(), sportDumbbell.calorie[i].calorie.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -147,9 +157,8 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
 
-        for (i in 0 until 4) {
-            val num = (Math.random() * 180).toFloat()
-            values.add(BarEntry(i.toFloat(), num))
+        for (i in 0 until sportDumbbell.heart_rate.size) {
+            values.add(BarEntry(i.toFloat(), sportDumbbell.heart_rate[i].rate_value.toFloat()))
 
         }
         val dataSets = ArrayList<IBarDataSet>()
@@ -198,14 +207,11 @@ class TodaySportsDumbbellFragment : BaseFragment<TodaySportsDumbbellViewModel, F
 
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
-
-        for (i in 0 until 8) {
-            val num = (Math.random() * 180).toFloat() - 30
-            values.add(BarEntry(i.toFloat(), num))
+        for (i in 0 until sportDumbbell.up_degree.size) {
+            values.add(BarEntry(i.toFloat(), sportDumbbell.up_degree[i].up_degree.toFloat()))
         }
-        for (i in 0 until 8) {
-            val num = (Math.random() * 100).toFloat() - 30
-            values2.add(BarEntry(i.toFloat(), num))
+        for (i in 0 until sportDumbbell.expand_chest_degree.size) {
+            values2.add(BarEntry(i.toFloat(), sportDumbbell.expand_chest_degree[i].expand_chest_degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")

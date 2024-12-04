@@ -17,7 +17,9 @@ import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityMainBinding
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
 import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
+import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsDumbbellFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsHighKneeFragment
+import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsPlankFragment
 import com.fjp.skeletalmuscle.ui.user.adapter.MainSportsRateAdapter
 import com.fjp.skeletalmuscle.viewmodel.request.RequestMainViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.MainViewModel
@@ -72,7 +74,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             parseState(it, {
                 mViewModel.curScore.set(it.score.toString())
                 if (it.sport_lift_leg!=null) {
-                    fragments.add(MainSportsHighKneeFragment.newInstance(it.sport_lift_leg))
+                    fragments.add(MainSportsHighKneeFragment.newInstance(it))
+                }
+                if (it.sport_dumbbell!=null) {
+                    fragments.add(MainSportsDumbbellFragment.newInstance(it))
+                }
+                if (it.sport_flat_support!=null) {
+                    fragments.add(MainSportsPlankFragment.newInstance(it))
                 }
             }, {
                 it.printStackTrace()

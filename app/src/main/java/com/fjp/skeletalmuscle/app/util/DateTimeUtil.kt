@@ -112,7 +112,7 @@ object DateTimeUtil {
     }
 
     fun formSportTime(time: Long): String {
-        return String.format("%.1f", (time / (1000 * 60f)))
+        return String.format("%.1f", (time /60f))
     }
 
     fun formatTime(seconds: Long): String {

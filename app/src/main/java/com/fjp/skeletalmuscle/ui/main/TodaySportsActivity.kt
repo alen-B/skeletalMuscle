@@ -1,10 +1,15 @@
 package com.fjp.skeletalmuscle.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySportsDataBinding
 import com.fjp.skeletalmuscle.ui.main.adapter.TodaySportsDataAdapter
 import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
@@ -14,14 +19,36 @@ import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsPlankFragment
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDataViewModel
 import com.zhpan.indicator.enums.IndicatorStyle
 import me.hgj.jetpackmvvm.ext.util.dp2px
+import me.hgj.jetpackmvvm.util.get
 
 class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityTodaySportsDataBinding>() {
+    companion object{
+        fun start(context: Context,todayDataResult: TodayDataResult,sportsType: SportsType){
+            val intent = Intent(context, TodaySportsActivity::class.java)
+            intent.putExtra(Constants.INTENT_KEY_TODAY_SPORTS_DATA,todayDataResult)
+            intent.putExtra(Constants.INTENT_KEY_TODAY_SPORTS_TYPE,sportsType)
+            context.startActivity(intent)
+        }
+    }
     lateinit var todaySportsDataAdapter: TodaySportsDataAdapter
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.today_sports_data_title))
         mDatabind.click = ProxyClick()
-        val fragments = arrayListOf<Fragment>(TodaySportsHighKneeFragment.newInstance(), TodaySportsDumbbellFragment.newInstance(), TodaySportsPlankFragment.newInstance())
+        //type用来记录是点击那个运动进来的详情
+        val type = intent.get(Constants.INTENT_KEY_TODAY_SPORTS_TYPE,SportsType.HIGH_KNEE)
+        val todaySportsData = intent.getParcelableExtra<TodayDataResult>(Constants.INTENT_KEY_TODAY_SPORTS_DATA)
+        val fragments = arrayListOf<Fragment>()
+        if(todaySportsData?.sport_lift_leg!=null && todaySportsData?.sport_lift_leg.start_time!=0){
+            fragments.add(TodaySportsHighKneeFragment.newInstance(todaySportsData?.sport_lift_leg))
+        }
+        if(todaySportsData?.sport_dumbbell!=null && todaySportsData?.sport_dumbbell.start_time!=0L){
+            fragments.add(TodaySportsDumbbellFragment.newInstance(todaySportsData?.sport_dumbbell))
+        }
+        if(todaySportsData?.sport_flat_support!=null && todaySportsData?.sport_flat_support.start_time!=0L){
+            fragments.add(TodaySportsPlankFragment.newInstance(todaySportsData?.sport_flat_support))
+        }
+
         val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 1f, fragments)
         mDatabind.viewpager.adapter = viewpagerAdapter
         mDatabind.indicatorView.apply {

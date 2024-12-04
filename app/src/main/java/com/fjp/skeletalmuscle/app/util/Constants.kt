@@ -18,6 +18,8 @@ class Constants {
         const val INTENT_KEY_SPORTS_DETAIL_TYPE = "sports_detail_type"
         const val INTENT_KEY_SPORTS_CHART_TYPE = "chart_type"
         const val INTENT_KEY_CONNECT_DEVICE_TYPE = "connect_device_type"
+        const val INTENT_KEY_TODAY_SPORTS_DATA = "today_sports_data"
+        const val INTENT_KEY_TODAY_SPORTS_TYPE = "today_sports_type"
         const val CONNECT_DEVICE_TYPE_ASSESSMENT = "device_type_assessment"
         const val CONNECT_DEVICE_TYPE_EXERCISE = "connect_device_type_exercise"
 
