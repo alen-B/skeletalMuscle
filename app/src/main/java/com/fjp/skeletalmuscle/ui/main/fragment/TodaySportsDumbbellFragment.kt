@@ -276,8 +276,8 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
             TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.HEART_RATE_TREND)
         }
 
-        fun clickLegAngle() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.LEG_LIFTING_ANGLE)
+        fun clickAngle() {
+            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.DUMBBELL_AVG_ANGLE)
         }
 
     }

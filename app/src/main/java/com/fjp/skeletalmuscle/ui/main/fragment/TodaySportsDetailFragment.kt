@@ -4,13 +4,23 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.dp
+import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
+import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellExpandChestAndUpResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeResult
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDetailBinding
+import com.fjp.skeletalmuscle.viewmodel.request.RequestTodaySportsDetailFragmentViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.DateType
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDetailFragmentViewModel
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -26,12 +36,14 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
+import me.hgj.jetpackmvvm.ext.parseState
 
 
-class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
+class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val dateType: DateType) : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
+    val request: RequestTodaySportsDetailFragmentViewModel by viewModels()
 
     companion object {
-        fun newInstance(chartType: Int, dateType: DateType) = TodaySportsDetailFragment(chartType, dateType)
+        fun newInstance(sportsType: SportsType, chartType: Int, dateType: DateType) = TodaySportsDetailFragment(sportsType, chartType, dateType)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -40,22 +52,117 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         when (type) {
             ChartType.BURN_CALORIES.type -> {
                 showCaloriesView()
-
+                if (sportsType == SportsType.HIGH_KNEE) {
+                    request.getLiftLegCalorie(dateType.value)
+                } else if (sportsType == SportsType.DUMBBELL) {
+                    request.getSportTrendDumbbellCalorie(dateType.value)
+                } else if (sportsType == SportsType.PLANK) {
+                    request.getSportTrendFlatSupportCalorie(dateType.value)
+                }
             }
 
             ChartType.HEART_RATE_TREND.type -> {
                 showHeartRatetrendView()
-
+                if (sportsType == SportsType.HIGH_KNEE) {
+                    request.getLiftLegHeartRate(dateType.value)
+                } else if (sportsType == SportsType.DUMBBELL) {
+                    request.getSportTrendDumbbellHeartRate(dateType.value)
+                } else if (sportsType == SportsType.PLANK) {
+                    request.getSportTrendFlatSupportHeartRate(dateType.value)
+                }
             }
 
             ChartType.LEG_LIFTING_ANGLE.type -> {
                 showLegAngleView()
+                request.getSportTrendLiftLeg(dateType.value)
+
             }
 
             ChartType.INTENSITY_AND_TIME.type -> {
                 mDatabind.horizontalBarChart.visibility = View.VISIBLE
-                initHorizontalBarChart()
+                request.getSportTrendLiftLegSportTime(dateType.value)
             }
+
+            ChartType.All_CALORIES.type -> {
+                request.getSportTrendCalorie(dateType.value)
+                showCaloriesView()
+            }
+
+            ChartType.DUMBBELL_AVG_ANGLE.type -> {
+                request.getSportTrendDumbbellUp(dateType.value)
+                request.getSportTrendDumbbellExpandChest(dateType.value)
+                mDatabind.upAvgAngleTv.visibility=View.VISIBLE
+                mDatabind.upAvgAngleValueTv.visibility=View.VISIBLE
+                mDatabind.expandChestAvgAngleTv.visibility=View.VISIBLE
+                mDatabind.expandChestAvgAngValueTv.visibility=View.VISIBLE
+                mDatabind.upTv.visibility=View.VISIBLE
+                mDatabind.expandChestTv.visibility=View.VISIBLE
+                mDatabind.upTv.visibility=View.VISIBLE
+                mDatabind.expandChestTv.visibility=View.VISIBLE
+                mDatabind.dumbbellUpAngleLineChart.visibility=View.VISIBLE
+                mDatabind.dumbbellExpandAngleLineChart.visibility=View.VISIBLE
+            }
+        }
+    }
+
+    override fun createObserver() {
+        super.createObserver()
+        request.sportsCalorieResult.observe(this) {
+            parseState(it, { result ->
+                mDatabind.sportKilocalorieTv.text = (result.total / 1000).toString()
+                initBarChart(result)
+            }, {
+                appContext.showToast(getString(R.string.request_failed))
+            })
+
+        }
+
+        request.heartRateResult.observe(this) {
+            parseState(it, { result ->
+                mDatabind.avgHeartTv.text = result.avg
+                mDatabind.maxHeartRateTv.text = result.max.toString()
+                initHeartRatelineChart(result)
+            }, {
+                appContext.showToast(getString(R.string.request_failed))
+            })
+
+        }
+
+        request.liftLegTrendResult.observe(this) {
+            parseState(it, { result ->
+                mDatabind.leftLegAvgAngleValueTv.text = result.avg_left_degree.toString()
+                mDatabind.rightLegAvgAngleValueTv.text = result.avg_right_degree.toString()
+                initLegAngleLineChart(result)
+            }, {
+                appContext.showToast(getString(R.string.request_failed))
+            })
+
+        }
+        request.strongTimeResult.observe(this) {
+            parseState(it, { result ->
+                initHorizontalBarChart(result)
+            }, {
+                appContext.showToast(getString(R.string.request_failed))
+            })
+
+        }
+
+        request.dumbbellUpResult.observe(this) {
+            parseState(it, { result ->
+                initDumbbellUpAngleLineChart(mDatabind.dumbbellUpAngleLineChart,result,true)
+            }, {
+                appContext.showToast(getString(R.string.request_failed))
+            })
+
+        }
+
+        request.dumbbellExpandChestResult.observe(this) {
+            parseState(it, { result ->
+                initDumbbellUpAngleLineChart(mDatabind.dumbbellUpAngleLineChart,result,false)
+            }, {
+                appContext.showToast(getString(R.string.request_failed))
+            })
+
         }
     }
 
@@ -67,14 +174,12 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         mDatabind.rightLegTv.visibility = View.VISIBLE
         mDatabind.leftLegTv.visibility = View.VISIBLE
         mDatabind.angleLineChart.visibility = View.VISIBLE
-        initLegAngleLineChart()
     }
 
     private fun showCaloriesView() {
         mDatabind.sportKilocalorieTv.visibility = View.VISIBLE
         mDatabind.sportKilocalorieUnitTv.visibility = View.VISIBLE
         mDatabind.barChart.visibility = View.VISIBLE
-        initBarChart()
     }
 
     private fun showHeartRatetrendView() {
@@ -83,7 +188,6 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         mDatabind.avgHeartTv.visibility = View.VISIBLE
         mDatabind.maxHeartRateTv.visibility = View.VISIBLE
         mDatabind.heartRateLineChart.visibility = View.VISIBLE
-        initHeartRatelineChart()
     }
 
     private fun getFormatterData(type: ChartType): Array<String> {
@@ -104,7 +208,7 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
     }
 
 
-    private fun initBarChart() {
+    private fun initBarChart(result: SportTrendCalorieResult) {
         val barChart = mDatabind.barChart
         barChart.legend.isEnabled = false
         barChart.setTouchEnabled(false)
@@ -137,14 +241,8 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         axisRight.axisMinimum = 0f
 
         val values = ArrayList<BarEntry>()
-        for (i in 0 until 24) {
-            if (i < 8 || i > 20) {
-                values.add(BarEntry(i.toFloat(), 0.0f))
-            } else {
-                val num = (Math.random() * 30).toFloat()
-                values.add(BarEntry(i.toFloat(), num))
-            }
-
+        for (i in 0 until result.trend.size) {
+            values.add(BarEntry(i.toFloat(), result.trend[i].calorie.toFloat()))
         }
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "消耗(千卡)")
@@ -162,7 +260,7 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         barChart.description = description
     }
 
-    private fun initHorizontalBarChart() {
+    private fun initHorizontalBarChart(result: SportTrendLiftLegSportTimeResult) {
         val horizontalBarChart = mDatabind.horizontalBarChart
         horizontalBarChart.legend.isEnabled = false
         horizontalBarChart.setTouchEnabled(false)
@@ -191,10 +289,10 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         axisRight.axisMinimum = 0f
 
         val values = ArrayList<BarEntry>()
-        for (i in 0 until 4) {
-            val num = (Math.random() * 180).toFloat()
-            values.add(BarEntry(i.toFloat(), num))
-        }
+        values.add(BarEntry(0f, result.warm_up_activation.toFloat()))
+        values.add(BarEntry(1f, result.efficient_grease_burning.toFloat()))
+        values.add(BarEntry(2f, result.heart_lung_enhancement.toFloat()))
+        values.add(BarEntry(3f, result.extreme_breakthrough.toFloat()))
 
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "消耗(千卡)")
@@ -217,8 +315,79 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         horizontalBarChart.animateY(500)
 
     }
+    private fun initDumbbellUpAngleLineChart(lineChart: LineChart,result: SportTrendDumbbellExpandChestAndUpResult,isUp:Boolean) {
+        lineChart.legend.isEnabled = false
+        lineChart.setTouchEnabled(false)
+        lineChart.isDragEnabled = false
+        lineChart.setScaleEnabled(false)
+        lineChart.setDrawBorders(false)
+        lineChart.setDrawGridBackground(false)
+        val description = Description()
+        description.text = ""
+        lineChart.description = description
+        val xAxis = lineChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.setDrawGridLines(false)
+        val leftAxis = lineChart.axisLeft
+        leftAxis.setDrawGridLines(true)
+        leftAxis.gridLineWidth = 0.5f
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
-    private fun initHeartRatelineChart() {
+        val rightAxis: YAxis = lineChart.axisRight
+        rightAxis.gridLineWidth = 0.5f
+        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
+        rightAxis.isEnabled = false
+
+        val values = ArrayList<Entry>()
+
+        for (i in 0 until result.trend.size) {
+            values.add(BarEntry(i.toFloat(), result.trend[i].up_degree.toFloat()))
+        }
+        val dataSets = ArrayList<ILineDataSet>()
+        val lineDataSet = LineDataSet(values, "千卡")
+        lineDataSet.setDrawIcons(false)
+        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.setDrawCircles(false)
+        if(isUp){
+            lineDataSet.color = appContext.getColor(R.color.color_ffc019)
+        }else{
+            lineDataSet.color = appContext.getColor(R.color.color_blue)
+        }
+        lineDataSet.setDrawCircleHole(false)
+
+        // text size of values
+        lineDataSet.setDrawValues(false)
+
+
+        // draw selection line as dashed
+        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
+
+        // set the filled area
+
+        // set the filled area
+        lineDataSet.setDrawFilled(true)
+        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+
+        // set color of filled area
+
+        // set color of filled area
+        if (Utils.getSDKInt() >= 18) {
+            // drawables only supported on api level 18 and above
+            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_red)
+            lineDataSet.fillDrawable = drawable
+        } else {
+            lineDataSet.fillColor = Color.BLACK
+        }
+        dataSets.add(lineDataSet)
+        val barData = LineData(dataSets)
+        lineChart.data = barData
+        lineChart.setNoDataText("暂无数据")
+        lineChart.animateY(500)
+    }
+    private fun initHeartRatelineChart(result: HeartRateResult) {
         val lineChart = mDatabind.heartRateLineChart
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
@@ -247,9 +416,8 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until 8) {
-            val num = 110 + (Math.random() * 30).toFloat()
-            values.add(BarEntry(i.toFloat(), num))
+        for (i in 0 until result.trend.size) {
+            values.add(BarEntry(i.toFloat(), result.trend[i].calorie.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -289,7 +457,7 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         lineChart.animateY(500)
     }
 
-    private fun initLegAngleLineChart() {
+    private fun initLegAngleLineChart(result: LiftLegTrendResult) {
         val lineChart = mDatabind.angleLineChart
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
@@ -324,13 +492,13 @@ class TodaySportsDetailFragment(val type: Int, val dateType: DateType) : BaseFra
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
 
-        for (i in 0 until 8) {
-            val num = (Math.random() * 180).toFloat() - 30
-            values.add(BarEntry(i.toFloat(), num))
+        val leftLegRecord = result.trend.filter { it.left_degree != 0.0 }
+        for (i in leftLegRecord.indices) {
+            values.add(BarEntry(i.toFloat(), leftLegRecord[i].left_degree.toFloat()))
         }
-        for (i in 0 until 8) {
-            val num = (Math.random() * 100).toFloat() - 30
-            values2.add(BarEntry(i.toFloat(), num))
+        val rightLegRecord = result.trend.filter { it.right_degree != 0.0}
+        for (i in rightLegRecord.indices) {
+            values2.add(BarEntry(i.toFloat(), rightLegRecord[i].right_degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")

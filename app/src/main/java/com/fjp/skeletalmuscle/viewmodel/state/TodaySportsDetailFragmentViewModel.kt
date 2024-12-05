@@ -16,11 +16,13 @@ enum class ChartType(val type: Int) {
     HEART_RATE_TREND(1),//心率趋势
     LEG_LIFTING_ANGLE(2),//抬腿角度
     INTENSITY_AND_TIME(3),//强度与时间
+    DUMBBELL_AVG_ANGLE(4),//哑铃运动-平均角度
+    All_CALORIES(5),//所有运动消耗的卡路里
 }
 
-enum class DateType {
-    DAY,//日
-    MONTH,//月
-    YEAR,//年
-    All,//总
+enum class DateType(val value:String) {
+    DAY("1"),//日
+    WEEK("2"),//周
+    MONTH("3"),//月
+    YEAR("4"),//年
 }

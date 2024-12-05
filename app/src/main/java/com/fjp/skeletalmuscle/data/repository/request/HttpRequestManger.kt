@@ -7,26 +7,15 @@ import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
 import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
 import com.fjp.skeletalmuscle.data.model.bean.SportTrendDumbbellUp
-import com.fjp.skeletalmuscle.data.model.bean.SportTrendDummbbellCalorie
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
-import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegCalorieResult
-import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegHeartRateResult
+import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellExpandChestResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellHeartRateResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendFlatSupportCalorieResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendFlatSupportHeartRateResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellExpandChestAndUpResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeResult
 import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.data.model.bean.result.UpdateImageResult
 import okhttp3.MultipartBody
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.Query
 
 /**
  * 作者　: hegaojian
@@ -118,7 +107,7 @@ class HttpRequestManger {
      * 高抬腿-卡路里趋势图
      *
      */
-    suspend fun getLiftLegCalorie( type: String): ApiResponse<LiftLegCalorieResult>{
+    suspend fun getLiftLegCalorie( type: String): ApiResponse<SportTrendCalorieResult>{
         return apiService.getLiftLegCalorie(type)
     }
 
@@ -126,7 +115,7 @@ class HttpRequestManger {
      * 高抬腿-心率趋势图
      *
      */
-    suspend fun getLiftLegHeartRate( type: String): ApiResponse<LiftLegHeartRateResult>{
+    suspend fun getLiftLegHeartRate( type: String): ApiResponse<HeartRateResult>{
         return apiService.getLiftLegHeartRate(type)
     }
 
@@ -161,7 +150,7 @@ class HttpRequestManger {
      *哑铃-卡路里趋势图
      *
      */
-    suspend fun getSportTrendDumbbellCalorie(type: String): ApiResponse<SportTrendDummbbellCalorie>{
+    suspend fun getSportTrendDumbbellCalorie(type: String): ApiResponse<SportTrendCalorieResult>{
         return apiService.getSportTrendDumbbellCalorie(type)
     }
 
@@ -172,7 +161,7 @@ class HttpRequestManger {
      *哑铃-心率趋势图
      *
      */
-    suspend fun getSportTrendDumbbellHeartRate(type: String): ApiResponse<SportTrendDumbbellHeartRateResult>{
+    suspend fun getSportTrendDumbbellHeartRate(type: String): ApiResponse<HeartRateResult>{
         return apiService.getSportTrendDumbbellHeartRate(type)
     }
 
@@ -183,11 +172,9 @@ class HttpRequestManger {
      *哑铃-上举运动趋势图
      *
      */
-    suspend fun getSportTrendDumbbellUp(type: String): ApiResponse<SportTrendDumbbellUp>{
+    suspend fun getSportTrendDumbbellUp(type: String): ApiResponse<SportTrendDumbbellExpandChestAndUpResult>{
         return apiService.getSportTrendDumbbellUp(type)
     }
-
-
 
 
 
@@ -195,7 +182,7 @@ class HttpRequestManger {
      *哑铃-扩胸运动趋势图
      *
      */
-    suspend fun getSportTrendDumbbellExpandChest(type: String): ApiResponse<SportTrendDumbbellExpandChestResult>{
+    suspend fun getSportTrendDumbbellExpandChest(type: String): ApiResponse<SportTrendDumbbellExpandChestAndUpResult>{
         return apiService.getSportTrendDumbbellExpandChest(type)
     }
 
@@ -204,7 +191,7 @@ class HttpRequestManger {
      *平板支撑-卡路里趋势图
      *
      */
-    suspend fun getSportTrendFlatSupportCalorie(type: String): ApiResponse<SportTrendFlatSupportCalorieResult>{
+    suspend fun getSportTrendFlatSupportCalorie(type: String): ApiResponse<SportTrendCalorieResult>{
         return apiService.getSportTrendFlatSupportCalorie(type)
     }
 
@@ -214,7 +201,7 @@ class HttpRequestManger {
      *平板支撑-心率趋势图
      *
      */
-    suspend fun getSportTrendFlatSupportHeartRate(type: String): ApiResponse<SportTrendFlatSupportHeartRateResult>{
+    suspend fun getSportTrendFlatSupportHeartRate(type: String): ApiResponse<HeartRateResult>{
         return apiService.getSportTrendFlatSupportHeartRate(type)
     }
 

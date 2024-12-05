@@ -133,6 +133,8 @@
     <string name="today_sports_detail_max">最高</string>
     <string name="today_sports_detail_left_leg_avg_angle">左腿平均</string>
     <string name="today_sports_detail_right_leg_avg_angle">右腿平均</string>
+    <string name="today_sports_detail_up_avg_angle">上举平均</string>
+    <string name="today_sports_detail_expand_chest_avg_angle">扩胸平均</string>
     <string name="today_sports_detail_left_leg">左腿</string>
     <string name="today_sports_detail_right_leg">右腿</string>
     <string name="today_sports_detail_all_sports_kilocalorie">所有运动消耗卡路里</string>

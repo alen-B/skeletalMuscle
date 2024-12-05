@@ -10,5 +10,11 @@ import com.fjp.skeletalmuscle.data.model.bean.result.Trend
 data class LiftLegTrendResult(
     val avg_left_degree: Int,
     val avg_right_degree: Int,
-    val trend: List<Trend>
+    val trend: List<LeftTrend>
+)
+
+data class LeftTrend(
+    val time:String,
+    val left_degree:Double,
+    val right_degree:Double
 )

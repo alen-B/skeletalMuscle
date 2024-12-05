@@ -455,7 +455,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="6dp"
-            android:onClick="@{()-> click.clickLegAngle()}"
+            android:onClick="@{()-> click.clickAngle()}"
             android:scaleType="center"
             android:src="@drawable/main_date_arrow"
             app:layout_constraintEnd_toEndOf="@+id/legAngleView"

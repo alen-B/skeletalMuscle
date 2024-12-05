@@ -39,7 +39,7 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, Activ
         val chartType = intent.get(Constants.INTENT_KEY_SPORTS_CHART_TYPE, ChartType.BURN_CALORIES.type)
         initSecondTitle(sportsType!!, chartType!!)
         val vp = mDatabind.todayViewpager
-        val fragments = arrayListOf<Fragment>(TodaySportsDetailFragment.newInstance(chartType, DateType.DAY), TodaySportsDetailFragment.newInstance(chartType, DateType.DAY), TodaySportsDetailFragment.newInstance(chartType, DateType.DAY), TodaySportsDetailFragment.newInstance(chartType, DateType.DAY))
+        val fragments = arrayListOf<Fragment>(TodaySportsDetailFragment.newInstance(sportsType,chartType, DateType.DAY),TodaySportsDetailFragment.newInstance(sportsType,chartType, DateType.WEEK), TodaySportsDetailFragment.newInstance(sportsType,chartType, DateType.MONTH), TodaySportsDetailFragment.newInstance(sportsType,chartType, DateType.YEAR))
         vp.adapter = TodaySportsDetailAdapter(supportFragmentManager, fragments)
         mDatabind.tabLayout.setViewPager(vp)
         mDatabind.tabLayout.setOnTabSelectListener(object : OnTabSelectListener {
@@ -58,7 +58,7 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, Activ
             mDatabind.allSportsViewpager.visibility = View.VISIBLE
 
             val allSportsViewpager = mDatabind.allSportsViewpager
-            val fragments = arrayListOf<Fragment>(TodaySportsDetailFragment.newInstance(ChartType.BURN_CALORIES.type, DateType.DAY), TodaySportsDetailFragment.newInstance(ChartType.BURN_CALORIES.type, DateType.MONTH), TodaySportsDetailFragment.newInstance(ChartType.BURN_CALORIES.type, DateType.YEAR), TodaySportsDetailFragment.newInstance(ChartType.BURN_CALORIES.type, DateType.All))
+            val fragments = arrayListOf<Fragment>(TodaySportsDetailFragment.newInstance(sportsType,ChartType.All_CALORIES.type, DateType.DAY),TodaySportsDetailFragment.newInstance(sportsType,ChartType.All_CALORIES.type, DateType.WEEK), TodaySportsDetailFragment.newInstance(sportsType,ChartType.All_CALORIES.type, DateType.MONTH), TodaySportsDetailFragment.newInstance(sportsType,ChartType.All_CALORIES.type, DateType.YEAR))
             allSportsViewpager.adapter = TodaySportsDetailAdapter(supportFragmentManager, fragments)
             mDatabind.allTabLayout.setViewPager(allSportsViewpager)
 

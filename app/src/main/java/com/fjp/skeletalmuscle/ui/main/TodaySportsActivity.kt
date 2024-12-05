@@ -39,7 +39,7 @@ class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityToday
         val type = intent.get(Constants.INTENT_KEY_TODAY_SPORTS_TYPE,SportsType.HIGH_KNEE)
         val todaySportsData = intent.getParcelableExtra<TodayDataResult>(Constants.INTENT_KEY_TODAY_SPORTS_DATA)
         val fragments = arrayListOf<Fragment>()
-        if(todaySportsData?.sport_lift_leg!=null && todaySportsData?.sport_lift_leg.start_time!=0){
+        if(todaySportsData?.sport_lift_leg!=null && todaySportsData?.sport_lift_leg.start_time!=0L){
             fragments.add(TodaySportsHighKneeFragment.newInstance(todaySportsData?.sport_lift_leg))
         }
         if(todaySportsData?.sport_dumbbell!=null && todaySportsData?.sport_dumbbell.start_time!=0L){
