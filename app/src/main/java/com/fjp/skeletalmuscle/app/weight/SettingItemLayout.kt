@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import coil.load
+import coil.request.ImageRequest
 import com.fjp.skeletalmuscle.R
 
 /**
@@ -61,13 +62,17 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
 
     }
 
-    fun setValue(value: String) {
+    fun setValue(value: String, startDrawalbeID: Int = 0) {
+        if (startDrawalbeID != 0) {
+            valueTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(context, startDrawalbeID), null, ContextCompat.getDrawable(context, R.drawable.setting_arrow), null)
+        }
         valueTv.text = value
     }
 
     fun setTitle(title: String) {
         titleTv.text = title
     }
+
 
     fun showSwitch(listener: CompoundButton.OnCheckedChangeListener) {
         switch.visibility = View.VISIBLE
@@ -79,8 +84,11 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
         switch.isChecked = isChecked
     }
 
-    fun setAvatarIv(path: String) {
+    fun setAvatarIv(context:Context,path: String) {
         avatarIv.visibility = View.VISIBLE
-        avatarIv.load(path)
+        avatarIv.load(path, builder = {
+            this.error(R.drawable.avatar_default)
+            this.placeholder(R.drawable.avatar_default)
+        })
     }
 }

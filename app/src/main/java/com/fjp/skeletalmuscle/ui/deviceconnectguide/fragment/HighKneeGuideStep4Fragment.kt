@@ -43,7 +43,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         if (App.sportsType == SportsType.HIGH_KNEE.type) {
             initHighKnee()
         } else if (App.sportsType == SportsType.DUMBBELL.type) {
-            initDumbbell()
+            initHighKnee()
         } else if (App.sportsType == SportsType.HAND_GRIPS.type) {
             initHandGrips()
         }
@@ -61,7 +61,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
             SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
                 override fun disConnected() {
-
+                    mDatabind.reconnectBtn.visibility=View.VISIBLE
                 }
 
                 override fun connected() {

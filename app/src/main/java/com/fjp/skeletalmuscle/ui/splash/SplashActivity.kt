@@ -30,10 +30,10 @@ import java.io.File
 
 class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), OnDownloadListener {
     val systemSettingViewModel: SystemSettingViewModel by viewModels()
-    var newVersion = true
-    var apkFile: File? = null
+    private var newVersion = false
+    private var apkFile: File? = null
     lateinit var pop: BasePopupView
-    lateinit var newVersionPop:NewVersionPop
+    private lateinit var newVersionPop:NewVersionPop
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         systemSettingViewModel.checkVersion()
@@ -60,10 +60,10 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
     override fun createObserver() {
         super.createObserver()
         systemSettingViewModel.appVersion.observe(this){
-//            if (it.version != AppUtils.getAppVersionName(this)) {
-//                newVersion=true
+            if (it.version != AppUtils.getAppVersionName(this)) {
+                newVersion=true
                 showNewVersionPop()
-//            }
+            }
         }
     }
 
@@ -73,8 +73,6 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
 
             override fun onClickUpdate(pop: NewVersionPop) {
                 externalCacheDir?.let {
-//                    val appFile=File(it, "gugeji.apk")
-//                    ApkUtils.installAPK(this@SplashActivity,appFile)
                     HttpDownLoadManager(it.path).download(systemSettingViewModel.appVersion.value!!.download_url, "gugeji.apk", this@SplashActivity)
                 }
             }
@@ -107,7 +105,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
     override fun done(apk: File) {
         runOnUiThread {
             pop.dismiss()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && (!packageManager.canRequestPackageInstalls())) {
+            if (!packageManager.canRequestPackageInstalls()) {
                 this@SplashActivity.apkFile = apk
                 ApkUtils.startPackageInstallActivity(this@SplashActivity)
             }else{

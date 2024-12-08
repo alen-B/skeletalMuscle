@@ -66,7 +66,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
             mDatabind.weightLayout.setValue(it.weight.toString())
             mDatabind.heightLayout.setValue(it.height.toString())
             mDatabind.waistLinLayout.setValue(it.waistline)
-            mDatabind.avatarLayout.setAvatarIv(it.profile)
+            mDatabind.avatarLayout.setAvatarIv(requireContext(),it.profile)
         }
 
     }
@@ -95,7 +95,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
 
         requestUserInfoViewModel.avatar.observe(this) {
             appContext.showToast("更新成功")
-            mDatabind.avatarLayout.setAvatarIv(App.userInfo.profile)
+            mDatabind.avatarLayout.setAvatarIv(requireContext(),App.userInfo.profile)
             App.userInfo.profile = it
             CacheUtil.setUser(App.userInfo)
         }

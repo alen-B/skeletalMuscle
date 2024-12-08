@@ -30,7 +30,9 @@ class SystemSettingFragment : BaseFragment<SystemSettingViewModel, FragmentSyste
         super.createObserver()
         mViewModel.appVersion.observe(this) {
             versionData = it
-            val newVersion = it.version.replace(".", "").toInt()
+            if (it.version != AppUtils.getAppVersionName(requireContext())) {
+                mDatabind.updateVersionLayout.setValue("发现新版本", R.drawable.red_point)
+            }
         }
     }
 

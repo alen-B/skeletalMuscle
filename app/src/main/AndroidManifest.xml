@@ -116,6 +116,10 @@
             android:exported="true"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".ui.sports.PlankActivity"
+            android:exported="true"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".ui.deviceconnectguide.DeviceConnectGuideActivity"
             android:exported="true"
             android:screenOrientation="landscape" />

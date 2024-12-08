@@ -29,42 +29,6 @@ class SportsCompletedActivity : BaseActivity<SportsCompletedViewModel, ActivityS
             mViewModel.score.set(curSports.score.toString())
             println(curSports.toString())
             mDatabind.timeTv.text = DateTimeUtil.formSportTime(curSports.time)
-            var sports = CacheUtil.getSports()
-            if (sports == null) {
-                val map = mutableMapOf<String, HighKneeSports>()
-                map[DateTimeUtil.getCurDate2Str()] = curSports
-                sports = TodayhignKneeSports(sports = map)
-                CacheUtil.setSports(sports)
-            } else {
-                val todaySports = sports.sports[DateTimeUtil.getCurDate2Str()]
-                if (todaySports == null) {
-                    sports.sports[DateTimeUtil.getCurDate2Str()] = curSports
-                    CacheUtil.setSports(sports)
-                } else {
-                    println("===:" + todaySports)
-                    println("===:" + curSports)
-                    todaySports.times = curSports.times + todaySports.times
-                    todaySports.time = curSports.time + todaySports.time
-                    todaySports.score = (curSports.score + todaySports.score) / 2
-                    todaySports.warmupTime = curSports.warmupTime + todaySports.warmupTime
-                    todaySports.fatBurningTime = curSports.fatBurningTime + todaySports.fatBurningTime
-                    todaySports.cardioTime = curSports.cardioTime + todaySports.cardioTime
-                    todaySports.breakTime = curSports.breakTime + todaySports.breakTime
-                    var maxHeartRate = curSports.maxHeartRate
-                    if (curSports.maxHeartRate > maxHeartRate) {
-                        maxHeartRate = curSports.maxHeartRate
-                    }
-                    todaySports.maxHeartRate = maxHeartRate
-                    var minHeartRate = curSports.minHeartRate
-                    if (curSports.minHeartRate < minHeartRate) {
-                        minHeartRate = curSports.minHeartRate
-                    }
-                    todaySports.minHeartRate = minHeartRate
-                    sports.sports[DateTimeUtil.getCurDate2Str()] = todaySports
-                    CacheUtil.setSports(sports)
-                }
-
-            }
         }
 
     }

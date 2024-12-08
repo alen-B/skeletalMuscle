@@ -19,6 +19,7 @@ object  AppUtils {
             // getPackageName()是你当前类的包名，0代表是获取版本信息
             val packageInfo = packageManager.getPackageInfo(context.packageName, 0)
             versionName = packageInfo.versionName
+            return versionName
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }

@@ -33,10 +33,13 @@
             android:layout_height="60dp"
             app:bitmap="@{viewModel.sportsIcon}"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@+id/typeTv"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
             tools:ignore="ContentDescription" />
 
         <TextView
+            android:id="@+id/typeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.sportsType}"
@@ -44,6 +47,7 @@
             android:textSize="@dimen/text_size_3"
             app:layout_constraintBottom_toBottomOf="@+id/sportsTypeIv"
             app:layout_constraintStart_toEndOf="@+id/sportsTypeIv"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="12dp"
             app:layout_constraintTop_toTopOf="@+id/sportsTypeIv" />
         <!--  运动处方View      -->
@@ -605,9 +609,9 @@
             android:id="@+id/connectCl"
             android:layout_width="0dp"
             app:layout_constraintStart_toStartOf="@+id/deviceView"
-            app:layout_constraintEnd_toStartOf="@+id/connectTv"
+            app:layout_constraintEnd_toEndOf="@+id/deviceView"
             app:layout_constraintTop_toBottomOf="@+id/deviceLinkTv"
-            app:layout_constraintBottom_toBottomOf="@+id/deviceView"
+            app:layout_constraintBottom_toTopOf="@+id/connectTv"
             android:background="@drawable/bg_e0e6ff_round_20"
             android:layout_margin="24dp"
             android:paddingTop="21dp"
@@ -618,7 +622,7 @@
 
             <ImageView
                 android:id="@+id/device1Iv"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
@@ -644,7 +648,7 @@
 
             <ImageView
                 android:id="@+id/device2Iv"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/device1Iv"
                 app:layout_constraintEnd_toStartOf="@+id/device3Iv"
@@ -669,7 +673,7 @@
 
             <ImageView
                 android:id="@+id/device3Iv"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/device2Iv"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -691,26 +695,28 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/exercise_plan_right_dumbbell"
                 android:layout_height="wrap_content" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
             android:id="@+id/connectTv"
-            android:layout_width="82dp"
-            app:layout_constraintStart_toEndOf="@+id/connectCl"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="@+id/deviceView"
             app:layout_constraintEnd_toEndOf="@+id/deviceView"
-            app:layout_constraintTop_toTopOf="@+id/connectCl"
-            app:layout_constraintBottom_toBottomOf="@+id/connectCl"
+            app:layout_constraintBottom_toBottomOf="@+id/deviceView"
             android:text="@string/exercise_plan_link_device"
+            android:paddingStart="24dp"
             android:textColor="@color/white"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="21dp"
             android:background="@drawable/bg_btn"
             android:textSize="@dimen/text_size_3"
+            android:paddingEnd="21dp"
             android:onClick="@{()-> click.clickStartDeviceGuide()}"
-            android:layout_marginEnd="16dp"
-            android:paddingBottom="30dp"
-            android:gravity="center"
-            android:drawableBottom="@drawable/connect_device_arrow"
-            android:ems="1"
-            android:layout_height="0dp" />
+            android:drawableRight="@drawable/blue_tooth"
+            android:layout_height="60dp" />
+
 
         <io.alterac.blurkit.BlurLayout
             android:id="@+id/backIv"

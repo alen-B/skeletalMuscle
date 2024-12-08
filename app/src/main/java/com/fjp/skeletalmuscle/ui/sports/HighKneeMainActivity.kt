@@ -271,8 +271,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         val pitch = DeviceDataParse.parseData2Pitch(data)
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===leftroll:${roll}")
-        println("===leftyaw:${yaw}")
+        println("===左设备: pitch:${pitch}     roll:${roll}    yaw:${yaw}")
         // 检查pitch是否大于100度
         if (pitch > 90) {
             // 抬腿过高，播放提示音
@@ -344,8 +343,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         val pitch = DeviceDataParse.parseData2Pitch(data)
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===rightroll:${roll}")
-        println("===rightyaw:${yaw}")
+        println("===又设备: pitch:${pitch}     roll:${roll}    yaw:${yaw}")
         if (pitch > 90) {
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放

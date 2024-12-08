@@ -90,6 +90,7 @@ object SMBleManager {
                 if (foundDevices.isEmpty()) {
                     Log.d("BLE", "No devices found with prefix: $devicePrefix")
                     appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_not_find))
+                    listener.disConnected()
                 }
             }
 

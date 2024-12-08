@@ -34,22 +34,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val requestMainViewModel: RequestMainViewModel by viewModels()
     lateinit var mainSportsRateAdapter: MainSportsRateAdapter
     val fragments = mutableListOf<Fragment>()
+    private lateinit var viewpagerAdapter :ViewPagerFragmentAdapter
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.showSetting.set(true)
 
-
-        val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 0.93f, fragments)
-        mDatabind.viewpager.adapter = viewpagerAdapter
-        mDatabind.indicatorView.apply {
-            setSliderColor(getColor(R.color.color_e9e9e9), getColor(R.color.color_blue))
-            setPageSize(viewpagerAdapter.count)
-            setSliderWidth(8f)
-            setSliderHeight(8f)
-            setIndicatorStyle(IndicatorStyle.CIRCLE)
-            notifyDataChanged()
-        }
         mDatabind.viewpager.pageMargin = dp2px(16)
         mDatabind.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -72,6 +62,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.createObserver()
         requestMainViewModel.mainLiveData.observe(this) {
             parseState(it, {
+                fragments.clear()
                 mViewModel.curScore.set(it.score.toString())
                 if (it.sport_lift_leg != null) {
                     fragments.add(MainSportsHighKneeFragment.newInstance(it))
@@ -81,6 +72,16 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 }
                 if (it.sport_flat_support != null) {
                     fragments.add(MainSportsPlankFragment.newInstance(it))
+                }
+                viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 1f, fragments)
+                mDatabind.viewpager.adapter = viewpagerAdapter
+                mDatabind.indicatorView.apply {
+                    setSliderColor(getColor(R.color.color_e9e9e9), getColor(R.color.color_blue))
+                    setPageSize(viewpagerAdapter.count)
+                    setSliderWidth(8f)
+                    setSliderHeight(8f)
+                    setIndicatorStyle(IndicatorStyle.CIRCLE)
+                    notifyDataChanged()
                 }
             }, {
                 it.printStackTrace()
@@ -92,26 +93,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
         requestMainViewModel.getTodayData()
-        val sports = CacheUtil.getSports()
-        sports?.let {
-            val curDay = DateTimeUtil.getCurDate2Str()
-            val todaySports = it.sports[curDay]
-            todaySports?.let { highKneeSports ->
-                mViewModel.sportsData.clear()
-                mViewModel.sportsData.add(MainSports(SportsType.HIGH_KNEE, highKneeSports))
-//                mViewModel.sportsData.add(MainSports(SportsType.DUMBBELL,highKneeSports))
-//                mViewModel.sportsData.add(MainSports(SportsType.PLANK,highKneeSports))
-//                mainSportsRateAdapter = MainSportsRateAdapter(mViewModel.sportsData as ArrayList<MainSports>,0)
-//                mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), mainSportsRateAdapter)
-//                mDatabind.recyclerView.addItemDecoration(SpaceItemDecoration( 12.dp.toInt(),0))
-                mViewModel.sportsTime.set(DateTimeUtil.formSportTime(highKneeSports.time))
-                mViewModel.curScore.set(highKneeSports.score.toString())
-                mViewModel.heat.set(highKneeSports.calories.toString())
-                mViewModel.endurance.set("0.32")
-                mViewModel.heartRate.set(highKneeSports.minHeartRate.toString() + "-" + highKneeSports.maxHeartRate.toString())
-            }
-
-        }
     }
 
     private fun setMainTitle() {

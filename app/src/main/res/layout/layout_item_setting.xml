@@ -17,6 +17,12 @@
         android:textColor="@color/color_cc1c1c1c"
         android:layout_height="wrap_content" />
 
+    <com.fjp.skeletalmuscle.app.weight.CircleImageView
+        android:id="@+id/avatarIv"
+        android:layout_width="50dp"
+        android:visibility="gone"
+        android:layout_height="50dp"
+        tools:ignore="ContentDescription" />
     <TextView
         android:id="@+id/valueTv"
         android:layout_width="wrap_content"
@@ -26,12 +32,6 @@
         android:textColor="@color/color_801c1c1c"
         android:layout_height="wrap_content" />
 
-    <com.fjp.skeletalmuscle.app.weight.CircleImageView
-        android:id="@+id/avatarIv"
-        android:layout_width="50dp"
-        android:visibility="gone"
-        android:layout_height="50dp"
-        tools:ignore="ContentDescription" />
 
     <Switch
         android:id="@+id/sch"
@@ -41,4 +41,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>

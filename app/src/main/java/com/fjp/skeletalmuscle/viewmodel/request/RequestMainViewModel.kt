@@ -18,7 +18,7 @@ class RequestMainViewModel : BaseViewModel() {
     fun getTodayData() {
         request({
             HttpRequestCoroutine.getTodayData(DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN))
-        }, mainLiveData, true)
+        }, mainLiveData)
 
     }
 }

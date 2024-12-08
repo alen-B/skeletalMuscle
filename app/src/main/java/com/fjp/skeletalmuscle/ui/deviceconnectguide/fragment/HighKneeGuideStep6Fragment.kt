@@ -31,7 +31,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
         if (App.sportsType == SportsType.HIGH_KNEE.type) {
             initHighKnee()
         } else if (App.sportsType == SportsType.DUMBBELL.type) {
-            initDumbbell()
+            initHighKnee()
         } else if (App.sportsType == SportsType.HAND_GRIPS.type) {
             initHandGrips()
         }
@@ -52,6 +52,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             SMBleManager.scanDevices(DeviceType.RIGHT_DUMBBELL.value, DeviceType.RIGHT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
                 override fun disConnected() {
+                    mDatabind.reconnectBtn.visibility = View.VISIBLE
                 }
 
                 override fun connected() {
@@ -76,6 +77,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             SMBleManager.scanDevices(DeviceType.RIGHT_HAND_GRIPS.value, DeviceType.RIGHT_HAND_GRIPS, object : SMBleManager.DeviceStatusListener {
                 override fun disConnected() {
+                    mDatabind.reconnectBtn.visibility = View.VISIBLE
                 }
 
                 override fun connected() {
@@ -133,7 +135,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
     fun connectDevice() {
         SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
             override fun disConnected() {
-                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
+//                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
                 mDatabind.reconnectBtn.visibility = View.VISIBLE
             }
 

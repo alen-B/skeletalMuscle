@@ -16,7 +16,9 @@ import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityExercisePlanBinding
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
+import com.fjp.skeletalmuscle.ui.sports.DumbbellMainActivity
 import com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity
+import com.fjp.skeletalmuscle.ui.sports.PlankActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ExercisePlanViewModel
 import me.hgj.jetpackmvvm.base.appContext
 
@@ -64,21 +66,21 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 mDatabind.device2Tv.text = getString(R.string.exercise_plan_left_knee)
                 mDatabind.device3Tv.text = getString(R.string.exercise_plan_right_knee)
                 mViewModel.sportsTime.set(DEFAULT_SPORTS_TIME_LEG_KNEE)
-                if (SMBleManager.connectedDevices.get(DeviceType.GTS) != null && SMBleManager.connectedDevices.get(DeviceType.LEFT_LEG) != null && SMBleManager.connectedDevices.get(DeviceType.RIGHT_LEG) != null) {
+                if (SMBleManager.connectedDevices[DeviceType.GTS] != null && SMBleManager.connectedDevices[DeviceType.LEFT_LEG] != null && SMBleManager.connectedDevices[DeviceType.RIGHT_LEG] != null) {
                     mDatabind.shareBtn.isEnabled = true
                     mDatabind.deviceLinkTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.exercise_device_linked), null, null, null)
                 }
             }
 
             SportsType.DUMBBELL.type -> {
-                mViewModel.sportsIcon.set(R.drawable.exercise_plan_dumbbell)
+//                mViewModel.sportsIcon.set(R.drawable.exercise_plan_dumbbell)
                 mViewModel.sportsType.set(getString(R.string.today_sports_data_type2))
                 mDatabind.exercisePlanSportsTimeCl.visibility = View.VISIBLE
                 mDatabind.sportsWeightCl.visibility = View.VISIBLE
                 mDatabind.sportsUpliftCl.visibility = View.VISIBLE
                 mDatabind.sportsExpandChestCl.visibility = View.VISIBLE
                 mViewModel.sportsTime.set(DEFAULT_SPORTS_TIME_DUMBBELL)
-                if (SMBleManager.connectedDevices.get(DeviceType.GTS) != null && SMBleManager.connectedDevices.get(DeviceType.LEFT_DUMBBELL) != null && SMBleManager.connectedDevices.get(DeviceType.RIGHT_DUMBBELL) != null) {
+                if (SMBleManager.connectedDevices[DeviceType.GTS] != null && SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL] != null && SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL] != null) {
                     mDatabind.shareBtn.isEnabled = true
                     mDatabind.deviceLinkTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.exercise_device_linked), null, null, null)
                 }
@@ -92,7 +94,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 mDatabind.exercisePlanSportsLegTimeCl.visibility = View.VISIBLE
                 mViewModel.sportsType.set(getString(R.string.today_sports_data_type3))
                 mViewModel.sportsTime.set(DEFAULT_SPORTS_TIME_PLANK)
-                if (SMBleManager.connectedDevices.get(DeviceType.GTS) != null) {
+                if (SMBleManager.connectedDevices[DeviceType.GTS] != null) {
                     mDatabind.shareBtn.isEnabled = true
                     mDatabind.deviceLinkTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.exercise_device_linked), null, null, null)
                 }
@@ -107,8 +109,17 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     inner class ProxyClick {
 
         fun clickStartSports() {
-            val intent = Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java)
-            startActivity(intent)
+            if (App.sportsType == SportsType.HIGH_KNEE.type) {
+                val intent = Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java)
+                startActivity(intent)
+
+            } else if (App.sportsType == SportsType.DUMBBELL.type) {
+                val intent = Intent(this@ExercisePlanActivity, DumbbellMainActivity::class.java)
+                startActivity(intent)
+            } else if (App.sportsType == SportsType.PLANK.type) {
+                val intent = Intent(this@ExercisePlanActivity, PlankActivity::class.java)
+                startActivity(intent)
+            }
             eventViewModel.startSports.postValue(true)
         }
 

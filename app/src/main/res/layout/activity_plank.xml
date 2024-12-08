@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fjp.skeletalmuscle.viewmodel.state.PlankViewModel" />
+
+        <variable
+            name="click"
+            type="com.fjp.skeletalmuscle.ui.sports.PlankActivity.ProxyClick" />
+    </data>
+    <!--    @drawable/bg_step1-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#11000000"
+        tools:context=".ui.sports.HighKneeMainActivity">
+
+        <include
+            layout="@layout/layout_title"
+            android:layout_marginStart="32dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp"
+            app:viewModel="@{viewModel}" />
+
+
+        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="17dp"
+            app:rpbBackgroundColor="@color/color_ccc6d1fc"
+            app:rpbCornerRadius="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/backIv"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rpbProgressColor="@color/colorAccent"
+            app:rpbShowProgressText="false" />
+
+        <ImageView
+            android:id="@+id/backIv"
+            android:layout_width="144dp"
+            android:background="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{()-> click.clickFinish()}"
+            app:layout_constraintTop_toTopOf="@+id/stopBtn"
+            android:layout_marginStart="35dp"
+            android:layout_height="144dp"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:id="@+id/dataView"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toEndOf="@+id/backIv"
+            app:layout_constraintEnd_toStartOf="@+id/stopBtn"
+            app:layout_constraintTop_toTopOf="@+id/stopBtn"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_white_80_round_20"
+            android:layout_height="144dp" />
+
+        <TextView
+            android:id="@+id/sportsTimeTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/dataView"
+            app:layout_constraintTop_toTopOf="@+id/dataView"
+            android:text="@string/main_sports_time"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="16dp"
+            android:textSize="@dimen/text_size_4"
+            android:textColor="@color/color_222"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/timeNumTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/dataView"
+            app:layout_constraintTop_toBottomOf="@+id/sportsTimeTv"
+            android:layout_marginTop="17dp"
+            android:text="@{viewModel.curTime}"
+            android:layout_marginStart="25dp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/main_timer"
+            android:textSize="@dimen/text_size_1"
+            android:textColor="@color/color_222"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/midLine"
+            android:layout_width="2dp"
+            app:layout_constraintStart_toStartOf="@+id/dataView"
+            app:layout_constraintEnd_toEndOf="@+id/dataView"
+            app:layout_constraintTop_toTopOf="@+id/dataView"
+            android:background="@color/color_332c2c2c"
+            app:layout_constraintBottom_toBottomOf="@+id/dataView"
+            android:layout_height="88dp" />
+
+        <TextView
+            android:id="@+id/heartTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/midLine"
+            app:layout_constraintTop_toTopOf="@+id/sportsTimeTv"
+            android:text="@string/high_knee_main_heart"
+            android:textSize="@dimen/text_size_4"
+            android:layout_marginStart="25dp"
+            android:textColor="@color/color_222"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/heartNumTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/midLine"
+            android:layout_marginStart="25dp"
+            android:text="@{viewModel.heartRate}"
+            app:layout_constraintTop_toBottomOf="@+id/heartTv"
+            android:layout_marginTop="17dp"
+            android:drawablePadding="10dp"
+            app:drawableStartCompat="@drawable/main_heart"
+            android:textSize="@dimen/text_size_1"
+            android:textColor="@color/color_222"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/stopBtn"
+            style="@style/SMButton"
+            android:layout_width="240dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="45dp"
+            android:onClick="@{()-> click.clickStop()}"
+            android:text="@string/high_knee_main_stop"
+            android:paddingEnd="24dp"
+            android:drawableEnd="@drawable/stop_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/completeBtn" />
+
+        <Button
+            android:id="@+id/completeBtn"
+            style="@style/SMButtonNext"
+            android:layout_width="240dp"
+            android:layout_marginBottom="45dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/high_knee_main_complete"
+            android:drawableEnd="@drawable/complete_icon"
+            android:background="@drawable/bg_cc585858_20"
+            android:layout_marginEnd="35dp"
+            android:onClick="@{()-> click.clickComplete()}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

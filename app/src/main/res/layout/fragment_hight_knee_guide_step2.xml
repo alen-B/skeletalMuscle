@@ -96,15 +96,16 @@
 
         <Button
             android:id="@+id/reconnectBtn"
-            style="@style/SMButtonPre"
+            style="@style/SMButtonNext"
             android:visibility="gone"
             android:layout_width="240dp"
             android:layout_marginEnd="547dp"
             android:layout_marginBottom="45dp"
+            app:layout_constraintEnd_toEndOf="parent"
             android:onClick="@{()-> click.clickReconnect()}"
             android:background="@drawable/bg_yellow_round_20"
+            android:drawableEnd="@drawable/device_reconnect"
             android:text="@string/high_knee_guide_reconnect"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/preBtn" />
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

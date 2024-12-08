@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityDeviceConnectGuideBinding
 import com.fjp.skeletalmuscle.ui.assessment.SelectedWaistlineAndWeightActivity
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentActivity
@@ -16,7 +18,9 @@ import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep1F
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep2Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep4Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep6Fragment
+import com.fjp.skeletalmuscle.ui.sports.DumbbellMainActivity
 import com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity
+import com.fjp.skeletalmuscle.ui.sports.PlankActivity
 import com.fjp.skeletalmuscle.viewmodel.state.DeviceConnectViewModel
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.util.get
@@ -38,7 +42,10 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
         mDatabind.click = ProxyClick()
         type = intent.get(Constants.INTENT_KEY_CONNECT_DEVICE_TYPE, Constants.CONNECT_DEVICE_TYPE_EXERCISE)!!
         if (type != Constants.CONNECT_DEVICE_TYPE_EXERCISE) {
-            fragments = arrayListOf<Fragment>(HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance())
+            fragments = arrayListOf(HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance())
+        }
+        if(App.sportsType == SportsType.PLANK.type){
+            fragments= arrayListOf(HighKneeGuideStep2Fragment.newInstance())
         }
         mDatabind.viewpager.init(supportFragmentManager, lifecycle, fragments, false)
     }
@@ -59,7 +66,14 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
         fun clickNext() {
             if (mDatabind.viewpager.currentItem == mDatabind.viewpager.adapter!!.itemCount - 1) {
                 if (type == Constants.CONNECT_DEVICE_TYPE_EXERCISE) {
-                    showVideoPop()
+                    if(App.sportsType == SportsType.HIGH_KNEE.type){
+                        showVideoPop()
+                    }else if(App.sportsType == SportsType.DUMBBELL.type){
+                        startActivity(Intent(this@DeviceConnectGuideActivity, DumbbellMainActivity::class.java))
+                    }else if(App.sportsType == SportsType.PLANK.type){
+                        startActivity(Intent(this@DeviceConnectGuideActivity, PlankActivity::class.java))
+                    }
+
                 } else {
                     startActivity(Intent(this@DeviceConnectGuideActivity, SelectedWaistlineAndWeightActivity::class.java))
                     finish()

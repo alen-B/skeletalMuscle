@@ -195,6 +195,14 @@ interface ApiService {
     @GET("sport_trend/flat_support_heart_rate")
     suspend fun getSportTrendFlatSupportHeartRate(@Query("type") type: String): ApiResponse<HeartRateResult>
 
+    /**
+     *日历
+     *
+     */
+    @FormUrlEncoded
+    @GET("sport_trend/calendar")
+    suspend fun calendar(@Query("month") month: String): ApiResponse<HeartRateResult>
+
 
     @Multipart
     @POST("http://8.141.25.141:8000/upload")
