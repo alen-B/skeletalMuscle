@@ -2,7 +2,6 @@ package com.fjp.skeletalmuscle.viewmodel.request
 
 import androidx.lifecycle.MutableLiveData
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
-import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.data.repository.request.HttpRequestCoroutine
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
@@ -18,7 +17,7 @@ class RequestMainViewModel : BaseViewModel() {
     var mainLiveData = MutableLiveData<ResultState<TodayDataResult>>()
     fun getTodayData() {
         request({
-            HttpRequestCoroutine.getTodayData(DateTimeUtil.formatDate(System.currentTimeMillis(),DateTimeUtil.DATE_PATTERN))
+            HttpRequestCoroutine.getTodayData(DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN))
         }, mainLiveData, true)
 
     }

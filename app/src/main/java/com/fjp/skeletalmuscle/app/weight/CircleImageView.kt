@@ -4,19 +4,15 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.Paint
-import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 
-class CircleImageView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : AppCompatImageView(context, attrs, defStyleAttr) {
+class CircleImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     private val paint = Paint().apply {
         isAntiAlias = true

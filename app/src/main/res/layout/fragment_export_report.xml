@@ -23,7 +23,7 @@
         <View
             android:id="@+id/rtView"
             android:layout_width="0dp"
-            android:layout_height="216dp"
+            android:layout_height="180dp"
             android:background="@drawable/bg_white_round_20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +173,6 @@
             android:drawableEnd="@drawable/export_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="35dp"
             android:onClick="@{()-> click.clickExport()}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

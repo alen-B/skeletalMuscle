@@ -91,16 +91,16 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
             ChartType.DUMBBELL_AVG_ANGLE.type -> {
                 request.getSportTrendDumbbellUp(dateType.value)
                 request.getSportTrendDumbbellExpandChest(dateType.value)
-                mDatabind.upAvgAngleTv.visibility=View.VISIBLE
-                mDatabind.upAvgAngleValueTv.visibility=View.VISIBLE
-                mDatabind.expandChestAvgAngleTv.visibility=View.VISIBLE
-                mDatabind.expandChestAvgAngValueTv.visibility=View.VISIBLE
-                mDatabind.upTv.visibility=View.VISIBLE
-                mDatabind.expandChestTv.visibility=View.VISIBLE
-                mDatabind.upTv.visibility=View.VISIBLE
-                mDatabind.expandChestTv.visibility=View.VISIBLE
-                mDatabind.dumbbellUpAngleLineChart.visibility=View.VISIBLE
-                mDatabind.dumbbellExpandAngleLineChart.visibility=View.VISIBLE
+                mDatabind.upAvgAngleTv.visibility = View.VISIBLE
+                mDatabind.upAvgAngleValueTv.visibility = View.VISIBLE
+                mDatabind.expandChestAvgAngleTv.visibility = View.VISIBLE
+                mDatabind.expandChestAvgAngValueTv.visibility = View.VISIBLE
+                mDatabind.upTv.visibility = View.VISIBLE
+                mDatabind.expandChestTv.visibility = View.VISIBLE
+                mDatabind.upTv.visibility = View.VISIBLE
+                mDatabind.expandChestTv.visibility = View.VISIBLE
+                mDatabind.dumbbellUpAngleLineChart.visibility = View.VISIBLE
+                mDatabind.dumbbellExpandAngleLineChart.visibility = View.VISIBLE
             }
         }
     }
@@ -149,7 +149,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         request.dumbbellUpResult.observe(this) {
             parseState(it, { result ->
-                initDumbbellUpAngleLineChart(mDatabind.dumbbellUpAngleLineChart,result,true)
+                initDumbbellUpAngleLineChart(mDatabind.dumbbellUpAngleLineChart, result, true)
             }, {
                 appContext.showToast(getString(R.string.request_failed))
             })
@@ -158,7 +158,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         request.dumbbellExpandChestResult.observe(this) {
             parseState(it, { result ->
-                initDumbbellUpAngleLineChart(mDatabind.dumbbellUpAngleLineChart,result,false)
+                initDumbbellUpAngleLineChart(mDatabind.dumbbellUpAngleLineChart, result, false)
             }, {
                 appContext.showToast(getString(R.string.request_failed))
             })
@@ -315,7 +315,8 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         horizontalBarChart.animateY(500)
 
     }
-    private fun initDumbbellUpAngleLineChart(lineChart: LineChart,result: SportTrendDumbbellExpandChestAndUpResult,isUp:Boolean) {
+
+    private fun initDumbbellUpAngleLineChart(lineChart: LineChart, result: SportTrendDumbbellExpandChestAndUpResult, isUp: Boolean) {
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
         lineChart.isDragEnabled = false
@@ -351,9 +352,9 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
         lineDataSet.setDrawCircles(false)
-        if(isUp){
+        if (isUp) {
             lineDataSet.color = appContext.getColor(R.color.color_ffc019)
-        }else{
+        } else {
             lineDataSet.color = appContext.getColor(R.color.color_blue)
         }
         lineDataSet.setDrawCircleHole(false)
@@ -387,6 +388,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineChart.setNoDataText("暂无数据")
         lineChart.animateY(500)
     }
+
     private fun initHeartRatelineChart(result: HeartRateResult) {
         val lineChart = mDatabind.heartRateLineChart
         lineChart.legend.isEnabled = false
@@ -496,7 +498,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         for (i in leftLegRecord.indices) {
             values.add(BarEntry(i.toFloat(), leftLegRecord[i].left_degree.toFloat()))
         }
-        val rightLegRecord = result.trend.filter { it.right_degree != 0.0}
+        val rightLegRecord = result.trend.filter { it.right_degree != 0.0 }
         for (i in rightLegRecord.indices) {
             values2.add(BarEntry(i.toFloat(), rightLegRecord[i].right_degree.toFloat()))
         }

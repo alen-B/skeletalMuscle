@@ -29,7 +29,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/legDetailCl"
             android:layout_width="389dp"
-            android:layout_height="409dp"
+            android:layout_height="380dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/bg_white_round_20"
             android:visibility="gone">

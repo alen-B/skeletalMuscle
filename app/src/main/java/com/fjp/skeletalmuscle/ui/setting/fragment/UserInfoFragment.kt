@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.ui.setting.fragment
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -20,6 +21,7 @@ import com.fjp.skeletalmuscle.app.weight.pop.SingleSelectedPop
 import com.fjp.skeletalmuscle.app.weight.pop.TakePhotoPop
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.fjp.skeletalmuscle.databinding.FragmentUserInfoBinding
+import com.fjp.skeletalmuscle.ui.login.LoginActivity
 import com.fjp.skeletalmuscle.viewmodel.request.RequestUserInfoViewModel
 import com.fjp.skeletalmuscle.viewmodel.request.SaveUserInfoViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
@@ -94,7 +96,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         requestUserInfoViewModel.avatar.observe(this) {
             appContext.showToast("更新成功")
             mDatabind.avatarLayout.setAvatarIv(App.userInfo.profile)
-            App.userInfo.profile=it
+            App.userInfo.profile = it
             CacheUtil.setUser(App.userInfo)
         }
 
@@ -143,6 +145,17 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
 
         fun clickUpdateSex() {
             showSingleSelectedDialog(SingleSelectType.SEX)
+        }
+        fun clickExit() {
+            val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
+                CacheUtil.setUser(null)
+                CacheUtil.setIsLogin(false)
+                val intent = Intent(context, LoginActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }, { })
+
+            pop.show()
         }
     }
 

@@ -80,6 +80,12 @@
     <color name="color_b2e0e6ff">#B2E0E6FF</color>
     <color name="color_e8a800">#E8A800</color>
     <color name="color_f6f6f6">#f6f6f6</color>
+    <color name="color_23d3f2">#23D3F2</color>
+    <color name="color_2650DCF5">#2650DCF5</color>
+    <color name="color_0750DCF5">#0750DCF5</color>
+    <color name="color_8e4cff">#8E4CFF</color>
+    <color name="color_19a16afd">#19A16AFD</color>
+    <color name="color_02D4BBF6">#02D4BBF6</color>
 
 
 </resources>

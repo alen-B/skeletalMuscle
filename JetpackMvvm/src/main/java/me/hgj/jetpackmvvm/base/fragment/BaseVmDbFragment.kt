@@ -22,12 +22,8 @@ abstract class BaseVmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> : Base
     private var _binding: DB? = null
     val mDatabind: DB get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding  = inflateBindingWithGeneric(inflater,container,false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = inflateBindingWithGeneric(inflater, container, false)
         return mDatabind.root
     }
 

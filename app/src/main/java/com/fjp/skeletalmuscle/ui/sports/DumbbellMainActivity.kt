@@ -22,12 +22,10 @@ import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
-import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
 import com.fjp.skeletalmuscle.databinding.ActivityDumbbellMainBinding
 import com.fjp.skeletalmuscle.viewmodel.state.DumbbellViewModel
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.util.DateUtils
-import me.hgj.jetpackmvvm.util.NumberUtils
 import java.util.Date
 import kotlin.math.abs
 import kotlin.math.ceil

@@ -1,7 +1,7 @@
 package me.hgj.jetpackmvvm.ext.lifecycle
 
 import android.app.Activity
-import java.util.*
+import java.util.LinkedList
 
 /**
  * 作者　: hegaojian
@@ -14,9 +14,8 @@ object KtxActivityManger {
 
     //当前activity
     val currentActivity: Activity?
-        get() =
-            if (mActivityList.isEmpty()) null
-            else mActivityList.last
+        get() = if (mActivityList.isEmpty()) null
+        else mActivityList.last
 
     /**
      * activity入栈

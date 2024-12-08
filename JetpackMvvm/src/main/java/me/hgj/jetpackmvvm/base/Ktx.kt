@@ -38,10 +38,7 @@ class Ktx : ContentProvider() {
     private fun install(application: Application) {
         app = application
         mNetworkStateReceive = NetworkStateReceive()
-        app.registerReceiver(
-            mNetworkStateReceive,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
+        app.registerReceiver(mNetworkStateReceive, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
         if (watchActivityLife) application.registerActivityLifecycleCallbacks(KtxLifeCycleCallBack())
         if (watchAppLife) ProcessLifecycleOwner.get().lifecycle.addObserver(KtxAppLifeObserver)
@@ -50,21 +47,10 @@ class Ktx : ContentProvider() {
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? = null
 
-    override fun query(
-        uri: Uri,
-        projection: Array<String>?,
-        selection: String?,
-        selectionArgs: Array<String>?,
-        sortOrder: String?
-    ): Cursor? = null
+    override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, sortOrder: String?): Cursor? = null
 
 
-    override fun update(
-        uri: Uri,
-        values: ContentValues?,
-        selection: String?,
-        selectionArgs: Array<String>?
-    ): Int = 0
+    override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<String>?): Int = 0
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0
 

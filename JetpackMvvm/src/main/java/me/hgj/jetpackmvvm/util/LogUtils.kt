@@ -19,10 +19,7 @@ object LogUtils {
     }
 
     fun debugInfo(msg: String?) {
-        debugInfo(
-            DEFAULT_TAG,
-            msg
-        )
+        debugInfo(DEFAULT_TAG, msg)
     }
 
     fun warnInfo(tag: String?, msg: String?) {
@@ -33,10 +30,7 @@ object LogUtils {
     }
 
     fun warnInfo(msg: String?) {
-        warnInfo(
-            DEFAULT_TAG,
-            msg
-        )
+        warnInfo(DEFAULT_TAG, msg)
     }
 
     /**
@@ -66,10 +60,7 @@ object LogUtils {
     }
 
     fun debugLongInfo(msg: String) {
-        debugLongInfo(
-            DEFAULT_TAG,
-            msg
-        )
+        debugLongInfo(DEFAULT_TAG, msg)
     }
 
 }

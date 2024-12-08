@@ -1,6 +1,5 @@
 package com.fjp.skeletalmuscle.app
 
-import androidx.databinding.ObservableField
 import cn.com.heaton.blelibrary.ble.Ble
 import cn.com.heaton.blelibrary.ble.BleLog
 import cn.com.heaton.blelibrary.ble.model.BleDevice
@@ -28,7 +27,7 @@ class App : BaseApp() {
         lateinit var instance: App
         lateinit var eventViewModelInstance: EventViewModel
         lateinit var appViewModelInstance: AppViewModel
-        var userInfo = UserInfo("", "", 0, arrayListOf(), 0, 0, 0, "", "", "", "", 0, 0, arrayListOf(), 0, 0, "", 0,"")
+        var userInfo = UserInfo("", "", 0, arrayListOf(), 0, 0, 0, "", "", "", "", 0, 0, arrayListOf(), 0, 0, "", 0, "")
         var sportsType = SportsType.HIGH_KNEE.type
         var sportsTime = 8
         var legAngle = 90

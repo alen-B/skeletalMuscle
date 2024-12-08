@@ -1,33 +1,39 @@
 package com.fjp.skeletalmuscle.ui.assessment
 
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
-import com.clj.fastble.BleManager
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.AssessmentUtils
+import com.fjp.skeletalmuscle.app.util.BleScanHelper
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
-import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
-import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
+import com.fjp.skeletalmuscle.data.model.bean.AssessmentType
+import com.fjp.skeletalmuscle.data.model.bean.BleDevice
+import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentBinding
-import com.fjp.skeletalmuscle.ui.sports.SportsCompletedActivity
 import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentViewModel
 import com.lxj.xpopup.XPopup
-import me.hgj.jetpackmvvm.util.DateUtils
-import me.hgj.jetpackmvvm.util.NumberUtils
-import java.util.Date
+import me.hgj.jetpackmvvm.ext.parseState
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -35,35 +41,23 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
     private var isRunning: Boolean = false
-    private var pauseTime: Long = 0
     private val handler = Handler(Looper.getMainLooper())
     private val LIFT_THRESHOLD = 30f // 抬起动作的阈值
 
-    private var leftLegLifted = false
-    private var rightLegLifted = false
     private var leftLegLifts = 0//左腿抬高了多少次
     private var rightLegLifts = 0//右腿抬高了多少次
-    private var totalHeartRate = 0
-    private var maxHeartRate = 0//最大心率
-    private var minHeartRate = 0//最小心率
-    private var heartRateCount = 0
     private var sportsMinutes = 0 //运动了多少分钟
-    private var caloriesBurned: Double = 0.0 //消耗了多少千卡
-    private var sportsTotalScore: Int = 0//运动中的总得分
-    private var sportsAvgScore: Int = 0//运动中的平均分数
 
-    private var leftLegAngleSum = 0.0
-    private var rightLegAngleSum = 0.0
+    //由于起坐时候用户可能带了两个设备或者一个设备，以最大次数为准
+    private var totalSitUpTimes = 0 //起坐了多少次
+    private var leftSitUpTimes = 0
+    private var rightSitUpTimes = 0
+
     private var leftLegmaxPitchInCycle = 0f // 记录周期内左腿最大的pitch值
     private var rightLegmaxPitchInCycle = 0f // 记录周期内右腿最大的pitch值
-    private var age = 1
-    private var weight = 1
-    private var isMale = true
+
     private var seconds = 0
-    private var warmupTime = 0.0
-    private var fatBurningTime = 0.0
-    private var cardioTime = 0.0
-    private var breakTime = 0.0
+
     private var leftLastPitch = 0f // 左腿上一个pitch值
     private var rightLastPitch = 0f // 右腿上一个pitch值
 
@@ -75,33 +69,30 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var mediaPlayer_low: MediaPlayer? = null
     private var leftLevelViews = mutableListOf<ImageView>()
     private var rightLevelViews = mutableListOf<ImageView>()
-    private var totalTime = 60
+    private var totalTime = 60//总共运行一分钟
+    private var curType = AssessmentType.HighLeg
+    private var weight: Int = 0//用户选择的当前体重
+    private var waistline: Int = 0//用户选择的当前腰围
     private val updateTimerTask = object : Runnable {
         override fun run() {
-            val currentTime = if (isRunning) SystemClock.uptimeMillis() else pauseTime
+
+            val currentTime = SystemClock.uptimeMillis()
             elapsedTime = currentTime - startTime
             // 检查是否暂停
             seconds++
             updateTimerTextView()
-            handler.postDelayed(this, 1000)
+            if (isRunning) {
+                handler.postDelayed(this, 1000)
+            }
         }
     }
 
-    var curHeartRateLevel: HeartRateLevel = HeartRateLevel.WARMUP_TIME
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        mViewModel.title.set(getString(R.string.sports_assessment_title))
-        startTimer()
-        //TODO 整个流程完成后需要计算出当前用户的年龄
-        App.userInfo?.let {
-            age = DateUtils.calculateAge(Date(it.birthday), Date(System.currentTimeMillis()))
-            weight = it.weight
-            isMale = it.sex == getString(R.string.setting_sex_man)
-        }
-
-
-//        showOffLinePop()
+        mViewModel.title.set("高抬腿运动即将开始")
+        weight = intent.getIntExtra(Constants.INTENT_KEY_WEIGHT, 0)
+        waistline = intent.getIntExtra(Constants.INTENT_KEY_WAISTLINE, 0)
         leftLevelViews.add(mDatabind.lIv1)
         leftLevelViews.add(mDatabind.lIv2)
         leftLevelViews.add(mDatabind.lIv3)
@@ -146,43 +137,109 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         }
     }
 
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.sportsCalorieResult.observe(this) {
+            parseState(it, {
+                val intent = Intent(this@SportsAssessmentActivity, SportsAssessmentResultActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+                finish()
+            }, {
+                showToast(getString(R.string.request_failed))
+            })
+        }
+    }
+
     private fun startTimer() {
         if (!isRunning) {
             startTime = SystemClock.uptimeMillis() - elapsedTime
             isRunning = true
             handler.post(updateTimerTask)
-
-        }
-    }
-
-    private fun pauseTimer() {
-        if (isRunning) {
-            isRunning = false
-            pauseTime = SystemClock.uptimeMillis()
-            handler.removeCallbacks(updateTimerTask)
         }
     }
 
     private fun updateTimerTextView() {
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
-        val seconds = ((elapsedTime / 1000) % 60).toInt()
-        if (sportsMinutes == mViewModel.maxTime) {
-            completed()
-        }
         val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
         mViewModel.curTime.set(timeString)
         mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
+        if (totalTime - seconds < 20) {
+            if (curType == AssessmentType.HighLeg) {
+                if (!mDatabind.nextSportsIv.isVisible) {
+                    mDatabind.nextSportsIv.visibility = View.VISIBLE
+                }
+            } else if (curType == AssessmentType.UpDown) {
+                if (!mDatabind.nextSportsIv.isVisible) {
+                    mDatabind.nextSportsIv.visibility = View.VISIBLE
+                    mDatabind.nextSportsIv.setImageResource(R.drawable.assessment_08)
+                }
+            }
+        }
+        if (totalTime - seconds == 0) {
+            completed()
+        }
     }
 
     fun completed() {
-        pauseTimer()
+        if (isRunning) {
+            isRunning = false
+            handler.removeCallbacks(updateTimerTask)
+        }
+        elapsedTime = 0
+        seconds = 0
+        mViewModel.sportsNumber.set("0")
         showToast("完成了运动")
-        pauseTimer()
-        val intent = Intent(this@SportsAssessmentActivity, SportsCompletedActivity::class.java)
-//        val highKneeSports = HighKneeSports(elapsedTime, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
-//        intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
-        startActivity(intent)
-        finish()
+        mDatabind.startTv.visibility = View.VISIBLE
+        mDatabind.centerIv.visibility = View.VISIBLE
+        mDatabind.nextSportsIv.visibility = View.GONE
+        when (curType) {
+            AssessmentType.HighLeg -> {
+                isHighLeg(false)
+                curType = AssessmentType.UpDown
+                mViewModel.title.set("起坐运动即将开始！")
+                mDatabind.heartTv.setText("起坐次数")
+                mDatabind.nextSportsIv.setImageResource(R.drawable.assessment_06)
+                mDatabind.centerIv.setImageResource(R.drawable.assessment_07)
+            }
+
+            AssessmentType.UpDown -> {
+                curType = AssessmentType.Grip
+                mViewModel.title.set("握力运动即将开始！")
+                mDatabind.heartTv.setText("握力最大值")
+                mDatabind.sportsNumberUnitTv.visibility = View.VISIBLE
+                mDatabind.nextSportsIv.setImageResource(R.drawable.assessment_08)
+                mDatabind.centerIv.setImageResource(R.drawable.assessment_09)
+                //移除高抬腿设备监听
+                SMBleManager.delDeviceResultDataListener(this)
+            }
+
+            else -> {
+                println("=============================")
+                println("抬腿次数：" + (leftLegLifts + rightLegLifts))
+                println("起坐：" + totalSitUpTimes)
+                println("最大握力：" + maxGrip)
+                println("=============================")
+                //TODO 提交代码
+                mViewModel.title.set("运动测评已全部完成！")
+                mDatabind.startTv.text = "提交"
+                mDatabind.startTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.drawable.fly), null)
+            }
+        }
+
+    }
+
+    fun isHighLeg(show: Boolean) {
+        mDatabind.rTimesView.visibility = if (show) View.VISIBLE else View.GONE
+        mDatabind.lTimesTv.visibility = if (show) View.VISIBLE else View.GONE
+        mDatabind.lUnitTv.visibility = if (show) View.VISIBLE else View.GONE
+        mDatabind.lTimesView.visibility = if (show) View.VISIBLE else View.GONE
+        mDatabind.lLC.visibility = if (show) View.VISIBLE else View.GONE
+        mDatabind.rLC.visibility = if (show) View.VISIBLE else View.GONE
+        mDatabind.rTimesView.visibility = if (show) View.VISIBLE else View.GONE
+        mDatabind.rTimesTv.visibility = if (show) View.VISIBLE else View.GONE
+        mDatabind.rUnitTv.visibility = if (show) View.VISIBLE else View.GONE
+
     }
 
     inner class ProxyClick {
@@ -191,15 +248,28 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             showExitDialog()
         }
 
-        fun clickComplete() {
-            showCompletedDialog()
-        }
-
-        fun clickStop() {
-            when (isRunning) {
-                false -> startTimer()
-                true -> pauseTimer()
+        fun clickStart() {
+            //标示所有都做完了
+            if (mDatabind.startTv.text.equals("提交")) {
+                val result = AssessmentUtils.testResult(leftLegLifts + rightLegLifts, totalSitUpTimes, maxGrip, "男".equals(App.userInfo.sex))
+                val saveAssessmentRequest = SaveAssessmentRequest(maxGrip, leftLegLifts + rightLegLifts, result, totalSitUpTimes, waistline, weight)
+                mViewModel.saveAssessment(saveAssessmentRequest)
             }
+            startTimer()
+            mDatabind.centerIv.visibility = View.GONE
+            if (curType == AssessmentType.HighLeg) {
+                mViewModel.title.set("高抬腿运动一分钟")
+                isHighLeg(true)
+            } else if (curType == AssessmentType.UpDown) {
+                mViewModel.title.set("请起坐运动一分钟")
+
+            } else {
+                mViewModel.title.set("请握3次握力器")
+                initBluetooth()
+            }
+
+            mDatabind.centerIv.visibility = View.GONE
+            mDatabind.startTv.visibility = View.GONE
         }
     }
 
@@ -208,8 +278,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             override fun reconnect(pop: DeviceOffLinePop) {
                 pop.dismiss()
             }
-
-
         })
         val pop = XPopup.Builder(this@SportsAssessmentActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
 
@@ -245,9 +313,8 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         println("===leftyaw:${yaw}")
         // 检查pitch是否大于100度
         if (pitch > 90) {
-            // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放
-            if (mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying) {
+            if (mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying && curType == AssessmentType.HighLeg) {
                 mediaPlayer_high!!.start() // 播放音频
             }
         }
@@ -262,12 +329,16 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         if (pitch < leftLastPitch) {
             if (!leftIsDescending) {
                 if (abs(pitch) > LIFT_THRESHOLD) {
-                    mViewModel.leftLegAngle.set("L ${leftLegmaxPitchInCycle.toInt()}°")
-                    leftLegLifts++
-                    leftLegAngleSum += leftLegmaxPitchInCycle.toDouble()
-                    mViewModel.sportsNumber.set((leftLegLifts + rightLegLifts).toString())
-                    mViewModel.leftLegCount.set(leftLegLifts.toString())
-
+                    if (curType == AssessmentType.HighLeg) {
+                        leftLegLifts++
+                        mViewModel.leftLegAngle.set("L ${leftLegmaxPitchInCycle.toInt()}°")
+                        mViewModel.sportsNumber.set((leftLegLifts + rightLegLifts).toString())
+                        mViewModel.leftLegCount.set(leftLegLifts.toString())
+                    } else if (curType == AssessmentType.UpDown) {
+                        leftSitUpTimes++
+                        totalSitUpTimes = Math.max(leftSitUpTimes, rightSitUpTimes)
+                        mViewModel.sportsNumber.set(totalSitUpTimes.toString())
+                    }
                 }
             }
             leftIsDescending = true
@@ -275,7 +346,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         // 如果已经开始下降，并且当前pitch值比较低，认为一个周期结束
         if (leftIsDescending && pitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
             // 周期结束，检查最大pitch值是否在25到30之间
-            if (leftLegmaxPitchInCycle >= 25 && leftLegmaxPitchInCycle <= 30) {
+            if (leftLegmaxPitchInCycle >= 25 && leftLegmaxPitchInCycle <= 30 && curType == AssessmentType.HighLeg) {
                 // 播放提示音
                 if (mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying()) {
                     mediaPlayer_low!!.start()
@@ -294,15 +365,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         val leftLevel = calculateLevelFromAngle(pitch)
         if (leftOldLevel != -1) {
             leftLevelViews[leftOldLevel].setImageDrawable(null)
-        }
-        if (curHeartRateLevel == HeartRateLevel.WARMUP_TIME) {
-            leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
-        } else if (curHeartRateLevel == HeartRateLevel.FAT_BURNING_TIME) {
-            leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_fat_burning))
-        } else if (curHeartRateLevel == HeartRateLevel.CARDIO_TIME) {
-            leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_cardio))
-        } else if (curHeartRateLevel == HeartRateLevel.BREAK_TIME) {
-            leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected_break))
         }
         leftOldLevel = leftLevel
     }
@@ -332,11 +394,16 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         if (pitch < rightLastPitch) {
             if (!rightIsDescending) {
                 if (abs(pitch) > LIFT_THRESHOLD) {
-                    rightLegLifts++
-                    mViewModel.rightLegAngle.set("R ${rightLastPitch.toInt()}°")
-                    rightLegAngleSum += abs(rightLegmaxPitchInCycle).toDouble()
-                    mViewModel.rightLegCount.set(rightLegLifts.toString())
-                    mViewModel.sportsNumber.set((leftLegLifts + rightLegLifts).toString())
+                    if (curType == AssessmentType.HighLeg) {
+                        rightLegLifts++
+                        mViewModel.sportsNumber.set((leftLegLifts + rightLegLifts).toString())
+                        mViewModel.rightLegAngle.set("R ${rightLastPitch.toInt()}°")
+                        mViewModel.rightLegCount.set(rightLegLifts.toString())
+                    } else if (curType == AssessmentType.UpDown) {
+                        rightSitUpTimes++
+                        totalSitUpTimes = Math.max(leftSitUpTimes, rightSitUpTimes)
+                        mViewModel.sportsNumber.set(totalSitUpTimes.toString())
+                    }
                 }
             }
             rightIsDescending = true
@@ -378,33 +445,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     override fun onRightHandGripsData(data: ByteArray) {
     }
 
-    private fun calculateCaloriesBurned(age: Int, weight: Double, heartRate: Int, exerciseTimeMinutes: Float, isMale: Boolean): Double {
-        return if (isMale) (age * 0.2017 + weight * 0.09036 + heartRate * 0.6309 - 55.0969) * exerciseTimeMinutes / 4.184 else (age * 0.074 + weight * 0.05741 + heartRate * 0.4472 - 20.4022) * exerciseTimeMinutes / 4.184
-    }
-
-
-    var standardAction = 0
-    private fun getCurScore(pitch: Float): Int {
-        if (pitch in 80.0..95.0) {
-            if (standardAction != 0) {
-                return 101
-            }
-            return 100
-        } else if ((pitch in 65.0..79.0) || (pitch >= 96 && pitch < 105)) {
-            standardAction++
-            if (standardAction != 0) {
-                return 81
-            }
-            return 80
-        } else if ((pitch in 50.0..64.0) || (pitch in 106.0..120.0)) {
-            standardAction = 0
-            return 50
-        } else {
-            standardAction = 0
-            return 15
-        }
-    }
-
 
     private fun calculateLevelFromAngle(angle: Float): Int {
         // 假设角度从0到90度，分成7个等级
@@ -421,6 +461,53 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             return minLevel
         }
         return 0
+    }
+
+    private lateinit var mBluetoothAdapter: BluetoothAdapter
+
+    //蓝牙扫描辅助类
+    private lateinit var mBleScanHelper: BleScanHelper
+    private var maxGrip = 0
+    private var curGrip = 0
+    private var gripCount = 0
+    private var countTemp = 5//数据连续低于最大值5次则定位一次握力
+    private fun initBluetooth() {
+        //初始化ble设配器
+        val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        mBluetoothAdapter = manager.adapter
+        //判断蓝牙是否开启，如果关闭则请求打开蓝牙
+        if (!mBluetoothAdapter.isEnabled()) {
+            showToast("当前蓝牙不可用，请打开蓝牙")
+        }
+        //创建扫描辅助类
+        mBleScanHelper = BleScanHelper(this)
+        mBleScanHelper.setOnScanListener(object : BleScanHelper.onScanListener {
+            @SuppressLint("MissingPermission")
+            override fun onNext(device: BleDevice) {
+                if (device.device.name != null && device.device.name.startsWith(DeviceType.LEFT_HAND_GRIPS.value)) {
+                    val rawDataStr = DeviceDataParse.bytesToHexString(device.scanRecordBytes)
+                    println("====扫描到的握力数据数据是：" + rawDataStr)
+                    var lengthStr = rawDataStr?.substring(46, 50)
+                    //将长度转10进制
+                    val grip = Integer.parseInt(lengthStr, 16)
+                    curGrip = grip
+                    if (maxGrip < grip) {
+                        maxGrip = grip
+                    }
+                    if (grip < maxGrip) {//如果连续次数小于最大值标示是一次握力
+                        countTemp--
+                        if (countTemp == 0) {
+                            mViewModel.sportsNumber.set((maxGrip / 10).toString())
+                            gripCount++
+                        }
+                    }
+                }
+            }
+
+            override fun onFinish() {
+            }
+        })
+        mBleScanHelper.startScanBle(1)
     }
 
     override fun onDestroy() {
@@ -442,14 +529,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
 //            BleManager.getInstance().disconnectAllDevice()
 //            BleManager.getInstance().destroy()
             finish() // 关闭所有 Activity 并退出应用
-        }.setNegativeButton("取消", null).show()
-    }
-
-    fun showCompletedDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动吗？").setPositiveButton("确定") { dialog, which ->
-            BleManager.getInstance().disconnectAllDevice()
-            BleManager.getInstance().destroy()
-            completed()
         }.setNegativeButton("取消", null).show()
     }
 

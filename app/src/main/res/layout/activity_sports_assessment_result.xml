@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="7dp"
                 android:text="@string/sports_assessment_history"
+                android:onClick="@{()->click.clickHistoryAssessment()}"
                 android:textColor="@color/color_801c1c1c"
                 android:textSize="@dimen/text_size_4"
                 app:drawableEndCompat="@drawable/setting_arrow"

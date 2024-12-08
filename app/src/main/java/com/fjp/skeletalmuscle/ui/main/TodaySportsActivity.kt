@@ -22,30 +22,31 @@ import me.hgj.jetpackmvvm.ext.util.dp2px
 import me.hgj.jetpackmvvm.util.get
 
 class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityTodaySportsDataBinding>() {
-    companion object{
-        fun start(context: Context,todayDataResult: TodayDataResult,sportsType: SportsType){
+    companion object {
+        fun start(context: Context, todayDataResult: TodayDataResult, sportsType: SportsType) {
             val intent = Intent(context, TodaySportsActivity::class.java)
-            intent.putExtra(Constants.INTENT_KEY_TODAY_SPORTS_DATA,todayDataResult)
-            intent.putExtra(Constants.INTENT_KEY_TODAY_SPORTS_TYPE,sportsType)
+            intent.putExtra(Constants.INTENT_KEY_TODAY_SPORTS_DATA, todayDataResult)
+            intent.putExtra(Constants.INTENT_KEY_TODAY_SPORTS_TYPE, sportsType)
             context.startActivity(intent)
         }
     }
+
     lateinit var todaySportsDataAdapter: TodaySportsDataAdapter
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.today_sports_data_title))
         mDatabind.click = ProxyClick()
         //type用来记录是点击那个运动进来的详情
-        val type = intent.get(Constants.INTENT_KEY_TODAY_SPORTS_TYPE,SportsType.HIGH_KNEE)
+        val type = intent.get(Constants.INTENT_KEY_TODAY_SPORTS_TYPE, SportsType.HIGH_KNEE)
         val todaySportsData = intent.getParcelableExtra<TodayDataResult>(Constants.INTENT_KEY_TODAY_SPORTS_DATA)
         val fragments = arrayListOf<Fragment>()
-        if(todaySportsData?.sport_lift_leg!=null && todaySportsData?.sport_lift_leg.start_time!=0L){
+        if (todaySportsData?.sport_lift_leg != null && todaySportsData?.sport_lift_leg.start_time != 0L) {
             fragments.add(TodaySportsHighKneeFragment.newInstance(todaySportsData?.sport_lift_leg))
         }
-        if(todaySportsData?.sport_dumbbell!=null && todaySportsData?.sport_dumbbell.start_time!=0L){
+        if (todaySportsData?.sport_dumbbell != null && todaySportsData?.sport_dumbbell.start_time != 0L) {
             fragments.add(TodaySportsDumbbellFragment.newInstance(todaySportsData?.sport_dumbbell))
         }
-        if(todaySportsData?.sport_flat_support!=null && todaySportsData?.sport_flat_support.start_time!=0L){
+        if (todaySportsData?.sport_flat_support != null && todaySportsData?.sport_flat_support.start_time != 0L) {
             fragments.add(TodaySportsPlankFragment.newInstance(todaySportsData?.sport_flat_support))
         }
 

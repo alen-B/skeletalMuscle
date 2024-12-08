@@ -12,10 +12,7 @@ import androidx.lifecycle.Observer
  * 可避免共享作用域 VM 下 liveData 被 observe 时旧数据倒灌的情况
  */
 class UnPeekLiveData<T> : MutableLiveData<T>() {
-    override fun observe(
-        owner: LifecycleOwner,
-        observer: Observer<in T>
-    ) {
+    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         super.observe(owner, observer)
         hook(observer)
     }
@@ -30,8 +27,7 @@ class UnPeekLiveData<T> : MutableLiveData<T>() {
             val observers = mObservers[this]
             val observersClass: Class<*> = observers.javaClass
             //获取SafeIterableMap的get(Object obj)方法
-            val methodGet =
-                observersClass.getDeclaredMethod("get", Any::class.java)
+            val methodGet = observersClass.getDeclaredMethod("get", Any::class.java)
             methodGet.isAccessible = true
             //获取到observer在集合中对应的ObserverWrapper对象
             val objectWrapperEntry = methodGet.invoke(observers, observer)
@@ -45,8 +41,7 @@ class UnPeekLiveData<T> : MutableLiveData<T>() {
             //获取ObserverWrapper的Class对象  LifecycleBoundObserver extends ObserverWrapper
             val wrapperClass: Class<*>? = objectWrapper.javaClass.superclass
             //获取ObserverWrapper的field mLastVersion
-            val mLastVersion =
-                wrapperClass!!.getDeclaredField("mLastVersion")
+            val mLastVersion = wrapperClass!!.getDeclaredField("mLastVersion")
             mLastVersion.isAccessible = true
             //获取liveData的field mVersion
             val mVersion = liveDataClass.getDeclaredField("mVersion")

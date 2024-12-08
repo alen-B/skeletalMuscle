@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path name="external_files" path="." />
+    <external-cache-path
+        name="app_update_cache"
+        path="." />
+    <external-files-path
+        name="sharedata"
+        path="." />
+</paths>

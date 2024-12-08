@@ -94,7 +94,7 @@ class BornActivity : BaseActivity<BornViewModel, ActivityBornBinding>() {
     inner class ProxyClick {
         fun next() {
             val intent = Intent(this@BornActivity, SingleSelectActivity::class.java)
-            App.userInfo?.birthday = DateTimeUtil.formatDate(curDate,DateTimeUtil.DATE_PATTERN)
+            App.userInfo?.birthday = DateTimeUtil.formatDate(curDate, DateTimeUtil.DATE_PATTERN)
             intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.HEIGHT.type)
             startActivity(intent)
         }

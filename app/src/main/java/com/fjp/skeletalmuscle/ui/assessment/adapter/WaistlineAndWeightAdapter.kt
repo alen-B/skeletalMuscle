@@ -7,12 +7,12 @@ import com.fjp.skeletalmuscle.app.ext.setAdapterAnimation
 import com.fjp.skeletalmuscle.app.util.SettingUtil
 
 
-class WaistlineAndWeightAdapter(data: ArrayList<String>, var defaultIndex: Int, var clickItem: (item: String, position: Int) -> Unit) : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_waistline_weight, data) {
+class WaistlineAndWeightAdapter(data: ArrayList<Int>, val isWeight: Boolean, var defaultIndex: Int, var clickItem: (item: Int, position: Int) -> Unit) : BaseQuickAdapter<Int, BaseViewHolder>(R.layout.item_waistline_weight, data) {
     init {
         setAdapterAnimation(SettingUtil.getListMode())
     }
 
-    override fun convert(holder: BaseViewHolder, item: String) {
+    override fun convert(holder: BaseViewHolder, item: Int) {
         if (defaultIndex === holder.adapterPosition) {
             holder.setVisible(R.id.singleSelectedIv, true)
             holder.setTextColorRes(R.id.contentTv, R.color.white)
@@ -22,7 +22,11 @@ class WaistlineAndWeightAdapter(data: ArrayList<String>, var defaultIndex: Int, 
             holder.setVisible(R.id.singleSelectedIv, false)
             holder.setBackgroundResource(R.id.contentTv, R.drawable.bg_gray_round_20)
         }
-        holder.setText(R.id.contentTv, item)
+        if (isWeight) {
+            holder.setText(R.id.contentTv, "${item}kg")
+        } else {
+            holder.setText(R.id.contentTv, "${item}cm")
+        }
         holder.itemView.setOnClickListener {
             defaultIndex = holder.adapterPosition
             clickItem.invoke(item, defaultIndex)

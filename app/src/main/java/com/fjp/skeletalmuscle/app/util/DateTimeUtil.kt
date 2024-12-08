@@ -112,7 +112,7 @@ object DateTimeUtil {
     }
 
     fun formSportTime(time: Long): String {
-        return String.format("%.1f", (time /60f))
+        return String.format("%.1f", (time / 60f))
     }
 
     fun formatTime(seconds: Long): String {
@@ -143,6 +143,18 @@ object DateTimeUtil {
         val date = Date()
         val formatter = SimpleDateFormat(DATE_PATTERN3)
         return formatter.format(date)
+    }
+
+    fun getPreYear(year:Int,month:Int): Int {
+        val specifiedDate = LocalDate.of(year, month, 15)
+        // 获取上一年的日期
+       return specifiedDate.minusYears(1).year
+    }
+
+    fun getNextYear(year:Int,month:Int): Int {
+        val specifiedDate = LocalDate.of(year, month, 15)
+        // 获取上一年的日期
+        return specifiedDate.plusYears(1).year
     }
 
     private fun getStartOfWeek(currentDate: LocalDate): LocalDate {

@@ -29,5 +29,44 @@ class DeviceFragment : BaseFragment<DeviceViewModel, FragmentSettingDeviceBindin
 
     inner class ProxyClick {
 
+        fun clickConnectLeftKnee(){
+            SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
+                override fun disConnected() {
+
+                }
+
+                override fun connected() {
+                    mDatabind.leftKneeLL.setValue( getString(R.string.setting_device_status_connected))
+
+                }
+
+            })
+        }
+
+        fun clickConnectRightKnee(){
+            SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
+                override fun disConnected() {
+
+                }
+
+                override fun connected() {
+                    mDatabind.rightKneeLL.setValue( getString(R.string.setting_device_status_connected) )
+                }
+
+            })
+        }
+
+        fun clickConnectGTSKnee(){
+            SMBleManager.scanDevices(DeviceType.GTS.value, DeviceType.GTS, object : SMBleManager.DeviceStatusListener {
+                override fun disConnected() {
+
+                }
+
+                override fun connected() {
+                    mDatabind.smartWatchLayout.setValue( getString(R.string.setting_device_status_connected))
+                }
+
+            })
+        }
     }
 }

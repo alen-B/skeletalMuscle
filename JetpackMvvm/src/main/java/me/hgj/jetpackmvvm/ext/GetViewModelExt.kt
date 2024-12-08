@@ -48,10 +48,7 @@ inline fun <reified VM : BaseViewModel> Fragment.getAppViewModel(): VM {
  */
 @Deprecated("已过时的方法，现在可以直接使用Ktx函数 viewmodels()获取")
 inline fun <reified VM : BaseViewModel> AppCompatActivity.getViewModel(): VM {
-    return ViewModelProvider(
-        this,
-        ViewModelProvider.AndroidViewModelFactory(application)
-    ).get(VM::class.java)
+    return ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(VM::class.java)
 }
 
 /**
@@ -60,10 +57,7 @@ inline fun <reified VM : BaseViewModel> AppCompatActivity.getViewModel(): VM {
  */
 @Deprecated("已过时的方法，现在可以直接使用Ktx函数 viewmodels()获取")
 inline fun <reified VM : BaseViewModel> Fragment.getViewModel(): VM {
-    return ViewModelProvider(
-        this,
-        ViewModelProvider.AndroidViewModelFactory(this.requireActivity().application)
-    ).get(VM::class.java)
+    return ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(this.requireActivity().application)).get(VM::class.java)
 }
 
 /**
@@ -72,9 +66,7 @@ inline fun <reified VM : BaseViewModel> Fragment.getViewModel(): VM {
  */
 @Deprecated("已过时的方法，现在可以直接使用Ktx函数 activityViewModels()获取")
 inline fun <reified VM : BaseViewModel> Fragment.getActivityViewModel(): VM {
-    return ViewModelProvider(requireActivity(),
-        ViewModelProvider.AndroidViewModelFactory(this.requireActivity().application)
-    ).get(VM::class.java)
+    return ViewModelProvider(requireActivity(), ViewModelProvider.AndroidViewModelFactory(this.requireActivity().application)).get(VM::class.java)
 }
 
 

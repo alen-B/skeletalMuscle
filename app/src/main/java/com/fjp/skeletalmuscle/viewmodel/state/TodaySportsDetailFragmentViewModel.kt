@@ -20,7 +20,7 @@ enum class ChartType(val type: Int) {
     All_CALORIES(5),//所有运动消耗的卡路里
 }
 
-enum class DateType(val value:String) {
+enum class DateType(val value: String) {
     DAY("1"),//日
     WEEK("2"),//周
     MONTH("3"),//月

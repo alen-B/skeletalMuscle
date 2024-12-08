@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentResultBinding
 import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentResultViewModel
@@ -13,6 +14,7 @@ import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
+import java.time.LocalDateTime
 
 
 class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewModel, ActivitySportsAssessmentResultBinding>() {
@@ -21,6 +23,11 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         mDatabind.click = ProxyClick()
 //        mViewModel.title.set()
         initRadarChart()
+            if (App.userInfo?.sex == getString(R.string.setting_sex_woman)) {
+                mViewModel.title.set("${App.userInfo?.name}奶奶，这里可以查看您的运动数据")
+            } else {
+                mViewModel.title.set("${App.userInfo?.name}爷爷，这里可以查看您的运动数据")
+            }
     }
 
     private fun initRadarChart() {
@@ -106,7 +113,11 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         }
 
         fun clickSelectedAssessmentPorts() {
-            val intent = Intent(this@SportsAssessmentResultActivity, SelectedWaistlineAndWeightActivity::class.java)
+            val intent = Intent(this@SportsAssessmentResultActivity, SportsAssessmentGuideActivity::class.java)
+            startActivity(intent)
+        }
+        fun clickHistoryAssessment() {
+            val intent = Intent(this@SportsAssessmentResultActivity, SportsAssessmentsHistoryActivity::class.java)
             startActivity(intent)
         }
     }

@@ -1,6 +1,12 @@
 package me.hgj.jetpackmvvm.ext.util
 
-import android.app.*
+import android.app.ActivityManager
+import android.app.AlarmManager
+import android.app.DownloadManager
+import android.app.KeyguardManager
+import android.app.NotificationManager
+import android.app.SearchManager
+import android.app.UiModeManager
 import android.app.job.JobScheduler
 import android.content.ClipboardManager
 import android.content.Context
@@ -31,8 +37,7 @@ import androidx.core.content.ContextCompat
 /**
  * Return system service which type is [T]
  */
-inline fun <reified T> Context.getSystemService(): T? =
-    ContextCompat.getSystemService(this, T::class.java)
+inline fun <reified T> Context.getSystemService(): T? = ContextCompat.getSystemService(this, T::class.java)
 
 val Context.windowManager get() = getSystemService<WindowManager>()
 val Context.clipboardManager get() = getSystemService<ClipboardManager>()

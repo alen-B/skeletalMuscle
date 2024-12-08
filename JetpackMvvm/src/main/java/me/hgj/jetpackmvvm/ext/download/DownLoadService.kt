@@ -15,8 +15,5 @@ import retrofit2.http.Url
 interface DownLoadService {
     @Streaming
     @GET
-    suspend fun downloadFile(
-        @Header("RANGE") start: String,
-        @Url url: String
-    ): Response<ResponseBody>
+    suspend fun downloadFile(@Header("RANGE") start: String, @Url url: String): Response<ResponseBody>
 }

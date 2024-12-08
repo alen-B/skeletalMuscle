@@ -12,9 +12,7 @@ import retrofit2.Retrofit
 abstract class BaseNetworkApi {
 
     fun <T> getApi(serviceClass: Class<T>, baseUrl: String): T {
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(okHttpClient)
+        val retrofitBuilder = Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient)
         return setRetrofitBuilder(retrofitBuilder).build().create(serviceClass)
     }
 

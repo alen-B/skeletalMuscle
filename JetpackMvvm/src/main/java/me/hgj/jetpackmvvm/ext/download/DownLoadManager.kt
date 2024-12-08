@@ -18,14 +18,7 @@ import java.util.concurrent.TimeUnit
 
 object DownLoadManager {
     private val retrofitBuilder by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://www.baidu.com")
-            .client(
-                OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(5, TimeUnit.SECONDS)
-                    .writeTimeout(5, TimeUnit.SECONDS).build()
-            ).build()
+        Retrofit.Builder().baseUrl("https://www.baidu.com").client(OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).writeTimeout(5, TimeUnit.SECONDS).build()).build()
     }
 
     /**
@@ -37,14 +30,7 @@ object DownLoadManager {
      * @param reDownload Boolean 如果文件已存在是否需要重新下载 默认不需要重新下载
      * @param loadListener OnDownLoadListener
      */
-    suspend fun downLoad(
-        tag: String,
-        url: String,
-        savePath: String,
-        saveName: String,
-        reDownload: Boolean = false,
-        loadListener: OnDownLoadListener
-    ) {
+    suspend fun downLoad(tag: String, url: String, savePath: String, saveName: String, reDownload: Boolean = false, loadListener: OnDownLoadListener) {
         withContext(Dispatchers.IO) {
             doDownLoad(tag, url, savePath, saveName, reDownload, loadListener, this)
         }
@@ -103,15 +89,7 @@ object DownLoadManager {
      * @param loadListener OnDownLoadListener
      * @param coroutineScope CoroutineScope 上下文
      */
-    private suspend fun doDownLoad(
-        tag: String,
-        url: String,
-        savePath: String,
-        saveName: String,
-        reDownload: Boolean,
-        loadListener: OnDownLoadListener,
-        coroutineScope: CoroutineScope
-    ) {
+    private suspend fun doDownLoad(tag: String, url: String, savePath: String, saveName: String, reDownload: Boolean, loadListener: OnDownLoadListener, coroutineScope: CoroutineScope) {
         //判断是否已经在队列中
         val scope = DownLoadPool.getScopeFromKey(tag)
         if (scope != null && scope.isActive) {
@@ -142,7 +120,7 @@ object DownLoadManager {
         } else {
             ShareDownLoadUtil.getLong(tag, 0)
         }
-        if (file.exists()&&currentLength == 0L && !reDownload) {
+        if (file.exists() && currentLength == 0L && !reDownload) {
             //文件已存在了
             loadListener.onDownLoadSuccess(tag, file.path, file.length())
             return
@@ -158,28 +136,17 @@ object DownLoadManager {
             withContext(Dispatchers.Main) {
                 loadListener.onDownLoadPrepare(key = tag)
             }
-            val response = retrofitBuilder.create(DownLoadService::class.java)
-                .downloadFile("bytes=$currentLength-", url)
+            val response = retrofitBuilder.create(DownLoadService::class.java).downloadFile("bytes=$currentLength-", url)
             val responseBody = response.body()
             if (responseBody == null) {
                 "responseBody is null".logi()
                 withContext(Dispatchers.Main) {
-                    loadListener.onDownLoadError(
-                        key = tag,
-                        throwable = Throwable("responseBody is null please check download url")
-                    )
+                    loadListener.onDownLoadError(key = tag, throwable = Throwable("responseBody is null please check download url"))
                 }
                 DownLoadPool.remove(tag)
                 return
             }
-            FileTool.downToFile(
-                tag,
-                savePath,
-                saveName,
-                currentLength,
-                responseBody,
-                loadListener
-            )
+            FileTool.downToFile(tag, savePath, saveName, currentLength, responseBody, loadListener)
         } catch (throwable: Throwable) {
             withContext(Dispatchers.Main) {
                 loadListener.onDownLoadError(key = tag, throwable = throwable)

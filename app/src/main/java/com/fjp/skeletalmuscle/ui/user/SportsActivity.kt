@@ -59,16 +59,16 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
 
         fun addSportsType() {
             val pop = XPopup.Builder(this@SportsActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(true).asCustom(AddSportsTypePop(this@SportsActivity, object : AddSportsTypePop.InputPasswordListener {
-                    override fun input(name: String) {
-                        if (name.isEmpty()) {
-                            showToast("请输入类型名称")
-                            return
-                        }
-                        sportsAdapter.addData(0, Sports(name, true))
-                        mDatabind.recyclerView.smoothScrollToPosition(0)
+                override fun input(name: String) {
+                    if (name.isEmpty()) {
+                        showToast("请输入类型名称")
+                        return
                     }
+                    sportsAdapter.addData(0, Sports(name, true))
+                    mDatabind.recyclerView.smoothScrollToPosition(0)
+                }
 
-                }))
+            }))
 
             pop.show()
         }
@@ -77,11 +77,11 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
     override fun createObserver() {
         super.createObserver()
         saveUserInfoViewModel.saveResult.observe(this) {
-            parseState(it,{
+            parseState(it, {
                 val intent = Intent(this@SportsActivity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
-            },{
+            }, {
                 showToast(getString(R.string.request_failed))
             })
 

@@ -2,7 +2,12 @@ package me.hgj.jetpackmvvm.ext
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
 import me.hgj.jetpackmvvm.base.fragment.BaseVmFragment
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
@@ -28,21 +33,18 @@ import me.hgj.jetpackmvvm.state.paresResult
  * @param onError 失败回调
  *
  */
-fun <T> BaseVmActivity<*>.parseState(
-    resultState: ResultState<T>,
-    onSuccess: (T) -> Unit,
-    onError: ((AppException) -> Unit)? = null,
-    onLoading: (() -> Unit)? = null
-) {
+fun <T> BaseVmActivity<*>.parseState(resultState: ResultState<T>, onSuccess: (T) -> Unit, onError: ((AppException) -> Unit)? = null, onLoading: (() -> Unit)? = null) {
     when (resultState) {
         is ResultState.Loading -> {
             showLoading(resultState.loadingMessage)
             onLoading?.run { this }
         }
+
         is ResultState.Success -> {
             dismissLoading()
             onSuccess(resultState.data)
         }
+
         is ResultState.Error -> {
             dismissLoading()
             onError?.run { this(resultState.error) }
@@ -58,24 +60,21 @@ fun <T> BaseVmActivity<*>.parseState(
  * @param onError 失败回调
  *
  */
-fun <T> BaseVmFragment<*>.parseState(
-    resultState: ResultState<T>,
-    onSuccess: (T) -> Unit,
-    onError: ((AppException) -> Unit)? = null,
-    onLoading: ((message:String) -> Unit)? = null
-) {
+fun <T> BaseVmFragment<*>.parseState(resultState: ResultState<T>, onSuccess: (T) -> Unit, onError: ((AppException) -> Unit)? = null, onLoading: ((message: String) -> Unit)? = null) {
     when (resultState) {
         is ResultState.Loading -> {
-            if(onLoading==null){
+            if (onLoading == null) {
                 showLoading(resultState.loadingMessage)
-            }else{
+            } else {
                 onLoading.invoke(resultState.loadingMessage)
             }
         }
+
         is ResultState.Success -> {
             dismissLoading()
             onSuccess(resultState.data)
         }
+
         is ResultState.Error -> {
             dismissLoading()
             onError?.run { this(resultState.error) }
@@ -91,12 +90,7 @@ fun <T> BaseVmFragment<*>.parseState(
  * @param isShowDialog 是否显示加载框
  * @param loadingMessage 加载框提示内容
  */
-fun <T> BaseViewModel.request(
-    block: suspend () -> BaseResponse<T>,
-    resultState: MutableLiveData<ResultState<T>>,
-    isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
-): Job {
+fun <T> BaseViewModel.request(block: suspend () -> BaseResponse<T>, resultState: MutableLiveData<ResultState<T>>, isShowDialog: Boolean = false, loadingMessage: String = "请求网络中..."): Job {
     return viewModelScope.launch {
         runCatching {
             if (isShowDialog) resultState.value = ResultState.onAppLoading(loadingMessage)
@@ -120,12 +114,7 @@ fun <T> BaseViewModel.request(
  * @param isShowDialog 是否显示加载框
  * @param loadingMessage 加载框提示内容
  */
-fun <T> BaseViewModel.requestNoCheck(
-    block: suspend () -> T,
-    resultState: MutableLiveData<ResultState<T>>,
-    isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
-): Job {
+fun <T> BaseViewModel.requestNoCheck(block: suspend () -> T, resultState: MutableLiveData<ResultState<T>>, isShowDialog: Boolean = false, loadingMessage: String = "请求网络中..."): Job {
     return viewModelScope.launch {
         runCatching {
             if (isShowDialog) resultState.value = ResultState.onAppLoading(loadingMessage)
@@ -150,13 +139,7 @@ fun <T> BaseViewModel.requestNoCheck(
  * @param isShowDialog 是否显示加载框
  * @param loadingMessage 加载框提示内容
  */
-fun <T> BaseViewModel.request(
-    block: suspend () -> BaseResponse<T>,
-    success: (T) -> Unit,
-    error: (AppException) -> Unit = {},
-    isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
-): Job {
+fun <T> BaseViewModel.request(block: suspend () -> BaseResponse<T>, success: (T) -> Unit, error: (AppException) -> Unit = {}, isShowDialog: Boolean = false, loadingMessage: String = "请求网络中..."): Job {
     //如果需要弹窗 通知Activity/fragment弹窗
     return viewModelScope.launch {
         runCatching {
@@ -168,7 +151,8 @@ fun <T> BaseViewModel.request(
             loadingChange.dismissDialog.postValue(false)
             runCatching {
                 //校验请求结果码是否正确，不正确会抛出异常走下面的onFailure
-                executeResponse(it) { t -> success(t)
+                executeResponse(it) { t ->
+                    success(t)
                 }
             }.onFailure { e ->
                 //打印错误消息
@@ -199,13 +183,7 @@ fun <T> BaseViewModel.request(
  * @param isShowDialog 是否显示加载框
  * @param loadingMessage 加载框提示内容
  */
-fun <T> BaseViewModel.requestNoCheck(
-    block: suspend () -> T,
-    success: (T) -> Unit,
-    error: (AppException) -> Unit = {},
-    isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
-): Job {
+fun <T> BaseViewModel.requestNoCheck(block: suspend () -> T, success: (T) -> Unit, error: (AppException) -> Unit = {}, isShowDialog: Boolean = false, loadingMessage: String = "请求网络中..."): Job {
     //如果需要弹窗 通知Activity/fragment弹窗
     if (isShowDialog) loadingChange.showDialog.postValue(loadingMessage)
     return viewModelScope.launch {
@@ -233,21 +211,15 @@ fun <T> BaseViewModel.requestNoCheck(
 /**
  * 请求结果过滤，判断请求服务器请求结果是否成功，不成功则会抛出异常
  */
-suspend fun <T> executeResponse(
-    response: BaseResponse<T>,
-    success: suspend CoroutineScope.(T) -> Unit
-) {
+suspend fun <T> executeResponse(response: BaseResponse<T>, success: suspend CoroutineScope.(T) -> Unit) {
     coroutineScope {
         when {
             response.isSucces() -> {
                 success(response.getResponseData())
             }
+
             else -> {
-                throw AppException(
-                    response.getResponseCode(),
-                    response.getResponseMsg(),
-                    response.getResponseMsg()
-                )
+                throw AppException(response.getResponseCode(), response.getResponseMsg(), response.getResponseMsg())
             }
         }
     }
@@ -259,11 +231,7 @@ suspend fun <T> executeResponse(
  * @param success 成功回调
  * @param error 失败回调 可不给
  */
-fun <T> BaseViewModel.launch(
-    block: () -> T,
-    success: (T) -> Unit,
-    error: (Throwable) -> Unit = {}
-) {
+fun <T> BaseViewModel.launch(block: () -> T, success: (T) -> Unit, error: (Throwable) -> Unit = {}) {
     viewModelScope.launch {
         kotlin.runCatching {
             withContext(Dispatchers.IO) {

@@ -15,7 +15,6 @@ import javax.xml.transform.TransformerException
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
-import kotlin.experimental.and
 
 /**
  * 作者　: hegaojian
@@ -26,18 +25,16 @@ class CharacterHandler private constructor() {
     companion object {
         //emoji过滤器
         val EMOJI_FILTER: InputFilter = object : InputFilter {
-            var emoji = Pattern.compile(
-                "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
-                Pattern.UNICODE_CASE or Pattern.CASE_INSENSITIVE
-            )
+            var emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]", Pattern.UNICODE_CASE or Pattern.CASE_INSENSITIVE)
 
-            override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int,dend: Int): CharSequence? {
+            override fun filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int, dend: Int): CharSequence? {
                 val emojiMatcher = emoji.matcher(source)
                 return if (emojiMatcher.find()) {
                     ""
                 } else null
             }
         }
+
         /**
          * json 格式化
          *
@@ -83,12 +80,9 @@ class CharacterHandler private constructor() {
             }
             val message: String?
             message = try {
-                val xmlInput: Source =
-                    StreamSource(StringReader(xml))
-                val xmlOutput =
-                    StreamResult(StringWriter())
-                val transformer =
-                    TransformerFactory.newInstance().newTransformer()
+                val xmlInput: Source = StreamSource(StringReader(xml))
+                val xmlOutput = StreamResult(StringWriter())
+                val transformer = TransformerFactory.newInstance().newTransformer()
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes")
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2")
                 transformer.transform(xmlInput, xmlOutput)

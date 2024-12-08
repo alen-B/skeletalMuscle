@@ -20,8 +20,8 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
 
     lateinit var diseaseAdapter: DiseaseAdapter
     lateinit var diseaseDetailAdapter: DiseaseDetailAdapter
-    var curDiseaseName=""
-    var curDiseaseDetailName=""
+    var curDiseaseName = ""
+    var curDiseaseDetailName = ""
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.disease_title))
@@ -42,23 +42,23 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
 
     inner class ProxyClick {
         fun next() {
-            val diseases =arrayListOf<Disease>()
-            if(curDiseaseName == "其他"){
-                if(mViewModel.other.get().toString().isEmpty()){
+            val diseases = arrayListOf<Disease>()
+            if (curDiseaseName == "其他") {
+                if (mViewModel.other.get().toString().isEmpty()) {
                     showToast(getString(R.string.disease_please_input_disease))
                     return
                 }
                 val disease = Disease(disease_name = curDiseaseName, child_disease_name = arrayListOf(mViewModel.other.get().toString()))
                 diseases.add(disease)
-            }else if(curDiseaseName != "无"){
-                if(curDiseaseDetailName.isEmpty()){
+            } else if (curDiseaseName != "无") {
+                if (curDiseaseDetailName.isEmpty()) {
                     showToast(getString(R.string.disease_please_selected_detail))
                     return
                 }
                 val disease = Disease(disease_name = curDiseaseName, child_disease_name = arrayListOf(curDiseaseDetailName))
                 diseases.add(disease)
             }
-            App.userInfo.disease=diseases
+            App.userInfo.disease = diseases
 
             startActivity(Intent(this@DiseaseActivity, SportsActivity::class.java))
         }
@@ -73,8 +73,8 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
 
     override fun invoke(item: String, position: Int) {
         curDiseaseName = item
-        curDiseaseDetailName=""
-        diseaseDetailAdapter.defaultIndex=-1
+        curDiseaseDetailName = ""
+        diseaseDetailAdapter.defaultIndex = -1
         when (position) {
             0 -> {
                 mDatabind.detailRecyclerView.visibility = View.GONE

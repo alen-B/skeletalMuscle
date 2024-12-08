@@ -7,7 +7,4 @@ import com.fjp.skeletalmuscle.data.model.bean.result.Trend
  *Time:2024/12/1
  *Description:
  */
-data class SportTrendDummbbellCalorie(
-    val total: Int,
-    val trend: List<Trend>
-)
+data class SportTrendDummbbellCalorie(val total: Int, val trend: List<Trend>)

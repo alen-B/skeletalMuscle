@@ -77,17 +77,7 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
             this@SettingActivity.finish()
         }
 
-        fun clickExit() {
-            val pop = XPopup.Builder(this@SettingActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
-                    CacheUtil.setUser(null)
-                    CacheUtil.setIsLogin(false)
-                    val intent = Intent(this@SettingActivity, LoginActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                }, { })
 
-            pop.show()
-        }
     }
 
     private fun changeFragment(exportReport: Int) {

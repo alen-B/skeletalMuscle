@@ -23,7 +23,7 @@
         <View
             android:id="@+id/rtView"
             android:layout_width="0dp"
-            android:layout_height="439dp"
+            android:layout_height="410dp"
             android:background="@drawable/bg_white_round_20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="23dp"
-            android:text="@{viewModel.updateVersion.version}"
+            android:text="@{viewModel.versionTitle}"
             android:textColor="@color/color_cc1c1c1c"
             android:textSize="@dimen/text_size_3"
             app:layout_constraintStart_toEndOf="@+id/iconIv"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="23dp"
-            android:text="@{viewModel.size}"
+            android:visibility="gone"
             android:textColor="@color/color_cc1c1c1c"
             android:textSize="@dimen/text_size_4"
             app:layout_constraintBottom_toBottomOf="@+id/iconIv"
@@ -76,7 +76,7 @@
             android:id="@+id/contentTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.updateVersion.content}"
+            android:text="@{viewModel.content}"
             android:textColor="@color/color_cc1c1c1c"
             android:layout_marginStart="48dp"
             android:textSize="@dimen/text_size_4"
@@ -88,10 +88,11 @@
             style="@style/SMButton"
             android:layout_width="240dp"
             android:text="@string/setting_system_update_version_disupdate"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/color_1c1c1c"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/updateBtn"
             android:background="@drawable/bg_cacaca_round_20"
-            android:layout_margin="35dp"
             android:onClick="@{()-> click.clickDisUpdate()}" />
 
         <Button
@@ -101,7 +102,6 @@
             android:text="@string/setting_system_update_version_update"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="35dp"
             android:onClick="@{()-> click.clickUpdate()}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

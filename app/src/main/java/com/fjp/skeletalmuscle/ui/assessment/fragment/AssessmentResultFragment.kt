@@ -14,15 +14,28 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
 import me.hgj.jetpackmvvm.base.appContext
 
-class AssessmentResultFragment(val curMonth: Int) : BaseFragment<AssessmentResultViewModel, FragmentAssessmentResultBinding>() {
+class AssessmentResultFragment(val year: Int, val curMonth: Int) : BaseFragment<AssessmentResultViewModel, FragmentAssessmentResultBinding>() {
 
     companion object {
-        fun newInstance(curMonth: Int) = AssessmentResultFragment(curMonth)
+        fun newInstance(year: Int, curMonth: Int) = AssessmentResultFragment(year, curMonth)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         initRadarChart()
+        if (curMonth == 1) {
+            mDatabind.preMonth.text = "${year}-${curMonth}"
+            mDatabind.curMonth.text = "${year}-${curMonth + 1}"
+            mDatabind.nextMonth.text = "${year}-${curMonth + 2}"
+        } else if (curMonth == 12) {
+            mDatabind.preMonth.text = "${year}-${curMonth - 2}"
+            mDatabind.curMonth.text = "${year}-${curMonth - 1}"
+            mDatabind.nextMonth.text = "${year}-${curMonth}"
+        }else{
+            mDatabind.preMonth.text = "${year}-${curMonth - 1}"
+            mDatabind.curMonth.text = "${year}-${curMonth}"
+            mDatabind.nextMonth.text = "${year}-${curMonth+1}"
+        }
     }
 
     private fun initRadarChart() {
@@ -36,27 +49,26 @@ class AssessmentResultFragment(val curMonth: Int) : BaseFragment<AssessmentResul
         setData()
         chart.animateXY(1400, 1400, Easing.EaseInOutQuad)
         val xAxis = chart.xAxis
-        xAxis.textSize = 9f
         xAxis.yOffset = 0f
         xAxis.xOffset = 0f
-        val mActivities = arrayOf(
-            getString(R.string.sports_assessment_history_result_max_grips),
-            getString(R.string.sports_assessment_history_result_max_sit_up_times),
-            getString(R.string.sports_assessment_waistline),
-            getString(R.string.sports_assessment_weight),
-            getString(R.string.sports_assessment_history_result_high_leg_times),
+        val mActivities = arrayOf("握力", "起坐", "腰围", "体重", "抬腿"
+//            getString(R.string.sports_assessment_history_result_max_grips),
+//            getString(R.string.sports_assessment_history_result_max_sit_up_times),
+//            getString(R.string.sports_assessment_waistline),
+//            getString(R.string.sports_assessment_weight),
+//            getString(R.string.sports_assessment_history_result_high_leg_times),
+
         )
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return mActivities[value.toInt() % mActivities.size]
             }
         }
-
-        xAxis.textColor = appContext.getColor(R.color.color_801c1c1c)
+        xAxis.setTextSize(34f)
+        xAxis.textColor = appContext.getColor(R.color.color_1c1c1c)
 
         val yAxis = chart.yAxis
         yAxis.setLabelCount(5, false)
-        yAxis.textSize = 9f
         yAxis.axisMinimum = 0f
         yAxis.axisMaximum = 80f
         yAxis.setDrawLabels(false)
@@ -71,6 +83,7 @@ class AssessmentResultFragment(val curMonth: Int) : BaseFragment<AssessmentResul
         val cnt = 5
         val entries1 = ArrayList<RadarEntry>()
         val entries2 = ArrayList<RadarEntry>()
+        val entries3 = ArrayList<RadarEntry>()
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
@@ -79,28 +92,38 @@ class AssessmentResultFragment(val curMonth: Int) : BaseFragment<AssessmentResul
             entries1.add(RadarEntry(val1))
             val val2 = (Math.random() * mul).toFloat() + min
             entries2.add(RadarEntry(val2))
+            val val3 = (Math.random() * mul).toFloat() + min
+            entries3.add(RadarEntry(val3))
+
         }
         val set1 = RadarDataSet(entries1, "Last Week")
-        set1.color = Color.rgb(103, 110, 129)
-        set1.fillColor = Color.rgb(103, 110, 129)
-        set1.setDrawFilled(true)
-        set1.fillAlpha = 180
-        set1.lineWidth = 1f
+        set1.color = resources.getColor(R.color.color_blue)
+//        set1.setDrawFilled(true)
+//        set1.fillAlpha = 180
+        set1.lineWidth = 4f
         set1.isDrawHighlightCircleEnabled = true
         set1.setDrawHighlightIndicators(false)
         val set2 = RadarDataSet(entries2, "This Week")
-        set2.color = appContext.getColor(R.color.color_1a4e71ff)
-        set2.fillColor = appContext.getColor(R.color.color_1a4e71ff)
-        set2.setDrawFilled(true)
-        set2.fillAlpha = 180
-        set2.lineWidth = 1f
+        set2.color = appContext.getColor(R.color.color_ffc019)
+//        set2.setDrawFilled(true)
+//        set2.fillAlpha = 180
+        set2.lineWidth = 4f
         set2.isDrawHighlightCircleEnabled = true
         set2.setDrawHighlightIndicators(false)
+
+        val set3 = RadarDataSet(entries3, "This Week")
+        set3.color = appContext.getColor(R.color.color_ff574c)
+//        set2.setDrawFilled(true)
+//        set2.fillAlpha = 180
+        set3.lineWidth = 4f
+        set3.isDrawHighlightCircleEnabled = true
+        set3.setDrawHighlightIndicators(false)
         val sets = ArrayList<IRadarDataSet>()
         sets.add(set1)
         sets.add(set2)
+        sets.add(set3)
         val data = RadarData(sets)
-        data.setValueTextSize(8f)
+        data.setValueTextSize(34f)
         data.setDrawValues(false)
         data.setValueTextColor(Color.WHITE)
         mDatabind.radarChart.data = data

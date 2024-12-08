@@ -8,13 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.getVmClazz
 import me.hgj.jetpackmvvm.network.manager.NetState
-import me.hgj.jetpackmvvm.network.manager.NetworkStateManager
 
 /**
  * 作者　: hegaojian
@@ -38,11 +36,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
      */
     abstract fun layoutId(): Int
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(layoutId(), container, false)
     }
 

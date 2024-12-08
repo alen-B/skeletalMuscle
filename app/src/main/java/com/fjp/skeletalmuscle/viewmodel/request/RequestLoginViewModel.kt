@@ -2,7 +2,6 @@ package com.fjp.skeletalmuscle.viewmodel.request
 
 import androidx.lifecycle.MutableLiveData
 import com.fjp.skeletalmuscle.R
-import com.fjp.skeletalmuscle.app.network.apiService
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.fjp.skeletalmuscle.data.repository.request.HttpRequestCoroutine
 import me.hgj.jetpackmvvm.base.appContext
@@ -21,7 +20,7 @@ class RequestLoginViewModel : BaseViewModel() {
 
     fun loginReq(mobile: String, code: String) {
         request({
-            HttpRequestCoroutine.login(mobile,code)
+            HttpRequestCoroutine.login(mobile, code)
         }, loginResult, true, appContext.getString(R.string.loading_login))
 
     }

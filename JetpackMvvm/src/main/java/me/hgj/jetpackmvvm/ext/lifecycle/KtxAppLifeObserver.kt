@@ -12,7 +12,7 @@ object KtxAppLifeObserver : LifecycleObserver {
 
     //在前台
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    private  fun onForeground() {
+    private fun onForeground() {
         isForeground.value = true
     }
 

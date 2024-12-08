@@ -34,8 +34,7 @@ inline fun <reified T> T?.notNull(notNullAction: (T) -> Unit, nullAction: () -> 
 
 /**
  * 判断是否为空 并传入相关操作
- */
-/*fun <T> Any?.notNull(f: () -> T, t: () -> T): T {
+ *//*fun <T> Any?.notNull(f: () -> T, t: () -> T): T {
     return if (this != null) f() else t()
 }*/
 
@@ -86,11 +85,7 @@ fun Context.copyToClipboard(text: String, label: String = "JetpackMvvm") {
  * 检查是否启用无障碍服务
  */
 fun Context.checkAccessibilityServiceEnabled(serviceName: String): Boolean {
-    val settingValue =
-        Settings.Secure.getString(
-            applicationContext.contentResolver,
-            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-        )
+    val settingValue = Settings.Secure.getString(applicationContext.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
     var result = false
     val splitter = TextUtils.SimpleStringSplitter(':')
     while (splitter.hasNext()) {

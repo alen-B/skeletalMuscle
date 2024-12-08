@@ -105,6 +105,7 @@ class RequestTodaySportsDetailFragmentViewModel : BaseViewModel() {
         }, dumbbellUpResult, true)
 
     }
+
     // 哑铃-扩胸运动趋势图
     fun getSportTrendDumbbellExpandChest(type: String) {
         request({

@@ -7,7 +7,4 @@ import com.fjp.skeletalmuscle.data.model.bean.result.Trend
  *Time:2024/12/1
  *Description:
  */
-data class SportTrendDumbbellUp(
-    val avg_up_degree: Int,
-    val trend: List<Trend>
-)
+data class SportTrendDumbbellUp(val avg_up_degree: Int, val trend: List<Trend>)

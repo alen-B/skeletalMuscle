@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.ContentInfoCompat.Flags
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
@@ -107,14 +107,13 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     inner class ProxyClick {
 
         fun clickStartSports() {
-           val intent = Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java)
+            val intent = Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java)
             startActivity(intent)
             eventViewModel.startSports.postValue(true)
         }
 
         fun clickStartDeviceGuide() {
-            val intent = Intent(this@ExercisePlanActivity, DeviceConnectGuideActivity::class.java)
-            startActivity(intent)
+            DeviceConnectGuideActivity.start(this@ExercisePlanActivity, Constants.CONNECT_DEVICE_TYPE_EXERCISE)
         }
 
         fun clickFinish() {

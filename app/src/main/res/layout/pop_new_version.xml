@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#aa000000"
-        android:padding="35dp"
+        android:paddingStart="35dp"
+        android:paddingEnd="35dp"
+        android:paddingTop="35dp"
         tools:context=".ui.setting.ChangeAccountActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,6 +86,7 @@
             android:paddingStart="56dp"
             android:background="@drawable/bg_new_version"
             android:paddingEnd="56dp"
+            android:layout_marginBottom="28dp"
             app:layout_constraintBottom_toTopOf="@+id/updateBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -101,20 +104,24 @@
 
             <TextView
                 android:id="@+id/versionTv"
-                android:layout_width="wrap_content"
-                android:textSize="46sp"
+                android:layout_width="109dp"
+                android:layout_marginStart="24dp"
+                android:textSize="36sp"
                 android:text="V 2.51"
-                android:textColor="@color/color_222"
-                android:background="@drawable/bg_ffc019_round_20"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_ffc019_round_25"
                 app:layout_constraintStart_toEndOf="@+id/versionDiscoveryTv"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="wrap_content" />
+                app:layout_constraintTop_toTopOf="@+id/versionDiscoveryTv"
+                app:layout_constraintBottom_toBottomOf="@+id/versionDiscoveryTv"
+                android:layout_height="45dp" />
 
             <TextView
                 android:id="@+id/contentTitleTv"
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/text_size_3"
                 android:text="@string/setting_update_version_content"
+                android:layout_marginTop="40dp"
                 android:textColor="@color/color_222"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/versionDiscoveryTv"
@@ -126,10 +133,23 @@
                 android:textSize="@dimen/text_size_3"
                 android:text="@string/setting_update_version_content"
                 android:textColor="@color/color_222"
+                android:layout_marginTop="24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/contentTitleTv"
                 android:layout_height="wrap_content" />
-
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="0dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:max="100"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:progressDrawable="@drawable/me_bg_vip_progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="15dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
@@ -140,7 +160,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/updateBtn"
             android:background="@drawable/bg_cacaca_round_20"
-            android:layout_margin="35dp" />
+            android:layout_marginEnd="35dp" />
 
         <Button
             android:id="@+id/updateBtn"
@@ -149,6 +169,6 @@
             android:text="@string/setting_system_update_version_update"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="35dp" />
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </io.alterac.blurkit.BlurLayout>

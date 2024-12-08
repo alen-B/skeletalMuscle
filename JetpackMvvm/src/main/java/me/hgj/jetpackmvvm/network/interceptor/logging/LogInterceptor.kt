@@ -27,21 +27,16 @@ class LogInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val logRequest =
-            printLevel == Level.ALL || printLevel != Level.NONE && printLevel == Level.REQUEST
+        val logRequest = printLevel == Level.ALL || printLevel != Level.NONE && printLevel == Level.REQUEST
         if (logRequest) {
             //打印请求信息
-            if (request.body() != null && isParseable(
-                    request.body()!!.contentType()
-                )
-            ) {
+            if (request.body() != null && isParseable(request.body()!!.contentType())) {
                 mPrinter.printJsonRequest(request, parseParams(request))
             } else {
                 mPrinter.printFileRequest(request)
             }
         }
-        val logResponse =
-            printLevel == Level.ALL || printLevel != Level.NONE && printLevel == Level.RESPONSE
+        val logResponse = printLevel == Level.ALL || printLevel != Level.NONE && printLevel == Level.RESPONSE
         val t1 = if (logResponse) System.nanoTime() else 0
         val originalResponse: Response
         originalResponse = try {
@@ -61,8 +56,7 @@ class LogInterceptor : Interceptor {
             bodyString = printResult(request, originalResponse, logResponse)
         }
         if (logResponse) {
-            val segmentList =
-                request.url().encodedPathSegments()
+            val segmentList = request.url().encodedPathSegments()
             val header: String = if (originalResponse.networkResponse() == null) {
                 originalResponse.headers().toString()
             } else {
@@ -73,15 +67,9 @@ class LogInterceptor : Interceptor {
             val message = originalResponse.message()
             val url = originalResponse.request().url().toString()
             if (responseBody != null && isParseable(responseBody.contentType())) {
-                mPrinter.printJsonResponse(
-                    TimeUnit.NANOSECONDS.toMillis(t2 - t1), isSuccessful,
-                    code, header, responseBody.contentType(), bodyString, segmentList, message, url
-                )
+                mPrinter.printJsonResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1), isSuccessful, code, header, responseBody.contentType(), bodyString, segmentList, message, url)
             } else {
-                mPrinter.printFileResponse(
-                    TimeUnit.NANOSECONDS.toMillis(t2 - t1),
-                    isSuccessful, code, header, segmentList, message, url
-                )
+                mPrinter.printFileResponse(TimeUnit.NANOSECONDS.toMillis(t2 - t1), isSuccessful, code, header, segmentList, message, url)
             }
         }
         return originalResponse
@@ -97,11 +85,7 @@ class LogInterceptor : Interceptor {
      * @throws IOException
      */
     @Throws(IOException::class)
-    private fun printResult(
-        request: Request,
-        response: Response,
-        logResponse: Boolean
-    ): String? {
+    private fun printResult(request: Request, response: Response, logResponse: Boolean): String? {
         return try {
             //读取服务器返回的结果
             val responseBody = response.newBuilder().build().body()
@@ -110,8 +94,7 @@ class LogInterceptor : Interceptor {
             val buffer = source.buffer()
 
             //获取content的压缩类型
-            val encoding = response
-                .headers()["Content-Encoding"]
+            val encoding = response.headers()["Content-Encoding"]
             val clone = buffer.clone()
 
             //解析response content
@@ -130,11 +113,7 @@ class LogInterceptor : Interceptor {
      * @param clone        克隆后的服务器响应内容
      * @return 解析后的响应结果
      */
-    private fun parseContent(
-        responseBody: ResponseBody?,
-        encoding: String?,
-        clone: Buffer
-    ): String? {
+    private fun parseContent(responseBody: ResponseBody?, encoding: String?, clone: Buffer): String? {
         var charset = Charset.forName("UTF-8")
         val contentType = responseBody!!.contentType()
         if (contentType != null) {
@@ -143,16 +122,10 @@ class LogInterceptor : Interceptor {
         //content 使用 gzip 压缩
         return if ("gzip".equals(encoding, ignoreCase = true)) {
             //解压
-            decompressForGzip(
-                clone.readByteArray(),
-                convertCharset(charset)
-            )
+            decompressForGzip(clone.readByteArray(), convertCharset(charset))
         } else if ("zlib".equals(encoding, ignoreCase = true)) {
             //content 使用 zlib 压缩
-            decompressToStringForZlib(
-                clone.readByteArray(),
-                convertCharset(charset)
-            )
+            decompressToStringForZlib(clone.readByteArray(), convertCharset(charset))
         } else {
             //content 没有被压缩, 或者使用其他未知压缩方式
             clone.readString(charset)
@@ -202,10 +175,7 @@ class LogInterceptor : Interceptor {
                 }
                 var json = requestbuffer.readString(charset)
                 if (hasUrlEncoded(json!!)) {
-                    json = URLDecoder.decode(
-                        json,
-                        convertCharset(charset)
-                    )
+                    json = URLDecoder.decode(json, convertCharset(charset))
                 }
                 jsonFormat(json!!)
             } catch (e: IOException) {
@@ -223,15 +193,7 @@ class LogInterceptor : Interceptor {
         fun isParseable(mediaType: MediaType?): Boolean {
             return if (mediaType?.type() == null) {
                 false
-            } else isText(mediaType) || isPlain(
-                mediaType
-            )
-                    || isJson(mediaType) || isForm(
-                mediaType
-            )
-                    || isHtml(mediaType) || isXml(
-                mediaType
-            )
+            } else isText(mediaType) || isPlain(mediaType) || isJson(mediaType) || isForm(mediaType) || isHtml(mediaType) || isXml(mediaType)
         }
 
         fun isText(mediaType: MediaType?): Boolean {
@@ -243,8 +205,7 @@ class LogInterceptor : Interceptor {
         fun isPlain(mediaType: MediaType?): Boolean {
             return if (mediaType?.subtype() == null) {
                 false
-            } else mediaType.subtype()
-                .toLowerCase().contains("plain")
+            } else mediaType.subtype().toLowerCase().contains("plain")
         }
 
         @JvmStatic
@@ -270,8 +231,7 @@ class LogInterceptor : Interceptor {
         fun isForm(mediaType: MediaType?): Boolean {
             return if (mediaType?.subtype() == null) {
                 false
-            } else mediaType.subtype().toLowerCase(Locale.getDefault())
-                .contains("x-www-form-urlencoded")
+            } else mediaType.subtype().toLowerCase(Locale.getDefault()).contains("x-www-form-urlencoded")
         }
 
         fun convertCharset(charset: Charset?): String {

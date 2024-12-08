@@ -14,6 +14,7 @@ import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.pop.NewVersionPop
 import com.fjp.skeletalmuscle.data.model.bean.MainSports
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.VersionData
 import com.fjp.skeletalmuscle.databinding.ActivityMainBinding
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
 import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
@@ -64,7 +65,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             }
         })
         setMainTitle()
-//        showNewVersionPop()
     }
 
 
@@ -73,13 +73,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         requestMainViewModel.mainLiveData.observe(this) {
             parseState(it, {
                 mViewModel.curScore.set(it.score.toString())
-                if (it.sport_lift_leg!=null) {
+                if (it.sport_lift_leg != null) {
                     fragments.add(MainSportsHighKneeFragment.newInstance(it))
                 }
-                if (it.sport_dumbbell!=null) {
+                if (it.sport_dumbbell != null) {
                     fragments.add(MainSportsDumbbellFragment.newInstance(it))
                 }
-                if (it.sport_flat_support!=null) {
+                if (it.sport_flat_support != null) {
                     fragments.add(MainSportsPlankFragment.newInstance(it))
                 }
             }, {
@@ -126,21 +126,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         }
     }
 
-    private fun showNewVersionPop() {
-        val changeAccountPop = NewVersionPop(this, object : NewVersionPop.Listener {
 
-
-            override fun onClickUpdate(pop: NewVersionPop) {
-                //TODO 执行版本更新
-            }
-
-
-        })
-        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(changeAccountPop)
-
-        pop.show()
-
-    }
 
     inner class ProxyClick {
         fun startSportsAssessment() {

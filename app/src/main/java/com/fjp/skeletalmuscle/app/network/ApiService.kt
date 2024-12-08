@@ -3,18 +3,17 @@ package com.fjp.skeletalmuscle.app.network
 import com.fjp.skeletalmuscle.data.model.bean.ApiResponse
 import com.fjp.skeletalmuscle.data.model.bean.DumbbellRequest
 import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
-import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
-import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
 import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
+import com.fjp.skeletalmuscle.data.model.bean.UserInfo
+import com.fjp.skeletalmuscle.data.model.bean.result.AppVersion
+import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryResult
+import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
+import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellExpandChestResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellHeartRateResult
-import com.fjp.skeletalmuscle.data.model.bean.SportTrendDumbbellUp
-import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendFlatSupportHeartRateResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellExpandChestAndUpResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeResult
 import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
-import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.fjp.skeletalmuscle.data.model.bean.result.UpdateImageResult
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -71,7 +70,7 @@ interface ApiService {
      *
      */
     @GET("assess/get_test")
-    suspend fun getAssessment(@Query("year") year: String): ApiResponse<String>
+    suspend fun getAssessment(@Query("year") year: String): ApiResponse<AssessmentHistoryResult>
 
     /**
      * 高抬腿
@@ -134,7 +133,6 @@ interface ApiService {
     suspend fun getSportTrendLiftLegSportTime(@Query("type") type: String): ApiResponse<SportTrendLiftLegSportTimeResult>
 
 
-
     /**
      *卡路里趋势图
      *
@@ -153,8 +151,6 @@ interface ApiService {
     suspend fun getSportTrendDumbbellCalorie(@Query("type") type: String): ApiResponse<SportTrendCalorieResult>
 
 
-
-
     /**
      *哑铃-心率趋势图
      *
@@ -164,18 +160,13 @@ interface ApiService {
     suspend fun getSportTrendDumbbellHeartRate(@Query("type") type: String): ApiResponse<HeartRateResult>
 
 
-
-
     /**
      *哑铃-上举运动趋势图
      *
      */
     @FormUrlEncoded
     @GET("sport_trend/dumbbell_up")
-    suspend fun getSportTrendDumbbellUp(@Query("type") type: String): ApiResponse<SportTrendDumbbellExpandChestResult>
-
-
-
+    suspend fun getSportTrendDumbbellUp(@Query("type") type: String): ApiResponse<SportTrendDumbbellExpandChestAndUpResult>
 
 
     /**
@@ -184,7 +175,7 @@ interface ApiService {
      */
     @FormUrlEncoded
     @GET("sport_trend/dumbbell_expand_chest")
-    suspend fun getSportTrendDumbbellExpandChest(@Query("type") type: String): ApiResponse<SportTrendDumbbellExpandChestResult>
+    suspend fun getSportTrendDumbbellExpandChest(@Query("type") type: String): ApiResponse<SportTrendDumbbellExpandChestAndUpResult>
 
 
     /**
@@ -205,10 +196,12 @@ interface ApiService {
     suspend fun getSportTrendFlatSupportHeartRate(@Query("type") type: String): ApiResponse<HeartRateResult>
 
 
-
     @Multipart
     @POST("http://8.141.25.141:8000/upload")
     suspend fun uploadImg(@Part body: MultipartBody.Part): UpdateImageResult
+
+    @GET("http://8.141.25.141:8000/check/version/gugeji")
+    suspend fun checkVersion(): AppVersion
 
 
 }

@@ -10,6 +10,7 @@ import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
 import com.fjp.skeletalmuscle.databinding.ActivityDeviceConnectGuideBinding
+import com.fjp.skeletalmuscle.ui.assessment.SelectedWaistlineAndWeightActivity
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentActivity
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep1Fragment
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep2Fragment
@@ -21,10 +22,10 @@ import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.util.get
 
 class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, ActivityDeviceConnectGuideBinding>() {
-    var type: String = Constants.CONNECT_DEVICE_TYPE_EXERCISE
+    var type: Int = Constants.CONNECT_DEVICE_TYPE_EXERCISE
 
     companion object {
-        fun start(context: Context, type: String) {
+        fun start(context: Context, type: Int) {
             val intent = Intent(context, DeviceConnectGuideActivity::class.java)
             intent.putExtra(Constants.INTENT_KEY_CONNECT_DEVICE_TYPE, type)
             context.startActivity(intent)
@@ -57,7 +58,13 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
 
         fun clickNext() {
             if (mDatabind.viewpager.currentItem == mDatabind.viewpager.adapter!!.itemCount - 1) {
-                showVideoPop()
+                if (type == Constants.CONNECT_DEVICE_TYPE_EXERCISE) {
+                    showVideoPop()
+                } else {
+                    startActivity(Intent(this@DeviceConnectGuideActivity, SelectedWaistlineAndWeightActivity::class.java))
+                    finish()
+                }
+
                 return
             }
             mDatabind.viewpager.setCurrentItem(mDatabind.viewpager.currentItem + 1, true)
@@ -76,13 +83,9 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
     fun showVideoPop() {
         val videoPop = VideoPop(this@DeviceConnectGuideActivity, object : VideoPop.Listener {
             override fun jump(pop: VideoPop) {
-                if (type == Constants.CONNECT_DEVICE_TYPE_EXERCISE) {
-                    val intent = Intent(this@DeviceConnectGuideActivity, HighKneeMainActivity::class.java)
-                    startActivity(intent)
-                    eventViewModel.startSports.postValue(true)
-                } else {
-                    startActivity(Intent(this@DeviceConnectGuideActivity, SportsAssessmentActivity::class.java))
-                }
+                val intent = Intent(this@DeviceConnectGuideActivity, HighKneeMainActivity::class.java)
+                startActivity(intent)
+                eventViewModel.startSports.postValue(true)
 
                 finish()
                 pop.dismiss()

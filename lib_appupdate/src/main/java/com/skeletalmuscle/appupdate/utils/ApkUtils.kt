@@ -8,11 +8,12 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import java.io.File
 
 
-object  ApkUtils {
+object ApkUtils {
     val GET_UNKNOWN_APP_SOURCES = 200
     fun getVersionName(context: Context): String {
         return try {
@@ -52,9 +53,9 @@ object  ApkUtils {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun startPackageInstallActivity(context: Activity){
+    fun startPackageInstallActivity(context: Activity) {
         val packageURI = Uri.parse("package:${context.packageName}")
-        val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageURI)
+        val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI)
         context.startActivityForResult(intent, GET_UNKNOWN_APP_SOURCES)
     }
 }

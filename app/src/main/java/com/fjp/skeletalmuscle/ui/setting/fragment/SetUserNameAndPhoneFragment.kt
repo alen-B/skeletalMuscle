@@ -16,7 +16,8 @@ import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.ext.util.isPhone
 
 class SetUserNameAndPhoneFragment(val isUserName: Boolean) : BaseFragment<SetUserNameViewModel, FragmentSetUserNameBinding>() {
-    val saveUserInfoViewModel:SaveUserInfoViewModel by viewModels()
+    val saveUserInfoViewModel: SaveUserInfoViewModel by viewModels()
+
     companion object {
         fun newInstance(isUserName: Boolean): SetUserNameAndPhoneFragment {
 
@@ -43,7 +44,7 @@ class SetUserNameAndPhoneFragment(val isUserName: Boolean) : BaseFragment<SetUse
                 if (isUserName) {
                     App.userInfo.name = mViewModel.data.get().toString()
                     eventViewModel.updateUserNameEvent.value = mViewModel.data.get().toString()
-                }else{
+                } else {
                     App.userInfo.mobile = mViewModel.data.get().toString()
                     eventViewModel.updatePhoneEvent.value = mViewModel.data.get().toString()
                 }

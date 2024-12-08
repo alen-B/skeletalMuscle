@@ -59,14 +59,14 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
         mViewModel.totalIndex.set("/10")
         if (singleSelectType == SingleSelectType.HEIGHT.type) {
             mViewModel.curIndex.set("4")
-            unit=getString(R.string.unit_cm)
+            unit = getString(R.string.unit_cm)
             for (i in 0..80) {
                 mViewModel.dataArr.add(i, i + 130)
             }
         } else if (singleSelectType == SingleSelectType.WEIGHT.type) {
             mViewModel.curIndex.set("5")
             title = getString(R.string.weight_title)
-            unit=getString(R.string.unit_kg)
+            unit = getString(R.string.unit_kg)
             for (i in 0..70) {
 //                mViewModel.dataArr.add(i, "${i + 30}kg")
                 mViewModel.dataArr.add(i, i + 30)
@@ -75,13 +75,13 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
         } else if (singleSelectType == SingleSelectType.WAIST_LINE.type) {
             mViewModel.curIndex.set("6")
             title = getString(R.string.waist_line_title)
-            unit=getString(R.string.unit_cm)
+            unit = getString(R.string.unit_cm)
             for (i in 0..50) {
                 mViewModel.dataArr.add(i, i + 70)
             }
         } else if (singleSelectType == SingleSelectType.DAY_ONE_WEEK.type) {
             mViewModel.curIndex.set("9")
-            unit=""
+            unit = ""
             title = getString(R.string.day_one_week_title)
             for (i in 0..6) {
                 mViewModel.dataArr.add(i, i + 1)
@@ -90,7 +90,7 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
         } else if (singleSelectType == SingleSelectType.SUPPORT_TIME.type) {
             mViewModel.curIndex.set("10")
             title = getString(R.string.sports_time_title)
-            unit=""
+            unit = ""
             for (i in 0..11) {
                 mViewModel.dataArr.add(i, (i + 1) * 10)
             }

@@ -1,4 +1,5 @@
 package me.hgj.jetpackmvvm.state
+
 import androidx.lifecycle.MutableLiveData
 import me.hgj.jetpackmvvm.network.AppException
 import me.hgj.jetpackmvvm.network.BaseResponse
@@ -30,6 +31,7 @@ fun <T> MutableLiveData<ResultState<T>>.paresResult(result: BaseResponse<T>) {
         result.isSucces() -> {
             ResultState.onAppSuccess(result.getResponseData())
         }
+
         else -> {
             ResultState.onAppError(AppException(result.getResponseCode(), result.getResponseMsg()))
         }

@@ -34,14 +34,7 @@ object FileTool {
      * @param responseBody ResponseBody
      * @param loadListener OnDownLoadListener
      */
-    suspend fun downToFile(
-        key: String,
-        savePath: String,
-        saveName: String,
-        currentLength: Long,
-        responseBody: ResponseBody,
-        loadListener: OnDownLoadListener
-    ) {
+    suspend fun downToFile(key: String, savePath: String, saveName: String, currentLength: Long, responseBody: ResponseBody, loadListener: OnDownLoadListener) {
         val filePath = getFilePath(savePath, saveName)
         try {
             if (filePath == null) {
@@ -69,23 +62,12 @@ object FileTool {
      * @param key String
      * @param loadListener OnDownLoadListener
      */
-    suspend fun saveToFile(
-        currentLength: Long,
-        responseBody: ResponseBody,
-        filePath: String,
-        key: String,
-        loadListener: OnDownLoadListener
-    ) {
-        val fileLength =
-            getFileLength(currentLength, responseBody)
+    suspend fun saveToFile(currentLength: Long, responseBody: ResponseBody, filePath: String, key: String, loadListener: OnDownLoadListener) {
+        val fileLength = getFileLength(currentLength, responseBody)
         val inputStream = responseBody.byteStream()
         val accessFile = RandomAccessFile(File(filePath), "rwd")
         val channel = accessFile.channel
-        val mappedBuffer = channel.map(
-            FileChannel.MapMode.READ_WRITE,
-            currentLength,
-            fileLength - currentLength
-        )
+        val mappedBuffer = channel.map(FileChannel.MapMode.READ_WRITE, currentLength, fileLength - currentLength)
         val buffer = ByteArray(1024 * 4)
         var len = 0
         var lastProgress = 0
@@ -101,18 +83,12 @@ object FileTool {
                 //记录已经下载的长度
                 ShareDownLoadUtil.putLong(key, currentSaveLength)
                 withContext(Dispatchers.Main) {
-                    loadListener.onUpdate(
-                        key,
-                        progress,
-                        currentSaveLength,
-                        fileLength,
-                        currentSaveLength == fileLength
-                    )
+                    loadListener.onUpdate(key, progress, currentSaveLength, fileLength, currentSaveLength == fileLength)
                 }
 
                 if (currentSaveLength == fileLength) {
                     withContext(Dispatchers.Main) {
-                        loadListener.onDownLoadSuccess(key, filePath,fileLength)
+                        loadListener.onDownLoadSuccess(key, filePath, fileLength)
                     }
                     DownLoadPool.remove(key)
                 }
@@ -130,11 +106,7 @@ object FileTool {
      * @param responseBody ResponseBody
      * @return Long
      */
-    fun getFileLength(
-        currentLength: Long,
-        responseBody: ResponseBody
-    ) =
-        if (currentLength == 0L) responseBody.contentLength() else currentLength + responseBody.contentLength()
+    fun getFileLength(currentLength: Long, responseBody: ResponseBody) = if (currentLength == 0L) responseBody.contentLength() else currentLength + responseBody.contentLength()
 
 
     /**
@@ -177,12 +149,15 @@ object FileTool {
             bytes / GB >= 1 -> {
                 format.format(bytes / GB) + "GB";
             }
+
             bytes / MB >= 1 -> {
                 format.format(bytes / MB) + "MB";
             }
+
             bytes / KB >= 1 -> {
                 format.format(bytes / KB) + "KB";
             }
+
             else -> {
                 "${bytes}B";
             }

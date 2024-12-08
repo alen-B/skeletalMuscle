@@ -102,7 +102,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                 }
-                App.userInfo= it
+                App.userInfo = it
                 CacheUtil.setUser(it)
                 finish()
             }, {

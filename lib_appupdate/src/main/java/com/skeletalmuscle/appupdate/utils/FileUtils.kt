@@ -8,17 +8,17 @@ object FileUtils {
         return File(downloadPath, fileName).exists()
     }
 
-    fun createFile(downloadPath:String,fileName:String):File{
-        return File(downloadPath,fileName)
+    fun createFile(downloadPath: String, fileName: String): File {
+        return File(downloadPath, fileName)
     }
 
-    fun delete(downloadPath:String,fileName:String):Boolean{
-        return File(downloadPath,fileName).delete()
+    fun delete(downloadPath: String, fileName: String): Boolean {
+        return File(downloadPath, fileName).delete()
     }
 
-    fun createDirectory(downloadPath:String){
+    fun createDirectory(downloadPath: String) {
         val file = File(downloadPath)
-        if(!file.exists()){
+        if (!file.exists()) {
             file.mkdirs()
         }
     }

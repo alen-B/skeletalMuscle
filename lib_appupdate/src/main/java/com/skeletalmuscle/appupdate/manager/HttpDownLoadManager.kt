@@ -24,46 +24,46 @@ class HttpDownLoadManager(var downloadPath: String) : BaseHttpDownLoadManager {
     }
 
     private fun fullDownload() {
-        listener?.onStart()
+        listener?.start()
         try {
-        val url = URL(apkUrl)
-        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-        connection.requestMethod = "GET"
-        connection.readTimeout = HTTP_TIME_OUT
-        connection.connectTimeout = HTTP_TIME_OUT
-        connection.setRequestProperty("Accept-Encoding", "identity")
-        if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-            val inputStream = connection.inputStream
-            val contentLength = connection.contentLength
-            var progress = 0
-            val buffer = ByteArray(1024 * 2)
-            val file = FileUtils.createFile(downloadPath, apkName)
-            val stream = FileOutputStream(file)
-            var len: Int
-            while (inputStream.read(buffer).also { len = it } != -1 && !shutdown) {
-                stream.write(buffer, 0, len)
-                progress += len
-                listener?.onDownLoading(contentLength, progress)
-            }
+            val url = URL(apkUrl)
+            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.readTimeout = HTTP_TIME_OUT
+            connection.connectTimeout = HTTP_TIME_OUT
+            connection.setRequestProperty("Accept-Encoding", "identity")
+            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                val inputStream = connection.inputStream
+                val contentLength = connection.contentLength
+                var progress = 0
+                val buffer = ByteArray(1024 * 2)
+                val file = FileUtils.createFile(downloadPath, apkName)
+                val stream = FileOutputStream(file)
+                var len: Int
+                while (inputStream.read(buffer).also { len = it } != -1 && !shutdown) {
+                    stream.write(buffer, 0, len)
+                    progress += len
+                    listener?.onDownLoading(contentLength, progress)
+                }
 
-            if (shutdown) {
-                shutdown = false
-                listener?.cancel()
+                if (shutdown) {
+                    shutdown = false
+                    listener?.cancel()
+                } else {
+                    listener?.done(file)
+                }
+                stream.flush()
+                stream.close()
+                inputStream.close()
+            } else if (connection.responseCode == HttpURLConnection.HTTP_MOVED_PERM || connection.responseCode == HttpURLConnection.HTTP_MOVED_TEMP) {
+                apkUrl = connection.getHeaderField("Location")
+                connection.disconnect()
+                fullDownload()
             } else {
-                listener?.done(file)
+                listener?.error(SocketTimeoutException("下载失败：Http ResponseCode = " + connection.responseCode))
             }
-            stream.flush()
-            stream.close()
-            inputStream.close()
-        } else if (connection.responseCode == HttpURLConnection.HTTP_MOVED_PERM || connection.responseCode == HttpURLConnection.HTTP_MOVED_TEMP) {
-            apkUrl = connection.getHeaderField("Location")
             connection.disconnect()
-            fullDownload()
-        } else {
-            listener?.error(SocketTimeoutException("下载失败：Http ResponseCode = " + connection.responseCode))
-        }
-        connection.disconnect()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             listener?.error(e)
         }
     }

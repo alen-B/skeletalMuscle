@@ -7,7 +7,7 @@ import com.fjp.skeletalmuscle.app.ext.setAdapterAnimation
 import com.fjp.skeletalmuscle.app.util.SettingUtil
 
 
-class SingleSelectAdapter(data: ArrayList<Int>,var  unit:String,var defaultIndex: Int, var clickItem: (item: Int, position: Int) -> Unit) : BaseQuickAdapter<Int, BaseViewHolder>(R.layout.item_single_select, data) {
+class SingleSelectAdapter(data: ArrayList<Int>, var unit: String, var defaultIndex: Int, var clickItem: (item: Int, position: Int) -> Unit) : BaseQuickAdapter<Int, BaseViewHolder>(R.layout.item_single_select, data) {
     init {
         setAdapterAnimation(SettingUtil.getListMode())
     }
