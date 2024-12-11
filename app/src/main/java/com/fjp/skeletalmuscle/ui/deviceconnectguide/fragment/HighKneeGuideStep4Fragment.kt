@@ -49,26 +49,35 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         }
 
     }
+    var listener:SMBleManager.DeviceStatusListener? = object : SMBleManager.DeviceStatusListener {
+        override fun disConnected() {
+            appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
+            if(context!=null){
+                mDatabind.reconnectBtn.visibility = View.VISIBLE
+            }
+        }
 
+        override fun connected() {
+            context?.let{
+                mDatabind.reconnectBtn.visibility = View.GONE
+                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))
+                showConnectedView()
+            }
+
+        }
+
+    }
     private fun initHighKnee() {
         val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         if (leftLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
+            mViewModel.title.set(getString(R.string.high_knee_guide_step5_title))
         } else {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             mViewModel.title.set(getString(R.string.high_knee_guide_step4_title))
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
-            SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
-                override fun disConnected() {
-                    mDatabind.reconnectBtn.visibility=View.VISIBLE
-                }
-
-                override fun connected() {
-                    showConnectedView()
-                }
-
-            })
+            SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, listener)
         }
     }
 
@@ -105,17 +114,6 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             mViewModel.title.set(getString(R.string.hand_grips_connect_left_device_title))
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
-//            SMBleManager.scanDevices(DeviceType.LEFT_HAND_GRIPS.value, DeviceType.LEFT_HAND_GRIPS,object: SMBleManager.DeviceStatusListener{
-//                override fun disConnected() {
-//                    appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
-//                }
-//
-//                override fun connected() {
-//                    showConnectedView()
-//                }
-//
-//
-//            })
             initBluetooth()
         }
     }
@@ -184,20 +182,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
     }
 
     fun connectDevice() {
-        SMBleManager.scanDevices(DeviceType.LEFT_DUMBBELL.value, DeviceType.LEFT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
-            override fun disConnected() {
-                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
-                mDatabind.reconnectBtn.visibility = View.VISIBLE
-
-            }
-
-            override fun connected() {
-                appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))
-                mDatabind.reconnectBtn.visibility = View.GONE
-                showConnectedView()
-            }
-
-        })
+        SMBleManager.scanDevices(DeviceType.LEFT_DUMBBELL.value, DeviceType.LEFT_DUMBBELL, listener)
     }
 
     fun showConnectedView() {
@@ -238,5 +223,10 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        listener = null
+        println("=========listener =null ==========")
+    }
 
 }

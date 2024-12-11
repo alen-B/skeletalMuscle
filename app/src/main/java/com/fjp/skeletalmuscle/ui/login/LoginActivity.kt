@@ -21,6 +21,7 @@ import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.databinding.ActivityLoginBinding
 import com.fjp.skeletalmuscle.ui.main.MainActivity
 import com.fjp.skeletalmuscle.ui.user.InputNameActivity
@@ -38,8 +39,9 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
 
         mDatabind.viewModel = mViewModel
+        val phone = intent.getStringExtra(Constants.INTENT_KEY_PHONE)
+        mViewModel.mobile.set(phone)
 
-        mViewModel.mobile.set(intent.getStringExtra(Constants.INTENT_KEY_PHONE))
         mDatabind.click = ProxyClick()
         mViewModel.title.set(resources.getString(R.string.login_title))
         mViewModel.showRightImg.set(true)
@@ -52,7 +54,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 mViewModel.mobile.set(s)
             }
         })
-
+        mDatabind.phoneEt.setText(phone)
         initAgreement()
 
     }
@@ -94,12 +96,18 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         super.createObserver()
         reqeustLoginViewModel.loginResult.observe(this) { resultState ->
             parseState(resultState, {
+                if(!CacheUtil.hasAccount(it.mobile)){
+                    val accounts=CacheUtil.getAccounts()
+                    accounts.add(0,Account(it.name,it.mobile,it.profile))
+                    CacheUtil.setAccounts(accounts)
+                }
                 if (it.name.isNullOrEmpty()) {//创建时间是0表示没有填写过个人信息
                     val intent = Intent(this@LoginActivity, InputNameActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 } else {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
                 App.userInfo = it

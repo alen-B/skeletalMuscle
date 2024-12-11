@@ -27,8 +27,10 @@ import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
+import java.util.Random
 
 class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBleManager.DeviceListener {
+    private var requestStartTime: Long = System.currentTimeMillis() / 1000
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
     private var isRunning: Boolean = false
@@ -128,23 +130,35 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     fun completed() {
         showToast("完成了运动")
         pauseTimer()
-        val request = FlatSupportRequest(startTime,System.currentTimeMillis(),getScore(),calories,heartRate)
+        val request = FlatSupportRequest(startTime, System.currentTimeMillis(), getScore(), calories, heartRate)
         mViewModel.saveflatSupport(request)
 
 
     }
 
     private fun getScore(): Int {
-
-        return 1
+        val random = Random().nextInt(9)
+        val score = (elapsedTime / 1000) / App.sportsTime * 100
+        if (score == 100L) {
+            return 100
+        } else if (score > 90) {
+            return 90 + random
+        } else if (score > 80) {
+            return 80 + random
+        } else if (score > 70) {
+            return 70 + random
+        } else if (score > 60) {
+            return 60 + random
+        }
+        return 50
     }
 
     override fun createObserver() {
         super.createObserver()
-        mViewModel.plankLiveData.observe(this){
-            parseState(it,{
+        mViewModel.plankLiveData.observe(this) {
+            parseState(it, {
                 showToast(it)
-            },{
+            }, {
                 showToast(getString(R.string.request_failed))
             })
         }
@@ -248,8 +262,8 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             println("===高效燃脂:  " + fatBurningTime)
             println("===心肺提升时间:  " + cardioTime)
             println("===极限突破:  " + breakTime)
-            calories.add(Calorie(caloriesBurned.toInt(),DateTimeUtil.formatDate(Date(),DateTimeUtil.DATE_PATTERN_SS)))
-            heartRate.add(HeartRate(interestedValue,DateTimeUtil.formatDate(Date(),DateTimeUtil.DATE_PATTERN_SS)))
+            calories.add(Calorie(caloriesBurned.toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
+            heartRate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
         }
     }
 
@@ -303,6 +317,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     fun showCompletedDialog() {
         AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动吗？").setPositiveButton("确定") { dialog, which ->
 //            BleManager.getInstance().disconnectAllDevice()
+
             completed()
         }.setNegativeButton("取消", null).show()
     }

@@ -17,12 +17,15 @@ class MainSportsDumbbellFragment(val todayDataResult: TodayDataResult) : BaseFra
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
-        mDatabind.click = ProxyClick()
-        mViewModel.curScore.set(todayDataResult.sport_dumbbell.score.toString())
-        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(todayDataResult.sport_dumbbell.end_time - todayDataResult.sport_dumbbell.start_time))
-        mViewModel.heartRate.set(todayDataResult.sport_dumbbell.avg_rate_value.toString())
-        mViewModel.weight.set(todayDataResult.sport_dumbbell.weight.toString())
-        mViewModel.heat.set(todayDataResult.sport_dumbbell.sum_calorie.toString())
+        todayDataResult.sport_dumbbell?.let{
+            mDatabind.click = ProxyClick()
+            mViewModel.curScore.set(it.score.toString())
+            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.end_time - it.start_time))
+            mViewModel.heartRate.set(it.avg_rate_value.toString())
+            mViewModel.weight.set(it.weight.toString())
+            mViewModel.heat.set(it.sum_calorie.toString())
+        }
+
     }
 
 

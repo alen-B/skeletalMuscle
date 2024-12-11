@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.init
+import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.ui.setting.SettingActivity
@@ -34,10 +35,7 @@ class ChangeAccountPop(val context: Activity, val listener: Listener) : FullScre
 
     override fun onCreate() {
         super.onCreate()
-        val accounts = mutableListOf<Account>()
-        accounts.add(Account("冯大爷", "15699999999", ""))
-        accounts.add(Account("张大妈", "15688888888", ""))
-        accounts.add(Account("李大妈", "15666666666", ""))
+        val accounts = CacheUtil.getAccounts()
         accounts.add(Account("添加账号", "", ""))
         val adapter = AccountAdapter(accounts) { account, _ ->
             listener.onclick(account, this)

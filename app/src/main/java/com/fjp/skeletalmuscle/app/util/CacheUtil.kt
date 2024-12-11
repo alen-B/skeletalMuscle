@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.app.util
 
 import android.text.TextUtils
+import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.data.model.bean.TodayhignKneeSports
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.google.gson.Gson
@@ -33,7 +34,6 @@ object CacheUtil {
             kv.encode("user", Gson().toJson(userInfo))
             setIsLogin(true)
         }
-
     }
 
     fun setSports(highKneeSports: TodayhignKneeSports) {
@@ -41,6 +41,40 @@ object CacheUtil {
         kv.encode("todayHighKneeSports", Gson().toJson(highKneeSports))
 
     }
+
+    //用来记录切换账号时，显示的账号
+    fun setAccounts(accounts :MutableList<Account>){
+        val kv = MMKV.mmkvWithID("app")
+        kv.encode("accounts",Gson().toJson(accounts))
+    }
+    fun getAccounts():MutableList<Account>{
+        val kv = MMKV.mmkvWithID("app")
+        val accountsJSON = kv.decodeString("accounts")
+        if(accountsJSON!=null){
+            return Gson().fromJson(accountsJSON, object : TypeToken<MutableList<Account>>() {}.type)
+        }else{
+            return mutableListOf()
+        }
+    }
+
+    fun hasAccount(phone:String):Boolean{
+        val kv = MMKV.mmkvWithID("app")
+        val accountsJSON = kv.decodeString("accounts")
+        if(accountsJSON!=null){
+            val accounts:MutableList<Account> = Gson().fromJson(accountsJSON, object : TypeToken<MutableList<Account>>() {}.type)
+            var include =false
+            accounts.forEach {
+                if(it.phone == phone) {
+                    include=true
+                }
+            }
+            return include
+        }else{
+            return false
+        }
+
+    }
+
 
     fun getSports(): TodayhignKneeSports? {
         val kv = MMKV.mmkvWithID("app")
@@ -69,22 +103,6 @@ object CacheUtil {
         kv.encode("login", isLogin)
     }
 
-    /**
-     * 是否是第一次登陆
-     */
-    fun isFirst(): Boolean {
-        val kv = MMKV.mmkvWithID("app")
-        return kv.decodeBool("first", true)
-    }
-
-    /**
-     * 是否是第一次登陆
-     */
-    fun setFirst(first: Boolean): Boolean {
-        val kv = MMKV.mmkvWithID("app")
-        return kv.encode("first", first)
-    }
-
     fun setVoiceInteraction(isOpen: Boolean): Boolean {
         val kv = MMKV.mmkvWithID("app")
         return kv.encode("voiceInteraction", isOpen)
@@ -95,36 +113,4 @@ object CacheUtil {
         return kv.decodeBool("voiceInteraction", true)
     }
 
-    /**
-     * 首页是否开启获取指定文章
-     */
-    fun isNeedTop(): Boolean {
-        val kv = MMKV.mmkvWithID("app")
-        return kv.decodeBool("top", true)
-    }
-
-    /**
-     * 设置首页是否开启获取指定文章
-     */
-    fun setIsNeedTop(isNeedTop: Boolean): Boolean {
-        val kv = MMKV.mmkvWithID("app")
-        return kv.encode("top", isNeedTop)
-    }
-
-    /**
-     * 获取搜索历史缓存数据
-     */
-    fun getSearchHistoryData(): ArrayList<String> {
-        val kv = MMKV.mmkvWithID("cache")
-        val searchCacheStr = kv.decodeString("history")
-        if (!TextUtils.isEmpty(searchCacheStr)) {
-            return Gson().fromJson(searchCacheStr, object : TypeToken<ArrayList<String>>() {}.type)
-        }
-        return arrayListOf()
-    }
-
-    fun setSearchHistoryData(searchResponseStr: String) {
-        val kv = MMKV.mmkvWithID("cache")
-        kv.encode("history", searchResponseStr)
-    }
 }

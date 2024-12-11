@@ -6,11 +6,10 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
+    <com.fjp.skeletalmuscle.app.weight.CircleImageView
         android:id="@+id/avatarIv"
         android:layout_width="144dp"
         android:layout_height="144dp"
-        android:background="@drawable/avatar_default"
         tools:ignore="ContentDescription" />
 
     <TextView

@@ -86,11 +86,11 @@
             android:background="@drawable/bg_gray_round_35"
             android:layout_height="66dp">
 
-            <ImageView
+            <com.fjp.skeletalmuscle.app.weight.CircleImageView
                 android:id="@+id/avatarIv"
-                android:layout_width="42dp"
+                android:layout_width="40dp"
+                app:url="@{viewModel.smAvatar}"
                 android:layout_height="40dp"
-                android:background="@drawable/title_default_avatar"
                 tools:ignore="ContentDescription" />
 
             <View

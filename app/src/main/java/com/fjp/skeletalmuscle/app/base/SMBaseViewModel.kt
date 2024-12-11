@@ -2,6 +2,7 @@ package com.fjp.skeletalmuscle.app.base
 
 import androidx.databinding.ObservableField
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 
 /**
@@ -11,6 +12,7 @@ import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
  */
 open class SMBaseViewModel : BaseViewModel() {
     var title = ObservableField("")
+    var smAvatar = ObservableField(App.userInfo.profile)
     var showRightImg = ObservableField(false)
     var leftImg = ObservableField(R.drawable.title_left_default_icon)
     var rightImg = ObservableField<Int>()

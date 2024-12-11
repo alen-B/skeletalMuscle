@@ -13,19 +13,19 @@ import kotlinx.parcelize.Parcelize
  */
 
 @Parcelize
-data class TodayDataResult(val avg_rate_value: Int, val calorie_total: Int, val score: Int, val sport_dumbbell: SportDumbbell, val sport_flat_support: SportFlatSupport, val sport_lift_leg: SportLiftLeg, val sport_time: Int) : Parcelable
+data class TodayDataResult(val avg_rate_value: Int = 0, val calorie_total: Int = 0, val score: Int = 0, val sport_dumbbell: SportDumbbell? = null , val sport_flat_support: SportFlatSupport?= null, val sport_lift_leg: SportLiftLeg?= null, val sport_time: Int = 0) : Parcelable
 
 @Parcelize
-data class SportDumbbell(val avg_expand_chest_degree: Int, val avg_rate_value: Int, val avg_up_degree: Int, val calorie: List<Calorie>, val end_time: Long, val expand_chest_degree: List<ExpandChestDegree>, val expand_chest_times: Int, val heart_rate: List<HeartRate>, val id: Int, val max_rate_value: Int, val min_rate_value: Int, val score: Int, val start_time: Long, val sum_calorie: Int, val up_degree: List<UpDegree>, val up_times: Int, val user_id: Int, val weight: Int) : Parcelable
+data class SportDumbbell(val avg_expand_chest_degree: Int = 0, val avg_rate_value: Int = 0, val avg_up_degree: Int = 0, val calorie: List<Calorie> = listOf(), val end_time: Long= 0, val expand_chest_degree: List<ExpandChestDegree> = listOf(), val expand_chest_times: Int = 0, val heart_rate: List<HeartRate> = listOf(), val id: Int=0, val max_rate_value: Int=0, val min_rate_value: Int=0, val score: Int=0, val start_time: Long=0, val sum_calorie: Int=0, val up_degree: List<UpDegree> = listOf(), val up_times: Int=0, val user_id: Int=0, val weight: Int=0) : Parcelable
 
 @Parcelize
-data class SportFlatSupport(val avg_rate_value: Int, val calorie: List<Calorie>, val end_time: Long, val heart_rate: List<HeartRate>, val id: Int, val max_rate_value: Int, val min_rate_value: Int, val score: Int, val start_time: Long, val sum_calorie: Int, val user_id: Int) : Parcelable
+data class SportFlatSupport(val avg_rate_value: Int = 0, val calorie: List<Calorie> = listOf(), val end_time: Long = 0, val heart_rate: List<HeartRate> = listOf(), val id: Int = 0, val max_rate_value: Int = 0, val min_rate_value: Int = 0, val score: Int = 0, val start_time: Long = 0, val sum_calorie: Int = 0, val user_id: Int = 0) : Parcelable
 
 @Parcelize
-data class SportLiftLeg(val avg_left_degree:Int, val avg_rate_value: Int, val avg_right_degree: Int, val calorie: List<Calorie>, val cardiorespiratory_endurance: Double, val efficient_grease_burning: Int, val end_time: Long, val extreme_breakthrough: Int, val heart_lung_enhancement: Int, val heart_rate: List<HeartRate>, val id: Int, val left_times: Long, val max_rate_value: Int, val min_rate_value: Int, val record: List<Record>, val right_times: Int, val score: Int, val start_time: Long, val sum_calorie: Int, val user_id: Int, val warm_up_activation: Int) : Parcelable
+data class SportLiftLeg(val avg_left_degree:Int = 0, val avg_rate_value: Int = 0, val avg_right_degree: Int = 0, val calorie: List<Calorie> = listOf(), val cardiorespiratory_endurance: Double = 0.0, val efficient_grease_burning: Int = 0, val end_time: Long = 0, val extreme_breakthrough: Int = 0, val heart_lung_enhancement: Int = 0, val heart_rate: List<HeartRate> = listOf(), val id: Int = 0, val left_times: Long = 0, val max_rate_value: Int = 0, val min_rate_value: Int = 0, val record: List<Record> = listOf(), val right_times: Int = 0, val score: Int = 0, val start_time: Long = 0, val sum_calorie: Int = 0, val user_id: Int = 0, val warm_up_activation: Int = 0) : Parcelable
 
 @Parcelize
-data class ExpandChestDegree(val data_id: Int, val expand_chest_degree: Int, val id: Int, val record_time: Int, val type: Int, val up_degree: Int, val user_id: Int) : Parcelable
+data class ExpandChestDegree(val data_id: Int = 0, val expand_chest_degree: Int = 0, val id: Int = 0, val record_time: Int = 0, val type: Int = 0, val up_degree: Int = 0, val user_id: Int= 0) : Parcelable
 
 @Parcelize
-data class UpDegree(val data_id: Int, val expand_chest_degree: Int, val id: Int, val record_time: Int, val type: Int, val up_degree: Int, val user_id: Int) : Parcelable
+data class UpDegree(val data_id: Int = 0, val expand_chest_degree: Int = 0, val id: Int = 0, val record_time: Int = 0, val type: Int = 0, val up_degree: Int = 0, val user_id: Int = 0) : Parcelable

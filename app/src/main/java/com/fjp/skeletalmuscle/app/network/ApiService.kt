@@ -208,7 +208,7 @@ interface ApiService {
     @POST("http://8.141.25.141:8000/upload")
     suspend fun uploadImg(@Part body: MultipartBody.Part): UpdateImageResult
 
-    @GET("http://8.141.25.141:8000/check/version/gugeji")
+    @GET("http://8.141.25.141:8003/check/version/gugeji")
     suspend fun checkVersion(): AppVersion
 
 

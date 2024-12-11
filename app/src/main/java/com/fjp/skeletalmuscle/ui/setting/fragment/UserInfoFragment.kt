@@ -95,9 +95,10 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
 
         requestUserInfoViewModel.avatar.observe(this) {
             appContext.showToast("更新成功")
-            mDatabind.avatarLayout.setAvatarIv(requireContext(),App.userInfo.profile)
             App.userInfo.profile = it
+            mDatabind.avatarLayout.setAvatarIv(requireContext(),App.userInfo.profile)
             CacheUtil.setUser(App.userInfo)
+            eventViewModel.updateAvatarEvent.postValue(it)
         }
 
         requestUserInfoViewModel.updateImageFailed.observe(this) {
@@ -147,7 +148,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
             showSingleSelectedDialog(SingleSelectType.SEX)
         }
         fun clickExit() {
-            val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
+            val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(200).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
                 CacheUtil.setUser(null)
                 CacheUtil.setIsLogin(false)
                 val intent = Intent(context, LoginActivity::class.java)

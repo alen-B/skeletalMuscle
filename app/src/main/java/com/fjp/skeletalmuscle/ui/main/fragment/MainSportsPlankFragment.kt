@@ -17,11 +17,14 @@ class MainSportsPlankFragment(var todayDataResult: TodayDataResult) : BaseFragme
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
-        mDatabind.click = ProxyClick()
-        mViewModel.curScore.set(todayDataResult.sport_flat_support.score.toString())
-        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(todayDataResult.sport_flat_support.end_time - todayDataResult.sport_flat_support.start_time))
-        mViewModel.heartRate.set(todayDataResult.sport_flat_support.avg_rate_value.toString())
-        mViewModel.heat.set((todayDataResult.sport_flat_support.sum_calorie / 1000).toString())
+        todayDataResult.sport_flat_support?.let {
+            mDatabind.click = ProxyClick()
+            mViewModel.curScore.set(it.score.toString())
+            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.end_time - it.start_time))
+            mViewModel.heartRate.set(it.avg_rate_value.toString())
+            mViewModel.heat.set((it.sum_calorie / 1000).toString())
+        }
+
     }
 
 

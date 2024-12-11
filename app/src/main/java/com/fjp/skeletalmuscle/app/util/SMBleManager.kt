@@ -62,7 +62,7 @@ object SMBleManager {
         BleManager.getInstance().enableLog(BuildConfig.DEBUG).setReConnectCount(3, 5000).setSplitWriteNum(20).setConnectOverTime(15000).operateTimeout = 15000
     }
 
-    fun scanDevices(devicePrefix: String, deviceType: DeviceType, listener: DeviceStatusListener) {
+    fun scanDevices(devicePrefix: String, deviceType: DeviceType, listener: DeviceStatusListener?) {
         BleManager.getInstance().scan(object : BleScanCallback() {
 
             override fun onScanStarted(success: Boolean) {
@@ -90,14 +90,14 @@ object SMBleManager {
                 if (foundDevices.isEmpty()) {
                     Log.d("BLE", "No devices found with prefix: $devicePrefix")
                     appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_not_find))
-                    listener.disConnected()
+                    listener?.disConnected()
                 }
             }
 
         })
     }
 
-    private fun connectToDevice(device: BleDevice, deviceType: DeviceType, listener: DeviceStatusListener) {
+    private fun connectToDevice(device: BleDevice, deviceType: DeviceType, listener: DeviceStatusListener?) {
         BleManager.getInstance().connect(device, object : BleGattCallback() {
             override fun onStartConnect() {
                 // 连接开始，弹出Toast消息
@@ -105,7 +105,7 @@ object SMBleManager {
             }
 
             override fun onConnectFail(bleDevice: BleDevice, exception: BleException) {
-                listener.disConnected()
+                listener?.disConnected()
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail) + exception?.description)
             }
 
@@ -117,11 +117,11 @@ object SMBleManager {
                 if (deviceType === DeviceType.GTS) {
                     subscribeToNotifications(bleDevice, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_NOTIFY_CHAR)
                 }
-                listener.connected()
+                listener?.connected()
             }
 
             override fun onDisConnected(isActiveDisConnected: Boolean, device: BleDevice, gatt: BluetoothGatt, status: Int) {
-                listener.disConnected()
+                listener?.disConnected()
                 val msg = if (isActiveDisConnected) "断开连接：" else "连接丢失："
                 appContext.showToast(msg + device.name)
                 // 根据断开连接的设备名称,将对应的按钮设置为半透明状态

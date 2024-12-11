@@ -16,6 +16,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.ActionDetector
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
@@ -263,10 +264,14 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     override fun rightHandGripsConnected() {
     }
-
+    val actionDetector = ActionDetector()
     override fun onLeftDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
+        }
+        val dataPoint =DeviceDataParse.parseData2DataPoint(data)
+        if(dataPoint!=null){
+            actionDetector.process(dataPoint)
         }
         val pitch = DeviceDataParse.parseData2Pitch(data)
         val roll = DeviceDataParse.parseData2Roll(data)
@@ -343,7 +348,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         val pitch = DeviceDataParse.parseData2Pitch(data)
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===又设备: pitch:${pitch}     roll:${roll}    yaw:${yaw}")
+        println("===右设备: pitch:${pitch}     roll:${roll}    yaw:${yaw}")
         if (pitch > 90) {
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放

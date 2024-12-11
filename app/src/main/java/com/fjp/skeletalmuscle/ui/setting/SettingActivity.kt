@@ -37,6 +37,9 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
             mViewModel.userInfo.set(App.userInfo)
             mViewModel.userInfo.get()?.notifyChange()
         }
+        eventViewModel.updateAvatarEvent.observeInActivity(this){
+            mViewModel.userInfo.set(App.userInfo)
+        }
     }
 
     inner class ProxyClick {

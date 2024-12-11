@@ -14,6 +14,8 @@ import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.pop.NewVersionPop
 import com.fjp.skeletalmuscle.data.model.bean.MainSports
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.SportDumbbell
+import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.data.model.bean.result.VersionData
 import com.fjp.skeletalmuscle.databinding.ActivityMainBinding
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
@@ -64,13 +66,19 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             parseState(it, {
                 fragments.clear()
                 mViewModel.curScore.set(it.score.toString())
-                if (it.sport_lift_leg != null) {
+                if (it.sport_lift_leg == null) {
+                    fragments.add(MainSportsHighKneeFragment.newInstance(TodayDataResult()))
+                }else{
                     fragments.add(MainSportsHighKneeFragment.newInstance(it))
                 }
-                if (it.sport_dumbbell != null) {
+                if (it.sport_dumbbell == null) {
+                    fragments.add(MainSportsDumbbellFragment.newInstance(TodayDataResult()))
+                }else{
                     fragments.add(MainSportsDumbbellFragment.newInstance(it))
                 }
-                if (it.sport_flat_support != null) {
+                if (it.sport_flat_support == null) {
+                    fragments.add(MainSportsPlankFragment.newInstance(TodayDataResult()))
+                }else{
                     fragments.add(MainSportsPlankFragment.newInstance(it))
                 }
                 viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 1f, fragments)

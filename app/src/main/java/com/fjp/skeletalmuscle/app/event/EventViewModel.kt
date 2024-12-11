@@ -20,4 +20,6 @@ class EventViewModel : BaseViewModel() {
     val updatePhoneEvent = EventLiveData<String>()
     val updateUserNameEvent = EventLiveData<String>()
 
+    val updateAvatarEvent = EventLiveData<String>()
+
 }
