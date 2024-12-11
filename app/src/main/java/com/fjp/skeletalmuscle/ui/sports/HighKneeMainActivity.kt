@@ -239,8 +239,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@HighKneeMainActivity, object : DeviceOffLinePop.Listener {
-            override fun reconnect(pop: DeviceOffLinePop) {
-                pop.dismiss()
+            override fun reconnect() {
             }
         })
         val pop = XPopup.Builder(this@HighKneeMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)

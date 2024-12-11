@@ -209,8 +209,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
     fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@DumbbellMainActivity, object : DeviceOffLinePop.Listener {
-            override fun reconnect(pop: DeviceOffLinePop) {
-                pop.dismiss()
+            override fun reconnect() {
             }
 
 

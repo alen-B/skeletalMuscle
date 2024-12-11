@@ -184,8 +184,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
 
     fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@PlankActivity, object : DeviceOffLinePop.Listener {
-            override fun reconnect(pop: DeviceOffLinePop) {
-                pop.dismiss()
+            override fun reconnect() {
             }
         })
         val pop = XPopup.Builder(this@PlankActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
