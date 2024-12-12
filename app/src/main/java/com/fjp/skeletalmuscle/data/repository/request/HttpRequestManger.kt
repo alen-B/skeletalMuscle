@@ -9,6 +9,7 @@ import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.fjp.skeletalmuscle.data.model.bean.result.AppVersion
 import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryResult
+import com.fjp.skeletalmuscle.data.model.bean.result.CalendarResult
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
@@ -193,13 +194,21 @@ class HttpRequestManger {
         return apiService.getSportTrendFlatSupportCalorie(type)
     }
 
-
     /**
      *平板支撑-心率趋势图
      *
      */
     suspend fun getSportTrendFlatSupportHeartRate(type: String): ApiResponse<HeartRateResult> {
         return apiService.getSportTrendFlatSupportHeartRate(type)
+    }
+
+
+    /**
+     *运动打开日历
+     *
+     */
+    suspend fun calendar(month: String): ApiResponse<ArrayList<CalendarResult>> {
+        return apiService.calendar(month)
     }
 
     /**

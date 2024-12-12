@@ -85,7 +85,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until sportDumbbell.calorie.size) {
+        for (i in sportDumbbell.calorie.indices) {
             values.add(BarEntry(i.toFloat(), sportDumbbell.calorie[i].calorie.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
@@ -157,7 +157,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
 
-        for (i in 0 until sportDumbbell.heart_rate.size) {
+        for (i in sportDumbbell.heart_rate.indices) {
             values.add(BarEntry(i.toFloat(), sportDumbbell.heart_rate[i].rate_value.toFloat()))
 
         }
@@ -207,10 +207,10 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
 
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
-        for (i in 0 until sportDumbbell.up_degree.size) {
+        for (i in sportDumbbell.up_degree.indices) {
             values.add(BarEntry(i.toFloat(), sportDumbbell.up_degree[i].up_degree.toFloat()))
         }
-        for (i in 0 until sportDumbbell.expand_chest_degree.size) {
+        for (i in sportDumbbell.expand_chest_degree.indices) {
             values2.add(BarEntry(i.toFloat(), sportDumbbell.expand_chest_degree[i].expand_chest_degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()

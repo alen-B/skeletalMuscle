@@ -30,7 +30,7 @@ public class ProgressMonthView extends MonthView {
         mProgressPaint.setAntiAlias(true);
         mProgressPaint.setStyle(Paint.Style.STROKE);
         mProgressPaint.setStrokeWidth(dipToPx(context, 6f));
-        mProgressPaint.setColor(0xBBf54a00);
+        mProgressPaint.setColor(Color.parseColor("#ff0000"));
 
         mNoneProgressPaint.setAntiAlias(true);
         mNoneProgressPaint.setStyle(Paint.Style.STROKE);
@@ -62,7 +62,7 @@ public class ProgressMonthView extends MonthView {
     protected void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y) {
         int cx = x + mItemWidth / 2;
         int cy = y + mItemHeight / 2;
-
+        mProgressPaint.setColor(calendar.getSchemeColor());
         int angle = getAngle(Integer.parseInt(calendar.getScheme()));
 
         RectF progressRectF = new RectF(cx - mRadius, cy - mRadius, cx + mRadius, cy + mRadius);

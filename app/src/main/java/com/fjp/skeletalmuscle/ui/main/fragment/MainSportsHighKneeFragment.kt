@@ -22,8 +22,8 @@ class MainSportsHighKneeFragment(val todayDataResult: TodayDataResult) : BaseFra
             mViewModel.curScore.set(it.score.toString())
             mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.left_times))
             mViewModel.heartRate.set("${it.min_rate_value}-${it.max_rate_value}")
-            mViewModel.endurance.set((it.sum_calorie / 1000).toString())
-            mViewModel.heat.set(it.cardiorespiratory_endurance.toString())
+            mViewModel.heat.set((it.sum_calorie / 1000).toString())
+            mViewModel.endurance.set(it.cardiorespiratory_endurance.toString())
             mDatabind.exerciseIntensityLayout.setValue(it.warm_up_activation, it.efficient_grease_burning, it.heart_lung_enhancement, it.extreme_breakthrough)
         }
 

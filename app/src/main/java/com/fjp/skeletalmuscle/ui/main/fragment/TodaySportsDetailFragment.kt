@@ -241,7 +241,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         axisRight.axisMinimum = 0f
 
         val values = ArrayList<BarEntry>()
-        for (i in 0 until result.trend.size) {
+        for (i in result.trend.indices) {
             values.add(BarEntry(i.toFloat(), result.trend[i].calorie.toFloat()))
         }
         val dataSets = ArrayList<IBarDataSet>()
@@ -344,7 +344,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until result.trend.size) {
+        for (i in result.trend.indices) {
             values.add(BarEntry(i.toFloat(), result.trend[i].up_degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
@@ -418,7 +418,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until result.trend.size) {
+        for (i in result.trend.indices) {
             values.add(BarEntry(i.toFloat(), result.trend[i].calorie.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()

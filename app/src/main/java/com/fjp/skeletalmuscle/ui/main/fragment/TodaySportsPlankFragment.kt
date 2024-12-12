@@ -79,7 +79,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until sportFlatSupport.heart_rate.size) {
+        for (i in sportFlatSupport.heart_rate.indices) {
             values.add(BarEntry(i.toFloat(), sportFlatSupport.heart_rate[i].rate_value.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
@@ -151,7 +151,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
 
-        for (i in 0 until sportFlatSupport.calorie.size) {
+        for (i in sportFlatSupport.calorie.indices) {
             values.add(BarEntry(i.toFloat(), sportFlatSupport.calorie[i].calorie.toFloat()))
 
         }

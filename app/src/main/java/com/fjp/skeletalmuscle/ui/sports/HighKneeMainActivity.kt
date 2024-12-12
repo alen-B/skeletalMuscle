@@ -57,6 +57,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private var minHeartRate = 0//最小心率
     private var heartRateCount = 0
     private var sportsMinutes = 0 //运动了多少分钟
+    private var sportsSecond = 0 //运动了多少秒
     private var caloriesBurned: Double = 0.0 //消耗了多少千卡
     private var sportsTotalScore: Int = 0//运动中的总得分
     private var sportsAvgScore: Int = 0//运动中的平均分数
@@ -178,7 +179,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     private fun updateTimerTextView() {
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
-        val seconds = ((elapsedTime / 1000) % 60).toInt()
+        sportsSecond = ((elapsedTime / 1000) % 60).toInt()
         if (sportsMinutes == mViewModel.maxTime) {
             completed()
         }
@@ -208,7 +209,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             parseState(it, {
                 showToast("发送成功")
                 val intent = Intent(this@HighKneeMainActivity, SportsCompletedActivity::class.java)
-                val highKneeSports = HighKneeSports(elapsedTime, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
+                val highKneeSports = HighKneeSports(elapsedTime/1000, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
                 intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
                 startActivity(intent)
                 finish()

@@ -93,7 +93,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
 
         val values = ArrayList<Entry>()
 
-        for (i in 0 until sportLiftLeg.heart_rate.size) {
+        for (i in sportLiftLeg.heart_rate.indices) {
             values.add(BarEntry(i.toFloat(), sportLiftLeg.heart_rate[i].rate_value.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
@@ -164,9 +164,10 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
 
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
-
-        for (i in 0..sportLiftLeg.calorie.size) {
-            values.add(BarEntry(i.toFloat(), sportLiftLeg.calorie[i].calorie.toFloat()))
+        var index = 0f
+        for (i in sportLiftLeg.calorie) {
+            values.add(BarEntry(index, i.calorie.toFloat()))
+            index++
         }
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "千卡")

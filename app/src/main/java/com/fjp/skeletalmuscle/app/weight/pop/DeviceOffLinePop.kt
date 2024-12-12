@@ -70,7 +70,10 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
 
                     override fun connected() {
                         disConnectedAccount--
-                        listener.reconnect()
+                        if(disConnectedAccount==0){
+                            listener.reconnect()
+                            dismiss()
+                        }
                     }
 
                 })
@@ -85,6 +88,7 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
                         disConnectedAccount--
                         if(disConnectedAccount==0){
                             listener.reconnect()
+                            dismiss()
                         }
                     }
 
@@ -98,7 +102,10 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
 
                     override fun connected() {
                         disConnectedAccount--
-                        listener.reconnect()
+                        if(disConnectedAccount==0){
+                            listener.reconnect()
+                            dismiss()
+                        }
                     }
 
                 })

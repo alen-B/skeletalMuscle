@@ -63,23 +63,23 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun createObserver() {
         super.createObserver()
         requestMainViewModel.mainLiveData.observe(this) {
-            parseState(it, {
+            parseState(it, {todayData->
                 fragments.clear()
-                mViewModel.curScore.set(it.score.toString())
-                if (it.sport_lift_leg == null) {
+                mViewModel.curScore.set(todayData.score.toString())
+                if (todayData.sport_lift_leg == null) {
                     fragments.add(MainSportsHighKneeFragment.newInstance(TodayDataResult()))
                 }else{
-                    fragments.add(MainSportsHighKneeFragment.newInstance(it))
+                    fragments.add(MainSportsHighKneeFragment.newInstance(todayData))
                 }
-                if (it.sport_dumbbell == null) {
+                if (todayData.sport_dumbbell == null) {
                     fragments.add(MainSportsDumbbellFragment.newInstance(TodayDataResult()))
                 }else{
-                    fragments.add(MainSportsDumbbellFragment.newInstance(it))
+                    fragments.add(MainSportsDumbbellFragment.newInstance(todayData))
                 }
-                if (it.sport_flat_support == null) {
+                if (todayData.sport_flat_support == null) {
                     fragments.add(MainSportsPlankFragment.newInstance(TodayDataResult()))
                 }else{
-                    fragments.add(MainSportsPlankFragment.newInstance(it))
+                    fragments.add(MainSportsPlankFragment.newInstance(todayData))
                 }
                 viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 1f, fragments)
                 mDatabind.viewpager.adapter = viewpagerAdapter

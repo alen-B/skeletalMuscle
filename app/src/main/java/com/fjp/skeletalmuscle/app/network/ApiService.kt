@@ -8,6 +8,7 @@ import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.fjp.skeletalmuscle.data.model.bean.result.AppVersion
 import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryResult
+import com.fjp.skeletalmuscle.data.model.bean.result.CalendarResult
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
@@ -104,7 +105,6 @@ interface ApiService {
      * 高抬腿-卡路里趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/lift_leg_calorie")
     suspend fun getLiftLegCalorie(@Query("type") type: String): ApiResponse<SportTrendCalorieResult>
 
@@ -112,7 +112,6 @@ interface ApiService {
      * 高抬腿-心率趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/lift_leg_heart_rate")
     suspend fun getLiftLegHeartRate(@Query("type") type: String): ApiResponse<HeartRateResult>
 
@@ -120,7 +119,6 @@ interface ApiService {
      * 高抬腿-抬腿趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/lift_leg")
     suspend fun getSportTrendLiftLeg(@Query("type") type: String): ApiResponse<LiftLegTrendResult>
 
@@ -128,7 +126,6 @@ interface ApiService {
      *高抬腿-强度和时间
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/lift_leg_sport_time")
     suspend fun getSportTrendLiftLegSportTime(@Query("type") type: String): ApiResponse<SportTrendLiftLegSportTimeResult>
 
@@ -137,7 +134,6 @@ interface ApiService {
      *卡路里趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/calorie")
     suspend fun getSportTrendCalorie(@Query("type") type: String): ApiResponse<SportTrendCalorieResult>
 
@@ -146,7 +142,6 @@ interface ApiService {
      *哑铃-卡路里趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/dumbbell_calorie")
     suspend fun getSportTrendDumbbellCalorie(@Query("type") type: String): ApiResponse<SportTrendCalorieResult>
 
@@ -155,7 +150,6 @@ interface ApiService {
      *哑铃-心率趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/dumbbell_heart_rate")
     suspend fun getSportTrendDumbbellHeartRate(@Query("type") type: String): ApiResponse<HeartRateResult>
 
@@ -164,7 +158,6 @@ interface ApiService {
      *哑铃-上举运动趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/dumbbell_up")
     suspend fun getSportTrendDumbbellUp(@Query("type") type: String): ApiResponse<SportTrendDumbbellExpandChestAndUpResult>
 
@@ -173,7 +166,6 @@ interface ApiService {
      *哑铃-扩胸运动趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/dumbbell_expand_chest")
     suspend fun getSportTrendDumbbellExpandChest(@Query("type") type: String): ApiResponse<SportTrendDumbbellExpandChestAndUpResult>
 
@@ -182,7 +174,6 @@ interface ApiService {
      *平板支撑-卡路里趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/flat_support_calorie")
     suspend fun getSportTrendFlatSupportCalorie(@Query("type") type: String): ApiResponse<SportTrendCalorieResult>
 
@@ -191,7 +182,6 @@ interface ApiService {
      *平板支撑-心率趋势图
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/flat_support_heart_rate")
     suspend fun getSportTrendFlatSupportHeartRate(@Query("type") type: String): ApiResponse<HeartRateResult>
 
@@ -199,9 +189,8 @@ interface ApiService {
      *日历
      *
      */
-    @FormUrlEncoded
     @GET("sport_trend/calendar")
-    suspend fun calendar(@Query("month") month: String): ApiResponse<HeartRateResult>
+    suspend fun calendar(@Query("month") month: String): ApiResponse<ArrayList<CalendarResult>>
 
 
     @Multipart
