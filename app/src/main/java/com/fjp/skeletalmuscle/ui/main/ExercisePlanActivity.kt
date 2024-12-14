@@ -46,6 +46,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
         findViewById<TextView>(R.id.titleTv).setTextColor(ContextCompat.getColor(appContext, R.color.white))
         SMBleManager.addDeviceResultDataListener(this)
         setSportsType()
+        App.sportsTime = mViewModel.sportsTime.get()!!.toInt()
     }
 
     override fun createObserver() {
@@ -58,6 +59,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     private fun setSportsType() {
         when (App.sportsType) {
             SportsType.HIGH_KNEE.type -> {
+
                 mDatabind.device2Iv.setImageBitmap((ContextCompat.getDrawable(appContext, R.drawable.knee_left) as BitmapDrawable).bitmap)
                 mDatabind.device3Iv.setImageBitmap((ContextCompat.getDrawable(appContext, R.drawable.knee_right) as BitmapDrawable).bitmap)
                 mDatabind.exercisePlanSportsLegTimeCl.visibility = View.VISIBLE

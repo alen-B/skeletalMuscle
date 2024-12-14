@@ -15,9 +15,9 @@ import me.hgj.jetpackmvvm.state.ResultState
  */
 class RequestMainViewModel : BaseViewModel() {
     var mainLiveData = MutableLiveData<ResultState<TodayDataResult>>()
-    fun getTodayData() {
+    fun getTodayData(time:String) {
         request({
-            HttpRequestCoroutine.getTodayData(DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN))
+            HttpRequestCoroutine.getTodayData(time)
         }, mainLiveData)
 
     }

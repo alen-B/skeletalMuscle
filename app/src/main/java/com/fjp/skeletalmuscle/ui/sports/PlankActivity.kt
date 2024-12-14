@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.sports
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -21,6 +22,8 @@ import com.fjp.skeletalmuscle.data.model.bean.Calorie
 import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
 import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
+import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityPlankBinding
 import com.fjp.skeletalmuscle.viewmodel.state.PlankViewModel
 import com.lxj.xpopup.XPopup
@@ -28,6 +31,7 @@ import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
 import java.util.Random
+import kotlin.math.abs
 
 class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBleManager.DeviceListener {
     private var requestStartTime: Long = System.currentTimeMillis() / 1000
@@ -42,16 +46,17 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     private var heartRateCount = 0
     private var sportsMinutes = 0 //运动了多少分钟
     private var caloriesBurned: Double = 0.0 //消耗了多少千卡
-    private var sportsTotalScore: Int = 0//运动中的总得分
-    private var sportsAvgScore: Int = 0//运动中的平均分数
     private var age = 1
     private var weight = 1.0
     private var isMale = true
     private var seconds = 0
+    private var score = 0
+
     private var warmupTime = 0
     private var fatBurningTime = 0
     private var cardioTime = 0
     private var breakTime = 0
+
     private var calories: MutableList<Calorie> = arrayListOf()
     private var heartRate: MutableList<HeartRate> = arrayListOf()
 
@@ -62,7 +67,9 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             // 检查是否暂停
             seconds++
             updateTimerTextView()
-            handler.postDelayed(this, 1000)
+            if(isRunning){
+                handler.postDelayed(this, 1000)
+            }
         }
     }
 
@@ -70,7 +77,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        mViewModel.title.set("加油，再坚持一下")
+        mViewModel.title.set("平板支撑运动")
         startTimer()
         //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
@@ -94,32 +101,36 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     }
 
     private fun startTimer() {
-        if (!isRunning) {
-            startTime = SystemClock.uptimeMillis() - elapsedTime
-            isRunning = true
-            mDatabind.stopBtn.text = getString(R.string.high_knee_main_stop)
-            handler.post(updateTimerTask)
-            val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.stop_icon)
-            mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
-        }
+        startTime = SystemClock.uptimeMillis() - elapsedTime
+        isRunning = true
+        mDatabind.stopBtn.text = getString(R.string.high_knee_main_stop)
+        handler.post(updateTimerTask)
+        val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.stop_icon)
+        mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
     }
 
     private fun pauseTimer() {
-        if (isRunning) {
-            isRunning = false
-            pauseTime = SystemClock.uptimeMillis()
-            mDatabind.stopBtn.text = getString(R.string.high_knee_main_continue)
-            handler.removeCallbacks(updateTimerTask)
+        isRunning = false
+        pauseTime = SystemClock.uptimeMillis()
+        mDatabind.stopBtn.text = getString(R.string.high_knee_main_continue)
+        handler.removeCallbacks(updateTimerTask)
 
-            val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.star_icon)
-            mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
-        }
+        val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.star_icon)
+        mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
+    }
+
+    fun completed() {
+        showToast("完成了运动")
+        pauseTimer()
+        score = getScore()
+        val request = FlatSupportRequest(startTime, System.currentTimeMillis() / 1000, score, calories, heartRate)
+        mViewModel.saveflatSupport(request)
     }
 
     private fun updateTimerTextView() {
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         val seconds = ((elapsedTime / 1000) % 60).toInt()
-        if (sportsMinutes == mViewModel.maxTime) {
+        if (sportsMinutes >= mViewModel.maxTime) {
             completed()
         }
         val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
@@ -127,14 +138,6 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         mDatabind.progressBar.setProgressPercentage((elapsedTime / 1000 / (mViewModel.maxTime * 60 / 100f)).toDouble(), false)
     }
 
-    fun completed() {
-        showToast("完成了运动")
-        pauseTimer()
-        val request = FlatSupportRequest(startTime, System.currentTimeMillis(), getScore(), calories, heartRate)
-        mViewModel.saveflatSupport(request)
-
-
-    }
 
     private fun getScore(): Int {
         val random = Random().nextInt(9)
@@ -157,7 +160,11 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         super.createObserver()
         mViewModel.plankLiveData.observe(this) {
             parseState(it, {
-                showToast(it)
+                val intent = Intent(this@PlankActivity, SportsCompletedActivity::class.java)
+                val highKneeSports = HighKneeSports(SportsType.PLANK.type,elapsedTime/1000, minHeartRate, maxHeartRate, 0, DateUtils.formatDouble(abs(caloriesBurned)), score, warmupTime, fatBurningTime, cardioTime, breakTime)
+                intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
+                startActivity(intent)
+                finish()
             }, {
                 showToast(getString(R.string.request_failed))
             })
@@ -233,21 +240,22 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             totalHeartRate += interestedValue // interestedValue是心率的值
 
             heartRateCount++
+            heartRateCount++
             val maxHeartRate: Double = (220 - age).toDouble()
             val heartRatePercentage: Double = interestedValue / maxHeartRate
             // 更新区间时间，每次心率读数都假设是10秒钟的时间
             if (heartRatePercentage < 0.6) {
                 warmupTime += 10
-                curHeartRateLevel = HeartRateLevel.WARMUP_TIME
+                mViewModel.title.set(getString(R.string.high_knee_main_title))
             } else if (heartRatePercentage >= 0.6 && heartRatePercentage < 0.7) {
                 fatBurningTime += 10
-                curHeartRateLevel = HeartRateLevel.FAT_BURNING_TIME
+                mViewModel.title.set(getString(R.string.high_knee_main_title_fat_burning))
             } else if (heartRatePercentage >= 0.7 && heartRatePercentage < 0.8) {
                 cardioTime += 10
-                curHeartRateLevel = HeartRateLevel.CARDIO_TIME
+                mViewModel.title.set(getString(R.string.high_knee_main_title_cardio))
             } else {
                 breakTime += 10
-                curHeartRateLevel = HeartRateLevel.BREAK_TIME
+                mViewModel.title.set(getString(R.string.high_knee_main_title_break))
             }
             // 计算卡路里消耗
             caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds.toFloat() / 60, isMale)
@@ -257,11 +265,8 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
             println("===消耗 caloriesBurned 千卡:  " + caloriesBurned)
-            println("===暖身激活时间:  " + warmupTime)
-            println("===高效燃脂:  " + fatBurningTime)
-            println("===心肺提升时间:  " + cardioTime)
-            println("===极限突破:  " + breakTime)
-            calories.add(Calorie(caloriesBurned.toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
+
+            calories.add(Calorie((caloriesBurned*1000).toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
             heartRate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
         }
     }

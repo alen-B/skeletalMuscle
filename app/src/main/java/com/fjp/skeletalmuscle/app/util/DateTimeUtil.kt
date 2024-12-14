@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.app.util
 
 import android.annotation.SuppressLint
+import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
@@ -22,6 +23,7 @@ object DateTimeUtil {
     val DATE_PATTERN3 = "yyyy年MM月"
     var DATE_PATTERN_SS = "yyyy-MM-dd HH:mm:ss"
     var DATE_PATTERN_MM = "yyyy-MM-dd HH:mm"
+    var MM_SS = "mm:ss"
 
     /**
      * 获取现在时刻
@@ -66,6 +68,7 @@ object DateTimeUtil {
 
     fun formatDate(formatStyle: String, formatStr: String): Date {
         val format = SimpleDateFormat(formatStyle, Locale.CHINA)
+        format.timeZone = TimeZone.getDefault()
         return try {
             return format.parse(formatStr)
         } catch (e: Exception) {
@@ -122,10 +125,15 @@ object DateTimeUtil {
         val remainingSecondsAfterMinutes = remainingSecondsAfterHours % 60
 
         return when {
-            hours > 0 -> "$hours H"
-            minutes > 0 -> "$minutes Min"
+            hours > 0 -> "$hours H $minutes Min $remainingSecondsAfterMinutes sec"
+            minutes > 0 -> "$minutes Min $remainingSecondsAfterMinutes sec"
             else -> "$remainingSecondsAfterMinutes sec"
         }
+    }
+
+    fun sceond2Min(seconds: Long): String {
+        val df = DecimalFormat("#.##")
+        return df.format(seconds/60f)
     }
 
     fun getCurWeek(): String {

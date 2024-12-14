@@ -73,7 +73,6 @@ class CircleProgressView @JvmOverloads constructor(context: Context, attrs: Attr
 
         textPaint.color = textColor
         textPaint.textSize = textSize.toFloat()
-
         // 绘制圆形背景（灰色的圆环）
         canvas.drawArc(oval, 0f, 360f, false, circlePaint)
 

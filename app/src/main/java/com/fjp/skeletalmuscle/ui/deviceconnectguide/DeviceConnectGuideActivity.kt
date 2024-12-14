@@ -70,8 +70,13 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
                         showVideoPop()
                     }else if(App.sportsType == SportsType.DUMBBELL.type){
                         startActivity(Intent(this@DeviceConnectGuideActivity, DumbbellMainActivity::class.java))
+                        eventViewModel.startSports.postValue(true)
+                        finish()
+
                     }else if(App.sportsType == SportsType.PLANK.type){
                         startActivity(Intent(this@DeviceConnectGuideActivity, PlankActivity::class.java))
+                        eventViewModel.startSports.postValue(true)
+                        finish()
                     }
 
                 } else {
@@ -100,7 +105,6 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
                 val intent = Intent(this@DeviceConnectGuideActivity, HighKneeMainActivity::class.java)
                 startActivity(intent)
                 eventViewModel.startSports.postValue(true)
-
                 finish()
                 pop.dismiss()
             }

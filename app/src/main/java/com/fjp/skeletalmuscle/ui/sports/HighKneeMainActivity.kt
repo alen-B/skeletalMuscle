@@ -29,6 +29,7 @@ import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
 import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
 import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.Record
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
 import com.fjp.skeletalmuscle.viewmodel.request.RequestHighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel
@@ -92,7 +93,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             // 检查是否暂停
             seconds++
             updateTimerTextView()
-            handler.postDelayed(this, 1000)
+            if(isRunning){
+                handler.postDelayed(this, 1000)
+            }
         }
     }
 
@@ -155,18 +158,15 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     private fun startTimer() {
-        if (!isRunning) {
             startTime = SystemClock.uptimeMillis() - elapsedTime
             isRunning = true
             mDatabind.stopBtn.text = getString(R.string.high_knee_main_stop)
             handler.post(updateTimerTask)
             val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.stop_icon)
             mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
-        }
     }
 
     private fun pauseTimer() {
-        if (isRunning) {
             isRunning = false
             pauseTime = SystemClock.uptimeMillis()
             mDatabind.stopBtn.text = getString(R.string.high_knee_main_continue)
@@ -174,16 +174,15 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
             val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.star_icon)
             mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
-        }
     }
 
     private fun updateTimerTextView() {
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         sportsSecond = ((elapsedTime / 1000) % 60).toInt()
-        if (sportsMinutes == mViewModel.maxTime) {
+        if (sportsMinutes >= mViewModel.maxTime) {
             completed()
         }
-        val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
+        val timeString = String.format("%02d:%02d", sportsMinutes, sportsSecond)
         mViewModel.curTime.set(timeString)
         mDatabind.progressBar.setProgressPercentage((elapsedTime / 1000 / (mViewModel.maxTime * 60 / 100f)).toDouble(), false)
     }
@@ -209,7 +208,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             parseState(it, {
                 showToast("发送成功")
                 val intent = Intent(this@HighKneeMainActivity, SportsCompletedActivity::class.java)
-                val highKneeSports = HighKneeSports(elapsedTime/1000, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
+                val highKneeSports = HighKneeSports(SportsType.HIGH_KNEE.type,elapsedTime/1000, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
                 intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
                 startActivity(intent)
                 finish()

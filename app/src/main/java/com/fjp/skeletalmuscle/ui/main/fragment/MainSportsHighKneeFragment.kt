@@ -27,6 +27,10 @@ class MainSportsHighKneeFragment(val todayDataResult: TodayDataResult) : BaseFra
             mDatabind.exerciseIntensityLayout.setValue(it.warm_up_activation, it.efficient_grease_burning, it.heart_lung_enhancement, it.extreme_breakthrough)
         }
 
+        if(todayDataResult.sport_lift_leg==null){
+            mDatabind.exerciseIntensityLayout.setValue(1, 0, 0, 0)
+        }
+
     }
 
 

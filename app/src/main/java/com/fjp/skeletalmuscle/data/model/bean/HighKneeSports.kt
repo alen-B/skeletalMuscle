@@ -11,6 +11,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class HighKneeSports(
+    var type:Int,
     var time: Long,
     var minHeartRate: Int,
     var maxHeartRate: Int,

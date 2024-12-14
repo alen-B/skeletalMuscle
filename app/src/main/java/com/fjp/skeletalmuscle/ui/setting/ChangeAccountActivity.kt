@@ -14,6 +14,9 @@ import com.fjp.skeletalmuscle.ui.login.LoginActivity
 import com.fjp.skeletalmuscle.ui.setting.adapter.AccountAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.ChangeAccountViewModel
 
+/**
+ * 现在使用的是dialog没用activity
+ */
 class ChangeAccountActivity : BaseActivity<ChangeAccountViewModel, ActivityChangeAccountBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {

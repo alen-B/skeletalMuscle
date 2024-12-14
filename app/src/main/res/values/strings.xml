@@ -96,6 +96,7 @@
     <string name="main_kilocalorie">千卡</string>
     <string name="main_total_score">/100</string>
     <string name="times_of_minute">次/分</string>
+    <string name="unit_times_of_minute">分</string>
     <!--    日历-->
     <string name="calendar_title">运动打卡日记</string>
     <string name="calendar_pre_month">前一月</string>
@@ -305,6 +306,8 @@
     <string name="sports_completed_title">一起来看看今天的成果</string>
     <string name="sports_completed_score">本次训练得分</string>
     <string name="sports_completed_sports_time">「高抬腿%d分钟锻炼计划」</string>
+    <string name="sports_completed_sports_time_plank">「平板支撑%d分钟锻炼计划」</string>
+    <string name="sports_completed_sports_time_dumbbell">「哑铃%d分钟锻炼计划」</string>
     <string name="sports_completed_time">完成次数</string>
 
     <string name="setting_title">设置您的个人资料</string>

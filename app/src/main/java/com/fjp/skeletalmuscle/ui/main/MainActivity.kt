@@ -81,7 +81,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 }else{
                     fragments.add(MainSportsPlankFragment.newInstance(todayData))
                 }
-                viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 1f, fragments)
+                viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 0.95f, fragments)
                 mDatabind.viewpager.adapter = viewpagerAdapter
                 mDatabind.indicatorView.apply {
                     setSliderColor(getColor(R.color.color_e9e9e9), getColor(R.color.color_blue))
@@ -100,7 +100,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun onResume() {
         super.onResume()
-        requestMainViewModel.getTodayData()
+        requestMainViewModel.getTodayData(DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN))
+//        requestMainViewModel.getTodayData("2024-12-11")
     }
 
     private fun setMainTitle() {

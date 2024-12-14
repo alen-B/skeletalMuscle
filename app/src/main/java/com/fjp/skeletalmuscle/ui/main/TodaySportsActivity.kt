@@ -92,7 +92,7 @@ class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityToday
         }
 
         fun clickSportsRecord() {
-
+            startActivity(Intent(this@TodaySportsActivity, CalendarActivity::class.java))
         }
 
         fun finish() {
