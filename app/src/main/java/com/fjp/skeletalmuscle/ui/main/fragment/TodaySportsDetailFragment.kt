@@ -9,6 +9,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
@@ -32,6 +33,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
@@ -130,8 +132,8 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         request.liftLegTrendResult.observe(this) {
             parseState(it, { result ->
-                mDatabind.leftLegAvgAngleValueTv.text = result.avg_left_degree.toString()
-                mDatabind.rightLegAvgAngleValueTv.text = result.avg_right_degree.toString()
+                mDatabind.leftLegAvgAngleValueTv.text = String.format("%.2f",result.avg_left_degree)
+                mDatabind.rightLegAvgAngleValueTv.text = String.format("%.2f",result.avg_right_degree)
                 initLegAngleLineChart(result)
             }, {
                 appContext.showToast(getString(R.string.request_failed))
@@ -221,20 +223,20 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         xAxis.mAxisMinimum = 0f
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textSize = 14f
-        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.textSize = 20.dp
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
 
         val dayFormatterData = getFormatterData(ChartType.BURN_CALORIES)
         //设置底部文字显示格式化
         xAxis.valueFormatter = IndexAxisValueFormatter(dayFormatterData)
         //设置左边轴样式
         val axisLeft = barChart.axisLeft
-        axisLeft.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        axisLeft.textSize = 14f
+        axisLeft.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        axisLeft.textSize = 20.dp
         axisLeft.axisMinimum = 0f
         axisLeft.enableGridDashedLine(2f, 1f, 0f)
-        axisLeft.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        axisLeft.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         //设置右边轴样式
         val axisRight = barChart.axisRight
         axisRight.isEnabled = false
@@ -273,9 +275,9 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_cc1c1c1c)
-        xAxis.textSize = 24.dp
+        xAxis.textSize = 20.dp
         xAxis.labelCount = 4
-        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         val dayFormatterData = getFormatterData(ChartType.INTENSITY_AND_TIME)
         xAxis.valueFormatter = IndexAxisValueFormatter(dayFormatterData)
         val axisLeft = horizontalBarChart.axisLeft
@@ -285,14 +287,20 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val axisRight = horizontalBarChart.axisRight
 //        axisRight.isEnabled = false
         axisRight.setDrawGridLines(false)
-        axisRight.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        axisRight.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         axisRight.axisMinimum = 0f
 
+        axisRight.valueFormatter = object: ValueFormatter(){
+            override fun getFormattedValue(value: Float): String {
+                return DateTimeUtil.formatTime(value.toLong())
+            }
+        }
+
         val values = ArrayList<BarEntry>()
-        values.add(BarEntry(0f, result.warm_up_activation.toFloat()))
-        values.add(BarEntry(1f, result.efficient_grease_burning.toFloat()))
-        values.add(BarEntry(2f, result.heart_lung_enhancement.toFloat()))
-        values.add(BarEntry(3f, result.extreme_breakthrough.toFloat()))
+        values.add(BarEntry(0f, result.extreme_breakthrough.toFloat()))
+        values.add(BarEntry(1f, result.heart_lung_enhancement.toFloat()))
+        values.add(BarEntry(2f, result.efficient_grease_burning.toFloat()))
+        values.add(BarEntry(3f, result.warm_up_activation.toFloat()))
 
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "消耗(千卡)")
@@ -300,11 +308,11 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         barDataSet.setDrawIcons(false)
         barDataSet.colors = arrayListOf(ContextCompat.getColor(appContext, R.color.color_ff574c), ContextCompat.getColor(appContext, R.color.color_ff824c), ContextCompat.getColor(appContext, R.color.color_ffc019), ContextCompat.getColor(appContext, R.color.color_blue))
         barDataSet.setDrawValues(true)//不显示柱状图上数据
-//        barDataSet.valueFormatter = object:ValueFormatter(){
-//            override fun getFormattedValue(value: Float): String {
-//                return value.toString()+"min"
-//            }
-//        }
+        barDataSet.valueFormatter = object: ValueFormatter(){
+            override fun getFormattedValue(value: Float): String {
+                return DateTimeUtil.formatTime(value.toLong())
+            }
+        }
         val barData = BarData(dataSets)
         barData.barWidth = 0.3f
         horizontalBarChart.data = barData
@@ -328,15 +336,16 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
+        xAxis.textSize=20.dp
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.gridLineWidth = 0.5f
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
-        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.textSize=20.dp
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
@@ -402,14 +411,16 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
+        xAxis.textSize=20.dp
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.gridLineWidth = 0.5f
+        leftAxis.textSize=20.dp
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
-        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
@@ -419,7 +430,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val values = ArrayList<Entry>()
 
         for (i in result.trend.indices) {
-            values.add(BarEntry(i.toFloat(), result.trend[i].calorie.toFloat()))
+            values.add(BarEntry(i.toFloat(), result.trend[i].rate_value.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -472,10 +483,11 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.setDrawLabels(true)
+        xAxis.textSize=20.dp
         xAxis.enableGridDashedLine(2f, 1f, 0f)
 
         val leftAxis = lineChart.axisLeft
@@ -484,8 +496,8 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawLabels(true)
         leftAxis.setDrawAxisLine(false)
-        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        leftAxis.textSize=20.dp
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)

@@ -41,10 +41,10 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         mViewModel.endurance.set(sportLiftLeg.cardiorespiratory_endurance.toString())
         mViewModel.heat.set((sportLiftLeg.sum_calorie / 1000).toString())
 
-        mDatabind.warmupTimePB.setProgressPercentage(((sportLiftLeg.warm_up_activation / (sportLiftLeg.end_time - sportLiftLeg.start_time)) * 100).toDouble(), true)
-        mDatabind.fatBurningTimePb.setProgressPercentage(((sportLiftLeg.efficient_grease_burning / (sportLiftLeg.end_time - sportLiftLeg.start_time)) * 100).toDouble(), true)
-        mDatabind.cardioTimePb.setProgressPercentage(((sportLiftLeg.heart_lung_enhancement / (sportLiftLeg.end_time - sportLiftLeg.start_time)) * 100).toDouble(), true)
-        mDatabind.breakTimePB.setProgressPercentage(((sportLiftLeg.extreme_breakthrough / (sportLiftLeg.end_time - sportLiftLeg.start_time)) * 100).toDouble(), true)
+        mDatabind.warmupTimePB.setProgressPercentage(((sportLiftLeg.warm_up_activation / (sportLiftLeg.end_time - sportLiftLeg.start_time).toDouble()) * 100), true)
+        mDatabind.fatBurningTimePb.setProgressPercentage(((sportLiftLeg.efficient_grease_burning / (sportLiftLeg.end_time - sportLiftLeg.start_time).toDouble()) * 100), true)
+        mDatabind.cardioTimePb.setProgressPercentage(((sportLiftLeg.heart_lung_enhancement / (sportLiftLeg.end_time - sportLiftLeg.start_time).toDouble()) * 100), true)
+        mDatabind.breakTimePB.setProgressPercentage(((sportLiftLeg.extreme_breakthrough / (sportLiftLeg.end_time - sportLiftLeg.start_time).toDouble()) * 100), true)
         mDatabind.warmupTimeMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.warm_up_activation.toLong()) + "'"
         mDatabind.fatBurningTimeMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.heart_lung_enhancement.toLong()) + "'"
         mDatabind.cardioTimeTotalMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.cardiorespiratory_endurance.toLong()) + "'"
@@ -218,11 +218,11 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
 
         val leftLegRecord = sportLiftLeg.record.filter { it.type == 1 }
         for (i in leftLegRecord.indices) {
-            values.add(BarEntry(i.toFloat(), leftLegRecord[i].degree.toFloat()))
+            values.add(BarEntry(i.toFloat(), leftLegRecord[i].left_degree.toFloat()))
         }
         val rightLegRecord = sportLiftLeg.record.filter { it.type == 2 }
         for (i in rightLegRecord.indices) {
-            values2.add(BarEntry(i.toFloat(), rightLegRecord[i].degree.toFloat()))
+            values2.add(BarEntry(i.toFloat(), rightLegRecord[i].right_degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")

@@ -123,7 +123,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         showToast("完成了运动")
         pauseTimer()
         score = getScore()
-        val request = FlatSupportRequest(startTime, System.currentTimeMillis() / 1000, score, calories, heartRate)
+        val request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate)
         mViewModel.saveflatSupport(request)
     }
 
