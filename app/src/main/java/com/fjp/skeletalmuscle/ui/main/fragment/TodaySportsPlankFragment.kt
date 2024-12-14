@@ -38,7 +38,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         mDatabind.click = ProxyClick()
         mViewModel.curScore.set(sportFlatSupport.score.toString())
         mViewModel.curScore.set(sportFlatSupport.score.toString())
-        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportFlatSupport.end_time - sportFlatSupport.start_time))
+        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportFlatSupport.sport_time))
         mViewModel.heat.set(sportFlatSupport.avg_rate_value.toString())
         mViewModel.calorie.set(sportFlatSupport.sum_calorie.toString())
         initCalorieBarChart()

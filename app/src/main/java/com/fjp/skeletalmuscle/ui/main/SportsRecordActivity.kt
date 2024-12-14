@@ -92,29 +92,26 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
 
 
         if(todayData.sport_lift_leg!=null){
-            val time = todayData.sport_lift_leg.end_time-todayData.sport_lift_leg.start_time
-            mDatabind.highKneeSRIL.setValue(DateTimeUtil.sceond2Min(time))
+            mDatabind.highKneeSRIL.setValue(DateTimeUtil.sceond2Min(todayData.sport_lift_leg.sport_time))
         }else{
             mDatabind.highKneeSRIL.setValue("0")
         }
         if(todayData.sport_dumbbell!=null){
-            val time = todayData.sport_dumbbell.end_time-todayData.sport_dumbbell.start_time
-            mDatabind.dumbbellSRIL.setValue(DateTimeUtil.sceond2Min(time))
+            mDatabind.dumbbellSRIL.setValue(DateTimeUtil.sceond2Min(todayData.sport_dumbbell.sport_time))
         }else{
             mDatabind.dumbbellSRIL.setValue("0")
         }
 
         if(todayData.sport_flat_support!=null){
-            val time = todayData.sport_flat_support.end_time-todayData.sport_flat_support.start_time
-            mDatabind.plankSRIL.setValue(DateTimeUtil.sceond2Min(time))
+            mDatabind.plankSRIL.setValue(DateTimeUtil.sceond2Min(todayData.sport_flat_support.sport_time))
         }else{
             mDatabind.plankSRIL.setValue("0")
         }
 
-        if(todayData.sport_lift_leg!=null){
+        if(todayData.sport_lift_leg!=null && todayData.sport_lift_leg.sport_time!=0L){
             mDatabind.heightLegBg.visibility = View.VISIBLE
             val sportLiftLeg =todayData.sport_lift_leg
-            val time = sportLiftLeg.end_time-sportLiftLeg.start_time
+            val time = sportLiftLeg.sport_time
             mDatabind.highKneeSRIL.setValue(DateTimeUtil.sceond2Min(time))
             mDatabind.highKneeScoreTv.text = sportLiftLeg.score.toString()
             mDatabind.highKneeSportsTimeValueTv.text = DateTimeUtil.sceond2Min(time)
@@ -144,7 +141,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
             mDatabind.heightLegBg.visibility = View.GONE
         }
 
-        if(todayData.sport_dumbbell!=null){
+        if(todayData.sport_dumbbell!=null && todayData.sport_dumbbell.sport_time!=0L){
             mDatabind.dumbbeBg.visibility = View.VISIBLE
 
             mDatabind.dumbbellScoreTv.text = todayData.sport_dumbbell.score.toString()
@@ -156,12 +153,12 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         }else{
             mDatabind.dumbbeBg.visibility = View.GONE
         }
-        if(todayData.sport_flat_support!=null){
+        if(todayData.sport_flat_support!=null && todayData.sport_flat_support.sport_time!=0L){
             mDatabind.flatSupportBg.visibility = View.VISIBLE
             mDatabind.plankScoreTv.text = todayData.sport_flat_support.score.toString()
             mDatabind.plankAvgHeartRateValueTv.text = todayData.sport_flat_support.avg_rate_value.toString()
             mDatabind.plankBurnCaloriesValueTv.text = (todayData.sport_flat_support.sum_calorie/1000).toString()
-            mDatabind.plankSportsTimeValueTv.text = DateTimeUtil.sceond2Min(todayData.sport_flat_support.end_time-todayData.sport_flat_support.start_time)
+            mDatabind.plankSportsTimeValueTv.text = DateTimeUtil.sceond2Min(todayData.sport_flat_support.sport_time)
             initSportsPlank(todayData)
         }else{
             mDatabind.flatSupportBg.visibility = View.GONE
@@ -305,7 +302,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
 
     private fun initSportsDumbbell(todayData: TodayDataResult) {
         var dummbbell = todayData.sport_dumbbell!!
-        mViewModel.dumbbellSportsDate.add(SportsRecord("运动时长",DateTimeUtil.sceond2Min(dummbbell.end_time-dummbbell.start_time) , "分钟"))
+        mViewModel.dumbbellSportsDate.add(SportsRecord("运动时长",DateTimeUtil.sceond2Min(dummbbell.sport_time) , "分钟"))
         mViewModel.dumbbellSportsDate.add(SportsRecord("哑铃重量", dummbbell.weight.toString(),"kg"))
         mViewModel.dumbbellSportsDate.add(SportsRecord("上举次数", dummbbell.up_times.toString(), "次"))
         mViewModel.dumbbellSportsDate.add( SportsRecord("扩胸次数", dummbbell.expand_chest_times.toString(), "次"))

@@ -40,16 +40,19 @@ class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityToday
         val type = intent.get(Constants.INTENT_KEY_TODAY_SPORTS_TYPE, SportsType.HIGH_KNEE)
         val todaySportsData = intent.getParcelableExtra<TodayDataResult>(Constants.INTENT_KEY_TODAY_SPORTS_DATA)
         val fragments = arrayListOf<Fragment>()
-        if (todaySportsData?.sport_lift_leg != null && todaySportsData?.sport_lift_leg.start_time != 0L) {
-            fragments.add(TodaySportsHighKneeFragment.newInstance(todaySportsData?.sport_lift_leg))
+        if(type == SportsType.HIGH_KNEE){
+            if (todaySportsData?.sport_lift_leg != null) {
+                fragments.add(TodaySportsHighKneeFragment.newInstance(todaySportsData?.sport_lift_leg))
+            }
+        }else if(type == SportsType.DUMBBELL){
+            if (todaySportsData?.sport_dumbbell != null ) {
+                fragments.add(TodaySportsDumbbellFragment.newInstance(todaySportsData?.sport_dumbbell))
+            }
+        }else if(type == SportsType.PLANK){
+            if (todaySportsData?.sport_flat_support != null ) {
+                fragments.add(TodaySportsPlankFragment.newInstance(todaySportsData?.sport_flat_support))
+            }
         }
-        if (todaySportsData?.sport_dumbbell != null && todaySportsData?.sport_dumbbell.start_time != 0L) {
-            fragments.add(TodaySportsDumbbellFragment.newInstance(todaySportsData?.sport_dumbbell))
-        }
-        if (todaySportsData?.sport_flat_support != null && todaySportsData?.sport_flat_support.start_time != 0L) {
-            fragments.add(TodaySportsPlankFragment.newInstance(todaySportsData?.sport_flat_support))
-        }
-
         val viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 1f, fragments)
         mDatabind.viewpager.adapter = viewpagerAdapter
         mDatabind.indicatorView.apply {

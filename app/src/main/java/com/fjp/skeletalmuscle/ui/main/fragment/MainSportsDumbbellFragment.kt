@@ -20,7 +20,7 @@ class MainSportsDumbbellFragment(val todayDataResult: TodayDataResult) : BaseFra
         todayDataResult.sport_dumbbell?.let{
             mDatabind.click = ProxyClick()
             mViewModel.curScore.set(it.score.toString())
-            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.end_time - it.start_time))
+            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.sport_time))
             mViewModel.heartRate.set(it.avg_rate_value.toString())
             mViewModel.weight.set(it.weight.toString())
             mViewModel.heat.set(it.sum_calorie.toString())

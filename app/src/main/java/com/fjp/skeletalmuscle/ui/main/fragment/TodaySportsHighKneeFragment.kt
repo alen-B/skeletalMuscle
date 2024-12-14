@@ -37,14 +37,14 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.curScore.set(sportLiftLeg.score.toString())
-        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportLiftLeg.end_time - sportLiftLeg.start_time))
+        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportLiftLeg.sport_time))
         mViewModel.endurance.set(sportLiftLeg.cardiorespiratory_endurance.toString())
         mViewModel.heat.set((sportLiftLeg.sum_calorie / 1000).toString())
 
-        mDatabind.warmupTimePB.setProgressPercentage(((sportLiftLeg.warm_up_activation / (sportLiftLeg.end_time - sportLiftLeg.start_time).toDouble()) * 100), true)
-        mDatabind.fatBurningTimePb.setProgressPercentage(((sportLiftLeg.efficient_grease_burning / (sportLiftLeg.end_time - sportLiftLeg.start_time).toDouble()) * 100), true)
-        mDatabind.cardioTimePb.setProgressPercentage(((sportLiftLeg.heart_lung_enhancement / (sportLiftLeg.end_time - sportLiftLeg.start_time).toDouble()) * 100), true)
-        mDatabind.breakTimePB.setProgressPercentage(((sportLiftLeg.extreme_breakthrough / (sportLiftLeg.end_time - sportLiftLeg.start_time).toDouble()) * 100), true)
+        mDatabind.warmupTimePB.setProgressPercentage(((sportLiftLeg.warm_up_activation / (sportLiftLeg.sport_time).toDouble()) * 100), true)
+        mDatabind.fatBurningTimePb.setProgressPercentage(((sportLiftLeg.efficient_grease_burning / (sportLiftLeg.sport_time).toDouble()) * 100), true)
+        mDatabind.cardioTimePb.setProgressPercentage(((sportLiftLeg.heart_lung_enhancement / (sportLiftLeg.sport_time).toDouble()) * 100), true)
+        mDatabind.breakTimePB.setProgressPercentage(((sportLiftLeg.extreme_breakthrough / (sportLiftLeg.sport_time).toDouble()) * 100), true)
         mDatabind.warmupTimeMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.warm_up_activation.toLong()) + "'"
         mDatabind.fatBurningTimeMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.heart_lung_enhancement.toLong()) + "'"
         mDatabind.cardioTimeTotalMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.cardiorespiratory_endurance.toLong()) + "'"

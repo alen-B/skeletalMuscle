@@ -50,6 +50,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     private var weight = 1.0
     private var isMale = true
     private var seconds = 0
+    private var oldSeconds = 0
     private var score = 0
 
     private var warmupTime = 0
@@ -258,15 +259,18 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
                 mViewModel.title.set(getString(R.string.high_knee_main_title_break))
             }
             // 计算卡路里消耗
-            caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds.toFloat() / 60, isMale)
+            // 计算卡路里消耗
+            val curCaloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds - oldSeconds.toFloat() / 60, isMale)
+            oldSeconds = seconds
+            caloriesBurned += curCaloriesBurned
             //消耗 caloriesBurned 千卡
             //暖身激活时间 warmupTime 秒
             //高效燃脂 fatBurningTime 秒
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
-            println("===消耗 caloriesBurned 千卡:  " + caloriesBurned)
+            println("===消耗 caloriesBurned 千卡:  " + curCaloriesBurned)
 
-            calories.add(Calorie((caloriesBurned*1000).toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
+            calories.add(Calorie((curCaloriesBurned*1000).toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
             heartRate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
         }
     }

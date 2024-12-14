@@ -20,7 +20,7 @@ class MainSportsHighKneeFragment(val todayDataResult: TodayDataResult) : BaseFra
         todayDataResult.sport_lift_leg?.let {
             mDatabind.click = ProxyClick()
             mViewModel.curScore.set(it.score.toString())
-            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.left_times))
+            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.sport_time))
             mViewModel.heartRate.set("${it.min_rate_value}-${it.max_rate_value}")
             mViewModel.heat.set((it.sum_calorie / 1000).toString())
             mViewModel.endurance.set(it.cardiorespiratory_endurance.toString())

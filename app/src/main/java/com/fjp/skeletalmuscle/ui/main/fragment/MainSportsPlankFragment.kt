@@ -20,7 +20,7 @@ class MainSportsPlankFragment(var todayDataResult: TodayDataResult) : BaseFragme
         todayDataResult.sport_flat_support?.let {
             mDatabind.click = ProxyClick()
             mViewModel.curScore.set(it.score.toString())
-            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.end_time - it.start_time))
+            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.sport_time))
             mViewModel.heartRate.set(it.avg_rate_value.toString())
             mViewModel.heat.set((it.sum_calorie / 1000).toString())
         }

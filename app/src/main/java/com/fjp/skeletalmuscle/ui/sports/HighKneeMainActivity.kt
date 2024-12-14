@@ -71,6 +71,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private var weight = 1.0
     private var isMale = true
     private var seconds = 0
+    private var oldSeconds = 0
     private var warmupTime = 0
     private var fatBurningTime = 0
     private var cardioTime = 0
@@ -93,7 +94,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             // 检查是否暂停
             seconds++
             updateTimerTextView()
-            if(isRunning){
+            if (isRunning) {
                 handler.postDelayed(this, 1000)
             }
         }
@@ -158,22 +159,22 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     private fun startTimer() {
-            startTime = SystemClock.uptimeMillis() - elapsedTime
-            isRunning = true
-            mDatabind.stopBtn.text = getString(R.string.high_knee_main_stop)
-            handler.post(updateTimerTask)
-            val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.stop_icon)
-            mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
+        startTime = SystemClock.uptimeMillis() - elapsedTime
+        isRunning = true
+        mDatabind.stopBtn.text = getString(R.string.high_knee_main_stop)
+        handler.post(updateTimerTask)
+        val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.stop_icon)
+        mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
     }
 
     private fun pauseTimer() {
-            isRunning = false
-            pauseTime = SystemClock.uptimeMillis()
-            mDatabind.stopBtn.text = getString(R.string.high_knee_main_continue)
-            handler.removeCallbacks(updateTimerTask)
+        isRunning = false
+        pauseTime = SystemClock.uptimeMillis()
+        mDatabind.stopBtn.text = getString(R.string.high_knee_main_continue)
+        handler.removeCallbacks(updateTimerTask)
 
-            val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.star_icon)
-            mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
+        val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.star_icon)
+        mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
     }
 
     private fun updateTimerTextView() {
@@ -198,8 +199,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     private fun getCardiorespiratorEndurance(): Double {
-        //TODO 心肺耐力需要计算
-        return 0.3
+        // 抬腿频率
+        val rate = (leftLegLifts + rightLegLifts) / (System.currentTimeMillis() / 1000 - liftLegRequest.start_time) / 60f
+        return rate * (leftLegAngleSum + rightLegAngleSum) / (leftLegLifts + rightLegLifts)
     }
 
     override fun createObserver() {
@@ -208,7 +210,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             parseState(it, {
                 showToast("发送成功")
                 val intent = Intent(this@HighKneeMainActivity, SportsCompletedActivity::class.java)
-                val highKneeSports = HighKneeSports(SportsType.HIGH_KNEE.type,elapsedTime/1000, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
+                val highKneeSports = HighKneeSports(SportsType.HIGH_KNEE.type, elapsedTime / 1000, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
                 intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
                 startActivity(intent)
                 finish()
@@ -263,13 +265,14 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     override fun rightHandGripsConnected() {
     }
+
     val actionDetector = ActionDetector()
     override fun onLeftDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
         }
-        val dataPoint =DeviceDataParse.parseData2DataPoint(data)
-        if(dataPoint!=null){
+        val dataPoint = DeviceDataParse.parseData2DataPoint(data)
+        if (dataPoint != null) {
             actionDetector.process(dataPoint)
         }
         val pitch = DeviceDataParse.parseData2Pitch(data)
@@ -462,19 +465,21 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 mViewModel.title.set(getString(R.string.high_knee_main_title_break))
             }
             // 计算卡路里消耗
-            caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds.toFloat() / 60, isMale)
+            val curCaloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds - oldSeconds.toFloat() / 60, isMale)
+            oldSeconds = seconds
+            caloriesBurned += curCaloriesBurned
             //消耗 caloriesBurned 千卡
             //暖身激活时间 warmupTime 秒
             //高效燃脂 fatBurningTime 秒
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
-            println("===消耗 caloriesBurned 千卡:  " + caloriesBurned)
+            println("===消耗 caloriesBurned 千卡:  " + curCaloriesBurned)
             println("===暖身激活时间:  " + warmupTime)
             println("===高效燃脂:  " + fatBurningTime)
             println("===心肺提升时间:  " + cardioTime)
             println("===极限突破:  " + breakTime)
             liftLegRequest.heart_rate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
-            liftLegRequest.calorie.add(Calorie((caloriesBurned * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
+            liftLegRequest.calorie.add(Calorie((curCaloriesBurned * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
             liftLegRequest.heart_lung_enhancement = cardioTime
             liftLegRequest.efficient_grease_burning = fatBurningTime
             liftLegRequest.extreme_breakthrough = breakTime

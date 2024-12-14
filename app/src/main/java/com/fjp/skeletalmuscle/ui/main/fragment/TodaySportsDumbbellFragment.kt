@@ -36,7 +36,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportDumbbell.end_time - sportDumbbell.start_time))
+        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportDumbbell.sport_time))
         mViewModel.curScore.set(sportDumbbell.score.toString())
         mViewModel.heartRate.set(sportDumbbell.avg_rate_value.toString())
         mViewModel.weight.set(sportDumbbell.weight.toString())
