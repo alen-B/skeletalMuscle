@@ -17,7 +17,9 @@ class MainSportsPlankFragment(var todayDataResult: TodayDataResult) : BaseFragme
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
+        println("todayDataResult.sport_flat_support:${todayDataResult.sport_flat_support}")
         todayDataResult.sport_flat_support?.let {
+
             mDatabind.click = ProxyClick()
             mViewModel.curScore.set(it.score.toString())
             mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.sport_time))

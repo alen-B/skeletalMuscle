@@ -23,6 +23,7 @@ import com.fjp.skeletalmuscle.app.util.PermissionUtils
 import com.fjp.skeletalmuscle.app.util.PermissionUtils.hasPermission
 import com.fjp.skeletalmuscle.app.util.PermissionUtils.requestPermission
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.TodaySportsType
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySelectSportsBinding
 import com.fjp.skeletalmuscle.ui.user.adapter.TodaySportsTypeAdapter
@@ -102,6 +103,10 @@ class TodaySelectSportsActivity : BaseActivity<TodaySelectSportsViewModel, Activ
 
     fun startExericisePlanActivity() {
         val intent = Intent(this@TodaySelectSportsActivity, ExercisePlanActivity::class.java)
+        if(mViewModel.curSports.type == SportsType.DUMBBELL){
+            showToast("正在开发中....")
+            return ;
+        }
         App.sportsType = mViewModel.curSports.type.type
         startActivity(intent)
     }

@@ -17,6 +17,7 @@ class MainSportsHighKneeFragment(val todayDataResult: TodayDataResult) : BaseFra
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
+        println("todayDataResult.sport_lift_leg:${todayDataResult.sport_lift_leg}")
         todayDataResult.sport_lift_leg?.let {
             mDatabind.click = ProxyClick()
             mViewModel.curScore.set(it.score.toString())

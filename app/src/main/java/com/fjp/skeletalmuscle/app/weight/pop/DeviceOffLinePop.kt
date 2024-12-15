@@ -21,7 +21,7 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
     private lateinit var blurLayout: BlurLayout
     private var disConnectedAccount=0//未连接的设备数量
     interface Listener {
-        fun reconnect()
+        fun reconnect(type:DeviceType)
     }
 
     override fun getImplLayoutId(): Int {
@@ -44,17 +44,20 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
         val rightKneeIv = findViewById<ImageView>(R.id.rightKneeIv)
         val GTSDevice = SMBleManager.connectedDevices[DeviceType.GTS]
         if (GTSDevice == null) {
+            disConnectedAccount++
             braceletLL.setBackgroundResource(R.drawable.bg_device_offline)
             braceletTv.text = context.getString(R.string.device_off_line_bracelet)
         }
         val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         if (leftLegDevice == null) {
+            disConnectedAccount++
             leftKneeLL.setBackgroundResource(R.drawable.bg_device_offline)
             leftKneeTv.text = context.getString(R.string.device_off_line_left_knee)
         }
 
         val rightLegDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
         if (rightLegDevice == null) {
+            disConnectedAccount++
             rightKneeLL.setBackgroundResource(R.drawable.bg_device_offline)
             rightKneeTv.text = context.getString(R.string.device_off_line_right_knee)
         }
@@ -63,7 +66,6 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
             val leftLeg =SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
             val rightLeg =SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
             if(gts==null){
-                disConnectedAccount++
                 SMBleManager.scanDevices(DeviceType.GTS.value, DeviceType.GTS, object: SMBleManager.DeviceStatusListener{
                     override fun disConnected() {
                     }
@@ -71,7 +73,7 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
                     override fun connected() {
                         disConnectedAccount--
                         if(disConnectedAccount==0){
-                            listener.reconnect()
+                            listener.reconnect(DeviceType.GTS)
                             dismiss()
                         }
                     }
@@ -79,7 +81,6 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
                 })
             }
             if(leftLeg==null){
-                disConnectedAccount++
                 SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG,  object: SMBleManager.DeviceStatusListener{
                     override fun disConnected() {
                     }
@@ -87,7 +88,7 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
                     override fun connected() {
                         disConnectedAccount--
                         if(disConnectedAccount==0){
-                            listener.reconnect()
+                            listener.reconnect( DeviceType.LEFT_LEG)
                             dismiss()
                         }
                     }
@@ -95,7 +96,6 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
                 })
             }
             if(rightLeg==null){
-                disConnectedAccount++
                 SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG,  object: SMBleManager.DeviceStatusListener{
                     override fun disConnected() {
                     }
@@ -103,7 +103,7 @@ class DeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPop
                     override fun connected() {
                         disConnectedAccount--
                         if(disConnectedAccount==0){
-                            listener.reconnect()
+                            listener.reconnect(DeviceType.RIGHT_LEG)
                             dismiss()
                         }
                     }

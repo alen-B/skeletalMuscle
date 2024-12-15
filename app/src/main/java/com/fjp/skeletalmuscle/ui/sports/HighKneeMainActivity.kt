@@ -60,6 +60,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private var sportsMinutes = 0 //运动了多少分钟
     private var sportsSecond = 0 //运动了多少秒
     private var caloriesBurned: Double = 0.0 //消耗了多少千卡
+    private var oldCaloriesBurned: Double = 0.0 //上个阶段消耗的卡路里
     private var sportsTotalScore: Int = 0//运动中的总得分
     private var sportsAvgScore: Int = 0//运动中的平均分数
 
@@ -194,6 +195,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         liftLegRequest.end_time = System.currentTimeMillis() / 1000
         liftLegRequest.cardiorespiratory_endurance = getCardiorespiratorEndurance()
         println("=====请求参数：" + liftLegRequest)
+        if(liftLegRequest.end_time-liftLegRequest.start_time>App.sportsTime*60){
+            liftLegRequest.end_time=liftLegRequest.start_time+App.sportsTime*60
+        }
         requestHighKneeViewModel.saveLiftLeg(liftLegRequest)
 
     }
@@ -216,6 +220,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 finish()
             }, {
                 showToast(getString(R.string.request_failed))
+                showReCompletedDialog()
             })
 
         }
@@ -241,7 +246,15 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@HighKneeMainActivity, object : DeviceOffLinePop.Listener {
-            override fun reconnect() {
+            override fun reconnect(type:DeviceType) {
+                if(type == DeviceType.GTS){
+                    SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
+                }else if(type == DeviceType.LEFT_LEG){
+                    SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                }else if(type == DeviceType.RIGHT_LEG){
+                    SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                }
+
             }
         })
         val pop = XPopup.Builder(this@HighKneeMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
@@ -465,25 +478,26 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 mViewModel.title.set(getString(R.string.high_knee_main_title_break))
             }
             // 计算卡路里消耗
-            val curCaloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds - oldSeconds.toFloat() / 60, isMale)
-            oldSeconds = seconds
-            caloriesBurned += curCaloriesBurned
+            caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds/ 60f, isMale)
+            println("seconds - oldSeconds:${seconds - oldSeconds} interestedValue：${interestedValue} oldCaloriesBurned:${oldCaloriesBurned}    totalCalor:${caloriesBurned}")
+
             //消耗 caloriesBurned 千卡
             //暖身激活时间 warmupTime 秒
             //高效燃脂 fatBurningTime 秒
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
-            println("===消耗 caloriesBurned 千卡:  " + curCaloriesBurned)
+            println("===消耗 caloriesBurned 千卡:  " + caloriesBurned)
             println("===暖身激活时间:  " + warmupTime)
             println("===高效燃脂:  " + fatBurningTime)
             println("===心肺提升时间:  " + cardioTime)
             println("===极限突破:  " + breakTime)
             liftLegRequest.heart_rate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
-            liftLegRequest.calorie.add(Calorie((curCaloriesBurned * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
+            liftLegRequest.calorie.add(Calorie(((caloriesBurned-oldCaloriesBurned) * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
             liftLegRequest.heart_lung_enhancement = cardioTime
             liftLegRequest.efficient_grease_burning = fatBurningTime
             liftLegRequest.extreme_breakthrough = breakTime
             liftLegRequest.warm_up_activation = warmupTime
+            oldCaloriesBurned =  caloriesBurned
         }
     }
 
@@ -681,6 +695,13 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动吗？").setPositiveButton("确定") { dialog, which ->
 //            BleManager.getInstance().disconnectAllDevice()
             completed()
+        }.setNegativeButton("取消", null).show()
+    }
+
+    fun showReCompletedDialog() {
+        AlertDialog.Builder(this).setTitle("数据提交失败").setMessage("是否再次提交数据?").setPositiveButton("确定") { dialog, which ->
+            requestHighKneeViewModel.saveLiftLeg(liftLegRequest)
+
         }.setNegativeButton("取消", null).show()
     }
 

@@ -51,6 +51,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     private var sportsTotalScore: Int = 0//运动中的总得分
     private var sportsAvgScore: Int = 0//运动中的平均分数
 
+    private var oldCaloriesBurned: Double = 0.0 //上个阶段消耗的卡路里
+
     private var leftLegAngleSum = 0.0
     private var rightLegAngleSum = 0.0
     private var leftLegmaxRollInCycle = 0f // 记录周期内左腿最大的Roll值
@@ -209,9 +211,16 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
     fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@DumbbellMainActivity, object : DeviceOffLinePop.Listener {
-            override fun reconnect() {
-            }
+            override fun reconnect(type:DeviceType) {
+                if(type == DeviceType.GTS){
+                    SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
+                }else if(type == DeviceType.LEFT_LEG){
+                    SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                }else if(type == DeviceType.RIGHT_LEG){
+                    SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                }
 
+            }
 
         })
         val pop = XPopup.Builder(this@DumbbellMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
@@ -409,6 +418,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             println("===高效燃脂:  " + fatBurningTime)
             println("===心肺提升时间:  " + cardioTime)
             println("===极限突破:  " + breakTime)
+            oldCaloriesBurned = caloriesBurned
         }
     }
 

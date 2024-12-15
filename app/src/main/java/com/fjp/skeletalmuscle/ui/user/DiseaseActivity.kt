@@ -20,7 +20,7 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
 
     lateinit var diseaseAdapter: DiseaseAdapter
     lateinit var diseaseDetailAdapter: DiseaseDetailAdapter
-    var curDiseaseName = ""
+    var curDiseaseName = "无"
     var curDiseaseDetailName = ""
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel

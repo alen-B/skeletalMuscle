@@ -46,11 +46,12 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     private var heartRateCount = 0
     private var sportsMinutes = 0 //运动了多少分钟
     private var caloriesBurned: Double = 0.0 //消耗了多少千卡
+    private var oldCaloriesBurned: Double = 0.0 //上个阶段消耗的卡路里
     private var age = 1
     private var weight = 1.0
     private var isMale = true
+
     private var seconds = 0
-    private var oldSeconds = 0
     private var score = 0
 
     private var warmupTime = 0
@@ -68,7 +69,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             // 检查是否暂停
             seconds++
             updateTimerTextView()
-            if(isRunning){
+            if (isRunning) {
                 handler.postDelayed(this, 1000)
             }
         }
@@ -124,7 +125,10 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         showToast("完成了运动")
         pauseTimer()
         score = getScore()
-        val request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate)
+        var request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate)
+        if (request.end_time - request.start_time > App.sportsTime * 60) {
+            request.end_time = request.start_time + App.sportsTime * 60
+        }
         mViewModel.saveflatSupport(request)
     }
 
@@ -162,7 +166,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         mViewModel.plankLiveData.observe(this) {
             parseState(it, {
                 val intent = Intent(this@PlankActivity, SportsCompletedActivity::class.java)
-                val highKneeSports = HighKneeSports(SportsType.PLANK.type,elapsedTime/1000, minHeartRate, maxHeartRate, 0, DateUtils.formatDouble(abs(caloriesBurned)), score, warmupTime, fatBurningTime, cardioTime, breakTime)
+                val highKneeSports = HighKneeSports(SportsType.PLANK.type, elapsedTime / 1000, minHeartRate, maxHeartRate, 0, DateUtils.formatDouble(abs(caloriesBurned)), score, warmupTime, fatBurningTime, cardioTime, breakTime)
                 intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
                 startActivity(intent)
                 finish()
@@ -192,7 +196,15 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
 
     fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@PlankActivity, object : DeviceOffLinePop.Listener {
-            override fun reconnect() {
+            override fun reconnect(type: DeviceType) {
+                if (type == DeviceType.GTS) {
+                    SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
+                } else if (type == DeviceType.LEFT_LEG) {
+                    SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                } else if (type == DeviceType.RIGHT_LEG) {
+                    SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                }
+
             }
         })
         val pop = XPopup.Builder(this@PlankActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
@@ -260,18 +272,18 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             }
             // 计算卡路里消耗
             // 计算卡路里消耗
-            val curCaloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds - oldSeconds.toFloat() / 60, isMale)
-            oldSeconds = seconds
-            caloriesBurned += curCaloriesBurned
+            caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds / 60f, isMale)
+
+
             //消耗 caloriesBurned 千卡
             //暖身激活时间 warmupTime 秒
             //高效燃脂 fatBurningTime 秒
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
-            println("===消耗 caloriesBurned 千卡:  " + curCaloriesBurned)
 
-            calories.add(Calorie((curCaloriesBurned*1000).toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
+            calories.add(Calorie(((caloriesBurned - oldCaloriesBurned) * 1000).toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
             heartRate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
+            oldCaloriesBurned = caloriesBurned
         }
     }
 

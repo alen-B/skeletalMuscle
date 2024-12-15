@@ -65,6 +65,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         requestMainViewModel.mainLiveData.observe(this) {
             parseState(it, {todayData->
                 fragments.clear()
+                println("获取到了数据=======")
                 mViewModel.curScore.set(todayData.score.toString())
                 if (todayData.sport_lift_leg == null) {
                     fragments.add(MainSportsHighKneeFragment.newInstance(TodayDataResult()))

@@ -127,6 +127,8 @@ object SMBleManager {
                 // 根据断开连接的设备名称,将对应的按钮设置为半透明状态
                 val deviceName = device.name
                 if (deviceName != null) {
+                    // 从已连接设备列表中移除断开连接的设备
+                    connectedDevices.remove(deviceType)
                     deviceListeners.forEach {
                         if (deviceType == DeviceType.LEFT_LEG) {
                             it.leftLegDisConnected()
@@ -143,8 +145,6 @@ object SMBleManager {
                     }
                 }
 
-                // 从已连接设备列表中移除断开连接的设备
-                connectedDevices.remove(deviceType)
             }
         })
     }
