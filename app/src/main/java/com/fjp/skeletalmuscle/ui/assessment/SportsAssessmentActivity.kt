@@ -70,6 +70,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var leftLevelViews = mutableListOf<ImageView>()
     private var rightLevelViews = mutableListOf<ImageView>()
     private var totalTime = 60//总共运行一分钟
+    private var totalGripTimes = 3//总共运行一分钟
     private var curType = AssessmentType.HighLeg
     private var weight: Int = 0//用户选择的当前体重
     private var waistline: Int = 0//用户选择的当前腰围
@@ -163,7 +164,11 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
         mViewModel.curTime.set(timeString)
-        mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
+        if(curType == AssessmentType.Grip){
+            mDatabind.countdownTv.text = "还剩${totalGripTimes - gripCount}次"
+        }else{
+            mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
+        }
         if (totalTime - seconds < 20) {
             if (curType == AssessmentType.HighLeg) {
                 if (!mDatabind.nextSportsIv.isVisible) {
@@ -212,9 +217,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 mDatabind.centerIv.setImageResource(R.drawable.assessment_09)
                 //移除高抬腿设备监听
                 SMBleManager.delDeviceResultDataListener(this)
-            }
-
-            else -> {
+            }else -> {
                 println("=============================")
                 println("抬腿次数：" + (leftLegLifts + rightLegLifts))
                 println("起坐：" + totalSitUpTimes)
@@ -500,6 +503,9 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                         if (countTemp == 0) {
                             mViewModel.sportsNumber.set((maxGrip / 10).toString())
                             gripCount++
+                            if(gripCount==3){
+                                completed()
+                            }
                         }
                     }
                 }
