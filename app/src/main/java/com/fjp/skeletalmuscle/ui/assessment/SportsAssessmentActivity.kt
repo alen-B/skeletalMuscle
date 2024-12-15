@@ -275,11 +275,13 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
 
     fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@SportsAssessmentActivity, object : DeviceOffLinePop.Listener {
-            override fun reconnect() {
+
+
+            override fun reconnect(type: DeviceType) {
+                TODO("Not yet implemented")
             }
         })
         val pop = XPopup.Builder(this@SportsAssessmentActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
-
         pop.show()
     }
 

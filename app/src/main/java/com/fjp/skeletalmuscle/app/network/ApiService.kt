@@ -7,7 +7,7 @@ import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.fjp.skeletalmuscle.data.model.bean.result.AppVersion
-import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryResult
+import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryData
 import com.fjp.skeletalmuscle.data.model.bean.result.CalendarResult
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
@@ -71,7 +71,7 @@ interface ApiService {
      *
      */
     @GET("assess/get_test")
-    suspend fun getAssessment(@Query("year") year: String): ApiResponse<AssessmentHistoryResult>
+    suspend fun getAssessment(@Query("year") year: String): ApiResponse<ArrayList<AssessmentHistoryData>>
 
     /**
      * 高抬腿

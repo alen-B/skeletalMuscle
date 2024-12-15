@@ -173,6 +173,9 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+
+        lineChart.extraBottomOffset=18f
+        lineChart.extraRightOffset=18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -208,7 +211,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         lineDataSet.setDrawCircles(false)
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ffc019)
         lineDataSet.setDrawCircleHole(false)
@@ -240,6 +243,9 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
        lineChart.setScaleEnabled(false)
        lineChart.setDrawBorders(false)
        lineChart.setDrawGridBackground(false)
+
+       lineChart.extraBottomOffset=18f
+       lineChart.extraRightOffset=18f
        val description = Description()
        description.text = ""
        lineChart.description = description
@@ -275,7 +281,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
        val dataSets = ArrayList<ILineDataSet>()
        val lineDataSet = LineDataSet(values, "")
        lineDataSet.setDrawIcons(false)
-       lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+       lineDataSet.setMode(LineDataSet.Mode.LINEAR);
        lineDataSet.setDrawCircles(false)
        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_4e71ff)
        lineDataSet.setDrawCircleHole(false)
@@ -334,6 +340,9 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         lineChart.isDragEnabled = false
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+
+        lineChart.extraBottomOffset=18f
+        lineChart.extraRightOffset=18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -376,7 +385,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "0")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(false)
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)

@@ -5,11 +5,11 @@ package com.fjp.skeletalmuscle.data.model.bean.result
  *Time:2024/12/7
  *Description:
  */
-data class AssessmentHistoryResult(
-    val `data`: List<Data>
-)
+//data class AssessmentHistoryResult(
+//    val `data`: List<Data>
+//)
 
-data class Data(
+data class AssessmentHistoryData(
     val bmi: Double,
     val grip: Int,
     val id: Int,

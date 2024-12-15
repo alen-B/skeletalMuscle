@@ -91,7 +91,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(false)
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
@@ -216,7 +216,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(false)
         lineDataSet.setDrawValues(false)
         lineDataSet.color = appContext.getColor(R.color.color_blue)
@@ -236,7 +236,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
 
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
-        lineDataSet2.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(false)
         lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
         lineDataSet2.setDrawCircleHole(false)

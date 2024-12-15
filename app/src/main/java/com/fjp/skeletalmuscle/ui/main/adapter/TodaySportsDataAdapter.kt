@@ -91,6 +91,9 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+
+        lineChart.extraBottomOffset=18f
+        lineChart.extraRightOffset=18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -117,7 +120,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         lineDataSet.setDrawCircles(false)
         lineDataSet.setColor(Color.parseColor("#FFDD82"))
 //        lineDataSet.setCircleColor(Color.BLACK)
@@ -179,6 +182,9 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
+
+        barChart.extraBottomOffset=18f
+        barChart.extraRightOffset=18f
         val description = Description()
         description.text = ""
         barChart.description = description

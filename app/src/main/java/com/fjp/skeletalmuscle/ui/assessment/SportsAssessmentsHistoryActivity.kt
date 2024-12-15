@@ -1,14 +1,13 @@
 package com.fjp.skeletalmuscle.ui.assessment
 
 import android.graphics.Color
-import android.icu.util.Calendar
 import android.os.Bundle
-import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
+import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryData
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentsHistoryBinding
 import com.fjp.skeletalmuscle.ui.assessment.adapter.SportsAssessmentsHistoryAdapter
 import com.fjp.skeletalmuscle.ui.assessment.fragment.AssessmentResultFragment
@@ -26,6 +25,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
+import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.ext.util.dp2px
 import java.time.LocalDate
 import kotlin.random.Random
@@ -51,12 +51,10 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         })
         mViewModel.calendarTitle.set("${curYear}年")
-        initTestLineChart()
-        initWeightLineChart()
-        initWaistlineLineChart()
+        mViewModel.getAssessment(curYear.toString())
     }
 
-    private fun initTestLineChart() {
+    private fun initTestLineChart(assessmentHistory: ArrayList<AssessmentHistoryData>) {
         val lineChart = mDatabind.sportsLineChart
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
@@ -64,6 +62,9 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+
+        lineChart.extraBottomOffset=18f
+        lineChart.extraRightOffset=18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -107,20 +108,20 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val values2 = ArrayList<Entry>()
         val values3 = ArrayList<Entry>()
 
-        for (i in 0..11) {
-            values.add(BarEntry(i.toFloat(), Random.nextInt(80).toFloat()))
+        for (i in assessmentHistory.indices) {
+            values.add(BarEntry(i.toFloat(), assessmentHistory[i].lift_leg.toFloat()))
         }
-        for (i in  0..11) {
-            values2.add(BarEntry(i.toFloat(),  Random.nextInt(80).toFloat()-20))
+        for (i in  assessmentHistory.indices) {
+            values2.add(BarEntry(i.toFloat(),  assessmentHistory[i].sit_up.toFloat()))
         }
 
-        for (i in  0..11) {
-            values3.add(BarEntry(i.toFloat(),  Random.nextInt(30).toFloat()))
+        for (i in assessmentHistory.indices) {
+            values3.add(BarEntry(i.toFloat(),  assessmentHistory[i].grip.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(false)
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
@@ -141,12 +142,12 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
-        lineDataSet2.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(false)
         lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
-//        lineDataSet2.axisDependency=YAxis.AxisDependency.LEFT
+        lineDataSet2.axisDependency=YAxis.AxisDependency.LEFT
         // draw selection line as dashed
         lineDataSet2.enableDashedHighlightLine(10f, 5f, 0f)
 
@@ -163,7 +164,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         val lineDataSet3 = LineDataSet(values2, "千卡")
         lineDataSet3.setDrawIcons(false)
-        lineDataSet3.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet3.mode = LineDataSet.Mode.LINEAR
         lineDataSet3.setDrawCircles(false)
         lineDataSet3.color = appContext.getColor(R.color.color_ff574c)
         lineDataSet3.setDrawCircleHole(false)
@@ -193,7 +194,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.setNoDataText("暂无数据")
         lineChart.animateY(500)
     }
-    private fun initWeightLineChart() {
+    private fun initWeightLineChart(assessmentHistory: ArrayList<AssessmentHistoryData>) {
         val lineChart = mDatabind.weightLineChart
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
@@ -201,6 +202,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+        lineChart.extraBottomOffset=18f
+        lineChart.extraRightOffset=18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -244,17 +247,17 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val values2 = ArrayList<Entry>()
         val values3 = ArrayList<Entry>()
 
-        for (i in 0..11) {
-            values.add(BarEntry(i.toFloat(), Random.nextInt(80).toFloat()))
+        for (i in assessmentHistory.indices) {
+            values.add(BarEntry(i.toFloat(), assessmentHistory[i].weight.toFloat()))
         }
-        for (i in  0..11) {
-            values2.add(BarEntry(i.toFloat(),  Random.nextInt(80).toFloat()-20))
+        for (i in assessmentHistory.indices) {
+            values2.add(BarEntry(i.toFloat(),  assessmentHistory[i].bmi.toFloat()))
         }
 
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(false)
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
@@ -275,12 +278,12 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
-        lineDataSet2.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(false)
         lineDataSet.color = appContext.getColor(R.color.color_8e4cff)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
-//        lineDataSet2.axisDependency=YAxis.AxisDependency.LEFT
+        lineDataSet2.axisDependency=YAxis.AxisDependency.RIGHT
         // draw selection line as dashed
         lineDataSet2.enableDashedHighlightLine(10f, 5f, 0f)
 
@@ -305,13 +308,15 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.animateY(500)
     }
 
-    private fun initWaistlineLineChart() {
+    private fun initWaistlineLineChart(assessmentHistory: ArrayList<AssessmentHistoryData>) {
         val lineChart = mDatabind.waistlineLineChart
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
         lineChart.isDragEnabled = false
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
+        lineChart.extraBottomOffset=18f
+        lineChart.extraRightOffset=18f
         lineChart.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
@@ -343,17 +348,18 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         leftAxis.textColor=ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         leftAxis.textSize=dp2px(20).toFloat()
         val rightAxis: YAxis = lineChart.axisRight
+        leftAxis.axisMinimum = 0f
         rightAxis.isEnabled=false
         val values = ArrayList<Entry>()
 
-        for (i in 0..11) {
-            values.add(BarEntry(i.toFloat(), Random.nextInt(80).toFloat()))
+        for (i in assessmentHistory.indices) {
+            values.add(BarEntry(i.toFloat(), assessmentHistory[i].waistline.toFloat()))
         }
 
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "cm")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(false)
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
@@ -380,16 +386,34 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.animateY(500)
     }
 
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.assessmentHistoryResult.observe(this){
+            parseState(it,{assessmentHistory->
+                initData(assessmentHistory)
+
+            })
+        }
+    }
+
+    private fun initData(assessmentHistory: ArrayList<AssessmentHistoryData>) {
+      initWaistlineLineChart(assessmentHistory)
+        initTestLineChart(assessmentHistory)
+        initWeightLineChart(assessmentHistory)
+    }
+
     inner class ProxyClick {
 
         fun clickPreYear() {
             curYear = DateTimeUtil.getPreYear(curYear,curMonth)
             mViewModel.calendarTitle.set("${curYear}年")
+            mViewModel.getAssessment(curYear.toString())
         }
 
         fun clickNextYear() {
             curYear = DateTimeUtil.getNextYear(curYear,curMonth)
             mViewModel.calendarTitle.set("${curYear}年")
+            mViewModel.getAssessment(curYear.toString())
         }
     }
 

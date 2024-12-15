@@ -37,10 +37,9 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.curScore.set(sportFlatSupport.score.toString())
-        mViewModel.curScore.set(sportFlatSupport.score.toString())
         mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportFlatSupport.sport_time))
         mViewModel.heat.set(sportFlatSupport.avg_rate_value.toString())
-        mViewModel.calorie.set(sportFlatSupport.sum_calorie.toString())
+        mViewModel.calorie.set((sportFlatSupport.sum_calorie/1000).toString())
         initCalorieBarChart()
         initHeartRateLineChart()
     }
@@ -85,7 +84,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+        lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(false)
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)

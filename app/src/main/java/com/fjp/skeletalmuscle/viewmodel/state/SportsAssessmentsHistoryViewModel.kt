@@ -3,7 +3,7 @@ package com.fjp.skeletalmuscle.viewmodel.state
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
-import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryResult
+import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryData
 import com.fjp.skeletalmuscle.data.repository.request.HttpRequestCoroutine
 import me.hgj.jetpackmvvm.ext.request
 import me.hgj.jetpackmvvm.state.ResultState
@@ -16,7 +16,7 @@ import me.hgj.jetpackmvvm.state.ResultState
 class SportsAssessmentsHistoryViewModel : SMBaseViewModel() {
     val calendarTitle = ObservableField<String>("")
 
-    var assessmentHistoryResult = MutableLiveData<ResultState<AssessmentHistoryResult>>()
+    var assessmentHistoryResult = MutableLiveData<ResultState<ArrayList<AssessmentHistoryData>>>()
 
     //获取测评数据
     fun getAssessment(year: String) {

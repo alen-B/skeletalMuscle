@@ -1,0 +1,2 @@
+com.skeletalmuscle.appupdate
+xml filepaths

@@ -41,6 +41,7 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int) : BaseFragment<
     private fun initRadarChart() {
         val chart = mDatabind.radarChart
         chart.description.isEnabled = false
+        chart.setTouchEnabled(false)
         chart.webLineWidth = 1f
         chart.webColor = Color.LTGRAY
         chart.webLineWidthInner = 1f

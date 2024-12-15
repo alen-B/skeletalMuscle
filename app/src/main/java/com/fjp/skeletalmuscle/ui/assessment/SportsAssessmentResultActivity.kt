@@ -35,6 +35,7 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         chart.description.isEnabled = false
         chart.webLineWidth = 1f
         chart.webColor = Color.LTGRAY
+        chart.setTouchEnabled(false)
         chart.webLineWidthInner = 1f
         chart.webColorInner = Color.LTGRAY
         chart.webAlpha = 100
