@@ -60,7 +60,7 @@
             android:textColorHint="@color/color_331c1c1c"
             android:gravity="center|start"
             android:hint="请输入其他医生建议控制运动的疾病"
-            android:text="@{viewModel.other}"
+            android:text="@={viewModel.other}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView"

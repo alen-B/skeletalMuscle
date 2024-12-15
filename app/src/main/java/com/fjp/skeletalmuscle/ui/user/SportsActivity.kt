@@ -26,7 +26,7 @@ import me.hgj.jetpackmvvm.ext.parseState
 class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() {
     private val saveUserInfoViewModel: SaveUserInfoViewModel by viewModels()
     lateinit var sportsAdapter: SportsTypeAdapter
-    var curItem: Sports? = null
+    var curItem: Sports = Sports(appContext.getString(R.string.sports_type_no), true)
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.sports_type_title))
@@ -46,6 +46,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
                 saveUserInfoViewModel.saveInfoReq(App.userInfo)
 
             } else {
+                App.userInfo.sports = arrayListOf(curItem!!.name)
                 val intent = Intent(this@SportsActivity, SingleSelectActivity::class.java)
                 intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.DAY_ONE_WEEK.type)
                 startActivity(intent)

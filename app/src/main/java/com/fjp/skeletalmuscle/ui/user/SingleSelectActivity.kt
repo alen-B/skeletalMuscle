@@ -2,18 +2,22 @@ package com.fjp.skeletalmuscle.ui.user
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
+import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.databinding.ActivitySingleSelectBinding
 import com.fjp.skeletalmuscle.ui.main.MainActivity
 import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
+import com.fjp.skeletalmuscle.viewmodel.request.SaveUserInfoViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectViewModel
+import me.hgj.jetpackmvvm.ext.parseState
 
 class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleSelectBinding>() {
     private val HeightDefaultIndex = 35
@@ -22,6 +26,7 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
     private val DayOneWeekDefaultIndex = 3
     private val SupportTtimeDefaultIndex = 2
     private lateinit var singleSelectAdapter: SingleSelectAdapter
+    private val saveUserInfoViewModel: SaveUserInfoViewModel by viewModels()
     var singleSelectType: Int? = 0
     var currIndex = 0
     var unit = "kg"
@@ -104,29 +109,28 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
             var intent = Intent(this@SingleSelectActivity, SingleSelectActivity::class.java)
             when (singleSelectType) {
                 SingleSelectType.HEIGHT.type -> {
-                    App.userInfo?.height = mViewModel.dataArr[currIndex]
+                    App.userInfo.height = mViewModel.dataArr[currIndex]
                     intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.WEIGHT.type)
                 }
 
                 SingleSelectType.WEIGHT.type -> {
-                    App.userInfo?.weight = mViewModel.dataArr[currIndex]
+                    App.userInfo.weight = mViewModel.dataArr[currIndex]
                     intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.WAIST_LINE.type)
                 }
 
                 SingleSelectType.WAIST_LINE.type -> {
-                    App.userInfo?.waistline = mViewModel.dataArr[currIndex].toString()
+                    App.userInfo.waistline = mViewModel.dataArr[currIndex].toString()
                     intent = Intent(this@SingleSelectActivity, DiseaseActivity::class.java)
                 }
 
                 SingleSelectType.DAY_ONE_WEEK.type -> {
-                    App.userInfo?.sport_day_nums = mViewModel.dataArr[currIndex]
+                    App.userInfo.sport_day_nums = mViewModel.dataArr[currIndex]
                     intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.SUPPORT_TIME.type)
                 }
 
                 SingleSelectType.SUPPORT_TIME.type -> {
-                    App.userInfo?.sport_time = mViewModel.dataArr[currIndex]
-                    intent = Intent(this@SingleSelectActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    App.userInfo.sport_time = mViewModel.dataArr[currIndex]
+                    saveUserInfoViewModel.saveInfoReq(App.userInfo)
                 }
             }
             startActivity(intent)
@@ -142,5 +146,15 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
 
     override fun createObserver() {
         super.createObserver()
+        saveUserInfoViewModel.saveResult.observe(this) {
+            parseState(it, {
+                val intent = Intent(this@SingleSelectActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }, {
+                showToast(getString(R.string.request_failed))
+            })
+
+        }
     }
 }

@@ -25,7 +25,7 @@ class InputNameActivity : BaseActivity<InputNameViewModel, ActivityInputNameBind
                 showToast(getString(R.string.input_name_tips))
                 return
             }
-            App.userInfo?.name = mViewModel.name.get().toString()
+            App.userInfo.name = mViewModel.name.get().toString()
             startActivity(Intent(this@InputNameActivity, SelectGenderActivity::class.java))
 
         }

@@ -63,9 +63,9 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
             mDatabind.bornLayout.setValue(it.birthday)
 
             mDatabind.sexLayout.setValue(it.sex)
-            mDatabind.weightLayout.setValue(it.weight.toString())
-            mDatabind.heightLayout.setValue(it.height.toString())
-            mDatabind.waistLinLayout.setValue(it.waistline)
+            mDatabind.weightLayout.setValue(it.weight.toString()+"kg")
+            mDatabind.heightLayout.setValue(it.height.toString()+"cm")
+            mDatabind.waistLinLayout.setValue(it.waistline+"cm")
             mDatabind.avatarLayout.setAvatarIv(requireContext(),it.profile)
         }
 
