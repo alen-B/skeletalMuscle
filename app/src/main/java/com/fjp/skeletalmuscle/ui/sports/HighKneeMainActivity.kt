@@ -492,7 +492,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             println("===心肺提升时间:  " + cardioTime)
             println("===极限突破:  " + breakTime)
             liftLegRequest.heart_rate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
-            liftLegRequest.calorie.add(Calorie(((caloriesBurned-oldCaloriesBurned) * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
+            liftLegRequest.calorie.add(Calorie((((caloriesBurned - oldCaloriesBurned).coerceAtLeast(0.0)) * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
             liftLegRequest.heart_lung_enhancement = cardioTime
             liftLegRequest.efficient_grease_burning = fatBurningTime
             liftLegRequest.extreme_breakthrough = breakTime

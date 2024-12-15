@@ -9,14 +9,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
-import com.fjp.skeletalmuscle.app.weight.pop.NewVersionPop
-import com.fjp.skeletalmuscle.data.model.bean.MainSports
-import com.fjp.skeletalmuscle.data.model.bean.SportsType
-import com.fjp.skeletalmuscle.data.model.bean.result.SportDumbbell
-import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
-import com.fjp.skeletalmuscle.data.model.bean.result.VersionData
 import com.fjp.skeletalmuscle.databinding.ActivityMainBinding
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
 import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
@@ -26,7 +19,6 @@ import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsPlankFragment
 import com.fjp.skeletalmuscle.ui.user.adapter.MainSportsRateAdapter
 import com.fjp.skeletalmuscle.viewmodel.request.RequestMainViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.MainViewModel
-import com.lxj.xpopup.XPopup
 import com.zhpan.indicator.enums.IndicatorStyle
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.ext.util.dp2px
@@ -36,7 +28,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val requestMainViewModel: RequestMainViewModel by viewModels()
     lateinit var mainSportsRateAdapter: MainSportsRateAdapter
     val fragments = mutableListOf<Fragment>()
-    private lateinit var viewpagerAdapter :ViewPagerFragmentAdapter
+    private lateinit var viewpagerAdapter: ViewPagerFragmentAdapter
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -59,29 +51,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         setMainTitle()
     }
 
-
     override fun createObserver() {
         super.createObserver()
         requestMainViewModel.mainLiveData.observe(this) {
-            parseState(it, {todayData->
+            parseState(it, { todayData ->
                 fragments.clear()
-                println("获取到了数据=======")
                 mViewModel.curScore.set(todayData.score.toString())
-                if (todayData.sport_lift_leg == null) {
-                    fragments.add(MainSportsHighKneeFragment.newInstance(TodayDataResult()))
-                }else{
-                    fragments.add(MainSportsHighKneeFragment.newInstance(todayData))
-                }
-                if (todayData.sport_dumbbell == null) {
-                    fragments.add(MainSportsDumbbellFragment.newInstance(TodayDataResult()))
-                }else{
-                    fragments.add(MainSportsDumbbellFragment.newInstance(todayData))
-                }
-                if (todayData.sport_flat_support == null) {
-                    fragments.add(MainSportsPlankFragment.newInstance(TodayDataResult()))
-                }else{
-                    fragments.add(MainSportsPlankFragment.newInstance(todayData))
-                }
+                fragments.add(MainSportsHighKneeFragment.newInstance(todayData))
+                fragments.add(MainSportsDumbbellFragment.newInstance(todayData))
+                fragments.add(MainSportsPlankFragment.newInstance(todayData))
                 viewpagerAdapter = ViewPagerFragmentAdapter(supportFragmentManager, 0.95f, fragments)
                 mDatabind.viewpager.adapter = viewpagerAdapter
                 mDatabind.indicatorView.apply {
@@ -116,7 +94,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             mViewModel.title.set("${App.userInfo?.name}爷爷，${timeOfDay}")
         }
     }
-
 
 
     inner class ProxyClick {

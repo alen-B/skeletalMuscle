@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
  */
 
 @Parcelize
-data class TodayDataResult(val avg_rate_value: Int = 0, val calorie_total: Int = 0, val score: Int = 0, val sport_dumbbell: SportDumbbell? = null, val sport_flat_support: SportFlatSupport? = null, val sport_lift_leg: SportLiftLeg? = null, val sport_time: Int = 0) : Parcelable
+data class TodayDataResult(val avg_rate_value: Int = 0, val calorie_total: Int = 0, val score: Int = 0, val sport_dumbbell: SportDumbbell, val sport_flat_support: SportFlatSupport, val sport_lift_leg: SportLiftLeg, val sport_time: Int = 0) : Parcelable
 
 @Parcelize
 data class SportDumbbell(val sport_time: Long = 0,val avg_expand_chest_degree: Int = 0, val avg_rate_value: Int = 0, val avg_up_degree: Int = 0, val calorie: List<Calorie> = listOf(),  val expand_chest_degree: List<ExpandChestDegree> = listOf(), val expand_chest_times: Int = 0, val heart_rate: List<HeartRate> = listOf(), val id: Int = 0, val max_rate_value: Int = 0, val min_rate_value: Int = 0, val score: Int = 0, val sum_calorie: Int = 0, val up_degree: List<UpDegree> = listOf(), val up_times: Int = 0, val user_id: Int = 0, val weight: Int = 0) : Parcelable

@@ -146,7 +146,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
 
     private fun getScore(): Int {
         val random = Random().nextInt(9)
-        val score = (elapsedTime / 1000) / App.sportsTime * 100
+        val score = (elapsedTime / 1000) / App.sportsTime * 60
         if (score == 100L) {
             return 100
         } else if (score > 90) {
@@ -259,16 +259,12 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             // 更新区间时间，每次心率读数都假设是10秒钟的时间
             if (heartRatePercentage < 0.6) {
                 warmupTime += 10
-                mViewModel.title.set(getString(R.string.high_knee_main_title))
             } else if (heartRatePercentage >= 0.6 && heartRatePercentage < 0.7) {
                 fatBurningTime += 10
-                mViewModel.title.set(getString(R.string.high_knee_main_title_fat_burning))
             } else if (heartRatePercentage >= 0.7 && heartRatePercentage < 0.8) {
                 cardioTime += 10
-                mViewModel.title.set(getString(R.string.high_knee_main_title_cardio))
             } else {
                 breakTime += 10
-                mViewModel.title.set(getString(R.string.high_knee_main_title_break))
             }
             // 计算卡路里消耗
             // 计算卡路里消耗
@@ -281,7 +277,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
 
-            calories.add(Calorie(((caloriesBurned - oldCaloriesBurned) * 1000).toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
+            calories.add(Calorie((((caloriesBurned - oldCaloriesBurned).coerceAtLeast(0.0)) * 1000).toInt(), DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
             heartRate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(Date(), DateTimeUtil.DATE_PATTERN_SS)))
             oldCaloriesBurned = caloriesBurned
         }

@@ -18,17 +18,15 @@ class MainSportsHighKneeFragment(val todayDataResult: TodayDataResult) : BaseFra
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         println("todayDataResult.sport_lift_leg:${todayDataResult.sport_lift_leg}")
-        todayDataResult.sport_lift_leg?.let {
+        if(todayDataResult.sport_lift_leg.sport_time!=0L){
             mDatabind.click = ProxyClick()
-            mViewModel.curScore.set(it.score.toString())
-            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.sport_time))
-            mViewModel.heartRate.set("${it.min_rate_value}-${it.max_rate_value}")
-            mViewModel.heat.set((it.sum_calorie / 1000).toString())
-            mViewModel.endurance.set(it.cardiorespiratory_endurance.toString())
-            mDatabind.exerciseIntensityLayout.setValue(it.warm_up_activation, it.efficient_grease_burning, it.heart_lung_enhancement, it.extreme_breakthrough)
-        }
-
-        if(todayDataResult.sport_lift_leg==null){
+            mViewModel.curScore.set(todayDataResult.sport_lift_leg.score.toString())
+            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(todayDataResult.sport_lift_leg.sport_time))
+            mViewModel.heartRate.set("${todayDataResult.sport_lift_leg.min_rate_value}-${todayDataResult.sport_lift_leg.max_rate_value}")
+            mViewModel.heat.set((todayDataResult.sport_lift_leg.sum_calorie / 1000).toString())
+            mViewModel.endurance.set(todayDataResult.sport_lift_leg.cardiorespiratory_endurance.toString())
+            mDatabind.exerciseIntensityLayout.setValue(todayDataResult.sport_lift_leg.warm_up_activation, todayDataResult.sport_lift_leg.efficient_grease_burning, todayDataResult.sport_lift_leg.heart_lung_enhancement, todayDataResult.sport_lift_leg.extreme_breakthrough)
+        }else{
             mDatabind.exerciseIntensityLayout.setValue(1, 0, 0, 0)
         }
 

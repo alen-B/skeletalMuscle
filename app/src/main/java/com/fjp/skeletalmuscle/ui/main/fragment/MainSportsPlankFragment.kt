@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.main.fragment
 
+import android.os.Build
 import android.os.Bundle
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
@@ -18,14 +19,13 @@ class MainSportsPlankFragment(var todayDataResult: TodayDataResult) : BaseFragme
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         println("todayDataResult.sport_flat_support:${todayDataResult.sport_flat_support}")
-        todayDataResult.sport_flat_support?.let {
-
-            mDatabind.click = ProxyClick()
-            mViewModel.curScore.set(it.score.toString())
-            mViewModel.sportsTime.set(DateTimeUtil.formSportTime(it.sport_time))
-            mViewModel.heartRate.set(it.avg_rate_value.toString())
-            mViewModel.heat.set((it.sum_calorie / 1000).toString())
-        }
+        if(todayDataResult.sport_flat_support.sport_time!=0L){
+                mDatabind.click = ProxyClick()
+                mViewModel.curScore.set(todayDataResult.sport_flat_support.score.toString())
+                mViewModel.sportsTime.set(DateTimeUtil.formSportTime(todayDataResult.sport_flat_support.sport_time))
+                mViewModel.heartRate.set(todayDataResult.sport_flat_support.avg_rate_value.toString())
+                mViewModel.heat.set((todayDataResult.sport_flat_support.sum_calorie / 1000).toString())
+            }
 
     }
 
