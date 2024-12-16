@@ -172,9 +172,9 @@
     <string name="exercise_plan_link_device">连接设备</string>
     <string name="exercise_plan_start_sports">开始运动</string>
     <string name="exercise_plan_start">开始</string>
-    <string name="exercise_plan_wrist_watch">智能手环</string>
-    <string name="exercise_plan_left_knee">左膝</string>
-    <string name="exercise_plan_right_knee">右膝</string>
+    <string name="exercise_plan_wrist_watch">连接心率手表</string>
+    <string name="exercise_plan_left_knee">左膝传感器</string>
+    <string name="exercise_plan_right_knee">右膝传感器</string>
     <string name="exercise_plan_right_dumbbell">右哑铃</string>
     <string name="exercise_plan_left_dumbbell">左哑铃</string>
 
@@ -231,45 +231,45 @@
     <string name="unit_angle">°</string>
     <string name="high_knee_guide_title1">接下来我将引导您完成连接</string>
 
-    <string name="high_knee_guide_step1_link_device">第一步\n检测设备是否已开启</string>
+    <string name="high_knee_guide_step1_link_device">第一步\n检查设备是否已开启</string>
 
     <string name="high_knee_guide_step2_title">连接中,请稍等</string>
     <string name="high_knee_guide_reconnect">点击重连</string>
-    <string name="high_knee_guide_step2_connect_wristband">连接智能手环</string>
-    <string name="high_knee_guide_step2_wear_wristband">· 佩戴手环</string>
-    <string name="high_knee_guide_step2_long_press">· 长按开关键连接</string>
-    <string name="high_knee_guide_step2_check">· 检查松紧</string>
+    <string name="high_knee_guide_step2_connect_wristband">连接心率手表</string>
+    <string name="high_knee_guide_step2_wear_wristband">· 正确佩戴手环</string>
+    <string name="high_knee_guide_step2_long_press">· 开启心率手表</string>
+    <string name="high_knee_guide_step2_check">· 检查配套松紧</string>
 
-    <string name="high_knee_guide_step3_title">智能手环已连接成功</string>
-    <string name="high_knee_guide_step4_title">请将左膝护膝佩戴在左膝上</string>
-    <string name="high_knee_guide_step4_connect">连接左膝</string>
-    <string name="high_knee_guide_step4_take">· 取出左膝护膝</string>
-    <string name="high_knee_guide_step4_wear">· 佩戴左膝护膝</string>
-    <string name="high_knee_guide_step4_check">· 检查传感器</string>
+    <string name="high_knee_guide_step3_title">心率手表已连接成功</string>
+    <string name="high_knee_guide_step4_title">请将左膝传感器佩戴在左腿膝盖上</string>
+    <string name="high_knee_guide_step4_connect">连接左腿传感器</string>
+    <string name="high_knee_guide_step4_take">· 穿戴左腿髌骨带</string>
+    <string name="high_knee_guide_step4_wear">· 将左腿传感器贴到髌骨带上</string>
+    <string name="high_knee_guide_step4_check">· 检查左腿传感器已打开</string>
 
-    <string name="high_knee_guide_step5_title">左膝已连接成功</string>
-    <string name="high_knee_guide_step6_title">请将右膝护膝佩戴在右膝上</string>
-    <string name="high_knee_guide_step6_connect">连接右膝</string>
-    <string name="high_knee_guide_step6_take">· 取出右膝护膝</string>
-    <string name="high_knee_guide_step6_wear">· 佩戴左膝护膝</string>
-    <string name="high_knee_guide_step6_check">· 检查传感器</string>
+    <string name="high_knee_guide_step5_title">左膝传感器已连接成功</string>
+    <string name="high_knee_guide_step6_title">请将右膝传感器佩戴在右腿膝盖上</string>
+    <string name="high_knee_guide_step6_connect">连接右腿传感器</string>
+    <string name="high_knee_guide_step6_take">· 穿戴右腿髌骨带</string>
+    <string name="high_knee_guide_step6_wear">· 将右腿传感器贴到髌骨带上</string>
+    <string name="high_knee_guide_step6_check">· 检查右腿传感器已打开</string>
 
-    <string name="high_knee_guide_step7_title">右膝已连接成功</string>
-    <string name="high_knee_guide_step7_connect">连接右膝</string>
-    <string name="high_knee_guide_step7_take">· 取出右膝护膝</string>
-    <string name="high_knee_guide_step7_wear">· 佩戴右膝护膝</string>
+    <string name="high_knee_guide_step7_title">右膝传感器已连接成功</string>
+    <string name="high_knee_guide_step7_connect">连接右膝传感器</string>
+    <string name="high_knee_guide_step7_take">· 取出右膝传感器护膝</string>
+    <string name="high_knee_guide_step7_wear">· 佩戴右膝传感器护膝</string>
     <string name="high_knee_guide_step7_check">· 检查传感器</string>
 
     <string name="high_knee_guide_step8_title">接下来我将引导您检查设备</string>
     <string name="high_knee_guide_step9_title">请您跟随指示移动</string>
-    <string name="high_knee_guide_step9_check">智能手环检测</string>
+    <string name="high_knee_guide_step9_check">心率手表检测</string>
     <string name="high_knee_guide_step9_up_arm">· 抬起手臂</string>
     <string name="high_knee_guide_step9_left_right">· 左右摇晃</string>
     <string name="high_knee_guide_step9_circle">· 圆圈移动</string>
 
-    <string name="high_knee_guide_step10_title">智能手环已检查完成</string>
+    <string name="high_knee_guide_step10_title">心率手表已检查完成</string>
     <string name="high_knee_guide_step11_title">所有设备已经就绪，开始吧</string>
-    <string name="high_knee_guide_step11_right_knee_checked">右膝设备检测完成</string>
+    <string name="high_knee_guide_step11_right_knee_checked">右膝传感器设备检测完成</string>
     <string name="high_knee_guide_step11_right_dumebbell_checked">右手哑铃检测完成</string>
     <string name="high_knee_guide_step11_right_hand_grips_checked">右手握力器检测完成</string>
 
@@ -284,18 +284,18 @@
     <string name="high_knee_main_heart">心率</string>
     <string name="high_knee_main_heart_rate_trend">心率趋势</string>
 
-    <string name="device_off_line_right_knee_title">右膝需要重新连接</string>
-    <string name="device_off_line_left_knee_title">左膝需要重新连接</string>
+    <string name="device_off_line_right_knee_title">右膝传感器需要重新连接</string>
+    <string name="device_off_line_left_knee_title">左膝传感器需要重新连接</string>
     <string name="device_off_line_bracelet_title">手环需要重新连接</string>
     <string name="device_off_line_bracelet_connected">手环连接正常</string>
-    <string name="device_off_line_left_knee_connected">左膝连接正常</string>
-    <string name="device_off_line_right_knee_connected">右膝连接正常</string>
+    <string name="device_off_line_left_knee_connected">左膝传感器连接正常</string>
+    <string name="device_off_line_right_knee_connected">右膝传感器连接正常</string>
     <string name="device_off_line_reconnect">重连</string>
     <string name="device_off_line_complete">完成</string>
 
     <string name="device_off_line_bracelet">手环待连接</string>
-    <string name="device_off_line_left_knee">左膝待连接</string>
-    <string name="device_off_line_right_knee">右膝待连接</string>
+    <string name="device_off_line_left_knee">左膝传感器待连接</string>
+    <string name="device_off_line_right_knee">右膝传感器待连接</string>
 
     <string name="share_title">请选择分享的平台</string>
     <string name="share_friends">微信好友</string>
@@ -305,9 +305,9 @@
 
     <string name="sports_completed_title">一起来看看今天的成果</string>
     <string name="sports_completed_score">本次训练得分</string>
-    <string name="sports_completed_sports_time">「高抬腿%d分钟锻炼计划」</string>
-    <string name="sports_completed_sports_time_plank">「平板支撑%d分钟锻炼计划」</string>
-    <string name="sports_completed_sports_time_dumbbell">「哑铃%d分钟锻炼计划」</string>
+    <string name="sports_completed_sports_time">「高抬腿运动%d分钟锻炼计划」</string>
+    <string name="sports_completed_sports_time_plank">「平板支撑运动%d分钟锻炼计划」</string>
+    <string name="sports_completed_sports_time_dumbbell">「哑铃运动%d分钟锻炼计划」</string>
     <string name="sports_completed_time">完成次数</string>
 
     <string name="setting_title">设置您的个人资料</string>
@@ -334,7 +334,7 @@
     <string name="setting_exit_content">您确定退出登录吗?</string>
 
     <string name="setting_device_smart_watch">智能手表</string>
-    <string name="setting_device_left_knee">左膝</string>
+    <string name="setting_device_left_knee">左膝传感器</string>
     <string name="setting_device_right_knee">又膝</string>
     <string name="setting_device_status_connected">已连接</string>
     <string name="setting_device_status_disconnect">未连接</string>

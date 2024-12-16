@@ -415,6 +415,9 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
             mViewModel.calendarTitle.set("${curYear}年")
             mViewModel.getAssessment(curYear.toString())
         }
+        fun clickFinish() {
+            finish()
+        }
     }
 
 }

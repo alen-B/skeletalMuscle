@@ -317,5 +317,26 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+        <io.alterac.blurkit.BlurLayout
+            android:id="@+id/backIv"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:onClick="@{()-> click.clickFinish()}"
+            app:blk_blurRadius="25"
+            app:blk_cornerRadius="20dp"
+            android:layout_marginBottom="48dp"
+            app:blk_fps="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:background="@drawable/bg_back_gray"
+                android:onClick="@{()-> click.clickFinish()}"
+                android:scaleType="center"
+                android:src="@drawable/arrow_right"
+                tools:ignore="ContentDescription" />
+        </io.alterac.blurkit.BlurLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -196,8 +196,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         liftLegRequest.cardiorespiratory_endurance = getCardiorespiratorEndurance()
 
         println("=====请求参数：liftLegRequest.cardiorespiratory_endurance" + liftLegRequest.cardiorespiratory_endurance)
-        if(liftLegRequest.end_time-liftLegRequest.start_time>App.sportsTime*60){
-            liftLegRequest.end_time=liftLegRequest.start_time+App.sportsTime*60
+        if (liftLegRequest.end_time - liftLegRequest.start_time > App.sportsTime * 60) {
+            liftLegRequest.end_time = liftLegRequest.start_time + App.sportsTime * 60
         }
         requestHighKneeViewModel.saveLiftLeg(liftLegRequest)
 
@@ -247,12 +247,12 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@HighKneeMainActivity, object : DeviceOffLinePop.Listener {
-            override fun reconnect(type:DeviceType) {
-                if(type == DeviceType.GTS){
+            override fun reconnect(type: DeviceType) {
+                if (type == DeviceType.GTS) {
                     SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
-                }else if(type == DeviceType.LEFT_LEG){
+                } else if (type == DeviceType.LEFT_LEG) {
                     SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
-                }else if(type == DeviceType.RIGHT_LEG){
+                } else if (type == DeviceType.RIGHT_LEG) {
                     SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
                 }
 
@@ -446,8 +446,11 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             totalHeartRate += interestedValue // interestedValue是心率的值
 
             heartRateCount++
-            val maxHeartRate: Double = (220 - age).toDouble()
-            val heartRatePercentage: Double = interestedValue / maxHeartRate
+            val warnHeartRate: Double = (220 - age).toDouble()
+            if (interestedValue > warnHeartRate) {
+                showToast("您的⼼率已超标，请注意休息！")
+            }
+            val heartRatePercentage: Double = interestedValue / (maxHeartRate * 1.0)
             // 更新区间时间，每次心率读数都假设是10秒钟的时间
             if (heartRatePercentage < 0.6) {
                 warmupTime += 10
@@ -479,7 +482,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 mViewModel.title.set(getString(R.string.high_knee_main_title_break))
             }
             // 计算卡路里消耗
-            caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds/ 60f, isMale)
+            caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds / 60f, isMale)
             println("seconds - oldSeconds:${seconds - oldSeconds} interestedValue：${interestedValue} oldCaloriesBurned:${oldCaloriesBurned}    totalCalor:${caloriesBurned}")
 
             //消耗 caloriesBurned 千卡
@@ -498,7 +501,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             liftLegRequest.efficient_grease_burning = fatBurningTime
             liftLegRequest.extreme_breakthrough = breakTime
             liftLegRequest.warm_up_activation = warmupTime
-            oldCaloriesBurned =  caloriesBurned
+            oldCaloriesBurned = caloriesBurned
         }
     }
 
