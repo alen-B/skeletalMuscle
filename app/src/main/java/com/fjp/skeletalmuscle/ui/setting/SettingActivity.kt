@@ -8,6 +8,7 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.util.CacheUtil
+import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.databinding.ActivitySettingBinding
 import com.fjp.skeletalmuscle.ui.login.LoginActivity
 import com.fjp.skeletalmuscle.ui.setting.fragment.DeviceFragment
@@ -36,9 +37,17 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
         eventViewModel.updateUserNameEvent.observeInActivity(this) {
             mViewModel.userInfo.set(App.userInfo)
             mViewModel.userInfo.get()?.notifyChange()
+            CacheUtil.removeAccount(App.userInfo.mobile)
+            val accounts = CacheUtil.getAccounts()
+            accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
+            CacheUtil.setAccounts(accounts)
         }
         eventViewModel.updateAvatarEvent.observeInActivity(this){
             mViewModel.userInfo.set(App.userInfo)
+            CacheUtil.removeAccount(App.userInfo.mobile)
+            val accounts = CacheUtil.getAccounts()
+            accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
+            CacheUtil.setAccounts(accounts)
         }
     }
 

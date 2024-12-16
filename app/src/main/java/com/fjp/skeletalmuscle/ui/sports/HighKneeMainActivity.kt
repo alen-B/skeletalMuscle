@@ -194,7 +194,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         pauseTimer()
         liftLegRequest.end_time = System.currentTimeMillis() / 1000
         liftLegRequest.cardiorespiratory_endurance = getCardiorespiratorEndurance()
-        println("=====请求参数：" + liftLegRequest)
+
+        println("=====请求参数：liftLegRequest.cardiorespiratory_endurance" + liftLegRequest.cardiorespiratory_endurance)
         if(liftLegRequest.end_time-liftLegRequest.start_time>App.sportsTime*60){
             liftLegRequest.end_time=liftLegRequest.start_time+App.sportsTime*60
         }
@@ -205,7 +206,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private fun getCardiorespiratorEndurance(): Double {
         // 抬腿频率
         val rate = (leftLegLifts + rightLegLifts) / (System.currentTimeMillis() / 1000 - liftLegRequest.start_time) / 60f
-        return rate * (leftLegAngleSum + rightLegAngleSum) / (leftLegLifts + rightLegLifts)
+        return String.format("%.2f", rate * (leftLegAngleSum + rightLegAngleSum) / (leftLegLifts + rightLegLifts)).toDouble()
     }
 
     override fun createObserver() {
