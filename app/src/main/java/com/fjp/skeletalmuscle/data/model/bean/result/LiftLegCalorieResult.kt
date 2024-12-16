@@ -7,4 +7,4 @@ package com.fjp.skeletalmuscle.data.model.bean.result
  */
 data class LiftLegCalorieResult(val total: Int, val trend: List<Trend>)
 
-data class Trend(val calorie: Int, val time: String)
+data class Trend(val calorie: Int, var time: String)

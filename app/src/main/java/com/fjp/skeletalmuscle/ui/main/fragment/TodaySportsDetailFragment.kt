@@ -132,8 +132,8 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         request.liftLegTrendResult.observe(this) {
             parseState(it, { result ->
-                mDatabind.leftLegAvgAngleValueTv.text = String.format("%.2f",result.avg_left_degree)
-                mDatabind.rightLegAvgAngleValueTv.text = String.format("%.2f",result.avg_right_degree)
+                mDatabind.leftLegAvgAngleValueTv.text = "${result.avg_left_degree.toInt()}°"
+                mDatabind.rightLegAvgAngleValueTv.text ="${result.avg_right_degree.toInt()}°"
                 initLegAngleLineChart(result)
             }, {
                 appContext.showToast(getString(R.string.request_failed))
@@ -230,9 +230,10 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         xAxis.textSize = 20.dp
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
 
-        val dayFormatterData = getFormatterData(ChartType.BURN_CALORIES)
+//        val dayFormatterData = getFormatterData(ChartType.BURN_CALORIES)
+        val resultMap =result.trend.map { it-> it.time }
         //设置底部文字显示格式化
-        xAxis.valueFormatter = IndexAxisValueFormatter(dayFormatterData)
+        xAxis.valueFormatter = IndexAxisValueFormatter(resultMap.toTypedArray())
         //设置左边轴样式
         val axisLeft = barChart.axisLeft
         axisLeft.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
@@ -274,6 +275,8 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         horizontalBarChart.setDrawBorders(false)
         horizontalBarChart.setDrawGridBackground(false)
         horizontalBarChart.isHighlightFullBarEnabled = false
+        horizontalBarChart.extraBottomOffset=18f
+        horizontalBarChart.extraRightOffset=18f
         val xAxis = horizontalBarChart.xAxis
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -292,6 +295,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         axisRight.setDrawGridLines(false)
         axisRight.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         axisRight.axisMinimum = 0f
+        axisRight.textSize=20.dp
 
         axisRight.valueFormatter = object: ValueFormatter(){
             override fun getFormattedValue(value: Float): String {

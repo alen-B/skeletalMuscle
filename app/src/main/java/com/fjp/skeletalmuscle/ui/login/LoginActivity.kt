@@ -96,11 +96,11 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         super.createObserver()
         reqeustLoginViewModel.loginResult.observe(this) { resultState ->
             parseState(resultState, {
-                if(!CacheUtil.hasAccount(it.mobile)){
-                    val accounts=CacheUtil.getAccounts()
-                    accounts.add(0,Account(it.name,it.mobile,it.profile))
-                    CacheUtil.setAccounts(accounts)
-                }
+                CacheUtil.removeAccount(it.mobile)
+                val accounts = CacheUtil.getAccounts()
+                accounts.add(0, Account(it.name, it.mobile, it.profile))
+                CacheUtil.setAccounts(accounts)
+
                 if (it.name.isNullOrEmpty()) {//创建时间是0表示没有填写过个人信息
                     val intent = Intent(this@LoginActivity, InputNameActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

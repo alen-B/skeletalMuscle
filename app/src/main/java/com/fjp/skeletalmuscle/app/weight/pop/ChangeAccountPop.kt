@@ -36,7 +36,7 @@ class ChangeAccountPop(val context: Activity, val listener: Listener) : FullScre
     override fun onCreate() {
         super.onCreate()
         val accounts = CacheUtil.getAccounts()
-        accounts.add(Account("添加账号", "", ""))
+        accounts.add(0,Account("添加账号", "", ""))
         val adapter = AccountAdapter(accounts) { account, _ ->
             listener.onclick(account, this)
         }

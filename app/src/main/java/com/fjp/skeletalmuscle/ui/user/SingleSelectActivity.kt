@@ -10,7 +10,9 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.databinding.ActivitySingleSelectBinding
 import com.fjp.skeletalmuscle.ui.main.MainActivity
 import com.fjp.skeletalmuscle.ui.user.adapter.SingleSelectAdapter
@@ -130,6 +132,10 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
 
                 SingleSelectType.SUPPORT_TIME.type -> {
                     App.userInfo.sport_time = mViewModel.dataArr[currIndex]
+                    CacheUtil.removeAccount(App.userInfo.mobile)
+                    val accounts = CacheUtil.getAccounts()
+                    accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
+                    CacheUtil.setAccounts(accounts)
                     saveUserInfoViewModel.saveInfoReq(App.userInfo)
                 }
             }

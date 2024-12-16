@@ -43,36 +43,32 @@ object CacheUtil {
     }
 
     //用来记录切换账号时，显示的账号
-    fun setAccounts(accounts :MutableList<Account>){
+    fun setAccounts(accounts: MutableList<Account>) {
         val kv = MMKV.mmkvWithID("app")
-        kv.encode("accounts",Gson().toJson(accounts))
+        kv.encode("accounts", Gson().toJson(accounts))
     }
-    fun getAccounts():MutableList<Account>{
+
+    fun getAccounts(): MutableList<Account> {
         val kv = MMKV.mmkvWithID("app")
         val accountsJSON = kv.decodeString("accounts")
-        if(accountsJSON!=null){
+        if (accountsJSON != null) {
             return Gson().fromJson(accountsJSON, object : TypeToken<MutableList<Account>>() {}.type)
-        }else{
+        } else {
             return mutableListOf()
         }
     }
 
-    fun hasAccount(phone:String):Boolean{
+    fun removeAccount(phone: String) {
         val kv = MMKV.mmkvWithID("app")
         val accountsJSON = kv.decodeString("accounts")
-        if(accountsJSON!=null){
-            val accounts:MutableList<Account> = Gson().fromJson(accountsJSON, object : TypeToken<MutableList<Account>>() {}.type)
-            var include =false
+        if (accountsJSON != null) {
+            val accounts: MutableList<Account> = Gson().fromJson(accountsJSON, object : TypeToken<MutableList<Account>>() {}.type)
             accounts.forEach {
-                if(it.phone == phone) {
-                    include=true
+                if (it.phone == phone) {
+                    accounts.remove(it)
                 }
             }
-            return include
-        }else{
-            return false
         }
-
     }
 
 
