@@ -3,6 +3,7 @@ package com.fjp.skeletalmuscle.ui.setting
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import coil.load
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
@@ -43,6 +44,12 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
             CacheUtil.setAccounts(accounts)
         }
         eventViewModel.updateAvatarEvent.observeInActivity(this){
+            App.userInfo.profile = it
+            mDatabind.avatarIv.load(it,builder = {
+                allowHardware(false)
+                this.error(R.drawable.avatar_default)
+                this.placeholder(R.drawable.avatar_default)
+            })
             mViewModel.userInfo.set(App.userInfo)
             CacheUtil.removeAccount(App.userInfo.mobile)
             val accounts = CacheUtil.getAccounts()
