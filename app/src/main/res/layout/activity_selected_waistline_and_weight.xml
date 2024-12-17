@@ -72,7 +72,7 @@
             android:id="@+id/nextBtn"
             style="@style/SMButtonNext"
             android:layout_width="240dp"
-            android:text="@string/exercise_plan_start"
+            android:text="@string/next_step"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:noRepeatClick="@{()-> click.clickComplete()}" />

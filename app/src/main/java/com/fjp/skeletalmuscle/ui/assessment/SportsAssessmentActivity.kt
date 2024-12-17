@@ -261,7 +261,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             startTimer()
             mDatabind.centerIv.visibility = View.GONE
             if (curType == AssessmentType.HighLeg) {
-                mViewModel.title.set("高抬腿运动一分钟")
+                mViewModel.title.set("请高抬腿运动一分钟")
                 isHighLeg(true)
             } else if (curType == AssessmentType.UpDown) {
                 mViewModel.title.set("请起坐运动一分钟")

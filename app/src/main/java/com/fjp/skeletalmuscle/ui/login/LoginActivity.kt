@@ -70,7 +70,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
             override fun updateDrawState(ds: TextPaint) {
                 ds.isUnderlineText = false
-                ds.color = ContextCompat.getColor(appContext, R.color.color_1c1c1c)
+                ds.color = ContextCompat.getColor(appContext, R.color.color_blue)
             }
         }
         val privacyClickableSpan = object : ClickableSpan() {
@@ -82,13 +82,13 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
             override fun updateDrawState(ds: TextPaint) {
                 ds.isUnderlineText = false
-                ds.color = ContextCompat.getColor(appContext, R.color.color_1c1c1c)
+                ds.color = ContextCompat.getColor(appContext, R.color.color_blue)
             }
         }
         mDatabind.agreementTv.movementMethod = LinkMovementMethod.getInstance()
         mDatabind.agreementTv.highlightColor = Color.TRANSPARENT
-        spannableStringBuilder.setSpan(agreementClickableSpan, 6, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableStringBuilder.setSpan(privacyClickableSpan, 17, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableStringBuilder.setSpan(agreementClickableSpan, 6, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableStringBuilder.setSpan(privacyClickableSpan, 17, 24, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         mDatabind.agreementTv.text = spannableStringBuilder
     }
 

@@ -50,7 +50,7 @@
             <ImageView
                 android:layout_width="144dp"
                 android:layout_height="144dp"
-                android:background="@drawable/bg_back"
+                android:background="@drawable/bg_back_gray"
                 android:onClick="@{()-> click.clickFinish()}"
                 android:scaleType="center"
                 android:src="@drawable/arrow_right"
