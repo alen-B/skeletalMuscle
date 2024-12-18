@@ -28,7 +28,7 @@ class App : BaseApp() {
         lateinit var eventViewModelInstance: EventViewModel
         lateinit var appViewModelInstance: AppViewModel
         var userInfo = UserInfo("", "", 0, arrayListOf(), 0, 0, 0, "", "", "", "", 0, 0, arrayListOf(), 0, 0, "", 0, "")
-        var sportsType = SportsType.HIGH_KNEE.type
+        var sportsType = SportsType.HIGH_KNEE
         var sportsTime = 8
         var legAngle = 90
         lateinit var mBle: Ble<BleDevice>

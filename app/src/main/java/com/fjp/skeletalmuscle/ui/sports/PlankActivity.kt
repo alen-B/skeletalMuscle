@@ -172,6 +172,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
                 finish()
             }, {
                 showToast(getString(R.string.request_failed))
+                showReCompletedDialog()
             })
         }
     }
@@ -195,7 +196,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = DeviceOffLinePop(this@PlankActivity, object : DeviceOffLinePop.Listener {
+        val deviceOffLinePop = DeviceOffLinePop(this@PlankActivity,SportsType.PLANK, object : DeviceOffLinePop.Listener {
             override fun reconnect(type: DeviceType) {
                 if (type == DeviceType.GTS) {
                     SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
@@ -204,6 +205,10 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
                 } else if (type == DeviceType.RIGHT_LEG) {
                     SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
                 }
+
+            }
+
+            override fun completed() {
 
             }
         })
@@ -323,20 +328,29 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     }
 
     fun showExitDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要退出吗？").setPositiveButton("确定") { dialog, which ->
-//            BleManager.getInstance().disconnectAllDevice()
-//            BleManager.getInstance().destroy()
-            finish() // 关闭所有 Activity 并退出应用
-        }.setNegativeButton("取消", null).show()
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要退出吗？", {
+            finish()
+        }, { })
+
+        pop.show()
+
     }
 
     fun showCompletedDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动吗？").setPositiveButton("确定") { dialog, which ->
-//            BleManager.getInstance().disconnectAllDevice()
-
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要结束运动吗？", {
             completed()
-        }.setNegativeButton("取消", null).show()
+        }, { })
+        pop.show()
     }
+
+    fun showReCompletedDialog() {
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("数据提交失败", "是否再次提交数据?", {
+            completed()
+        }, { })
+        pop.show()
+
+    }
+
 
     override fun onBackPressed() {
         super.onBackPressed()

@@ -221,12 +221,22 @@
             android:textColor="@color/color_222"
             android:textSize="@dimen/text_size_4"
             android:layout_height="wrap_content" />
-
+        <ImageView
+            android:id="@+id/centerIv"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:background="@drawable/sports_high_leg_temp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"/>
         <View
             android:id="@+id/scoreView"
             android:layout_width="166dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="35dp"
+            android:visibility="gone"
             android:background="@drawable/bg_white_80_round_20"
             app:layout_constraintTop_toTopOf="@+id/rTimesView"
             app:layout_constraintBottom_toBottomOf="@+id/rTimesView"
@@ -243,8 +253,9 @@
             app:layout_constraintEnd_toStartOf="@+id/scoreViewUnitTv"
             app:layout_constraintHorizontal_chainStyle="packed"
             android:textColor="@color/color_222"
+            android:visibility="gone"
             android:textSize="70sp"
-            android:text="88"
+            android:text="0"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -254,9 +265,11 @@
             app:layout_constraintStart_toEndOf="@+id/scoreViewTv"
             app:layout_constraintEnd_toEndOf="@+id/scoreView"
             android:text="@string/main_rate"
+            android:visibility="gone"
             android:textColor="@color/color_99222222"
             android:textSize="@dimen/text_size_3"
             android:layout_height="wrap_content" />
+
 
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
             android:id="@+id/progressBar"
@@ -379,6 +392,16 @@
             android:background="@drawable/bg_cc585858_20"
             android:layout_marginEnd="35dp"
             android:onClick="@{()-> click.clickComplete()}" />
-
+        <TextView
+            android:id="@+id/countdownText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="150sp"
+            android:textColor="@color/color_ffc019"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_centerInParent="true"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

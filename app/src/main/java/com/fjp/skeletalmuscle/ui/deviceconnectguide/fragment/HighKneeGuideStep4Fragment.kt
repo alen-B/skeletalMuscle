@@ -40,11 +40,11 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
 
     override fun onResume() {
         super.onResume()
-        if (App.sportsType == SportsType.HIGH_KNEE.type) {
+        if (App.sportsType == SportsType.HIGH_KNEE) {
             initHighKnee()
-        } else if (App.sportsType == SportsType.DUMBBELL.type) {
+        } else if (App.sportsType == SportsType.DUMBBELL) {
             initHighKnee()
-        } else if (App.sportsType == SportsType.HAND_GRIPS.type) {
+        } else if (App.sportsType == SportsType.HAND_GRIPS) {
             initHandGrips()
         }
 
@@ -202,17 +202,21 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
 
     private fun setLayoutTitle() {
         when (App.sportsType) {
-            SportsType.HIGH_KNEE.type -> {
+            SportsType.HIGH_KNEE -> {
                 mViewModel.title.set(getString(R.string.high_knee_guide_step5_title))
             }
 
-            SportsType.DUMBBELL.type -> {
+            SportsType.DUMBBELL -> {
                 mViewModel.title.set(getString(R.string.dumbbell_connect_left_device_connect))
             }
 
-            SportsType.HAND_GRIPS.type -> {
+            SportsType.HAND_GRIPS -> {
                 mViewModel.title.set(getString(R.string.hand_grips_connect_left_device_connected_title))
             }
+            SportsType.PLANK -> {
+            }
+
+            else -> {}
         }
 
     }

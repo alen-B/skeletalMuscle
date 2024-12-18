@@ -17,12 +17,12 @@ class HighKneeGuideStep8Fragment : BaseFragment<HighKneeGuideStep8ViewModel, Fra
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.high_knee_guide_step8_title))
-        if (App.sportsType == SportsType.HIGH_KNEE.type) {
+        if (App.sportsType == SportsType.HIGH_KNEE) {
             //目前默认数据是高抬腿的不需要做处理
-        } else if (App.sportsType == SportsType.DUMBBELL.type) {
+        } else if (App.sportsType == SportsType.DUMBBELL) {
             initDumbbellView()
 
-        } else if (App.sportsType == SportsType.HAND_GRIPS.type) {
+        } else if (App.sportsType == SportsType.HAND_GRIPS) {
             initHandGripsView()
         }
 

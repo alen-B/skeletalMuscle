@@ -22,12 +22,15 @@ import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.PermissionUtils
 import com.fjp.skeletalmuscle.app.util.PermissionUtils.hasPermission
 import com.fjp.skeletalmuscle.app.util.PermissionUtils.requestPermission
+import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.TodaySportsType
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySelectSportsBinding
+import com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity
 import com.fjp.skeletalmuscle.ui.user.adapter.TodaySportsTypeAdapter
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySelectSportsViewModel
+import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.appContext
 
 
@@ -107,7 +110,7 @@ class TodaySelectSportsActivity : BaseActivity<TodaySelectSportsViewModel, Activ
             showToast("正在开发中....")
             return ;
         }
-        App.sportsType = mViewModel.curSports.type.type
+        App.sportsType = mViewModel.curSports.type
         startActivity(intent)
     }
 

@@ -30,7 +30,14 @@
             android:layout_marginEnd="32dp"
             app:viewModel="@{viewModel}" />
 
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:background="@drawable/sports_plank_temp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"/>
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
             android:id="@+id/progressBar"
             android:layout_width="0dp"

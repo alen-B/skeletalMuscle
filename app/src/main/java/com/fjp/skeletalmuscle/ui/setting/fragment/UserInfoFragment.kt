@@ -148,7 +148,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
             showSingleSelectedDialog(SingleSelectType.SEX)
         }
         fun clickExit() {
-            val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(200).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
+            val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
                 CacheUtil.setUser(null)
                 CacheUtil.setIsLogin(false)
                 val intent = Intent(context, LoginActivity::class.java)

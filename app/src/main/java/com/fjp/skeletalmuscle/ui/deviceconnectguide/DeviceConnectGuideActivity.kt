@@ -9,6 +9,9 @@ import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.app.util.DeviceType
+import com.fjp.skeletalmuscle.app.util.SMBleManager
+import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityDeviceConnectGuideBinding
@@ -26,7 +29,7 @@ import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.util.get
 
 class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, ActivityDeviceConnectGuideBinding>() {
-    var type: Int = Constants.CONNECT_DEVICE_TYPE_EXERCISE
+    var psortsType: Int = Constants.CONNECT_DEVICE_TYPE_EXERCISE
 
     companion object {
         fun start(context: Context, type: Int) {
@@ -40,11 +43,11 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        type = intent.get(Constants.INTENT_KEY_CONNECT_DEVICE_TYPE, Constants.CONNECT_DEVICE_TYPE_EXERCISE)!!
-        if (type != Constants.CONNECT_DEVICE_TYPE_EXERCISE) {
+        psortsType = intent.get(Constants.INTENT_KEY_CONNECT_DEVICE_TYPE, Constants.CONNECT_DEVICE_TYPE_EXERCISE)!!
+        if (psortsType != Constants.CONNECT_DEVICE_TYPE_EXERCISE) {
             fragments = arrayListOf(HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance())
         }
-        if(App.sportsType == SportsType.PLANK.type){
+        if(App.sportsType == SportsType.PLANK){
             fragments= arrayListOf(HighKneeGuideStep2Fragment.newInstance())
         }
         mDatabind.viewpager.init(supportFragmentManager, lifecycle, fragments, false)
@@ -65,25 +68,7 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
 
         fun clickNext() {
             if (mDatabind.viewpager.currentItem == mDatabind.viewpager.adapter!!.itemCount - 1) {
-                if (type == Constants.CONNECT_DEVICE_TYPE_EXERCISE) {
-                    if(App.sportsType == SportsType.HIGH_KNEE.type){
-                        showVideoPop()
-                    }else if(App.sportsType == SportsType.DUMBBELL.type){
-                        startActivity(Intent(this@DeviceConnectGuideActivity, DumbbellMainActivity::class.java))
-                        eventViewModel.startSports.postValue(true)
-                        finish()
-
-                    }else if(App.sportsType == SportsType.PLANK.type){
-                        startActivity(Intent(this@DeviceConnectGuideActivity, PlankActivity::class.java))
-                        eventViewModel.startSports.postValue(true)
-                        finish()
-                    }
-
-                } else {
-                    startActivity(Intent(this@DeviceConnectGuideActivity, SelectedWaistlineAndWeightActivity::class.java))
-                    finish()
-                }
-
+                showOffLinePop()
                 return
             }
             mDatabind.viewpager.setCurrentItem(mDatabind.viewpager.currentItem + 1, true)
@@ -99,20 +84,31 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
 
     }
 
-    fun showVideoPop() {
-        val videoPop = VideoPop(this@DeviceConnectGuideActivity, object : VideoPop.Listener {
-            override fun jump(pop: VideoPop) {
-                val intent = Intent(this@DeviceConnectGuideActivity, HighKneeMainActivity::class.java)
-                startActivity(intent)
-                eventViewModel.startSports.postValue(true)
-                finish()
-                pop.dismiss()
+    fun showOffLinePop() {
+        var type = SportsType.HIGH_KNEE
+        if(psortsType== Constants.CONNECT_DEVICE_TYPE_ASSESSMENT){
+            type =SportsType.ASSESSMENT
+        }else{
+            type = App.sportsType
+        }
+        val deviceOffLinePop = DeviceOffLinePop(this@DeviceConnectGuideActivity,type ,object : DeviceOffLinePop.Listener {
+            override fun reconnect(type: DeviceType) {
+                if (type == DeviceType.GTS) {
+                    SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
+                } else if (type == DeviceType.LEFT_LEG) {
+                    SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                } else if (type == DeviceType.RIGHT_LEG) {
+                    SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                }
+
             }
 
-
+            override fun completed() {
+                finish()
+            }
         })
-        val pop = XPopup.Builder(this@DeviceConnectGuideActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(videoPop)
-
+        val pop = XPopup.Builder(this@DeviceConnectGuideActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
         pop.show()
     }
+
 }

@@ -30,6 +30,7 @@ import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.AssessmentType
 import com.fjp.skeletalmuscle.data.model.bean.BleDevice
 import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentBinding
 import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentViewModel
 import com.lxj.xpopup.XPopup
@@ -277,11 +278,13 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = DeviceOffLinePop(this@SportsAssessmentActivity, object : DeviceOffLinePop.Listener {
+        val deviceOffLinePop = DeviceOffLinePop(this@SportsAssessmentActivity, SportsType.HIGH_KNEE, object : DeviceOffLinePop.Listener {
 
 
             override fun reconnect(type: DeviceType) {
-                TODO("Not yet implemented")
+            }
+
+            override fun completed() {
             }
         })
         val pop = XPopup.Builder(this@SportsAssessmentActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
@@ -532,11 +535,14 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     }
 
     fun showExitDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要退出吗？").setPositiveButton("确定") { dialog, which ->
-//            BleManager.getInstance().disconnectAllDevice()
-//            BleManager.getInstance().destroy()
-            finish() // 关闭所有 Activity 并退出应用
-        }.setNegativeButton("取消", null).show()
+        fun showExitDialog() {
+            val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要退出吗？", {
+                finish()
+            }, { })
+
+            pop.show()
+
+        }
     }
 
     override fun onBackPressed() {

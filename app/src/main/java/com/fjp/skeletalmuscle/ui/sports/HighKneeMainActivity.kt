@@ -4,12 +4,15 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
@@ -39,6 +42,7 @@ import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
 import kotlin.math.abs
 import kotlin.math.ceil
+
 
 class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMainBinding>(), SMBleManager.DeviceListener {
     var liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0)
@@ -105,8 +109,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        mViewModel.title.set(getString(R.string.high_knee_main_title))
-        startTimer()
+        mViewModel.title.set(getString(R.string.now_start))
         //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
             age = DateUtils.calculateAge(DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, it.birthday), Date(System.currentTimeMillis()))
@@ -139,6 +142,47 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
         initMediaPlayerHigh()
         initMediaPlayerLow()
+        startCountdown(4)
+    }
+
+    private fun startCountdown(startNumber: Int) {
+        val countDownTimer = object : CountDownTimer(startNumber * 1000L, 1000) {
+            override fun onTick(millis: Long) {
+                if(Math.ceil(millis/1000.0).toInt()-1==0){
+                    mDatabind.countdownText.text = "GO"
+                }else{
+                    mDatabind.countdownText.text = (Math.ceil(millis/1000.0).toInt()-1).toString()
+                }
+                animateText()
+
+
+            }
+
+            override fun onFinish() {
+                mDatabind.countdownText.visibility = View.GONE
+                mDatabind.centerIv.visibility = View.VISIBLE
+                mDatabind.scoreView.visibility = View.VISIBLE
+                mDatabind.scoreViewTv.visibility = View.VISIBLE
+                mDatabind.scoreViewTv.visibility = View.VISIBLE
+                mViewModel.title.set(getString(R.string.high_knee_main_title))
+                liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0)
+                startTimer()
+            }
+
+        }
+        countDownTimer.start()
+    }
+
+    private fun animateText() {
+        val scaleAnimation = ScaleAnimation(1f, 1.5f,  // 从1扩大到1.5
+            1f, 1.5f,  // 从1扩大到1.5
+            Animation.RELATIVE_TO_SELF, 0.5f,  // 在中心点放大
+            Animation.RELATIVE_TO_SELF, 0.5f // 在中心点放大
+        )
+        scaleAnimation.duration = 1000 // 动画持续时间
+        scaleAnimation.repeatCount = 1 // 动画重复次数
+        scaleAnimation.repeatMode = Animation.REVERSE // 反向播放
+        mDatabind.countdownText.startAnimation(scaleAnimation) // 启动动画
     }
 
     private fun initMediaPlayerHigh() {
@@ -246,7 +290,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = DeviceOffLinePop(this@HighKneeMainActivity, object : DeviceOffLinePop.Listener {
+        val deviceOffLinePop = DeviceOffLinePop(this@HighKneeMainActivity,SportsType.HIGH_KNEE, object : DeviceOffLinePop.Listener {
             override fun reconnect(type: DeviceType) {
                 if (type == DeviceType.GTS) {
                     SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
@@ -255,6 +299,10 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 } else if (type == DeviceType.RIGHT_LEG) {
                     SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
                 }
+
+            }
+
+            override fun completed() {
 
             }
         })
@@ -688,25 +736,27 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     fun showExitDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要退出吗？").setPositiveButton("确定") { dialog, which ->
-//            BleManager.getInstance().disconnectAllDevice()
-//            BleManager.getInstance().destroy()
-            finish() // 关闭所有 Activity 并退出应用
-        }.setNegativeButton("取消", null).show()
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要退出吗？", {
+            finish()
+        }, { })
+
+        pop.show()
+
     }
 
     fun showCompletedDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动吗？").setPositiveButton("确定") { dialog, which ->
-//            BleManager.getInstance().disconnectAllDevice()
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要结束运动吗？", {
             completed()
-        }.setNegativeButton("取消", null).show()
+        }, { })
+        pop.show()
     }
 
     fun showReCompletedDialog() {
-        AlertDialog.Builder(this).setTitle("数据提交失败").setMessage("是否再次提交数据?").setPositiveButton("确定") { dialog, which ->
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("数据提交失败", "是否再次提交数据?", {
             requestHighKneeViewModel.saveLiftLeg(liftLegRequest)
+        }, { })
+        pop.show()
 
-        }.setNegativeButton("取消", null).show()
     }
 
     override fun onBackPressed() {

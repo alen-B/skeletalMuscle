@@ -13,13 +13,16 @@ import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
+import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityExercisePlanBinding
+import com.fjp.skeletalmuscle.ui.assessment.SelectedWaistlineAndWeightActivity
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
 import com.fjp.skeletalmuscle.ui.sports.DumbbellMainActivity
 import com.fjp.skeletalmuscle.ui.sports.HighKneeMainActivity
 import com.fjp.skeletalmuscle.ui.sports.PlankActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ExercisePlanViewModel
+import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.appContext
 
 class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercisePlanBinding>(), SMBleManager.DeviceListener {
@@ -45,7 +48,6 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
         mViewModel.leftImg.set(R.drawable.title_icon_sports_record)
         findViewById<TextView>(R.id.titleTv).setTextColor(ContextCompat.getColor(appContext, R.color.white))
         SMBleManager.addDeviceResultDataListener(this)
-        setSportsType()
         App.sportsTime = mViewModel.sportsTime.get()!!.toInt()
     }
 
@@ -56,9 +58,14 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setSportsType()
+    }
+
     private fun setSportsType() {
         when (App.sportsType) {
-            SportsType.HIGH_KNEE.type -> {
+            SportsType.HIGH_KNEE -> {
 
                 mDatabind.device2Iv.setImageBitmap((ContextCompat.getDrawable(appContext, R.drawable.knee_left) as BitmapDrawable).bitmap)
                 mDatabind.device3Iv.setImageBitmap((ContextCompat.getDrawable(appContext, R.drawable.knee_right) as BitmapDrawable).bitmap)
@@ -74,7 +81,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 }
             }
 
-            SportsType.DUMBBELL.type -> {
+            SportsType.DUMBBELL -> {
 //                mViewModel.sportsIcon.set(R.drawable.exercise_plan_dumbbell)
                 mViewModel.sportsType.set(getString(R.string.today_sports_data_type2))
                 mDatabind.exercisePlanSportsTimeCl.visibility = View.VISIBLE
@@ -88,7 +95,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 }
             }
 
-            SportsType.PLANK.type -> {
+            SportsType.PLANK -> {
                 mDatabind.device2Iv.visibility = View.GONE
                 mDatabind.device3Iv.visibility = View.GONE
                 mDatabind.device2Tv.visibility = View.GONE
@@ -101,6 +108,8 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                     mDatabind.deviceLinkTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.exercise_device_linked), null, null, null)
                 }
             }
+
+            else -> {}
         }
     }
 
@@ -111,18 +120,19 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     inner class ProxyClick {
 
         fun clickStartSports() {
-            if (App.sportsType == SportsType.HIGH_KNEE.type) {
-                val intent = Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java)
-                startActivity(intent)
-
-            } else if (App.sportsType == SportsType.DUMBBELL.type) {
-                val intent = Intent(this@ExercisePlanActivity, DumbbellMainActivity::class.java)
-                startActivity(intent)
-            } else if (App.sportsType == SportsType.PLANK.type) {
-                val intent = Intent(this@ExercisePlanActivity, PlankActivity::class.java)
-                startActivity(intent)
-            }
-            eventViewModel.startSports.postValue(true)
+            showVideoPop()
+//            if (App.sportsType == SportsType.HIGH_KNEE) {
+//                val intent = Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java)
+//                startActivity(intent)
+//
+//            } else if (App.sportsType == SportsType.DUMBBELL) {
+//                val intent = Intent(this@ExercisePlanActivity, DumbbellMainActivity::class.java)
+//                startActivity(intent)
+//            } else if (App.sportsType == SportsType.PLANK) {
+//                val intent = Intent(this@ExercisePlanActivity, PlankActivity::class.java)
+//                startActivity(intent)
+//            }
+//            eventViewModel.startSports.postValue(true)
         }
 
         fun clickStartDeviceGuide() {
@@ -134,13 +144,13 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
         }
 
         fun clickSportsTimeSub() {
-            if (App.sportsType == SportsType.HIGH_KNEE.type && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MIN_LEG_KNEE) {
+            if (App.sportsType == SportsType.HIGH_KNEE && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MIN_LEG_KNEE) {
                 return
             }
-            if (App.sportsType == SportsType.DUMBBELL.type && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MIN_DUMBBELL) {
+            if (App.sportsType == SportsType.DUMBBELL && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MIN_DUMBBELL) {
                 return
             }
-            if (App.sportsType == SportsType.PLANK.type && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MIN_PLANK) {
+            if (App.sportsType == SportsType.PLANK && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MIN_PLANK) {
                 return
             }
 
@@ -149,13 +159,13 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
         }
 
         fun clickSportsTimeAdd() {
-            if (App.sportsType == SportsType.HIGH_KNEE.type && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MAX_LEG_KNEE) {
+            if (App.sportsType == SportsType.HIGH_KNEE && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MAX_LEG_KNEE) {
                 return
             }
-            if (App.sportsType == SportsType.DUMBBELL.type && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MAX_DUMBBELL) {
+            if (App.sportsType == SportsType.DUMBBELL && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MAX_DUMBBELL) {
                 return
             }
-            if (App.sportsType == SportsType.PLANK.type && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MAX_PLANK) {
+            if (App.sportsType == SportsType.PLANK && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MAX_PLANK) {
                 return
             }
             mViewModel.sportsTime.set((mViewModel.sportsTime.get()!!.toInt() + 1).toString())
@@ -260,9 +270,33 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     override fun onRightHandGripsData(data: ByteArray) {
     }
 
+    fun showVideoPop() {
+        val videoPop = VideoPop(this@ExercisePlanActivity, object : VideoPop.Listener {
+            override fun jump(pop: VideoPop) {
+                    finish()
+                    if(App.sportsType == SportsType.HIGH_KNEE){
+                        startActivity(Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java))
+                    }else if(App.sportsType == SportsType.DUMBBELL){
+                        startActivity(Intent(this@ExercisePlanActivity, DumbbellMainActivity::class.java))
+                    }else if(App.sportsType == SportsType.PLANK){
+                        startActivity(Intent(this@ExercisePlanActivity, PlankActivity::class.java))
+                    }
+                eventViewModel.startSports.postValue(true)
+                pop.dismiss()
+                finish()
+            }
+
+
+        })
+        val pop = XPopup.Builder(this@ExercisePlanActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(videoPop)
+
+        pop.show()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         SMBleManager.delDeviceResultDataListener(this)
     }
+
 
 }

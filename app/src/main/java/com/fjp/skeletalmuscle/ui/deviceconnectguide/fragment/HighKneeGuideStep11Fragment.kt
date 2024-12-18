@@ -24,9 +24,9 @@ class HighKneeGuideStep11Fragment : BaseFragment<HighKneeGuideStep11ViewModel, F
 
     override fun onResume() {
         super.onResume()
-        if (App.sportsType == SportsType.DUMBBELL.type) {
+        if (App.sportsType == SportsType.DUMBBELL) {
             initDumbbell()
-        } else if (App.sportsType == SportsType.HAND_GRIPS.type) {
+        } else if (App.sportsType == SportsType.HAND_GRIPS) {
             initHandGrips()
         }
     }

@@ -8,5 +8,5 @@ package com.fjp.skeletalmuscle.data.model.bean
 class MainSports(val type: SportsType, val sports: HighKneeSports)
 
 enum class SportsType(val type: Int) {
-    HIGH_KNEE(0), DUMBBELL(1), PLANK(2), HAND_GRIPS(3)
+    HIGH_KNEE(0), DUMBBELL(1), PLANK(2), HAND_GRIPS(3), ASSESSMENT(4)
 }

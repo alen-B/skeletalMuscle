@@ -22,6 +22,7 @@ import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityDumbbellMainBinding
 import com.fjp.skeletalmuscle.viewmodel.state.DumbbellViewModel
 import com.lxj.xpopup.XPopup
@@ -210,7 +211,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = DeviceOffLinePop(this@DumbbellMainActivity, object : DeviceOffLinePop.Listener {
+        val deviceOffLinePop = DeviceOffLinePop(this@DumbbellMainActivity,SportsType.DUMBBELL, object : DeviceOffLinePop.Listener {
             override fun reconnect(type:DeviceType) {
                 if(type == DeviceType.GTS){
                     SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
@@ -219,6 +220,10 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
                 }else if(type == DeviceType.RIGHT_LEG){
                     SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
                 }
+
+            }
+
+            override fun completed() {
 
             }
 
@@ -575,23 +580,29 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             mediaPlayer_low = null
         }
     }
-
     fun showExitDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要退出吗？").setPositiveButton("确定") { dialog, which ->
-//            BleManager.getInstance().disconnectAllDevice()
-//            BleManager.getInstance().destroy()
-            finish() // 关闭所有 Activity 并退出应用
-        }.setNegativeButton("取消", null).show()
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要退出吗？", {
+            finish()
+        }, { })
+
+        pop.show()
+
     }
 
     fun showCompletedDialog() {
-        AlertDialog.Builder(this).setTitle("当前正在运动").setMessage("您确定要结束运动吗？").setPositiveButton("确定") { dialog, which ->
-            BleManager.getInstance().disconnectAllDevice()
-            BleManager.getInstance().destroy()
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要结束运动吗？", {
             completed()
-        }.setNegativeButton("取消", null).show()
+        }, { })
+        pop.show()
     }
 
+    fun showReCompletedDialog() {
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("数据提交失败", "是否再次提交数据?", {
+            completed()
+        }, { })
+        pop.show()
+
+    }
     override fun onBackPressed() {
         super.onBackPressed()
         showExitDialog()

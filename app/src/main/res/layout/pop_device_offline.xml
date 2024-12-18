@@ -21,7 +21,7 @@
                 android:id="@+id/leftIv"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:background="@drawable/off_line"
+                android:background="@drawable/title_left_default_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/device_off_line_right_knee_title"
+                android:text="@string/device_off_line_connected"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_1"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -160,7 +160,7 @@
                 android:layout_width="56dp"
                 android:layout_marginTop="20dp"
                 android:layout_height="56dp"
-                android:background="@drawable/device_disconnect" />
+                android:background="@drawable/device_connected" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <Button
@@ -170,7 +170,7 @@
             android:layout_marginEnd="35dp"
             android:drawableEnd="@drawable/exercise_plan_start_icon"
             android:paddingEnd="24dp"
-            android:text="@string/device_off_line_reconnect"
+            android:text="@string/device_off_line_complete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

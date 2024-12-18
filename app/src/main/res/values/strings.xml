@@ -273,6 +273,7 @@
     <string name="high_knee_guide_step11_right_dumebbell_checked">右手哑铃检测完成</string>
     <string name="high_knee_guide_step11_right_hand_grips_checked">右手握力器检测完成</string>
 
+    <string name="now_start">准备好，即将开始！</string>
     <string name="high_knee_main_title">您现在处于暖身激活阶段,继续努力！</string>
     <string name="high_knee_main_title_fat_burning">您现在处于高效燃脂阶段,继续努力！</string>
     <string name="high_knee_main_title_cardio">您现在处于心肺提升阶段,继续努力！</string>
@@ -290,6 +291,7 @@
     <string name="device_off_line_bracelet_connected">手环连接正常</string>
     <string name="device_off_line_left_knee_connected">左膝传感器连接正常</string>
     <string name="device_off_line_right_knee_connected">右膝传感器连接正常</string>
+    <string name="device_off_line_connected">连接完成，一起继续运动吧</string>
     <string name="device_off_line_reconnect">重连</string>
     <string name="device_off_line_complete">完成</string>
 
