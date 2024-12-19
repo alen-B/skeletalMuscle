@@ -62,7 +62,9 @@
             android:background="@drawable/bg_device_connected"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:maxWidth="360dp"
             app:layout_constraintBottom_toBottomOf="@+id/deviceView"
+            app:layout_goneMarginEnd="32dp"
             app:layout_constraintEnd_toStartOf="@+id/leftKneeLL"
             app:layout_constraintStart_toStartOf="@+id/deviceView"
             app:layout_constraintTop_toTopOf="@+id/deviceView">

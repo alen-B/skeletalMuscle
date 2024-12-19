@@ -29,10 +29,11 @@ import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.Calorie
 import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
-import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
 import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.Record
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.SportLiftLeg
+import com.fjp.skeletalmuscle.data.model.bean.result.TodayRecord
 import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
 import com.fjp.skeletalmuscle.viewmodel.request.RequestHighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel
@@ -148,10 +149,10 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private fun startCountdown(startNumber: Int) {
         val countDownTimer = object : CountDownTimer(startNumber * 1000L, 1000) {
             override fun onTick(millis: Long) {
-                if(Math.ceil(millis/1000.0).toInt()-1==0){
+                if (Math.ceil(millis / 1000.0).toInt() - 1 == 0) {
                     mDatabind.countdownText.text = "GO"
-                }else{
-                    mDatabind.countdownText.text = (Math.ceil(millis/1000.0).toInt()-1).toString()
+                } else {
+                    mDatabind.countdownText.text = (Math.ceil(millis / 1000.0).toInt() - 1).toString()
                 }
                 animateText()
 
@@ -258,9 +259,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         requestHighKneeViewModel.liftLegLiveData.observe(this) {
             parseState(it, {
                 showToast("发送成功")
-                val intent = Intent(this@HighKneeMainActivity, SportsCompletedActivity::class.java)
-                val highKneeSports = HighKneeSports(SportsType.HIGH_KNEE.type, elapsedTime / 1000, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
-                intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
+                val intent = Intent(this@HighKneeMainActivity, SportsHighKneeCompletedActivity::class.java)
+                val sportLiftLeg = getSportLiftLeg()
+                intent.putExtra(Constants.INTENT_SPORT_LIFT_LEG, sportLiftLeg)
                 startActivity(intent)
                 finish()
             }, {
@@ -269,6 +270,32 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             })
 
         }
+    }
+
+    private fun getSportLiftLeg(): SportLiftLeg {
+        val sport_time: Long = elapsedTime / 1000
+        val avg_left_degree: Int = (leftLegAngleSum / leftLegLifts).toInt()
+        val avg_rate_value: Int = liftLegRequest.record.sumBy { it.degree } / liftLegRequest.record.size
+        val avg_right_degree: Int = (rightLegAngleSum / rightLegLifts).toInt()
+        val calorie: List<Calorie> = liftLegRequest.calorie
+        val cardiorespiratory_endurance: Double = liftLegRequest.cardiorespiratory_endurance
+        val efficient_grease_burning: Int = liftLegRequest.efficient_grease_burning
+        val extreme_breakthrough: Int = liftLegRequest.extreme_breakthrough
+        val heart_lung_enhancement: Int = liftLegRequest.heart_lung_enhancement
+        val heart_rate: List<HeartRate> = liftLegRequest.heart_rate
+        val left_times: Int = leftLegLifts
+        val max_rate_value: Int = maxHeartRate
+        val min_rate_value: Int = minHeartRate
+        val record: List<TodayRecord> = liftLegRequest.record.map { record ->
+            TodayRecord(0, 0, 0, DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN_SS, record.record_time).time.toInt(), record.type, record.degree, record.degree)
+        }
+        val right_times: Int = rightLegLifts
+        val score: Int = liftLegRequest.score
+        val sum_calorie: Int = (caloriesBurned * 1000).toInt()
+        val warm_up_activation: Int = liftLegRequest.warm_up_activation
+        return SportLiftLeg(sport_time, avg_left_degree, avg_rate_value, avg_right_degree, calorie, cardiorespiratory_endurance, efficient_grease_burning, extreme_breakthrough, heart_lung_enhancement, heart_rate, 0, left_times,
+            max_rate_value, min_rate_value, record, right_times, score, sum_calorie,0, warm_up_activation,avg_left_degree*left_times,avg_right_degree*right_times)
+
     }
 
     inner class ProxyClick {
@@ -290,7 +317,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = DeviceOffLinePop(this@HighKneeMainActivity,SportsType.HIGH_KNEE, object : DeviceOffLinePop.Listener {
+        val deviceOffLinePop = DeviceOffLinePop(this@HighKneeMainActivity, SportsType.HIGH_KNEE, object : DeviceOffLinePop.Listener {
             override fun reconnect(type: DeviceType) {
                 if (type == DeviceType.GTS) {
                     SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }

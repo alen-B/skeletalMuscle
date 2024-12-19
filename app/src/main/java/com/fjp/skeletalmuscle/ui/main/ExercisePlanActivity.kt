@@ -74,7 +74,6 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 mViewModel.sportsType.set(getString(R.string.today_sports_data_type1))
                 mDatabind.device2Tv.text = getString(R.string.exercise_plan_left_knee)
                 mDatabind.device3Tv.text = getString(R.string.exercise_plan_right_knee)
-                mViewModel.sportsTime.set(DEFAULT_SPORTS_TIME_LEG_KNEE)
                 if (SMBleManager.connectedDevices[DeviceType.GTS] != null && SMBleManager.connectedDevices[DeviceType.LEFT_LEG] != null && SMBleManager.connectedDevices[DeviceType.RIGHT_LEG] != null) {
                     mDatabind.shareBtn.isEnabled = true
                     mDatabind.deviceLinkTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.exercise_device_linked), null, null, null)
@@ -88,7 +87,6 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 mDatabind.sportsWeightCl.visibility = View.VISIBLE
                 mDatabind.sportsUpliftCl.visibility = View.VISIBLE
                 mDatabind.sportsExpandChestCl.visibility = View.VISIBLE
-                mViewModel.sportsTime.set(DEFAULT_SPORTS_TIME_DUMBBELL)
                 if (SMBleManager.connectedDevices[DeviceType.GTS] != null && SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL] != null && SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL] != null) {
                     mDatabind.shareBtn.isEnabled = true
                     mDatabind.deviceLinkTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.exercise_device_linked), null, null, null)
@@ -102,7 +100,6 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 mDatabind.device3Tv.visibility = View.GONE
                 mDatabind.exercisePlanSportsLegTimeCl.visibility = View.VISIBLE
                 mViewModel.sportsType.set(getString(R.string.today_sports_data_type3))
-                mViewModel.sportsTime.set(DEFAULT_SPORTS_TIME_PLANK)
                 if (SMBleManager.connectedDevices[DeviceType.GTS] != null) {
                     mDatabind.shareBtn.isEnabled = true
                     mDatabind.deviceLinkTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.exercise_device_linked), null, null, null)

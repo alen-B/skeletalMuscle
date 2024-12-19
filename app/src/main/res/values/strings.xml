@@ -92,6 +92,7 @@
     <string name="main_heat">消耗热量</string>
     <string name="main_min">分钟</string>
     <string name="main_times">次</string>
+    <string name="main_times_angle">次°</string>
     <string name="main_rate">/分</string>
     <string name="main_kilocalorie">千卡</string>
     <string name="main_total_score">/100</string>

@@ -7,6 +7,9 @@ package com.fjp.skeletalmuscle.app.util
  */
 class Constants {
     companion object {
+        val INTENT_SPORT_LIFT_LEG: String = "sport_lift_leg"
+        val INTENT_SPORT_DUMBBELL: String = "sport_dumbbell"
+        val INTENT_SPORT_PLANK: String = "intent_sport_plank"
         const val INTENT_KEY_SINGLESELECT_TYPE = "type"
         const val INTENT_KEY_YEAR = "year"
         const val INTENT_KEY_MONTH = "month"

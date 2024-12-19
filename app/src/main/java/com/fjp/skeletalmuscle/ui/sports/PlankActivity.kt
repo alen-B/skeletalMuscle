@@ -3,9 +3,13 @@ package com.fjp.skeletalmuscle.ui.sports
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
@@ -23,7 +27,9 @@ import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
 import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
 import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
+import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.ActivityPlankBinding
 import com.fjp.skeletalmuscle.viewmodel.state.PlankViewModel
 import com.lxj.xpopup.XPopup
@@ -34,7 +40,7 @@ import java.util.Random
 import kotlin.math.abs
 
 class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBleManager.DeviceListener {
-    private var requestStartTime: Long = System.currentTimeMillis() / 1000
+    private var requestStartTime: Long = 0
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
     private var isRunning: Boolean = false
@@ -88,6 +94,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             isMale = it.sex == getString(R.string.setting_sex_man)
         }
 
+        startCountdown()
 //        showOffLinePop()
 
         SMBleManager.addDeviceResultDataListener(this)
@@ -100,6 +107,42 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let {
             SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE)
         }
+    }
+
+    private fun startCountdown() {
+        val countDownTimer = object : CountDownTimer(4000L, 1000) {
+            override fun onTick(millis: Long) {
+                if(Math.ceil(millis/1000.0).toInt()-1==0){
+                    mDatabind.countdownText.text = "GO"
+                }else{
+                    mDatabind.countdownText.text = (Math.ceil(millis/1000.0).toInt()-1).toString()
+                }
+                animateText()
+
+
+            }
+
+            override fun onFinish() {
+                requestStartTime = System.currentTimeMillis() / 1000
+                mDatabind.countdownText.visibility = View.GONE
+                mDatabind.centerIv.visibility = View.VISIBLE
+                mViewModel.title.set(getString(R.string.high_knee_main_title))
+                startTimer()
+            }
+
+        }
+        countDownTimer.start()
+    }
+    private fun animateText() {
+        val scaleAnimation = ScaleAnimation(1f, 1.5f,  // 从1扩大到1.5
+            1f, 1.5f,  // 从1扩大到1.5
+            Animation.RELATIVE_TO_SELF, 0.5f,  // 在中心点放大
+            Animation.RELATIVE_TO_SELF, 0.5f // 在中心点放大
+        )
+        scaleAnimation.duration = 1000 // 动画持续时间
+        scaleAnimation.repeatCount = 1 // 动画重复次数
+        scaleAnimation.repeatMode = Animation.REVERSE // 反向播放
+        mDatabind.countdownText.startAnimation(scaleAnimation) // 启动动画
     }
 
     private fun startTimer() {
@@ -165,9 +208,9 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         super.createObserver()
         mViewModel.plankLiveData.observe(this) {
             parseState(it, {
-                val intent = Intent(this@PlankActivity, SportsCompletedActivity::class.java)
-                val highKneeSports = HighKneeSports(SportsType.PLANK.type, elapsedTime / 1000, minHeartRate, maxHeartRate, 0, DateUtils.formatDouble(abs(caloriesBurned)), score, warmupTime, fatBurningTime, cardioTime, breakTime)
-                intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
+                val intent = Intent(this@PlankActivity, SportsPlankCompletedActivity::class.java)
+                val sportFlatSupport=getSportFlatSupport()
+                intent.putExtra(Constants.INTENT_SPORT_PLANK, sportFlatSupport)
                 startActivity(intent)
                 finish()
             }, {
@@ -175,6 +218,11 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
                 showReCompletedDialog()
             })
         }
+    }
+
+    private fun getSportFlatSupport(): SportFlatSupport {
+
+        return SportFlatSupport(elapsedTime/1000,(maxHeartRate+minHeartRate)/2,calories,heartRate,0,maxHeartRate,minHeartRate,getScore(),(caloriesBurned*1000).toInt(),0)
     }
 
     inner class ProxyClick {

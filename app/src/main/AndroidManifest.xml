@@ -60,29 +60,32 @@
         android:theme="@style/Theme.SkeletalMuscle"
         tools:targetApi="31">
         <activity
+            android:name=".ui.sports.SportsPlankCompletedActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.assessment.SportsAssessmentsHistoryActivity"
-            android:screenOrientation="sensorLandscape"
             android:configChanges="orientation|screenLayout"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.assessment.SelectedWaistlineAndWeightActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.assessment.SportsAssessmentGuideActivity"
-            android:screenOrientation="sensorLandscape"
             android:configChanges="orientation|screenLayout"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.assessment.SportsAssessmentResultActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.setting.ChangeAccountActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.splash.SplashActivity"
@@ -91,134 +94,131 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.login.ServiceAgreementActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.setting.SettingActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".ui.sports.SportsCompletedActivity"
-            android:exported="true"
+            android:name=".ui.sports.SportsHighKneeCompletedActivity"
             android:configChanges="orientation|screenLayout"
-            android:screenOrientation="sensorLandscape" >
-        </activity>
-        <activity
-            android:name=".ui.sports.DeviceOffLineActivity"
             android:exported="true"
-            android:configChanges="orientation|screenLayout"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".ui.assessment.SportsAssessmentActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.sports.HighKneeMainActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.sports.DumbbellMainActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.sports.PlankActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.deviceconnectguide.DeviceConnectGuideActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.main.ExercisePlanActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.main.TodaySelectSportsActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.main.SportsRecordActivity"
-            android:exported="false"
             android:configChanges="orientation|screenLayout"
+            android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.main.TodaySportsDetailActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ui.main.TodaySportsActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.main.CalendarActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.user.DiseaseActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.user.SportsActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.user.SingleSelectActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.user.BornActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.user.InputNameActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.user.SelectGenderActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
+            android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true"
             android:configChanges="orientation|screenLayout"
-            android:screenOrientation="sensorLandscape" >
-<!--                        <intent-filter>-->
-<!--                            <action android:name="android.intent.action.MAIN" />-->
-<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                        </intent-filter>-->
+            android:exported="true"
+            android:screenOrientation="sensorLandscape">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
         <meta-data
@@ -227,12 +227,13 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="800" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.fjp.skeletalmuscle.fileProvider"
             android:exported="false"
-            tools:replace="android:authorities"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />

@@ -4,9 +4,13 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
@@ -92,7 +96,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        mViewModel.title.set(getString(R.string.high_knee_main_title))
+//        mViewModel.title.set(getString(R.string.high_knee_main_title))
         startTimer()
         //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
@@ -101,7 +105,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             isMale = it.sex == getString(R.string.setting_sex_man)
         }
 
-
+        startCountdown()
 //        showOffLinePop()
         leftLevelViews.add(mDatabind.lIv1)
         leftLevelViews.add(mDatabind.lIv2)
@@ -127,6 +131,43 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
         initMediaPlayerHigh()
         initMediaPlayerLow()
+    }
+
+
+    private fun startCountdown() {
+        val countDownTimer = object : CountDownTimer(4000L, 1000) {
+            override fun onTick(millis: Long) {
+                if(Math.ceil(millis/1000.0).toInt()-1==0){
+                    mDatabind.countdownText.text = "GO"
+                }else{
+                    mDatabind.countdownText.text = (Math.ceil(millis/1000.0).toInt()-1).toString()
+                }
+                animateText()
+
+
+            }
+
+            override fun onFinish() {
+                mDatabind.countdownText.visibility = View.GONE
+                mDatabind.centerIv.visibility = View.VISIBLE
+//                mViewModel.title.set(getString(R.string.high_knee_main_title))
+                startTimer()
+            }
+
+        }
+        countDownTimer.start()
+    }
+
+    private fun animateText() {
+        val scaleAnimation = ScaleAnimation(1f, 1.5f,  // 从1扩大到1.5
+            1f, 1.5f,  // 从1扩大到1.5
+            Animation.RELATIVE_TO_SELF, 0.5f,  // 在中心点放大
+            Animation.RELATIVE_TO_SELF, 0.5f // 在中心点放大
+        )
+        scaleAnimation.duration = 1000 // 动画持续时间
+        scaleAnimation.repeatCount = 1 // 动画重复次数
+        scaleAnimation.repeatMode = Animation.REVERSE // 反向播放
+        mDatabind.countdownText.startAnimation(scaleAnimation) // 启动动画
     }
 
     private fun initMediaPlayerHigh() {
@@ -185,7 +226,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         pauseTimer()
         showToast("完成了运动")
         pauseTimer()
-        val intent = Intent(this@DumbbellMainActivity, SportsCompletedActivity::class.java)
+//        val intent = Intent(this@DumbbellMainActivity, SportsCompletedActivity::class.java)
 //        val highKneeSports = HighKneeSports(elapsedTime, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
 //        intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
         startActivity(intent)

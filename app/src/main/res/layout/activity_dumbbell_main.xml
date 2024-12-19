@@ -258,6 +258,7 @@
             android:textSize="@dimen/text_size_3"
             android:layout_height="wrap_content" />
         <ImageView
+            android:id="@+id/centerIv"
             android:layout_width="wrap_content"
             android:background="@drawable/sports_dumbbell_temp"
             app:layout_constraintStart_toStartOf="parent"
@@ -386,6 +387,16 @@
             android:background="@drawable/bg_cc585858_20"
             android:layout_marginEnd="35dp"
             android:onClick="@{()-> click.clickComplete()}" />
-
+        <TextView
+            android:id="@+id/countdownText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="150sp"
+            android:textColor="@color/color_ffc019"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_centerInParent="true"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
