@@ -212,7 +212,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         val lineDataSet = LineDataSet(values, "")
         lineDataSet.setDrawIcons(false)
         lineDataSet.setMode(LineDataSet.Mode.LINEAR);
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ffc019)
         lineDataSet.setDrawCircleHole(false)
 
@@ -282,7 +282,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
        val lineDataSet = LineDataSet(values, "")
        lineDataSet.setDrawIcons(false)
        lineDataSet.setMode(LineDataSet.Mode.LINEAR);
-       lineDataSet.setDrawCircles(false)
+       lineDataSet.setDrawCircles(true)
        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_4e71ff)
        lineDataSet.setDrawCircleHole(false)
 
@@ -386,7 +386,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         val lineDataSet = LineDataSet(values, "0")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 

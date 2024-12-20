@@ -10,7 +10,6 @@ import android.os.SystemClock
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
@@ -26,8 +25,6 @@ import com.fjp.skeletalmuscle.data.model.bean.Calorie
 import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
 import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
-import com.fjp.skeletalmuscle.data.model.bean.HighKneeSports
-import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.ActivityPlankBinding
@@ -37,7 +34,6 @@ import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
 import java.util.Random
-import kotlin.math.abs
 
 class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBleManager.DeviceListener {
     private var requestStartTime: Long = 0
@@ -74,6 +70,11 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             elapsedTime = currentTime - startTime
             // 检查是否暂停
             seconds++
+            if (seconds >= 30) {
+                mViewModel.title.set("太棒了，您做的很好，继续！")
+            }else if(seconds > App.sportsTime * 60 * 3 / 2){
+                mViewModel.title.set("加油，再坚持一下！")
+            }
             updateTimerTextView()
             if (isRunning) {
                 handler.postDelayed(this, 1000)
@@ -112,10 +113,10 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     private fun startCountdown() {
         val countDownTimer = object : CountDownTimer(4000L, 1000) {
             override fun onTick(millis: Long) {
-                if(Math.ceil(millis/1000.0).toInt()-1==0){
+                if (Math.ceil(millis / 1000.0).toInt() - 1 == 0) {
                     mDatabind.countdownText.text = "GO"
-                }else{
-                    mDatabind.countdownText.text = (Math.ceil(millis/1000.0).toInt()-1).toString()
+                } else {
+                    mDatabind.countdownText.text = (Math.ceil(millis / 1000.0).toInt() - 1).toString()
                 }
                 animateText()
 
@@ -133,6 +134,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         }
         countDownTimer.start()
     }
+
     private fun animateText() {
         val scaleAnimation = ScaleAnimation(1f, 1.5f,  // 从1扩大到1.5
             1f, 1.5f,  // 从1扩大到1.5
@@ -209,7 +211,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         mViewModel.plankLiveData.observe(this) {
             parseState(it, {
                 val intent = Intent(this@PlankActivity, SportsPlankCompletedActivity::class.java)
-                val sportFlatSupport=getSportFlatSupport()
+                val sportFlatSupport = getSportFlatSupport()
                 intent.putExtra(Constants.INTENT_SPORT_PLANK, sportFlatSupport)
                 startActivity(intent)
                 finish()
@@ -222,7 +224,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
 
     private fun getSportFlatSupport(): SportFlatSupport {
 
-        return SportFlatSupport(elapsedTime/1000,(maxHeartRate+minHeartRate)/2,calories,heartRate,0,maxHeartRate,minHeartRate,getScore(),(caloriesBurned*1000).toInt(),0)
+        return SportFlatSupport(elapsedTime / 1000, (maxHeartRate + minHeartRate) / 2, calories, heartRate, 0, maxHeartRate, minHeartRate, getScore(), (caloriesBurned * 1000).toInt(), 0)
     }
 
     inner class ProxyClick {
@@ -244,7 +246,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = DeviceOffLinePop(this@PlankActivity,SportsType.PLANK, object : DeviceOffLinePop.Listener {
+        val deviceOffLinePop = DeviceOffLinePop(this@PlankActivity, SportsType.PLANK, object : DeviceOffLinePop.Listener {
             override fun reconnect(type: DeviceType) {
                 if (type == DeviceType.GTS) {
                     SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
@@ -307,8 +309,11 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
 
             heartRateCount++
             heartRateCount++
-            val maxHeartRate: Double = (220 - age).toDouble()
-            val heartRatePercentage: Double = interestedValue / maxHeartRate
+            val warnHeartRate: Double = (220 - age).toDouble()
+            if (interestedValue > warnHeartRate) {
+                showToast("您的⼼率已超标，请注意休息！")
+            }
+            val heartRatePercentage: Double = interestedValue / (maxHeartRate * 1.0)
             // 更新区间时间，每次心率读数都假设是10秒钟的时间
             if (heartRatePercentage < 0.6) {
                 warmupTime += 10

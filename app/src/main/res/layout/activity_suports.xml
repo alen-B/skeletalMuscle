@@ -67,6 +67,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerChildView"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toEndOf="@+id/addView"
+            android:scrollbars="none"
+            android:layout_height="wrap_content" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerChildView"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
             app:layout_constraintBottom_toTopOf="@+id/nextBtn"
             android:layout_width="0dp"
             app:layout_constraintStart_toEndOf="@+id/addView"

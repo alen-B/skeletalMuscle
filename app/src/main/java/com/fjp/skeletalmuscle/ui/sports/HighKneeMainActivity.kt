@@ -372,6 +372,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (pitch > 90) {
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放
+            mViewModel.title.set("左腿抬腿角度偏高！")
             if (mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying) {
                 mediaPlayer_high!!.start() // 播放音频
             }
@@ -388,6 +389,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             if (!leftIsDescending) {
                 if (abs(pitch) > LIFT_THRESHOLD) {
                     mViewModel.leftLegAngle.set("L ${leftLegmaxPitchInCycle.toInt()}°")
+                    if(leftLegmaxPitchInCycle>70 &&  leftLegmaxPitchInCycle<90){
+                        mViewModel.title.set("太棒了，您做的很好，继续！")
+                    }
                     leftLegLifts++
                     liftLegRequest.record.add(Record(leftLegmaxPitchInCycle.toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
                     leftLegAngleSum += leftLegmaxPitchInCycle.toDouble()
@@ -401,6 +405,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (leftIsDescending && pitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
             // 周期结束，检查最大pitch值是否在25到30之间
             if (leftLegmaxPitchInCycle >= 25 && leftLegmaxPitchInCycle <= 30) {
+                mViewModel.title.set("左腿抬腿角度偏低！")
                 // 播放提示音
                 if (mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying()) {
                     mediaPlayer_low!!.start()
@@ -443,6 +448,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (pitch > 90) {
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放
+            mViewModel.title.set("右腿抬腿角度偏高！")
             if (mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying) {
                 mediaPlayer_high!!.start() // 播放音频
             }
@@ -456,6 +462,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (pitch < rightLastPitch) {
             if (!rightIsDescending) {
                 if (abs(pitch) > LIFT_THRESHOLD) {
+                    if(leftLegmaxPitchInCycle>70 &&  leftLegmaxPitchInCycle<90){
+                        mViewModel.title.set("太棒了，您做的很好，继续！")
+                    }
                     rightLegLifts++
                     mViewModel.rightLegAngle.set("R ${rightLastPitch.toInt()}°")
                     rightLegAngleSum += abs(rightLegmaxPitchInCycle).toDouble()
@@ -471,6 +480,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (rightIsDescending && pitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
             // 周期结束，检查最大pitch值是否在25到30之间
             if (rightLegmaxPitchInCycle in 25.0..30.0) {
+                mViewModel.title.set("右腿抬腿角度偏低！")
                 // 播放提示音
                 if (mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying) {
                     mediaPlayer_low!!.start()

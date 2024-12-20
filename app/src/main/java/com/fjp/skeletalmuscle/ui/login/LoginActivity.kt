@@ -88,7 +88,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         mDatabind.agreementTv.movementMethod = LinkMovementMethod.getInstance()
         mDatabind.agreementTv.highlightColor = Color.TRANSPARENT
         spannableStringBuilder.setSpan(agreementClickableSpan, 6, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableStringBuilder.setSpan(privacyClickableSpan, 17, 24, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableStringBuilder.setSpan(privacyClickableSpan, 16, 22, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         mDatabind.agreementTv.text = spannableStringBuilder
     }
 

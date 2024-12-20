@@ -122,7 +122,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_blue)
@@ -143,7 +143,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
-        lineDataSet2.setDrawCircles(false)
+        lineDataSet2.setDrawCircles(true)
         lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
@@ -165,7 +165,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val lineDataSet3 = LineDataSet(values2, "千卡")
         lineDataSet3.setDrawIcons(false)
         lineDataSet3.mode = LineDataSet.Mode.LINEAR
-        lineDataSet3.setDrawCircles(false)
+        lineDataSet3.setDrawCircles(true)
         lineDataSet3.color = appContext.getColor(R.color.color_ff574c)
         lineDataSet3.setDrawCircleHole(false)
         lineDataSet3.setDrawValues(false)
@@ -258,7 +258,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_23d3f2)
@@ -279,7 +279,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
-        lineDataSet2.setDrawCircles(false)
+        lineDataSet2.setDrawCircles(true)
         lineDataSet.color = appContext.getColor(R.color.color_8e4cff)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
@@ -360,7 +360,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val lineDataSet = LineDataSet(values, "cm")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_blue)

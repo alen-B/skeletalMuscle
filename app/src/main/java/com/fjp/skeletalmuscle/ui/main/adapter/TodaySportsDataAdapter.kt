@@ -121,7 +121,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.setMode(LineDataSet.Mode.LINEAR);
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.setColor(Color.parseColor("#FFDD82"))
 //        lineDataSet.setCircleColor(Color.BLACK)
 

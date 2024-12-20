@@ -51,6 +51,7 @@ public class ProgressWeekView extends WeekView {
         mPointPaint.setColor(Color.RED);
         mPointRadius = dipToPx(context, 12);
 
+
     }
 
     @Override
@@ -72,6 +73,13 @@ public class ProgressWeekView extends WeekView {
         int cy = mItemHeight / 2;
 
         int angle = getAngle(Integer.parseInt(calendar.getScheme()));
+        if(angle < 210){
+            mProgressPaint.setColor(Color.RED);
+        }else if(angle > 210 && angle < 280){
+            mProgressPaint.setColor(Color.YELLOW);
+        }else{
+            mProgressPaint.setColor(Color.BLUE);
+        }
 
         RectF progressRectF = new RectF(cx - mRadius, cy - mRadius, cx + mRadius, cy + mRadius);
         canvas.drawArc(progressRectF, -90, angle, false, mProgressPaint);

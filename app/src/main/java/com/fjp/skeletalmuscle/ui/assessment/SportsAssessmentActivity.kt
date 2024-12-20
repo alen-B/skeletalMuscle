@@ -12,7 +12,6 @@ import android.os.Looper
 import android.os.SystemClock
 import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -165,11 +164,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
         mViewModel.curTime.set(timeString)
-        if(curType == AssessmentType.Grip){
-            mDatabind.countdownTv.text = "还剩${totalGripTimes - gripCount}次"
-        }else{
-            mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
-        }
+        mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
         if (totalTime - seconds < 20) {
             if (curType == AssessmentType.HighLeg) {
                 if (!mDatabind.nextSportsIv.isVisible) {
@@ -218,7 +213,9 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 mDatabind.centerIv.setImageResource(R.drawable.assessment_09)
                 //移除高抬腿设备监听
                 SMBleManager.delDeviceResultDataListener(this)
-            }else -> {
+            }
+
+            else -> {
                 println("=============================")
                 println("抬腿次数：" + (leftLegLifts + rightLegLifts))
                 println("起坐：" + totalSitUpTimes)
@@ -259,12 +256,14 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 val saveAssessmentRequest = SaveAssessmentRequest(maxGrip, leftLegLifts + rightLegLifts, result, totalSitUpTimes, waistline, weight)
                 mViewModel.saveAssessment(saveAssessmentRequest)
             }
-            startTimer()
+
             mDatabind.centerIv.visibility = View.GONE
             if (curType == AssessmentType.HighLeg) {
                 mViewModel.title.set("请高抬腿运动一分钟")
+                startTimer()
                 isHighLeg(true)
             } else if (curType == AssessmentType.UpDown) {
+                startTimer()
                 mViewModel.title.set("请起坐运动一分钟")
 
             } else {
@@ -506,7 +505,8 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                         if (countTemp == 0) {
                             mViewModel.sportsNumber.set((maxGrip / 10).toString())
                             gripCount++
-                            if(gripCount==3){
+                            mDatabind.countdownTv.text = "还剩${totalGripTimes - gripCount}次"
+                            if (gripCount == 3) {
                                 completed()
                             }
                         }
@@ -535,14 +535,12 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     }
 
     fun showExitDialog() {
-        fun showExitDialog() {
-            val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要退出吗？", {
-                finish()
-            }, { })
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要退出吗？", {
+            finish()
+        }, { })
 
-            pop.show()
+        pop.show()
 
-        }
     }
 
     override fun onBackPressed() {

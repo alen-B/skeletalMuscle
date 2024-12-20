@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
+import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentGuideBinding
 import com.fjp.skeletalmuscle.ui.assessment.adapter.AssessmentTypeAdapter
 import com.fjp.skeletalmuscle.ui.deviceconnectguide.DeviceConnectGuideActivity
@@ -40,7 +42,8 @@ class SportsAssessmentGuideActivity : BaseActivity<SportsAssessmentTypeSelectedV
                 val intent = Intent(this@SportsAssessmentGuideActivity, SelectedWaistlineAndWeightActivity::class.java)
                 startActivity(intent)
             } else {
-                DeviceConnectGuideActivity.start(this@SportsAssessmentGuideActivity, Constants.CONNECT_DEVICE_TYPE_ASSESSMENT)
+                App.sportsType = SportsType.ASSESSMENT
+                DeviceConnectGuideActivity.start(this@SportsAssessmentGuideActivity)
             }
 
 

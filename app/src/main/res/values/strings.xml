@@ -23,7 +23,7 @@
     <string name="login_phone_title">手机号注册/登录</string>
     <string name="login_input_phone">请输入手机号</string>
     <string name="login_input_code">请输入验证码</string>
-    <string name="login_agreement">已阅读并同意《骨骼肌用户协议》 和 《隐私协议》</string>
+    <string name="login_agreement">已阅读并同意《骨骼肌用户协议》和《隐私协议》</string>
     <string name="login_agreement_no_checked">请选择已阅读并同意骨骼肌用户协议 和 隐私协议</string>
     <string name="login_btn_wechat">微信登录</string>
     <string name="login_title_wechat">微信扫码登录</string>
@@ -292,6 +292,8 @@
     <string name="device_off_line_bracelet_connected">手环连接正常</string>
     <string name="device_off_line_left_knee_connected">左膝传感器连接正常</string>
     <string name="device_off_line_right_knee_connected">右膝传感器连接正常</string>
+    <string name="device_off_line_left_dumbbell_connected">左哑铃传感器连接正常</string>
+    <string name="device_off_line_right_dumbbell_connected">右哑铃传感器连接正常</string>
     <string name="device_off_line_connected">连接完成，一起继续运动吧</string>
     <string name="device_off_line_reconnect">重连</string>
     <string name="device_off_line_complete">完成</string>
@@ -299,6 +301,8 @@
     <string name="device_off_line_bracelet">手环待连接</string>
     <string name="device_off_line_left_knee">左膝传感器待连接</string>
     <string name="device_off_line_right_knee">右膝传感器待连接</string>
+    <string name="device_off_line_left_dumbbell">左哑铃传感器待连接</string>
+    <string name="device_off_line_right_dumbbell">右哑铃传感器待连接</string>
 
     <string name="share_title">请选择分享的平台</string>
     <string name="share_friends">微信好友</string>

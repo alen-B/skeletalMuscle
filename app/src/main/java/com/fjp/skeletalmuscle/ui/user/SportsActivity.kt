@@ -12,11 +12,13 @@ import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.app.util.SettingUtil
 import com.fjp.skeletalmuscle.app.weight.pop.AddSportsTypePop
 import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.data.model.bean.Sports
 import com.fjp.skeletalmuscle.databinding.ActivitySuportsBinding
 import com.fjp.skeletalmuscle.ui.main.MainActivity
+import com.fjp.skeletalmuscle.ui.user.adapter.SportsChildTypeAdapter
 import com.fjp.skeletalmuscle.ui.user.adapter.SportsTypeAdapter
 import com.fjp.skeletalmuscle.viewmodel.request.SaveUserInfoViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
@@ -28,7 +30,8 @@ import me.hgj.jetpackmvvm.ext.parseState
 class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() {
     private val saveUserInfoViewModel: SaveUserInfoViewModel by viewModels()
     lateinit var sportsAdapter: SportsTypeAdapter
-    var curItem: Sports = Sports(appContext.getString(R.string.sports_type_no), true)
+    lateinit var sportsChildAdapter: SportsChildTypeAdapter
+    var curItem: Sports?=null
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.sports_type_title))
@@ -36,9 +39,13 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
         mViewModel.curIndex.set("8")
         mViewModel.totalIndex.set("/10")
         mViewModel.showRightText.set(true)
-        sportsAdapter = SportsTypeAdapter(mViewModel.dataArr as ArrayList<Sports>, clickItem = { item ->
+        sportsAdapter = SportsTypeAdapter(mViewModel.dataArr, clickItem = { item ->
             curItem = item
+            sportsChildAdapter = SportsChildTypeAdapter(curItem!!.child, clickItem = { item ->
+            })
+            mDatabind.recyclerChildView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), sportsChildAdapter)
         })
+
         mDatabind.recyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), sportsAdapter)
     }
 
@@ -49,10 +56,11 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
                 val accounts = CacheUtil.getAccounts()
                 accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
                 CacheUtil.setAccounts(accounts)
+                App.userInfo.device_no = SettingUtil.getDeviceId(this@SportsActivity)
                 saveUserInfoViewModel.saveInfoReq(App.userInfo)
 
             } else {
-                App.userInfo.sports = arrayListOf(curItem!!.name)
+//                App.userInfo.sports = arrayListOf(curItem!!.name)
                 val intent = Intent(this@SportsActivity, SingleSelectActivity::class.java)
                 intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.DAY_ONE_WEEK.type)
                 startActivity(intent)
@@ -70,7 +78,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
                         showToast("请输入类型名称")
                         return
                     }
-                    sportsAdapter.addData(0, Sports(name, true))
+                    sportsAdapter.addData(0, Sports(name, arrayListOf(),true))
                     mDatabind.recyclerView.smoothScrollToPosition(0)
                 }
 

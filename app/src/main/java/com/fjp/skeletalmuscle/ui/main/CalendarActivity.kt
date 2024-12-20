@@ -72,7 +72,9 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
                 color =Color.parseColor("#FF574C")
             }
             val calendar = LocalDate.parse(calendarResult.date)
-            map[getSchemeCalendar(year, month, calendar.dayOfMonth, color,score.toString()).toString()] = getSchemeCalendar(year, month, data.day, color,score.toString())
+            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FF574C"),"81").toString()] = getSchemeCalendar(year, month, data.day, color,score.toString())
+            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FFC019"),"70").toString()] = getSchemeCalendar(year, month, data.day, color,score.toString())
+            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FF574C"),"50").toString()] = getSchemeCalendar(year, month, data.day, color,score.toString())
         }
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mDatabind.calendarView.setSchemeDate(map)

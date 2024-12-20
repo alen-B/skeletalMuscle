@@ -85,7 +85,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 

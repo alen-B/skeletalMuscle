@@ -133,7 +133,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
         }
 
         fun clickStartDeviceGuide() {
-            DeviceConnectGuideActivity.start(this@ExercisePlanActivity, Constants.CONNECT_DEVICE_TYPE_EXERCISE)
+            DeviceConnectGuideActivity.start(this@ExercisePlanActivity)
         }
 
         fun clickFinish() {

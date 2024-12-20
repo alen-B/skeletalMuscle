@@ -369,7 +369,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         if (isUp) {
             lineDataSet.color = appContext.getColor(R.color.color_ffc019)
         } else {
@@ -448,7 +448,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
@@ -533,7 +533,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(false)
+        lineDataSet.setDrawCircles(true)
         lineDataSet.setDrawValues(false)
         lineDataSet.color = appContext.getColor(R.color.color_blue)
         // draw selection line as dashed
@@ -553,7 +553,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
-        lineDataSet2.setDrawCircles(false)
+        lineDataSet2.setDrawCircles(true)
         lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)

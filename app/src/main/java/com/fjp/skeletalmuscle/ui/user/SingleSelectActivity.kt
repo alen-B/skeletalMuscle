@@ -12,6 +12,7 @@ import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.app.util.SettingUtil
 import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.databinding.ActivitySingleSelectBinding
 import com.fjp.skeletalmuscle.ui.main.MainActivity
@@ -136,6 +137,7 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
                     val accounts = CacheUtil.getAccounts()
                     accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
                     CacheUtil.setAccounts(accounts)
+                    App.userInfo.device_no = SettingUtil.getDeviceId(this@SingleSelectActivity)
                     saveUserInfoViewModel.saveInfoReq(App.userInfo)
                 }
             }

@@ -183,8 +183,11 @@ object SettingUtil {
         }
     }
 
-    fun getDeviceId(context: Context): String? {
+    fun getDeviceId(context: Context): String {
         val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
+        if(telephonyManager == null){
+            return "获取deviceId失败"
+        }
         return telephonyManager!!.deviceId
     }
 }
