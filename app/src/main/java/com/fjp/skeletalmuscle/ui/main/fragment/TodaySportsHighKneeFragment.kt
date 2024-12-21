@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.main.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
@@ -9,6 +10,7 @@ import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.SportLiftLeg
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsHighKneeBinding
+import com.fjp.skeletalmuscle.ui.main.CalendarActivity
 import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsHighKneeViewModel
@@ -22,6 +24,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
@@ -50,9 +53,9 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         mDatabind.fatBurningTimeMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.efficient_grease_burning.toLong()) + "'"
         mDatabind.cardioTimeTotalMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.heart_lung_enhancement.toLong()) + "'"
         mDatabind.breakTimeTotalMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.extreme_breakthrough.toLong()) + "'"
-        mViewModel.totalCount.set((sportLiftLeg.left_times + sportLiftLeg.right_times).toString())
-        mViewModel.leftCount.set(sportLiftLeg.left_times.toString())
-        mViewModel.rightCount.set(sportLiftLeg.right_times.toString())
+        mViewModel.totalCount.set((sportLiftLeg.left_sport_amount + sportLiftLeg.right_sport_amount).toString())
+        mViewModel.leftCount.set(sportLiftLeg.left_sport_amount.toString())
+        mViewModel.rightCount.set(sportLiftLeg.right_sport_amount.toString())
         mViewModel.avgHeart.set(sportLiftLeg.avg_rate_value.toString())
         mViewModel.maxHeart.set(sportLiftLeg.max_rate_value.toString())
         initCalorieBarChart()
@@ -68,14 +71,24 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+        lineChart.extraBottomOffset=5f
+        lineChart.extraLeftOffset=25f
         val description = Description()
         description.text = ""
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
+        xAxis.textSize=20f
+        xAxis.labelCount=2
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return DateTimeUtil.formatDate(sportLiftLeg.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.MM_SS)
+            }
+
+        }
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -85,7 +98,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
@@ -102,6 +115,8 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.setCircleColor(resources.getColor(R.color.color_ff574c))
+        lineDataSet.circleRadius=4f
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
@@ -143,11 +158,30 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
+        barChart.extraBottomOffset=15f
+        barChart.extraLeftOffset=45f
+        barChart.extraRightOffset=45f
         val description = Description()
         description.text = ""
         barChart.description = description
         val xAxis = barChart.xAxis
-        xAxis.isEnabled = false
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.setDrawGridLines(false)
+        xAxis.textSize=20f
+        xAxis.labelCount= Math.min(2,sportLiftLeg.calorie.size)
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                val index = value.toInt()
+                return if(index>=0 && index< sportLiftLeg.calorie.size){
+                    DateTimeUtil.formatDate(sportLiftLeg.calorie[index].record_time.toLong(),DateTimeUtil.MM_SS)
+                }else{
+                    ""
+                }
+            }
+
+        }
 
         val leftAxis = barChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -191,16 +225,25 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+        lineChart.extraBottomOffset=5f
+        lineChart.extraLeftOffset=25f
         val description = Description()
         description.text = ""
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.enableGridDashedLine(2f, 1f, 0f)
+        xAxis.textSize=20f
+        xAxis.labelCount=2
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return "${value.toInt()+1}组"
+            }
 
+        }
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
@@ -229,7 +272,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(true)
+        lineDataSet.setDrawCircles(false)
         lineDataSet.setDrawValues(false)
         lineDataSet.color = appContext.getColor(R.color.color_blue)
         // draw selection line as dashed
@@ -249,7 +292,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
-        lineDataSet2.setDrawCircles(true)
+        lineDataSet2.setDrawCircles(false)
         lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
@@ -293,6 +336,9 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
 
         fun clickStrengthAndTime() {
             TodaySportsDetailActivity.startActivity(requireContext(), SportsType.HIGH_KNEE, ChartType.INTENSITY_AND_TIME)
+        }
+        fun clickCalendar() {
+            startActivity(Intent(context, CalendarActivity::class.java))
         }
     }
 }

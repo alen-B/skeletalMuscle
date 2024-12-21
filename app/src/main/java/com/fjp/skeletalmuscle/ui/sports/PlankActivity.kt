@@ -70,10 +70,10 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             elapsedTime = currentTime - startTime
             // 检查是否暂停
             seconds++
-            if (seconds >= 30) {
-                mViewModel.title.set("太棒了，您做的很好，继续！")
-            }else if(seconds > App.sportsTime * 60 * 3 / 2){
+            if(seconds > App.sportsTime * 60 * 2 / 3){
                 mViewModel.title.set("加油，再坚持一下！")
+            }else if (seconds >= 30) {
+                mViewModel.title.set("太棒了，您做的很好，继续！")
             }
             updateTimerTextView()
             if (isRunning) {
@@ -87,8 +87,6 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.title.set("平板支撑运动")
-        startTimer()
-        //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
             age = DateUtils.calculateAge(DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, it.birthday), Date(System.currentTimeMillis()))
             weight = it.weight.toDouble()
@@ -127,7 +125,6 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
                 requestStartTime = System.currentTimeMillis() / 1000
                 mDatabind.countdownText.visibility = View.GONE
                 mDatabind.centerIv.visibility = View.VISIBLE
-                mViewModel.title.set(getString(R.string.high_knee_main_title))
                 startTimer()
             }
 

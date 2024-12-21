@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.ui.main.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
@@ -9,6 +10,7 @@ import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsPlankBinding
+import com.fjp.skeletalmuscle.ui.main.CalendarActivity
 import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsPlankViewModel
@@ -22,6 +24,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
@@ -86,6 +89,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.setCircleColor(ContextCompat.getColor(appContext, R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
@@ -127,11 +131,29 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
+        barChart.extraBottomOffset=15f
+        barChart.extraLeftOffset=45f
+        barChart.extraRightOffset=45f
         val description = Description()
         description.text = ""
         barChart.description = description
         val xAxis = barChart.xAxis
-        xAxis.isEnabled = false
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.setDrawGridLines(false)
+        xAxis.textSize=20f
+        xAxis.labelCount= 2
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return if(value.toInt()>=0 && value.toInt()< sportFlatSupport.calorie.size){
+                    DateTimeUtil.formatDate(sportFlatSupport.calorie[value.toInt()].record_time.toLong(),DateTimeUtil.MM_SS)
+                }else{
+                    ""
+                }
+            }
+
+        }
 
         val leftAxis = barChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -149,10 +171,10 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
 
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
-
-        for (i in sportFlatSupport.calorie.indices) {
-            values.add(BarEntry(i.toFloat(), sportFlatSupport.calorie[i].calorie.toFloat()))
-
+        var index = 0f
+        for (i in sportFlatSupport.calorie) {
+            values.add(BarEntry(index, i.calorie.toFloat()))
+            index++
         }
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "千卡")
@@ -176,6 +198,5 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         fun clickHeartRate() {
             TodaySportsDetailActivity.startActivity(requireContext(), SportsType.PLANK, ChartType.HEART_RATE_TREND)
         }
-
     }
 }

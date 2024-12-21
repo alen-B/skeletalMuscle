@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
@@ -51,14 +52,25 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+        lineChart.extraBottomOffset=15f
+        lineChart.extraLeftOffset=45f
+        lineChart.extraRightOffset=45f
         val description = Description()
         description.text = ""
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
+        xAxis.textSize=20f
+        xAxis.labelCount= Math.min(sportFlatSupport.heart_rate.size,4)
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return sportFlatSupport.heart_rate[value.toInt()].record_time.split(" ")[1]
+            }
+
+        }
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -68,7 +80,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
@@ -85,6 +97,8 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.setCircleColor(resources.getColor(R.color.color_ff574c))
+        lineDataSet.circleRadius=4f
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
@@ -126,11 +140,27 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
+
+        barChart.extraBottomOffset=15f
+        barChart.extraLeftOffset=45f
+        barChart.extraRightOffset=45f
         val description = Description()
         description.text = ""
         barChart.description = description
         val xAxis = barChart.xAxis
-        xAxis.isEnabled = false
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.setDrawGridLines(false)
+        xAxis.textSize=20f
+        xAxis.labelCount= 2
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return sportFlatSupport.calorie[value.toInt()].record_time.split(" ")[1]
+            }
+
+        }
+        xAxis.enableGridDashedLine(2f, 1f, 0f)
 
         val leftAxis = barChart.axisLeft
         leftAxis.setDrawGridLines(true)

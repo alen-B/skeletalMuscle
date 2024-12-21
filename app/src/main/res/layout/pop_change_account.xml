@@ -79,14 +79,35 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:scrollbars="none"
+            android:layout_marginStart="52dp"
+            android:layout_marginEnd="52dp"
             app:layout_constraintBottom_toTopOf="@+id/backIv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_layout" />
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_marginStart="22dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/arrow_right"
+            app:layout_constraintTop_toTopOf="@+id/recyclerView"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/arrow_left"
+            app:layout_constraintTop_toTopOf="@+id/recyclerView"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/backIv"

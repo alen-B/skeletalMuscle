@@ -184,22 +184,17 @@
             android:name=".ui.user.DiseaseActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
-            android:screenOrientation="sensorLandscape" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.user.SportsActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
-            android:screenOrientation="sensorLandscape" >
-
-        </activity>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.user.SingleSelectActivity"
             android:configChanges="orientation|screenLayout"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity

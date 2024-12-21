@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
  *Description:
  */
 class TodaySportsDetailAdapter(fm: FragmentManager, val list: List<Fragment>) : FragmentStatePagerAdapter(fm) {
-    private val mTitles = arrayOf("日", "周", "月", "年", "总")
+    private val mTitles = arrayOf("日", "周", "月", "年")
     override fun getCount(): Int {
         return list.size
     }
@@ -20,7 +20,7 @@ class TodaySportsDetailAdapter(fm: FragmentManager, val list: List<Fragment>) : 
         return list[position]
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return mTitles.get(position)
+    override fun getPageTitle(position: Int): CharSequence {
+        return mTitles[position]
     }
 }

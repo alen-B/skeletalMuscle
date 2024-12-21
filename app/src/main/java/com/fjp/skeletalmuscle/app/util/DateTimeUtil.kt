@@ -125,8 +125,8 @@ object DateTimeUtil {
         val remainingSecondsAfterMinutes = remainingSecondsAfterHours % 60
 
         return when {
-            hours > 0 -> "$hours H"
-            minutes > 0 -> "$minutes Min"
+            hours > 0 -> "$hours H $minutes Min $remainingSecondsAfterMinutes sec"
+            minutes > 0 -> "$minutes Min $remainingSecondsAfterMinutes sec"
             else -> "$remainingSecondsAfterMinutes sec"
         }
     }

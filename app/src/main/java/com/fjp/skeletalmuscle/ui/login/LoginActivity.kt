@@ -106,12 +106,13 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 } else {
+                    CacheUtil.setUser(it)
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                 }
                 App.userInfo = it
-                CacheUtil.setUser(it)
+
                 finish()
             }, {
                 showToast(getString(R.string.login_login_failed))

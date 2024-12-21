@@ -68,16 +68,16 @@
             style="@style/SMButton"
             android:layout_width="240dp"
             android:text="@string/today_sports_data_recorde"
+            android:onClick="@{()-> click.clickSportsRecord()}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{()-> click.clickShare()}" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             style="@style/SMButtonNext"
             android:layout_width="240dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_yellow_round_20"
-            android:onClick="@{()-> click.clickSportsRecord()}"
+            android:onClick="@{()-> click.clickShare()}"
             android:text="@string/today_sports_data_share"
             android:drawableEnd="@drawable/today_sports_data_share"
             app:layout_constraintBottom_toBottomOf="parent"

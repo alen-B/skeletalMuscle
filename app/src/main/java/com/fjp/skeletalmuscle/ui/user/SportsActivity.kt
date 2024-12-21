@@ -41,15 +41,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
         mViewModel.totalIndex.set("/10")
         mViewModel.showRightText.set(true)
         sportsAdapter = SportsTypeAdapter(mViewModel.dataArr, clickItem = { item ->
-            if (item.name == getString(R.string.sports_type_no)) {
-                mViewModel.dataArr.forEach {
-                    it.isSelected = false
-                    it.child.forEach { child -> child.isSelected = false }
-                }
-            }
-            if (!item.isSelected) {
-                item.child.forEach { it.isSelected = false }
-            }
+
             curItem = item
             sportsChildAdapter = SportsChildTypeAdapter(if (curItem!!.isSelected) curItem!!.child else arrayListOf(), clickItem = { item ->
             })
@@ -61,6 +53,14 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
 
     inner class ProxyClick {
         fun next() {
+            val selectedSports = mViewModel.dataArr.filter { it.isSelected }
+            selectedSports.forEach {
+                it.child = it.child.filter { child -> child.isSelected } as ArrayList<SportsChild>
+            }
+            val userSports = arrayListOf<UserSports>()
+            selectedSports.forEach {
+                userSports.add(UserSports(it.child.map { it.name }, it.name))
+            }
             mViewModel.dataArr.forEach {
                 if (it.name == getString(R.string.sports_type_no) && it.isSelected) {
                     CacheUtil.removeAccount(App.userInfo.mobile)
@@ -69,21 +69,12 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
                     CacheUtil.setAccounts(accounts)
                     CacheUtil.setUser(App.userInfo)
                     App.userInfo.device_no = SettingUtil.getDeviceId(this@SportsActivity)
-                    val selectedSports = mViewModel.dataArr.filter { it.isSelected }
-//                App.userInfo.sports =
+                    App.userInfo.sports = userSports
                     saveUserInfoViewModel.saveInfoReq(App.userInfo)
                 }
             }
 
-            val selectedSports = mViewModel.dataArr.filter { it.isSelected }
-            selectedSports.forEach {
-                it.child = it.child.filter { child -> child.isSelected } as ArrayList<SportsChild>
-            }
-            val userSports = arrayListOf<UserSports>()
-            selectedSports.forEach {
-                userSports.add(UserSports(it.child.map { it.name },it.name))
-            }
-            App.userInfo.sports = userSports
+
             val intent = Intent(this@SportsActivity, SingleSelectActivity::class.java)
             intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.DAY_ONE_WEEK.type)
             startActivity(intent)
@@ -100,7 +91,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
                         showToast("请输入类型名称")
                         return
                     }
-                    sportsAdapter.addData(0, Sports(name, arrayListOf(), true))
+                    sportsAdapter.addData(0, Sports(name, arrayListOf(), false))
                     mDatabind.recyclerView.smoothScrollToPosition(0)
                 }
 

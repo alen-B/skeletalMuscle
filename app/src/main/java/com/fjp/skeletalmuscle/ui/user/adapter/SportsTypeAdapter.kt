@@ -26,10 +26,6 @@ class SportsTypeAdapter(data: ArrayList<Sports>, var clickItem: (item: Sports) -
         }
         holder.setText(R.id.contentTv, item.name)
         holder.itemView.setOnClickListener {
-
-            if (item.name === appContext.getString(R.string.sports_type_no) && (!item.isSelected)) {
-                data.forEach { it.isSelected = false }
-            }
             if (item.name != appContext.getString(R.string.sports_type_no) && (!item.isSelected)) {
                 data.forEach {
                     if (it.name === appContext.getString(R.string.sports_type_no)) {
@@ -37,6 +33,19 @@ class SportsTypeAdapter(data: ArrayList<Sports>, var clickItem: (item: Sports) -
                     }
                 }
             }
+            if (item.name == appContext.getString(R.string.sports_type_no) && (!item.isSelected)) {
+                data.forEach {
+                    if(it.name != appContext.getString(R.string.sports_type_no)){
+                        it.isSelected = false
+                        it.child.forEach { child -> child.isSelected = false }
+                    }
+                }
+            }
+
+            if (!item.isSelected) {
+                item.child.forEach { it.isSelected = false }
+            }
+
             item.isSelected = !item.isSelected
             clickItem.invoke(item)
             notifyDataSetChanged()
