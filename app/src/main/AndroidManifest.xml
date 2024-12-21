@@ -149,10 +149,10 @@
             android:configChanges="orientation|screenLayout"
             android:exported="true"
             android:screenOrientation="sensorLandscape" >
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+<!--             <intent-filter>-->
+<!--             <action android:name="android.intent.action.MAIN" />-->
+<!--             <category android:name="android.intent.category.LAUNCHER" />-->
+<!--             </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.main.SportsRecordActivity"
@@ -184,12 +184,19 @@
             android:name=".ui.user.DiseaseActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".ui.user.SportsActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape" >
+
+        </activity>
         <activity
             android:name=".ui.user.SingleSelectActivity"
             android:configChanges="orientation|screenLayout"

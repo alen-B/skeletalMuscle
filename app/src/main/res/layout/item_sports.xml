@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:background="@drawable/bg_gray_round_20">
+
+    <TextView
+        android:id="@+id/contentTv"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:textStyle="bold"
+        android:minWidth="207dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:textColor="@color/color_1c1c1c"
+        android:textSize="@dimen/text_size_2"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/singleSelectedIv"
+        android:layout_width="77dp"
+        android:layout_height="60dp"
+        android:background="@drawable/gender_selected"
+        android:importantForAccessibility="no"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/contentTv"
+        app:layout_constraintTop_toTopOf="@+id/contentTv" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,12 +34,13 @@
             android:layout_width="180dp"
             android:background="@drawable/bg_gray_round_20"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="16dp"
             android:onClick="@{()-> click.addSportsType()}"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+            app:layout_constraintEnd_toStartOf="@+id/recyclerView"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_height="240dp" />
+            android:layout_height="200dp" />
 
         <ImageView
             android:id="@+id/addIv"
@@ -67,8 +68,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerChildView"
             android:layout_width="0dp"
+            android:layout_marginTop="40dp"
             app:layout_constraintStart_toEndOf="@+id/addView"
             android:scrollbars="none"
             android:layout_height="wrap_content" />
@@ -77,6 +78,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recyclerView"
             app:layout_constraintBottom_toTopOf="@+id/nextBtn"
             android:layout_width="0dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintStart_toEndOf="@+id/addView"
             android:scrollbars="none"
             android:layout_height="wrap_content" />

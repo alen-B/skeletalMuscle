@@ -34,6 +34,9 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
             initHighKnee()
         } else if (App.sportsType == SportsType.HAND_GRIPS) {
             initHandGrips()
+        }else if(App.sportsType == SportsType.ASSESSMENT){
+            mDatabind.step2Tv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.guide1_step2_2), null, null, null)
+            initHighKnee()
         }
 
     }

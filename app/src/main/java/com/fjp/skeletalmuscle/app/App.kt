@@ -4,10 +4,9 @@ import cn.com.heaton.blelibrary.ble.Ble
 import cn.com.heaton.blelibrary.ble.BleLog
 import cn.com.heaton.blelibrary.ble.model.BleDevice
 import com.fjp.skeletalmuscle.app.event.EventViewModel
-import com.fjp.skeletalmuscle.app.util.SettingUtil
-import com.fjp.skeletalmuscle.data.model.bean.Sport
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.UserInfo
+import com.fjp.skeletalmuscle.data.model.bean.UserSports
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.BuildConfig
 import com.tencent.mmkv.MMKV
@@ -29,7 +28,7 @@ class App : BaseApp() {
         lateinit var instance: App
         lateinit var eventViewModelInstance: EventViewModel
         lateinit var appViewModelInstance: AppViewModel
-        var userInfo = UserInfo("", "", 0, arrayListOf(), 0, 0, 0, "", "", "", "", 0, 0, Sport(arrayListOf(),""), 0, 0, "", 0, "","")
+        var userInfo = UserInfo("", "", 0, arrayListOf(), 0, 0, 0, "", "", "", "", 0, 0, arrayListOf<UserSports>(), 0, 0, "", 0, "", "")
         var sportsType = SportsType.HIGH_KNEE
         var sportsTime = 8
         var legAngle = 90

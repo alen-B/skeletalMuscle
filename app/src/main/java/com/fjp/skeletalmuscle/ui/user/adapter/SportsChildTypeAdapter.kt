@@ -10,7 +10,7 @@ import com.fjp.skeletalmuscle.data.model.bean.SportsChild
 import me.hgj.jetpackmvvm.base.appContext
 
 
-class SportsChildTypeAdapter(data: ArrayList<SportsChild>, var clickItem: (item: SportsChild) -> Unit) : BaseQuickAdapter<SportsChild, BaseViewHolder>(R.layout.item_single_select, data) {
+class SportsChildTypeAdapter(data: ArrayList<SportsChild>, var clickItem: (item: SportsChild) -> Unit) : BaseQuickAdapter<SportsChild, BaseViewHolder>(R.layout.item_sports_child_select, data) {
     init {
         setAdapterAnimation(SettingUtil.getListMode())
     }

@@ -40,12 +40,15 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
 
     override fun onResume() {
         super.onResume()
-        if (App.sportsType == SportsType.HIGH_KNEE) {
+        if (App.sportsType == SportsType.HIGH_KNEE ) {
             initHighKnee()
         } else if (App.sportsType == SportsType.DUMBBELL) {
             initHighKnee()
         } else if (App.sportsType == SportsType.HAND_GRIPS) {
             initHandGrips()
+        }else if(App.sportsType == SportsType.ASSESSMENT){
+            mDatabind.step2Tv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.guide1_step1_1), null, null, null)
+            initHighKnee()
         }
 
     }
