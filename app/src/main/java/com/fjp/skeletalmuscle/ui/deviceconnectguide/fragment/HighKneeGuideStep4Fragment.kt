@@ -74,6 +74,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         if (leftLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
+            mDatabind.step2Tv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.high_knee_guide3_connected), null, null, null)
             mViewModel.title.set(getString(R.string.high_knee_guide_step5_title))
         } else {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
@@ -218,8 +219,9 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             }
             SportsType.PLANK -> {
             }
-
-            else -> {}
+            SportsType.ASSESSMENT -> {
+                mViewModel.title.set(getString(R.string.high_knee_guide_step5_title))
+            }
         }
 
     }

@@ -90,9 +90,8 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
 
                     else -> {}
                 }
-                mDatabind.viewpager.setCurrentItem(mDatabind.viewpager.currentItem + 1, true)
             }
-
+            mDatabind.viewpager.setCurrentItem(mDatabind.viewpager.currentItem + 1, true)
         }
         fun clickPre() {
             if (mDatabind.viewpager.currentItem == 0) {

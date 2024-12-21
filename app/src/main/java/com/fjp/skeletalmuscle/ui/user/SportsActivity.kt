@@ -67,6 +67,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
                     val accounts = CacheUtil.getAccounts()
                     accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
                     CacheUtil.setAccounts(accounts)
+                    CacheUtil.setUser(App.userInfo)
                     App.userInfo.device_no = SettingUtil.getDeviceId(this@SportsActivity)
                     val selectedSports = mViewModel.dataArr.filter { it.isSelected }
 //                App.userInfo.sports =
@@ -82,7 +83,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
             selectedSports.forEach {
                 userSports.add(UserSports(it.child.map { it.name },it.name))
             }
-                App.userInfo.sports = userSports
+            App.userInfo.sports = userSports
             val intent = Intent(this@SportsActivity, SingleSelectActivity::class.java)
             intent.putExtra(Constants.INTENT_KEY_SINGLESELECT_TYPE, SingleSelectType.DAY_ONE_WEEK.type)
             startActivity(intent)

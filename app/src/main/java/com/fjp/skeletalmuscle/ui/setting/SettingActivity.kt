@@ -42,6 +42,7 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
             val accounts = CacheUtil.getAccounts()
             accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
             CacheUtil.setAccounts(accounts)
+            CacheUtil.setUser(App.userInfo)
         }
         eventViewModel.updateAvatarEvent.observeInActivity(this){
             App.userInfo.profile = it
@@ -55,6 +56,7 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
             val accounts = CacheUtil.getAccounts()
             accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
             CacheUtil.setAccounts(accounts)
+            CacheUtil.setUser(App.userInfo)
         }
     }
 

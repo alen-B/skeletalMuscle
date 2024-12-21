@@ -38,6 +38,7 @@ class SportsAssessmentGuideActivity : BaseActivity<SportsAssessmentTypeSelectedV
         }
 
         fun clickStart() {
+            App.sportsType = SportsType.ASSESSMENT
             if (SMBleManager.highKneeLeftDeviceIsConnected() && SMBleManager.highKneeRightDeviceIsConnected()) {
                 val intent = Intent(this@SportsAssessmentGuideActivity, SelectedWaistlineAndWeightActivity::class.java)
                 startActivity(intent)

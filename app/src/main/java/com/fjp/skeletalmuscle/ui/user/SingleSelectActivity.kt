@@ -137,6 +137,7 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
                     val accounts = CacheUtil.getAccounts()
                     accounts.add(Account(App.userInfo.name, App.userInfo.mobile, App.userInfo.profile))
                     CacheUtil.setAccounts(accounts)
+                    CacheUtil.setUser(App.userInfo)
                     App.userInfo.device_no = SettingUtil.getDeviceId(this@SingleSelectActivity)
                     saveUserInfoViewModel.saveInfoReq(App.userInfo)
                 }
