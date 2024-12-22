@@ -24,6 +24,7 @@ import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.AssessmentUtils
 import com.fjp.skeletalmuscle.app.util.BleScanHelper
+import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
@@ -55,6 +56,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var totalSitUpTimes = 0 //起坐了多少次
     private var leftSitUpTimes = 0
     private var rightSitUpTimes = 0
+    private val playAudioIsOpen = true
 
     private var leftLegmaxPitchInCycle = 0f // 记录周期内左腿最大的pitch值
     private var rightLegmaxPitchInCycle = 0f // 记录周期内右腿最大的pitch值
@@ -131,6 +133,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         mViewModel.title.set("高抬腿运动即将开始")
         weight = intent.getIntExtra(Constants.INTENT_KEY_WEIGHT, 0)
         waistline = intent.getIntExtra(Constants.INTENT_KEY_WAISTLINE, 0)
+        playAudioIsOpen = CacheUtil.getVoiceInteraction()
         leftLevelViews.add(mDatabind.lIv1)
         leftLevelViews.add(mDatabind.lIv2)
         leftLevelViews.add(mDatabind.lIv3)
@@ -373,7 +376,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         // 检查pitch是否大于100度
         if (pitch > 90) {
             // 抬腿过高，检查MediaPlayer是否已经在播放
-            if (mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying && curType == AssessmentType.HighLeg) {
+            if (playAudioIsOpen && mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying && curType == AssessmentType.HighLeg) {
                 mediaPlayer_high!!.start() // 播放音频
             }
         }
@@ -473,7 +476,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             // 周期结束，检查最大pitch值是否在25到30之间
             if (rightLegmaxPitchInCycle in 25.0..30.0) {
                 // 播放提示音
-                if (mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying) {
+                if (playAudioIsOpen && mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying) {
                     mediaPlayer_low!!.start()
                 }
             }

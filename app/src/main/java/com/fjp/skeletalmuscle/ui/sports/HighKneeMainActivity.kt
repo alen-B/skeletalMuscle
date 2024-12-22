@@ -20,6 +20,7 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.ActionDetector
+import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
@@ -90,6 +91,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private var leftIsDescending = false // 标记是否已经开始下降
     private var rightIsDescending = false // 标记是否已经开始下降
     private var mediaPlayer_high: MediaPlayer? = null
+    private val playAudioIsOpen = true
     private var mediaPlayer_low: MediaPlayer? = null
     private var leftLevelViews = mutableListOf<ImageView>()
     private var rightLevelViews = mutableListOf<ImageView>()
@@ -111,14 +113,13 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.title.set(getString(R.string.now_start))
-        //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
             age = DateUtils.calculateAge(DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, it.birthday), Date(System.currentTimeMillis()))
             weight = it.weight.toDouble()
             isMale = it.sex == getString(R.string.setting_sex_man)
         }
+        playAudioIsOpen = CacheUtil.getVoiceInteraction()
 
-//        showOffLinePop()
         leftLevelViews.add(mDatabind.lIv1)
         leftLevelViews.add(mDatabind.lIv2)
         leftLevelViews.add(mDatabind.lIv3)
@@ -293,8 +294,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         val score: Int = liftLegRequest.score
         val sum_calorie: Int = (caloriesBurned * 1000).toInt()
         val warm_up_activation: Int = liftLegRequest.warm_up_activation
-        return SportLiftLeg(sport_time, avg_left_degree, avg_rate_value, avg_right_degree, calorie, cardiorespiratory_endurance, efficient_grease_burning, extreme_breakthrough, heart_lung_enhancement, heart_rate, 0, left_times,
-            max_rate_value, min_rate_value, record, right_times, score, sum_calorie,0, warm_up_activation,avg_left_degree*left_times,avg_right_degree*right_times)
+        return SportLiftLeg(sport_time, avg_left_degree, avg_rate_value, avg_right_degree, calorie, cardiorespiratory_endurance, efficient_grease_burning, extreme_breakthrough, heart_lung_enhancement, heart_rate, 0, left_times, max_rate_value, min_rate_value, record, right_times, score, sum_calorie, 0, warm_up_activation, avg_left_degree * left_times, avg_right_degree * right_times)
 
     }
 
@@ -373,7 +373,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放
             mViewModel.title.set("左腿抬腿角度偏高！")
-            if (mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying) {
+            if (playAudioIsOpen && mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying) {
                 mediaPlayer_high!!.start() // 播放音频
             }
         }
@@ -389,7 +389,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             if (!leftIsDescending) {
                 if (abs(pitch) > LIFT_THRESHOLD) {
                     mViewModel.leftLegAngle.set("L ${leftLegmaxPitchInCycle.toInt()}°")
-                    if(leftLegmaxPitchInCycle>70 &&  leftLegmaxPitchInCycle<90){
+                    if (leftLegmaxPitchInCycle > 70 && leftLegmaxPitchInCycle < 90) {
                         mViewModel.title.set("太棒了，您做的很好，继续！")
                     }
                     leftLegLifts++
@@ -407,7 +407,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             if (leftLegmaxPitchInCycle >= 25 && leftLegmaxPitchInCycle <= 30) {
                 mViewModel.title.set("左腿抬腿角度偏低！")
                 // 播放提示音
-                if (mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying()) {
+                if (playAudioIsOpen && mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying()) {
                     mediaPlayer_low!!.start()
                 }
             }
@@ -462,7 +462,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (pitch < rightLastPitch) {
             if (!rightIsDescending) {
                 if (abs(pitch) > LIFT_THRESHOLD) {
-                    if(leftLegmaxPitchInCycle>70 &&  leftLegmaxPitchInCycle<90){
+                    if (leftLegmaxPitchInCycle > 70 && leftLegmaxPitchInCycle < 90) {
                         mViewModel.title.set("太棒了，您做的很好，继续！")
                     }
                     rightLegLifts++
