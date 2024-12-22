@@ -91,7 +91,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private var leftIsDescending = false // 标记是否已经开始下降
     private var rightIsDescending = false // 标记是否已经开始下降
     private var mediaPlayer_high: MediaPlayer? = null
-    private val playAudioIsOpen = true
+    private var playAudioIsOpen = true
     private var mediaPlayer_low: MediaPlayer? = null
     private var leftLevelViews = mutableListOf<ImageView>()
     private var rightLevelViews = mutableListOf<ImageView>()

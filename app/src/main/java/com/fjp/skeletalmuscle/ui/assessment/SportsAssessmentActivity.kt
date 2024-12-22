@@ -56,7 +56,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var totalSitUpTimes = 0 //起坐了多少次
     private var leftSitUpTimes = 0
     private var rightSitUpTimes = 0
-    private val playAudioIsOpen = true
+    private var playAudioIsOpen = true
 
     private var leftLegmaxPitchInCycle = 0f // 记录周期内左腿最大的pitch值
     private var rightLegmaxPitchInCycle = 0f // 记录周期内右腿最大的pitch值
