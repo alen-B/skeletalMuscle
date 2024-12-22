@@ -38,19 +38,21 @@ public class ProgressWeekView extends WeekView {
         super(context);
         mProgressPaint.setAntiAlias(true);
         mProgressPaint.setStyle(Paint.Style.STROKE);
-        mProgressPaint.setPathEffect(new CornerPathEffect(10));
+        mProgressPaint.setStrokeCap(Paint.Cap.ROUND);
         mProgressPaint.setStrokeWidth(dipToPx(context, 2.2f));
         mProgressPaint.setColor(0xBBf54a00);
 
         mNoneProgressPaint.setAntiAlias(true);
         mNoneProgressPaint.setStyle(Paint.Style.STROKE);
+        mProgressPaint.setStrokeCap(Paint.Cap.ROUND);
         mNoneProgressPaint.setStrokeWidth(dipToPx(context, 2.2f));
-        mNoneProgressPaint.setColor(0x90CfCfCf);
+        mNoneProgressPaint.setColor(Color.parseColor("#DEE8F8"));
         mPadding = dipToPx(getContext(), 3);
 
         mPointPaint.setAntiAlias(true);
-        mPointPaint.setStyle(Paint.Style.FILL);
+        mPointPaint.setStyle(Paint.Style.STROKE);
         mPointPaint.setTextAlign(Paint.Align.CENTER);
+        mProgressPaint.setStrokeCap(Paint.Cap.ROUND);
         mPointPaint.setColor(Color.RED);
         mPointRadius = dipToPx(context, 12);
 
