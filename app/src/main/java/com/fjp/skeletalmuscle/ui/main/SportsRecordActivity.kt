@@ -81,6 +81,9 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         }else if(todayData.score>60){
             mDatabind.circleProgressView.setTextColor(resources.getColor(R.color.color_ffc019))
             mDatabind.circleProgressView.setCircleColor(resources.getColor(R.color.color_ffc019))
+        }else if(todayData.score>30){
+            mDatabind.circleProgressView.setTextColor(resources.getColor(R.color.color_ff824c))
+            mDatabind.circleProgressView.setCircleColor(resources.getColor(R.color.color_ff824c))
         }else{
             mDatabind.circleProgressView.setTextColor(resources.getColor(R.color.color_ff574c))
             mDatabind.circleProgressView.setCircleColor(resources.getColor(R.color.color_ff574c))
@@ -116,9 +119,9 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
             mDatabind.highKneeScoreTv.text = sportLiftLeg.score.toString()
             mDatabind.highKneeSportsTimeValueTv.text = DateTimeUtil.sceond2Min(time)
             mDatabind.highKneeBurnCaloriesValueTv.text = (sportLiftLeg.sum_calorie/1000).toString()
-            mDatabind.highKneeExerciseAmountTotalValueTv.text = (sportLiftLeg.left_times+sportLiftLeg.right_times).toString()
-            mDatabind.highKneeExerciseAmountRightValueTv.text = (sportLiftLeg.right_times).toString()
-            mDatabind.highKneeExerciseAmountLeftValueTv.text = (sportLiftLeg.left_times).toString()
+            mDatabind.highKneeExerciseAmountTotalValueTv.text = (sportLiftLeg.left_sport_amount+sportLiftLeg.right_sport_amount).toString()
+            mDatabind.highKneeExerciseAmountRightValueTv.text = (sportLiftLeg.right_sport_amount).toString()
+            mDatabind.highKneeExerciseAmountLeftValueTv.text = (sportLiftLeg.left_sport_amount).toString()
             mDatabind.highKneeAngleRightValueTv.text ="${ sportLiftLeg.avg_right_degree}°"
             mDatabind.highKneeAngleLeftValueTv.text = "${sportLiftLeg.avg_left_degree}°"
             mDatabind.highKneeEnduranceValueTv.text = (sportLiftLeg.cardiorespiratory_endurance).toString()

@@ -55,14 +55,22 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+        lineChart.extraBottomOffset=18f
         val description = Description()
         description.text = ""
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return DateTimeUtil.formatDate(sportFlatSupport.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.MM_SS)
+            }
+
+        }
+        xAxis.textSize=20f
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -72,7 +80,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
@@ -89,6 +97,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.circleRadius=4f
         lineDataSet.setCircleColor(ContextCompat.getColor(appContext, R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)

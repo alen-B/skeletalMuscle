@@ -3,9 +3,11 @@ package com.fjp.skeletalmuscle.app.weight.calendar;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
+import com.fjp.skeletalmuscle.R;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
 
@@ -36,6 +38,7 @@ public class ProgressWeekView extends WeekView {
         super(context);
         mProgressPaint.setAntiAlias(true);
         mProgressPaint.setStyle(Paint.Style.STROKE);
+        mProgressPaint.setPathEffect(new CornerPathEffect(10));
         mProgressPaint.setStrokeWidth(dipToPx(context, 2.2f));
         mProgressPaint.setColor(0xBBf54a00);
 
@@ -73,12 +76,14 @@ public class ProgressWeekView extends WeekView {
         int cy = mItemHeight / 2;
 
         int angle = getAngle(Integer.parseInt(calendar.getScheme()));
-        if(angle < 210){
-            mProgressPaint.setColor(Color.RED);
-        }else if(angle > 210 && angle < 280){
-            mProgressPaint.setColor(Color.YELLOW);
+        if(angle > 288){
+            mProgressPaint.setColor(getContext().getResources().getColor(R.color.color_4e71ff));
+        }else if(angle > 216){
+            mProgressPaint.setColor(getContext().getResources().getColor(R.color.color_ffc019));
+        }else if(angle > 108){
+            mProgressPaint.setColor(getContext().getResources().getColor(R.color.color_ff824c));
         }else{
-            mProgressPaint.setColor(Color.BLUE);
+            mProgressPaint.setColor(getContext().getResources().getColor(R.color.color_ff574c));
         }
 
         RectF progressRectF = new RectF(cx - mRadius, cy - mRadius, cx + mRadius, cy + mRadius);

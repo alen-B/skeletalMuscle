@@ -26,13 +26,5 @@ class SportsHighKneeCompletedViewModel : SMBaseViewModel() {
     val avgHeart = ObservableField("0")
     val maxHeart = ObservableField("0")
 
-   fun share(activity: Activity,view1:View,view2:View,view3: View){
-        viewModelScope.launch{
-            val titleBitmap =  ShareUtils.createBitmapByView(activity,view1)
-            val centerBitmap =  ShareUtils.createBitmapByView(activity,view2)
-            val bottomBitmap =  ShareUtils.createBitmapByView(activity,view3)
-            val shareBitmap = ShareUtils.mergeBitmaps(titleBitmap,centerBitmap,bottomBitmap)
-            ShareUtils.shareBitmap(activity,shareBitmap)
-        }
-    }
+
 }

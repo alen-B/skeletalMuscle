@@ -3,14 +3,21 @@ package com.fjp.skeletalmuscle.ui.sports
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import coil.load
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
+import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
 import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.ActivitySportsPlankCompletedBinding
+import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SportsPlankCompletedViewModel
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
@@ -31,6 +38,7 @@ import me.hgj.jetpackmvvm.base.appContext
 
 class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,ActivitySportsPlankCompletedBinding>() {
     lateinit var sportFlatSupport: SportFlatSupport
+    val shareViewmodel  : ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
         sportFlatSupport = intent.getParcelableExtra(Constants.INTENT_SPORT_PLANK)!!
         mDatabind.viewModel = mViewModel
@@ -52,9 +60,6 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=15f
-        lineChart.extraLeftOffset=45f
-        lineChart.extraRightOffset=45f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -64,10 +69,9 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.textSize=20f
-        xAxis.labelCount= Math.min(sportFlatSupport.heart_rate.size,4)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return sportFlatSupport.heart_rate[value.toInt()].record_time.split(" ")[1]
+                return DateTimeUtil.formatDate(sportFlatSupport.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.MM_SS)
             }
 
         }
@@ -97,8 +101,8 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
-        lineDataSet.setCircleColor(resources.getColor(R.color.color_ff574c))
         lineDataSet.circleRadius=4f
+        lineDataSet.setCircleColor(ContextCompat.getColor(appContext, R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
@@ -198,7 +202,21 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
 
     inner class ProxyClick {
         fun clickShare() {
-            sharePop()
+//            sharePop()
+            val shareTitleView = View.inflate(this@SportsPlankCompletedActivity, R.layout.share_title, null)
+            val shareTBottomView = View.inflate(this@SportsPlankCompletedActivity, R.layout.share_bottom, null)
+            val avatarIv = shareTitleView.findViewById<CircleImageView>(R.id.avatarIv)
+            val nameTv = shareTitleView.findViewById<TextView>(R.id.nameTv)
+            val timeTv = shareTitleView.findViewById<TextView>(R.id.timeTv)
+            nameTv.text = App.userInfo.name
+            timeTv.text = DateTimeUtil.formatShareTime(System.currentTimeMillis())
+            avatarIv.load(App.userInfo.profile)
+            avatarIv.load(App.userInfo.profile, builder = {
+                allowHardware(false)
+                this.error(R.drawable.avatar_default)
+                this.placeholder(R.drawable.avatar_default)
+            })
+            shareViewmodel.share(this@SportsPlankCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
         }
 
         fun clickCompleted() {

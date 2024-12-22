@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import coil.load
 import com.example.pdftest.ui.ShareUtils
@@ -16,6 +17,7 @@ import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
 import com.fjp.skeletalmuscle.data.model.bean.result.SportLiftLeg
 import com.fjp.skeletalmuscle.databinding.ActivitySportsHightKneeCompletedBinding
+import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SportsHighKneeCompletedViewModel
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
@@ -36,6 +38,7 @@ import me.hgj.jetpackmvvm.base.appContext
 
 class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedViewModel, ActivitySportsHightKneeCompletedBinding>() {
     lateinit var sportLiftLeg: SportLiftLeg
+    val shareViewmodel  :ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -341,7 +344,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
                 this.error(R.drawable.avatar_default)
                 this.placeholder(R.drawable.avatar_default)
             })
-            mViewModel.share(this@SportsHighKneeCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
+            shareViewmodel.share(this@SportsHighKneeCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
 
 
         }
