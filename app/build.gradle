@@ -125,6 +125,7 @@ dependencies {
     implementation 'com.github.zhpanvip:viewpagerindicator:1.2.3'
     implementation 'com.github.aicareles:Android-BLE:3.3.1'
     implementation 'io.coil-kt:coil:1.2.2'
+    implementation 'com.itextpdf:itext7-core:7.1.9'
     implementation project(path: ':lib_appupdate')
 
     testImplementation 'junit:junit:4.13.2'

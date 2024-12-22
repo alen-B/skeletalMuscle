@@ -10,6 +10,7 @@ import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.fjp.skeletalmuscle.data.model.bean.result.AppVersion
 import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryData
 import com.fjp.skeletalmuscle.data.model.bean.result.CalendarResult
+import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
@@ -18,6 +19,7 @@ import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeR
 import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.data.model.bean.result.UpdateImageResult
 import okhttp3.MultipartBody
+import retrofit2.http.Query
 
 /**
  * 作者　: hegaojian
@@ -74,6 +76,13 @@ class HttpRequestManger {
      */
     suspend fun getAssessment(year: String): ApiResponse<ArrayList<AssessmentHistoryData>> {
         return apiService.getAssessment(year)
+    }
+    /**
+     * 获取最后一次测评结果
+     *
+     */
+    suspend fun getLatestTest(): ApiResponse<AssessmentHistoryData?> {
+        return apiService.getLatestTest()
     }
 
     /**
@@ -200,6 +209,14 @@ class HttpRequestManger {
      */
     suspend fun getSportTrendFlatSupportHeartRate(type: String): ApiResponse<HeartRateResult> {
         return apiService.getSportTrendFlatSupportHeartRate(type)
+    }
+
+    /**
+     *平板支撑-心率趋势图
+     *
+     */
+    suspend fun getExportData(startTime: Long,endTime: Long): ApiResponse<ExportData> {
+        return apiService.getExportData(startTime,endTime)
     }
 
 

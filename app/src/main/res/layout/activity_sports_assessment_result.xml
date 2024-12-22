@@ -100,7 +100,7 @@
                     android:layout_height="match_parent" />
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/chartLl"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -112,18 +112,73 @@
                 app:layout_constraintBottom_toBottomOf="@+id/assessmentResultLl"
                 app:layout_constraintStart_toEndOf="@+id/assessmentResultLl"
                 app:layout_constraintTop_toTopOf="@+id/assessmentResultLl">
-
+                <TextView
+                    android:id="@+id/gripTv"
+                    android:layout_width="wrap_content"
+                    android:text="握力运动"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_801c1c1c"
+                    android:layout_height="wrap_content"/>
                 <com.github.mikephil.charting.charts.RadarChart
                     android:id="@+id/radarChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                    android:layout_width="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gripTv"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="0dp" />
+                <TextView
+                    android:id="@+id/highLegTv"
+                    android:layout_width="wrap_content"
+                    android:text="高抬腿运动"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginStart="140dp"
+                    android:textColor="@color/color_801c1c1c"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/situpTv"
+                    android:layout_width="wrap_content"
+                    android:text="起坐运动"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="150dp"
+                    android:textColor="@color/color_801c1c1c"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/weightTv"
+                    android:layout_width="wrap_content"
+                    android:text="体重"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginStart="190dp"
+                    android:textColor="@color/color_801c1c1c"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/waistTv"
+                    android:layout_width="wrap_content"
+                    android:text="腰围"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginEnd="190dp"
+                    android:textColor="@color/color_801c1c1c"
+                    android:layout_height="wrap_content"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/resultTv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:drawablePadding="20dp"
+                android:textSize="26dp"
+                android:textColor="@color/color_cc1c1c1c"
                 android:drawableStart="@drawable/sports_assessement_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

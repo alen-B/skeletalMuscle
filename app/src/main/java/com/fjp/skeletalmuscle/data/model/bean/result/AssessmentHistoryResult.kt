@@ -17,7 +17,7 @@ data class AssessmentHistoryData(
     val month: Int,
     val result: String,
     val sit_up: Int,
-    val test_time: Int,
+    val test_time: Long,
     val user_id: Int,
     val waistline: Int,
     val weight: Int,

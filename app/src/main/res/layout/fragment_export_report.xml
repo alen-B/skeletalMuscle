@@ -77,6 +77,7 @@
                 android:textSize="@dimen/text_size_4"
                 android:drawablePadding="16dp"
                 android:button="@null"
+                android:checked="true"
                 android:drawableStart="@drawable/radio_button_selector"
                 android:text="@string/setting_current_week"
                 android:layout_height="70dp" />

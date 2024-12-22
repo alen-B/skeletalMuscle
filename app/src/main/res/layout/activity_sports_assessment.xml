@@ -230,6 +230,16 @@
             android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@+id/rTimesTv"
             app:layout_constraintStart_toEndOf="@+id/rTimesTv" />
+        <ImageView
+            android:id="@+id/centerBigIv"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:background="@drawable/sports_high_leg_temp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"/>
 
         <View
             android:id="@+id/dataView"

@@ -213,6 +213,8 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         lineDataSet.setDrawIcons(false)
         lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         lineDataSet.setDrawCircles(true)
+        lineDataSet.setCircleColor( ContextCompat.getColor(appContext, R.color.color_ffc019))
+        lineDataSet.circleRadius =4f
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ffc019)
         lineDataSet.setDrawCircleHole(false)
 
@@ -283,6 +285,8 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
        lineDataSet.setDrawIcons(false)
        lineDataSet.setMode(LineDataSet.Mode.LINEAR);
        lineDataSet.setDrawCircles(true)
+       lineDataSet.setCircleColor( ContextCompat.getColor(appContext, R.color.color_4e71ff))
+       lineDataSet.circleRadius =4f
        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_4e71ff)
        lineDataSet.setDrawCircleHole(false)
 
@@ -387,6 +391,8 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.setCircleColor( ContextCompat.getColor(appContext, R.color.color_ff574c))
+        lineDataSet.circleRadius =4f
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 

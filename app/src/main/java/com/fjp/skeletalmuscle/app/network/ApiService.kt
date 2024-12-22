@@ -9,6 +9,7 @@ import com.fjp.skeletalmuscle.data.model.bean.UserInfo
 import com.fjp.skeletalmuscle.data.model.bean.result.AppVersion
 import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryData
 import com.fjp.skeletalmuscle.data.model.bean.result.CalendarResult
+import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
@@ -191,6 +192,18 @@ interface ApiService {
      */
     @GET("sport_trend/calendar")
     suspend fun calendar(@Query("month") month: String): ApiResponse<ArrayList<CalendarResult>>
+    /**
+     *获取最后一次的测评结果
+     *
+     */
+    @GET("assess/get_latest_test")
+    suspend fun getLatestTest(): ApiResponse<AssessmentHistoryData?>
+    /**
+     *数据导出
+     *
+     */
+    @GET("/sport/get_data")
+    suspend fun getExportData(@Query("start_time") startTime: Long,@Query("end_time") endTime: Long): ApiResponse<ExportData>
 
 
     @Multipart

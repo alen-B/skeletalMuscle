@@ -5,7 +5,9 @@ import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -131,20 +133,32 @@ object DateTimeUtil {
         }
     }
 
+    fun formatExportTime(seconds: Long): String {
+        val hours = seconds / 3600
+        val remainingSecondsAfterHours = seconds % 3600
+        val minutes = remainingSecondsAfterHours / 60
+        val remainingSecondsAfterMinutes = remainingSecondsAfterHours % 60
+
+        return when {
+            hours > 0 -> "$hours:$minutes:$remainingSecondsAfterMinutes "
+            minutes > 0 -> "00:$minutes:$remainingSecondsAfterMinutes"
+            else -> "00:00:$remainingSecondsAfterMinutes"
+        }
+    }
+
     fun sceond2Min(seconds: Long): String {
         val df = DecimalFormat("#.##")
-        return df.format(seconds/60f)
+        return df.format(seconds / 60f)
     }
 
     fun getCurWeek(): String {
         val today = LocalDate.now()
         val startOfWeek = getStartOfWeek(today)
         val endOfWeek = getEndOfWeek(today)
-
         val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN2)
         val startDateFormatted = startOfWeek.format(formatter)
         val endDateFormatted = endOfWeek.format(formatter)
-        return startDateFormatted + endDateFormatted
+        return startDateFormatted + "-" + endDateFormatted
     }
 
     fun getCurMonth(): String {
@@ -153,25 +167,45 @@ object DateTimeUtil {
         return formatter.format(date)
     }
 
-    fun getPreYear(year:Int,month:Int): Int {
+    fun getPreYear(year: Int, month: Int): Int {
         val specifiedDate = LocalDate.of(year, month, 15)
         // 获取上一年的日期
-       return specifiedDate.minusYears(1).year
+        return specifiedDate.minusYears(1).year
     }
 
-    fun getNextYear(year:Int,month:Int): Int {
+    fun getNextYear(year: Int, month: Int): Int {
         val specifiedDate = LocalDate.of(year, month, 15)
         // 获取上一年的日期
         return specifiedDate.plusYears(1).year
     }
 
-    private fun getStartOfWeek(currentDate: LocalDate): LocalDate {
+    fun getStartOfWeek(currentDate: LocalDate): LocalDate {
         val dayOfWeek = currentDate.dayOfWeek
         return currentDate.minusDays((dayOfWeek.value - 1).toLong())
     }
-
-    private fun getEndOfWeek(currentDate: LocalDate): LocalDate {
+    fun getEndOfWeek(currentDate: LocalDate): LocalDate {
         val dayOfWeek = currentDate.dayOfWeek
         return currentDate.plusDays((DayOfWeek.SATURDAY.value - dayOfWeek.value).toLong())
+    }
+
+    fun getFirstDayTimeOfMonth(): Long {
+        val firstDayOfMonth = LocalDate.now().withDayOfMonth(1)
+        // 将LocalDate转换为时间戳（以秒为单位，从1970-01-01T00:00:00Z开始计算）
+        return firstDayOfMonth.atStartOfDay(ZoneOffset.UTC).toEpochSecond()
+    }
+
+
+    fun getFirstDayTimeOfWeek(): Long {
+        val today = LocalDate.now()
+        val startOfWeek = DateTimeUtil.getStartOfWeek(today)
+        val instant: Instant = startOfWeek.atStartOfDay().toInstant(ZoneOffset.UTC)
+        return instant.toEpochMilli()
+    }
+
+    fun getLastDayTimeOfWeek(): Long {
+        val today = LocalDate.now()
+        val endOfWeek = DateTimeUtil.getEndOfWeek(today)
+        val instant: Instant = endOfWeek.atStartOfDay().toInstant(ZoneOffset.UTC)
+        return instant.toEpochMilli()
     }
 }

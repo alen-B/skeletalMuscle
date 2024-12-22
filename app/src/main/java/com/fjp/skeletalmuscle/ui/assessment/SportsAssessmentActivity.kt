@@ -61,8 +61,8 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var leftLastPitch = 0f // 左腿上一个pitch值
     private var rightLastPitch = 0f // 右腿上一个pitch值
 
-    private var rightOldLevel = -1
-    private var leftOldLevel = -1
+    private var rightOldLevel = 0
+    private var leftOldLevel = 0
     private var leftIsDescending = false // 标记是否已经开始下降
     private var rightIsDescending = false // 标记是否已经开始下降
     private var mediaPlayer_high: MediaPlayer? = null
@@ -164,7 +164,9 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
         mViewModel.curTime.set(timeString)
-        mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
+        if(curType != AssessmentType.Grip){
+            mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
+        }
         if (totalTime - seconds < 20) {
             if (curType == AssessmentType.HighLeg) {
                 if (!mDatabind.nextSportsIv.isVisible) {
@@ -194,6 +196,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         mDatabind.startTv.visibility = View.VISIBLE
         mDatabind.centerIv.visibility = View.VISIBLE
         mDatabind.nextSportsIv.visibility = View.GONE
+        mDatabind.centerBigIv.visibility = View.GONE
         when (curType) {
             AssessmentType.HighLeg -> {
                 isHighLeg(false)
@@ -202,6 +205,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 mDatabind.heartTv.setText("起坐次数")
                 mDatabind.nextSportsIv.setImageResource(R.drawable.assessment_06)
                 mDatabind.centerIv.setImageResource(R.drawable.assessment_07)
+
             }
 
             AssessmentType.UpDown -> {
@@ -253,7 +257,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             //标示所有都做完了
             if (mDatabind.startTv.text.equals("提交")) {
                 val result = AssessmentUtils.testResult(leftLegLifts + rightLegLifts, totalSitUpTimes, maxGrip, "男".equals(App.userInfo.sex))
-                val saveAssessmentRequest = SaveAssessmentRequest(maxGrip, leftLegLifts + rightLegLifts, result, totalSitUpTimes, waistline, weight)
+                val saveAssessmentRequest = SaveAssessmentRequest(maxGrip , leftLegLifts + rightLegLifts, result, totalSitUpTimes, waistline, weight)
                 mViewModel.saveAssessment(saveAssessmentRequest)
             }
 
@@ -261,13 +265,20 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             if (curType == AssessmentType.HighLeg) {
                 mViewModel.title.set("请高抬腿运动一分钟")
                 startTimer()
+                mDatabind.centerBigIv.visibility = View.VISIBLE
                 isHighLeg(true)
             } else if (curType == AssessmentType.UpDown) {
                 startTimer()
+                mDatabind.centerBigIv.visibility = View.VISIBLE
+                mDatabind.centerBigIv.setBackgroundResource(R.drawable.sports_sit_up_temp)
                 mViewModel.title.set("请起坐运动一分钟")
 
             } else {
+                startTimer()
                 mViewModel.title.set("请握3次握力器")
+                mDatabind.centerBigIv.visibility = View.VISIBLE
+                mDatabind.centerBigIv.setBackgroundResource(R.drawable.sports_grip_temp)
+                mDatabind.countdownTv.text = "还剩3次"
                 initBluetooth()
             }
 
@@ -372,6 +383,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         if (leftOldLevel != -1) {
             leftLevelViews[leftOldLevel].setImageDrawable(null)
         }
+        leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
         leftOldLevel = leftLevel
     }
 
@@ -474,9 +486,10 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     //蓝牙扫描辅助类
     private lateinit var mBleScanHelper: BleScanHelper
     private var maxGrip = 0
-    private var curGrip = 0
     private var gripCount = 0
-    private var countTemp = 5//数据连续低于最大值5次则定位一次握力
+    private var countTemp = 3//数据连续低于最大值5次则定位一次握力
+    private var oldGrip = 0//odlGrip和grip连续相同三次定位一次握力，
+    private var preGrip = -1//防止用户握完之后没动，握力次数会自动增加，记录上一次被记录的握力值，如果相同不计数
     private fun initBluetooth() {
         //初始化ble设配器
         val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -492,23 +505,30 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             override fun onNext(device: BleDevice) {
                 if (device.device.name != null && device.device.name.startsWith(DeviceType.LEFT_HAND_GRIPS.value)) {
                     val rawDataStr = DeviceDataParse.bytesToHexString(device.scanRecordBytes)
-                    println("====扫描到的握力数据数据是：" + rawDataStr)
                     var lengthStr = rawDataStr?.substring(46, 50)
                     //将长度转10进制
                     val grip = Integer.parseInt(lengthStr, 16)
-                    curGrip = grip
+                    println("===握力值：" + grip)
                     if (maxGrip < grip) {
                         maxGrip = grip
                     }
-                    if (grip < maxGrip) {//如果连续次数小于最大值标示是一次握力
+                    if(preGrip ==grip){//如果用户握力一次之后没有再握，不计数
+                        return
+                    }
+                    if (oldGrip == grip) {
                         countTemp--
-                        if (countTemp == 0) {
-                            mViewModel.sportsNumber.set((maxGrip / 10).toString())
-                            gripCount++
-                            mDatabind.countdownTv.text = "还剩${totalGripTimes - gripCount}次"
-                            if (gripCount == 3) {
-                                completed()
-                            }
+                    }
+                    oldGrip = grip
+                    if (countTemp == 0) {//如果连续次数小于最大值标示是一次握力
+                        mViewModel.sportsNumber.set((maxGrip / 10f).toString())
+                        gripCount++
+                        preGrip = oldGrip
+                        oldGrip = 0
+                        println("===握力值gripCount：" + gripCount)
+                        countTemp = 3
+                        mDatabind.countdownTv.text = "还剩${totalGripTimes - gripCount}次"
+                        if (gripCount == 3) {
+                            completed()
                         }
                     }
                 }

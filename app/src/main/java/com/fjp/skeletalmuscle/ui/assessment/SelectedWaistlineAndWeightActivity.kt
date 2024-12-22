@@ -27,13 +27,13 @@ class SelectedWaistlineAndWeightActivity : BaseActivity<SelectedWaistlineAndWeig
             currWeightIndex = position
         })
         mDatabind.weightRView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), weightAdapter)
-        mDatabind.weightRView.smoothScrollToPosition(currWeightIndex)
+        mDatabind.weightRView.smoothScrollToPosition(currWeightIndex+3)
         val waistlineAdapter = WaistlineAndWeightAdapter(mViewModel.waistlineDataArr as ArrayList<Int>,false, currWaistLineIndex, clickItem = { item, position ->
 //            currIndex = position
             currWaistLineIndex = position
         })
         mDatabind.waistlineRView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), waistlineAdapter)
-        mDatabind.waistlineRView.smoothScrollToPosition(currWaistLineIndex)
+        mDatabind.waistlineRView.smoothScrollToPosition(currWaistLineIndex+3)
     }
 
     private fun initWeightData() {

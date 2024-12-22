@@ -20,7 +20,7 @@ public class DashboardView extends View {
     private float pointerAngle = 90;
     private Paint textPaint;
     private Paint pointerPaint;
-    private String text = "力量流失";
+    private String text = "暂无数据";
     private float centerX;
     private float centerY;
 
@@ -48,7 +48,8 @@ public class DashboardView extends View {
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(getContext().getColor(R.color.color_1c1c1c));
-        textPaint.setTextSize(22);
+        textPaint.setTextSize(18);
+        textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         pointerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         pointerPaint.setStrokeWidth(5);
@@ -88,12 +89,12 @@ public class DashboardView extends View {
                 true,
                 paint);
         // 测量文字宽度
-        float textWidth = paint.measureText(text);
+        float textWidth = textPaint.measureText(text);
         // 测量文字高度
-        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
         float textHeight = fontMetrics.bottom - fontMetrics.top;
 
-        canvas.drawText(text, centerX - textWidth, centerY - textHeight, textPaint);
+        canvas.drawText(text, centerX - textWidth/2, centerY - textHeight/2, textPaint);
     }
 
     private void drawOutLine(Canvas canvas) {

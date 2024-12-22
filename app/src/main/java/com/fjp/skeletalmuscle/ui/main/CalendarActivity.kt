@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseActivity
-import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.calendar.SMWeekBar
@@ -17,12 +16,11 @@ import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
 import me.hgj.jetpackmvvm.ext.parseState
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
 class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding>(), CalendarView.OnCalendarSelectListener, CalendarView.OnYearChangeListener, View.OnClickListener {
-    var year:Int=0
-    var month:Int=0
+    var year: Int = 0
+    var month: Int = 0
     var list: ArrayList<CalendarResult> = arrayListOf()
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
@@ -30,8 +28,8 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
         mDatabind.calendarLayout.expand()
         mViewModel.title.set(getString(R.string.calendar_title))
 
-        year= mDatabind.calendarView.getCurYear()
-        month= mDatabind.calendarView.getCurMonth()
+        year = mDatabind.calendarView.getCurYear()
+        month = mDatabind.calendarView.getCurMonth()
         setCalendarTitle(year, month)
         mDatabind.calendarView.setOnCalendarSelectListener(this)
         mDatabind.calendarView.setOnYearChangeListener(this)
@@ -47,12 +45,11 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
 
     override fun createObserver() {
         super.createObserver()
-        mViewModel.response.observe(this){
-            parseState(it,{list->
+        mViewModel.response.observe(this) {
+            parseState(it, { list ->
                 this.list = list
-                    setCalendarData(list)
+                setCalendarData(list)
             })
-
 
 
         }
@@ -61,24 +58,25 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
     private fun setCalendarData(list: ArrayList<CalendarResult>) {
         val map: MutableMap<String, Calendar?> = HashMap()
         for ((index, calendarResult) in list.withIndex()) {
-            val data = DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN,calendarResult.date)
+            val data = DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, calendarResult.date)
             val score = calendarResult.score.toDouble().toInt()
             var color = Color.parseColor("#FF574C")
-            if(score>80){
+            if (score > 80) {
                 color = resources.getColor(R.color.color_blue)
-            }else if(score>60){
-                color =Color.parseColor("#FFC019")
-            }else{
-                color =Color.parseColor("#FF574C")
+            } else if (score > 60) {
+                color = Color.parseColor("#FFC019")
+            } else {
+                color = Color.parseColor("#FF574C")
             }
             val calendar = LocalDate.parse(calendarResult.date)
-            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FF574C"),"81").toString()] = getSchemeCalendar(year, month, data.day, color,score.toString())
-            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FFC019"),"70").toString()] = getSchemeCalendar(year, month, data.day, color,score.toString())
-            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FF574C"),"50").toString()] = getSchemeCalendar(year, month, data.day, color,score.toString())
+            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FF574C"), "81").toString()] = getSchemeCalendar(year, month, data.day, color, score.toString())
+            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FFC019"), "70").toString()] = getSchemeCalendar(year, month, data.day, color, score.toString())
+            map[getSchemeCalendar(year, month, calendar.dayOfMonth, Color.parseColor("#FF574C"), "50").toString()] = getSchemeCalendar(year, month, data.day, color, score.toString())
         }
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mDatabind.calendarView.setSchemeDate(map)
     }
+
     private fun setCalendarTitle(year: Int, month: Int) {
         mViewModel.calendarTitle.set("${year}年${month}月")
     }
@@ -87,17 +85,17 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
     }
 
     override fun onCalendarSelect(calendar: Calendar, isClick: Boolean) {
-        if (isClick ) {
+        if (isClick) {
             list.forEach {
                 var day = "1"
-                if(calendar.day<10){
-                    day="0"+calendar.day
-                }else{
-                    day=calendar.day.toString()
+                if (calendar.day < 10) {
+                    day = "0" + calendar.day
+                } else {
+                    day = calendar.day.toString()
                 }
-                if(it.date == "${calendar.year}-${calendar.month}-${day}"){
-                    println("===it.date     :"+it.date )
-                    println("===click date  :"+"${calendar.year}-${calendar.month}-${calendar.day}")
+                if (it.date == "${calendar.year}-${calendar.month}-${day}") {
+                    println("===it.date     :" + it.date)
+                    println("===click date  :" + "${calendar.year}-${calendar.month}-${calendar.day}")
                     val intent = Intent(this@CalendarActivity, SportsRecordActivity::class.java)
                     intent.putExtra(Constants.INTENT_KEY_YEAR, calendar.year)
                     intent.putExtra(Constants.INTENT_KEY_MONTH, calendar.month)

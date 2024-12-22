@@ -73,7 +73,50 @@ class AssessmentUtils {
             } else if (levels.contains(2)) {
                 "肌肉可疑减少-根据测评结果，您的肌肉可疑减少，请适当增加锻炼量。"
             } else {
-                "肌肉正常：根据测评结果，您的锻炼效果显著，请继续保持哦！"
+                "肌肉正常-根据测评结果，您的锻炼效果显著，请继续保持哦！"
+            }
+
+        }
+        fun getResultLevel(legCount: Int, sitUpCount: Int, grip: Float, isMan: Boolean): Int {
+            val levels = arrayListOf(0, 0, 0)
+            if (legCount >= LegCountLevel01) {//抬腿良好
+                levels[0] = 1
+            } else if (legCount >= LegCountLevel02) {//耐力下降
+                levels[0] = 2
+            } else {
+                levels[0] = 3
+            }
+            if (sitUpCount >= SitUpCountLevel01) {//良好
+                levels[1] = 1
+            } else if (legCount >= SitUpCountLevel02) {//耐力下降
+                levels[1] = 2
+            } else {
+                levels[1] = 3
+            }
+
+            if (isMan) {
+                if (grip >= ManGripLevel01) {//良好
+                    levels[2] = 1
+                } else if (legCount >= ManGripLevel02) {//耐力下降
+                    levels[2] = 2
+                } else {
+                    levels[2] = 3
+                }
+            } else {
+                if (grip >= WOManGripLevel01) {//良好
+                    levels[2] = 1
+                } else if (legCount >= WoManGripLevel02) {//耐力下降
+                    levels[2] = 2
+                } else {
+                    levels[2] = 3
+                }
+            }
+            return if (levels.contains(3)) {
+               return 30
+            } else if (levels.contains(2)) {
+               return 90
+            } else {
+               return 145
             }
 
         }

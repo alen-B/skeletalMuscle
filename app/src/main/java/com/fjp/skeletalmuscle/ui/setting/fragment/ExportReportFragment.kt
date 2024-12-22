@@ -1,23 +1,38 @@
 package com.fjp.skeletalmuscle.ui.setting.fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.view.TimePickerView
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
+import com.fjp.skeletalmuscle.app.util.PDFManager
+import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
 import com.fjp.skeletalmuscle.databinding.FragmentExportReportBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ExportReportViewModel
+import com.itextpdf.layout.element.Table
+import com.itextpdf.layout.property.TextAlignment
+import com.itextpdf.layout.property.UnitValue
 import me.hgj.jetpackmvvm.base.appContext
+import me.hgj.jetpackmvvm.ext.parseState
+import java.io.IOException
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
 
+
 class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportReportBinding>() {
+    val PERMISSION_REQUEST_CODE = 201
     lateinit var pvTime: TimePickerView
     var endDate: Date = Date()
     lateinit var startDate: Date
@@ -26,9 +41,122 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         fun newInstance() = ExportReportFragment()
     }
 
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.exportLiveData.observe(this) {
+            parseState(it, {
+                exportPDF(it)
+            })
+        }
+    }
+
+    private fun exportPDF(it: ExportData) {
+        try {
+            PDFManager.createPDF(requireContext())
+            if (mDatabind.curWeekRB.isChecked) {
+                PDFManager.createParagraph("报告日期：" + mDatabind.curWeekTv.text, TextAlignment.RIGHT, 6f)
+
+            } else if (mDatabind.curMonthRB.isChecked) {
+                PDFManager.createParagraph("报告日期：" + mDatabind.curMonthTv.text, TextAlignment.RIGHT, 6f)
+            } else {
+                PDFManager.createParagraph("报告日期：" + mDatabind.curCustomerStartTv.text + mDatabind.curCustomerEndTv.text, TextAlignment.RIGHT, 6f)
+            }
+            var title = "${App.userInfo.name}爷爷，骨骼肌运动报告"
+            if (App.userInfo.sex == requireContext().getString(R.string.setting_sex_woman)) {
+                title = "${App.userInfo.name}奶奶的，骨骼肌运动报告"
+            }
+            PDFManager.createParagraph(title, TextAlignment.CENTER, 25f)
+            PDFManager.createLine()
+            PDFManager.createParagraph("姓名：" + App.userInfo.name + "\n性别：${App.userInfo.sex}" + "\n出生日期：${App.userInfo.birthday}" + "\n身高：${App.userInfo.height}" + "\n体重：${App.userInfo.weight}" + "\n腰围：${App.userInfo.waistline}")
+            PDFManager.createParagraph("运动总结",TextAlignment.LEFT)
+            // 创建表格对象，此处设置表格列数为3
+            val table = Table(UnitValue.createPercentArray(4))
+            // 添加表头行
+            table.addHeaderCell(PDFManager.createCell("平均得分"))
+            table.addHeaderCell(PDFManager.createCell("运动时长"))
+            table.addHeaderCell(PDFManager.createCell("消耗卡路里"))
+            table.addHeaderCell(PDFManager.createCell("平均心率"))
+            table.addCell(PDFManager.createCell(it.score.toString()))
+            table.addCell(PDFManager.createCell(DateTimeUtil.formatExportTime(it.sport_time.toLong())))
+            table.addCell(PDFManager.createCell("${it.calorie_total / 1000}千卡"))
+            table.addCell(PDFManager.createCell(it.avg_rate_value.toString()))
+            PDFManager.add(table)
+            PDFManager.createParagraph("高抬腿运动")
+            val highLegTab = Table(UnitValue.createPercentArray(8))
+            // 添加表头行
+            highLegTab.addHeaderCell(PDFManager.createCell("平均得分"))
+            highLegTab.addHeaderCell(PDFManager.createCell("运动时长"))
+            highLegTab.addHeaderCell(PDFManager.createCell("消耗卡路里"))
+            highLegTab.addHeaderCell(PDFManager.createCell("平均心率"))
+            highLegTab.addHeaderCell(PDFManager.createCell("暖身激活"))
+            highLegTab.addHeaderCell(PDFManager.createCell("高效燃脂"))
+            highLegTab.addHeaderCell(PDFManager.createCell("心肺提升"))
+            highLegTab.addHeaderCell(PDFManager.createCell("极限突破"))
+
+            highLegTab.addCell(PDFManager.createCell(it.sport_lift_leg.score.toString()))
+            highLegTab.addCell(PDFManager.createCell(DateTimeUtil.formatExportTime(it.sport_lift_leg.sport_time.toLong())))
+            highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.sum_calorie / 1000}千卡"))
+            highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.avg_rate_value}"))
+            highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.warm_up_activation}"))
+            highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.efficient_grease_burning}"))
+            highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.heart_lung_enhancement}"))
+            highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.extreme_breakthrough}"))
+            PDFManager.add(highLegTab)
+            PDFManager.createParagraph("哑铃运动")
+            val dumbbellTab = Table(UnitValue.createPercentArray(5))
+            dumbbellTab.addHeaderCell(PDFManager.createCell("平均得分"))
+            dumbbellTab.addHeaderCell(PDFManager.createCell("运动时长"))
+            dumbbellTab.addHeaderCell(PDFManager.createCell("上举次数"))
+            dumbbellTab.addHeaderCell(PDFManager.createCell("扩胸次数"))
+            dumbbellTab.addHeaderCell(PDFManager.createCell("哑铃重量"))
+
+            dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.score.toString()))
+            dumbbellTab.addCell(PDFManager.createCell(DateTimeUtil.formatExportTime(it.sport_dumbbell.sport_time.toLong())))
+            dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.up_times.toString()))
+            dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.expand_chest_times.toString()))
+            dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.weight.toString()+"kg"))
+
+            PDFManager.add(dumbbellTab)
+
+            PDFManager.createParagraph("平板支撑运动")
+            val plankTab = Table(UnitValue.createPercentArray(3))
+            plankTab.addHeaderCell(PDFManager.createCell("平均得分"))
+            plankTab.addHeaderCell(PDFManager.createCell("运动时长"))
+            plankTab.addHeaderCell(PDFManager.createCell("消耗卡路里"))
+
+            plankTab.addCell(PDFManager.createCell(it.sport_flat_support.score.toString()))
+            plankTab.addCell(PDFManager.createCell(DateTimeUtil.formatExportTime(it.sport_flat_support.sport_time.toLong())))
+            plankTab.addCell(PDFManager.createCell("${it.sport_flat_support.sum_calorie / 1000}千卡"))
+
+            PDFManager.add(plankTab)
+
+            PDFManager.close()
+            Toast.makeText(context, "PDF生成成！功路径：${PDFManager.getFilePath()}", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            dismissLoading()
+        }
+    }
+
     inner class ProxyClick {
 
         fun clickExport() {
+            if (checkPermission()) {
+                var startTime: Long = 0
+                var endTime: Long = 0
+                if (mDatabind.curWeekRB.isChecked) {
+                    startTime = DateTimeUtil.getFirstDayTimeOfWeek()
+                    endTime = System.currentTimeMillis()
+
+                } else if (mDatabind.curMonthRB.isChecked) {
+                    startTime = DateTimeUtil.getFirstDayTimeOfMonth()
+                    endTime = System.currentTimeMillis()
+                } else {
+                    startTime = startDate.time
+                    endTime = endDate.time
+                }
+                mViewModel.getTodayData(startTime / 1000, endTime / 1000)
+            }
 
         }
 
@@ -41,12 +169,26 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         }
     }
 
+
+    fun checkPermission(): Boolean {
+        // 检查写外部存储权限是否已授予
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // 若未授予权限，则发起权限申请
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
+            return false
+        } else {
+            // 权限已授予，可直接调用生成PDF方法
+            return true
+        }
+    }
+
+
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         initStartDate()
         mDatabind.curCustomerStartTv.text = DateTimeUtil.formatDate(startDate, DateTimeUtil.DATE_PATTERN2)
-        mDatabind.curCustomerEndTv.text = "-" + DateTimeUtil.formatDate(endDate, DateTimeUtil.DATE_PATTERN2)
+        mDatabind.curCustomerEndTv.text = "-${DateTimeUtil.formatDate(endDate, DateTimeUtil.DATE_PATTERN2)}"
         mDatabind.curWeekTv.text = DateTimeUtil.getCurWeek()
         mDatabind.curMonthTv.text = DateTimeUtil.getCurMonth()
         mDatabind.curWeekRB.setOnCheckedChangeListener { compoundButton, b ->

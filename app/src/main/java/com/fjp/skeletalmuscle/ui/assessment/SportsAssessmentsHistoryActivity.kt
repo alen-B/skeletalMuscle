@@ -28,7 +28,6 @@ import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.ext.util.dp2px
 import java.time.LocalDate
-import kotlin.random.Random
 
 class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryViewModel, ActivitySportsAssessmentsHistoryBinding>() {
     var curYear= LocalDate.now().year
@@ -37,10 +36,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.title.set(getString(R.string.sports_assessment_history_title))
-        val fragments = arrayListOf<Fragment>(AssessmentResultFragment.newInstance(curYear,1), AssessmentResultFragment.newInstance(curYear,2), AssessmentResultFragment.newInstance(curYear,3), AssessmentResultFragment.newInstance(curYear,4), AssessmentResultFragment.newInstance(curYear,5), AssessmentResultFragment.newInstance(curYear,6), AssessmentResultFragment.newInstance(curYear,7), AssessmentResultFragment.newInstance(curYear,8), AssessmentResultFragment.newInstance(curYear,9), AssessmentResultFragment.newInstance(curYear,10), AssessmentResultFragment.newInstance(curYear,11), AssessmentResultFragment.newInstance(curYear,12))
-        mDatabind.viewpager.adapter = SportsAssessmentsHistoryAdapter(supportFragmentManager, fragments)
-        mDatabind.tabLayout.setViewPager(mDatabind.viewpager)
-        mDatabind.tabLayout.currentTab = curMonth
+
         mDatabind.tabLayout.setOnTabSelectListener(object: OnTabSelectListener{
             override fun onTabSelect(position: Int) {
                 curMonth = position
@@ -116,13 +112,15 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         }
 
         for (i in assessmentHistory.indices) {
-            values3.add(BarEntry(i.toFloat(),  assessmentHistory[i].grip.toFloat()))
+            values3.add(BarEntry(i.toFloat(),  assessmentHistory[i].grip/10f))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.setCircleColor(appContext.getColor(R.color.color_blue))
+        lineDataSet.circleRadius=4f
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_blue)
@@ -144,6 +142,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet2.setDrawIcons(false)
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(true)
+        lineDataSet2.setCircleColor(appContext.getColor(R.color.color_ffc019))
+        lineDataSet2.circleRadius=4f
         lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
@@ -166,6 +166,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet3.setDrawIcons(false)
         lineDataSet3.mode = LineDataSet.Mode.LINEAR
         lineDataSet3.setDrawCircles(true)
+        lineDataSet3.setCircleColor(appContext.getColor(R.color.color_ff574c))
+        lineDataSet3.circleRadius=4f
         lineDataSet3.color = appContext.getColor(R.color.color_ff574c)
         lineDataSet3.setDrawCircleHole(false)
         lineDataSet3.setDrawValues(false)
@@ -259,6 +261,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.setCircleColor(appContext.getColor(R.color.color_23d3f2))
+        lineDataSet.circleRadius=4f
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_23d3f2)
@@ -280,7 +284,9 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet2.setDrawIcons(false)
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(true)
-        lineDataSet.color = appContext.getColor(R.color.color_8e4cff)
+        lineDataSet2.setCircleColor(appContext.getColor(R.color.color_8e4cff))
+        lineDataSet2.circleRadius=4f
+        lineDataSet2.color = appContext.getColor(R.color.color_8e4cff)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
         lineDataSet2.axisDependency=YAxis.AxisDependency.RIGHT
@@ -361,6 +367,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.setCircleColor(appContext.getColor(R.color.color_blue))
+        lineDataSet.circleRadius=4f
         lineDataSet.setDrawValues(false)
         lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_blue)
@@ -397,6 +405,10 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
     }
 
     private fun initData(assessmentHistory: ArrayList<AssessmentHistoryData>) {
+        val fragments = arrayListOf<Fragment>(AssessmentResultFragment.newInstance(curYear,1,assessmentHistory), AssessmentResultFragment.newInstance(curYear,2,assessmentHistory), AssessmentResultFragment.newInstance(curYear,3,assessmentHistory), AssessmentResultFragment.newInstance(curYear,4,assessmentHistory), AssessmentResultFragment.newInstance(curYear,5,assessmentHistory), AssessmentResultFragment.newInstance(curYear,6,assessmentHistory), AssessmentResultFragment.newInstance(curYear,7,assessmentHistory), AssessmentResultFragment.newInstance(curYear,8,assessmentHistory), AssessmentResultFragment.newInstance(curYear,9,assessmentHistory), AssessmentResultFragment.newInstance(curYear,10,assessmentHistory), AssessmentResultFragment.newInstance(curYear,11,assessmentHistory), AssessmentResultFragment.newInstance(curYear,12,assessmentHistory))
+        mDatabind.viewpager.adapter = SportsAssessmentsHistoryAdapter(supportFragmentManager, fragments)
+        mDatabind.tabLayout.setViewPager(mDatabind.viewpager)
+        mDatabind.tabLayout.currentTab = curMonth
       initWaistlineLineChart(assessmentHistory)
         initTestLineChart(assessmentHistory)
         initWeightLineChart(assessmentHistory)

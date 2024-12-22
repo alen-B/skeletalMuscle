@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.data.model.bean.result.AssessmentHistoryData
 import com.fjp.skeletalmuscle.databinding.FragmentAssessmentResultBinding
 import com.fjp.skeletalmuscle.viewmodel.state.AssessmentResultViewModel
 import com.github.mikephil.charting.animation.Easing
@@ -14,10 +15,10 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet
 import me.hgj.jetpackmvvm.base.appContext
 
-class AssessmentResultFragment(val year: Int, val curMonth: Int) : BaseFragment<AssessmentResultViewModel, FragmentAssessmentResultBinding>() {
+class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentHistory: ArrayList<AssessmentHistoryData>) : BaseFragment<AssessmentResultViewModel, FragmentAssessmentResultBinding>() {
 
     companion object {
-        fun newInstance(year: Int, curMonth: Int) = AssessmentResultFragment(year, curMonth)
+        fun newInstance(year: Int, curMonth: Int, assessmentHistory: ArrayList<AssessmentHistoryData>) = AssessmentResultFragment(year, curMonth, assessmentHistory)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -31,10 +32,10 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int) : BaseFragment<
             mDatabind.preMonth.text = "${year}-${curMonth - 2}"
             mDatabind.curMonth.text = "${year}-${curMonth - 1}"
             mDatabind.nextMonth.text = "${year}-${curMonth}"
-        }else{
+        } else {
             mDatabind.preMonth.text = "${year}-${curMonth - 1}"
             mDatabind.curMonth.text = "${year}-${curMonth}"
-            mDatabind.nextMonth.text = "${year}-${curMonth+1}"
+            mDatabind.nextMonth.text = "${year}-${curMonth + 1}"
         }
     }
 
@@ -52,12 +53,9 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int) : BaseFragment<
         val xAxis = chart.xAxis
         xAxis.yOffset = 0f
         xAxis.xOffset = 0f
-        val mActivities = arrayOf("握力", "起坐", "腰围", "体重", "抬腿"
-//            getString(R.string.sports_assessment_history_result_max_grips),
-//            getString(R.string.sports_assessment_history_result_max_sit_up_times),
-//            getString(R.string.sports_assessment_waistline),
-//            getString(R.string.sports_assessment_weight),
-//            getString(R.string.sports_assessment_history_result_high_leg_times),
+        val curAssessment = assessmentHistory[curMonth - 1]
+
+        val mActivities = arrayOf("${curAssessment.grip/10f}kg", "${curAssessment.sit_up}次", "${curAssessment.waistline}cm", "${curAssessment.weight}kg", "${curAssessment.lift_leg}次"
 
         )
         xAxis.valueFormatter = object : ValueFormatter() {
@@ -79,24 +77,97 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int) : BaseFragment<
     }
 
     private fun setData() {
-        val mul = 80f
-        val min = 20f
-        val cnt = 5
+
         val entries1 = ArrayList<RadarEntry>()
         val entries2 = ArrayList<RadarEntry>()
         val entries3 = ArrayList<RadarEntry>()
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (i in 0 until cnt) {
-            val val1 = (Math.random() * mul).toFloat() + min
-            entries1.add(RadarEntry(val1))
-            val val2 = (Math.random() * mul).toFloat() + min
-            entries2.add(RadarEntry(val2))
-            val val3 = (Math.random() * mul).toFloat() + min
-            entries3.add(RadarEntry(val3))
+        if (curMonth == 1) {
+            var curAssessment = assessmentHistory[curMonth - 1]
+            entries1.add(RadarEntry(curAssessment.grip/10f))
+            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries1.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+            curAssessment = assessmentHistory[curMonth]
+            entries2.add(RadarEntry(curAssessment.grip/10f))
+            entries2.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries2.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries2.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries2.add(RadarEntry(curAssessment.lift_leg.toFloat()))
 
+            curAssessment = assessmentHistory[curMonth + 1]
+            entries3.add(RadarEntry(curAssessment.grip/10f))
+            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries3.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+
+        } else if (curMonth == 12) {
+            var curAssessment = assessmentHistory[curMonth - 3]
+            entries1.add(RadarEntry(curAssessment.grip/10f))
+            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries1.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+            curAssessment = assessmentHistory[curMonth - 2]
+            entries2.add(RadarEntry(curAssessment.grip/10f))
+            entries2.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries2.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries2.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries2.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+
+            curAssessment = assessmentHistory[curMonth - 1]
+            entries3.add(RadarEntry(curAssessment.grip/10f))
+            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries3.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+
+        } else if (curMonth == 11) {
+            var curAssessment = assessmentHistory[curMonth - 2]
+            entries1.add(RadarEntry(curAssessment.grip/10f))
+            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries1.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+            curAssessment = assessmentHistory[curMonth - 1]
+            entries2.add(RadarEntry(curAssessment.grip/10f))
+            entries2.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries2.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries2.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries2.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+
+            curAssessment = assessmentHistory[curMonth]
+            entries3.add(RadarEntry(curAssessment.grip/10f))
+            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries3.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+        } else {
+            var curAssessment = assessmentHistory[curMonth - 1]
+            entries1.add(RadarEntry(curAssessment.grip/10f))
+            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries1.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+            curAssessment = assessmentHistory[curMonth]
+            entries2.add(RadarEntry(curAssessment.grip/10f))
+            entries2.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries2.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries2.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries2.add(RadarEntry(curAssessment.lift_leg.toFloat()))
+
+            curAssessment = assessmentHistory[curMonth + 1]
+            entries3.add(RadarEntry(curAssessment.grip/10f))
+            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
+            entries3.add(RadarEntry(curAssessment.weight.toFloat()))
+            entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))
         }
+
         val set1 = RadarDataSet(entries1, "Last Week")
         set1.color = resources.getColor(R.color.color_blue)
 //        set1.setDrawFilled(true)
