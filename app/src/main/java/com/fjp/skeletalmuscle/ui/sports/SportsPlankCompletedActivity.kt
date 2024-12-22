@@ -60,6 +60,9 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+        lineChart.extraBottomOffset=18f
+        lineChart.extraLeftOffset=24f
+        lineChart.extraRightOffset=24f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -71,9 +74,8 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.textSize=20f
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.formatDate(sportFlatSupport.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.MM_SS)
+                return sportFlatSupport.heart_rate[value.toInt()].record_time.split(" ")[1]
             }
-
         }
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         val leftAxis = lineChart.axisLeft

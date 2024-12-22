@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import coil.load
@@ -22,6 +23,7 @@ import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
 import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsDumbbellFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsHighKneeFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsPlankFragment
+import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDataViewModel
 import com.zhpan.indicator.enums.IndicatorStyle
 import me.hgj.jetpackmvvm.ext.util.dp2px
@@ -29,6 +31,7 @@ import me.hgj.jetpackmvvm.util.get
 
 class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityTodaySportsDataBinding>() {
     val fragments = arrayListOf<Fragment>()
+    val shareViewmodel  : ShareViewModel by viewModels()
     companion object {
         fun start(context: Context, todayDataResult: TodayDataResult, sportsType: SportsType) {
             val intent = Intent(context, TodaySportsActivity::class.java)
@@ -90,7 +93,7 @@ class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityToday
                 this.placeholder(R.drawable.avatar_default)
             })
             fragments[0].view?.let {
-                mViewModel.share(this@TodaySportsActivity,shareTitleView,it,shareTBottomView)
+                shareViewmodel.share(this@TodaySportsActivity,shareTitleView,it,shareTBottomView)
             }
 
 
