@@ -7,10 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -86,6 +89,40 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 handler.postDelayed(this, 1000)
             }
         }
+    }
+
+    private fun startCountdown(startNumber: Int) {
+        val countDownTimer = object : CountDownTimer(startNumber * 1000L, 1000) {
+            override fun onTick(millis: Long) {
+                if (Math.ceil(millis / 1000.0).toInt() - 1 == 0) {
+                    mDatabind.countdownText.text = "GO"
+                } else {
+                    mDatabind.countdownText.text = (Math.ceil(millis / 1000.0).toInt() - 1).toString()
+                }
+                animateText()
+
+
+            }
+
+            override fun onFinish() {
+                mDatabind.countdownText.visibility = View.GONE
+                startTimer()
+            }
+
+        }
+        countDownTimer.start()
+    }
+
+    private fun animateText() {
+        val scaleAnimation = ScaleAnimation(1f, 1.5f,  // 从1扩大到1.5
+            1f, 1.5f,  // 从1扩大到1.5
+            Animation.RELATIVE_TO_SELF, 0.5f,  // 在中心点放大
+            Animation.RELATIVE_TO_SELF, 0.5f // 在中心点放大
+        )
+        scaleAnimation.duration = 1000 // 动画持续时间
+        scaleAnimation.repeatCount = 1 // 动画重复次数
+        scaleAnimation.repeatMode = Animation.REVERSE // 反向播放
+        mDatabind.countdownText.startAnimation(scaleAnimation) // 启动动画
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -164,7 +201,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
         mViewModel.curTime.set(timeString)
-        if(curType != AssessmentType.Grip){
+        if (curType != AssessmentType.Grip) {
             mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
         }
         if (totalTime - seconds < 20) {
@@ -191,8 +228,10 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         }
         elapsedTime = 0
         seconds = 0
-        mViewModel.sportsNumber.set("0")
-        showToast("完成了运动")
+        if (curType != AssessmentType.Grip) {
+            mViewModel.sportsNumber.set("0")
+        }
+
         mDatabind.startTv.visibility = View.VISIBLE
         mDatabind.centerIv.visibility = View.VISIBLE
         mDatabind.nextSportsIv.visibility = View.GONE
@@ -254,27 +293,31 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         }
 
         fun clickStart() {
+
+
             //标示所有都做完了
             if (mDatabind.startTv.text.equals("提交")) {
                 val result = AssessmentUtils.testResult(leftLegLifts + rightLegLifts, totalSitUpTimes, maxGrip, "男".equals(App.userInfo.sex))
-                val saveAssessmentRequest = SaveAssessmentRequest(maxGrip , leftLegLifts + rightLegLifts, result, totalSitUpTimes, waistline, weight)
+                val saveAssessmentRequest = SaveAssessmentRequest(maxGrip, leftLegLifts + rightLegLifts, result, totalSitUpTimes, waistline, weight)
                 mViewModel.saveAssessment(saveAssessmentRequest)
+            } else {
+                startCountdown(4)
+                mDatabind.centerIv.visibility = View.GONE
+                mDatabind.startTv.visibility = View.GONE
             }
 
             mDatabind.centerIv.visibility = View.GONE
             if (curType == AssessmentType.HighLeg) {
                 mViewModel.title.set("请高抬腿运动一分钟")
-                startTimer()
+
                 mDatabind.centerBigIv.visibility = View.VISIBLE
                 isHighLeg(true)
             } else if (curType == AssessmentType.UpDown) {
-                startTimer()
                 mDatabind.centerBigIv.visibility = View.VISIBLE
                 mDatabind.centerBigIv.setBackgroundResource(R.drawable.sports_sit_up_temp)
                 mViewModel.title.set("请起坐运动一分钟")
 
             } else {
-                startTimer()
                 mViewModel.title.set("请握3次握力器")
                 mDatabind.centerBigIv.visibility = View.VISIBLE
                 mDatabind.centerBigIv.setBackgroundResource(R.drawable.sports_grip_temp)
@@ -282,8 +325,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 initBluetooth()
             }
 
-            mDatabind.centerIv.visibility = View.GONE
-            mDatabind.startTv.visibility = View.GONE
+
         }
     }
 
@@ -512,7 +554,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                     if (maxGrip < grip) {
                         maxGrip = grip
                     }
-                    if(preGrip ==grip){//如果用户握力一次之后没有再握，不计数
+                    if (preGrip == grip) {//如果用户握力一次之后没有再握，不计数
                         return
                     }
                     if (oldGrip == grip) {
