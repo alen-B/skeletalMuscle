@@ -24,6 +24,7 @@ object DateTimeUtil {
     val DATE_PATTERN2 = "yyyy年MM月dd日"
     val DATE_PATTERN3 = "yyyy年MM月"
     var DATE_PATTERN_SS = "yyyy-MM-dd HH:mm:ss"
+    var DATE_PATTERN_SS2 = "yyyy/MM/dd HH:mm:ss"
     var DATE_PATTERN_MM = "yyyy-MM-dd HH:mm"
     var MM_SS = "mm:ss"
 
@@ -207,5 +208,17 @@ object DateTimeUtil {
         val endOfWeek = DateTimeUtil.getEndOfWeek(today)
         val instant: Instant = endOfWeek.atStartOfDay().toInstant(ZoneOffset.UTC)
         return instant.toEpochMilli()
+    }
+
+    fun formatShareTime(currentTimeMillis: Long): String {
+       val date = formatDate(currentTimeMillis,DATE_PATTERN_SS2).split(" ")
+        val today = LocalDate.now()
+        val weekday = today.dayOfWeek
+        val weekStr: String = if(weekday== DayOfWeek.SUNDAY){
+            "周日"
+        }else{
+            "周${weekday.value+1}"
+        }
+        return date[0]+weekStr+date[1]
     }
 }

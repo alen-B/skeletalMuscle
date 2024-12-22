@@ -24,16 +24,16 @@ import java.io.FileOutputStream
 //android:name="android.support.FILE_PROVIDER_PATHS"
 //android:resource="@xml/file_paths" />
 //</provider>
-class ShareUtils {
+object ShareUtils {
     fun shareBitmap(context: Context, bitmap: Bitmap) {
         val shareIntent = Intent()
         shareIntent.setAction(Intent.ACTION_SEND)
-        shareIntent.putExtra(Intent.EXTRA_STREAM, getUriForBitmap(context,bitmap))
+        shareIntent.putExtra(Intent.EXTRA_STREAM, getUriForBitmap(context, bitmap))
         shareIntent.setType("image/jpeg")
         context.startActivity(Intent.createChooser(shareIntent, "Share bitmap using"))
     }
 
-    private fun getUriForBitmap(context:Context,bitmap: Bitmap): Uri {
+    private fun getUriForBitmap(context: Context, bitmap: Bitmap): Uri {
         // 将Bitmap转换为文件并保存到缓存中
         val file = File(context.cacheDir, "shared_bitmap.jpg")
         try {
@@ -46,31 +46,25 @@ class ShareUtils {
 
 
         // 返回文件的Uri
-        return FileProvider.getUriForFile(
-            context,
-            context.packageName + ".fileprovider",
-            file
-        )
+        return FileProvider.getUriForFile(context, context.packageName + ".fileProvider", file)
     }
 
-    fun mergeBitmaps(bitmap1: Bitmap, bitmap2: Bitmap): Bitmap {
+    fun mergeBitmaps(bitmap1: Bitmap, bitmap2: Bitmap, bitmap3: Bitmap): Bitmap {
         // 创建一个新的位图，其大小为两个bitmap的总和
-        val mergedBitmap = Bitmap.createBitmap(
-            bitmap1.width,
-            bitmap1.height + bitmap2.height,
-            Bitmap.Config.ARGB_8888
-        )
+        val mergedBitmap = Bitmap.createBitmap(bitmap1.width, bitmap1.height + bitmap2.height + bitmap3.height, Bitmap.Config.ARGB_8888)
         // 创建一个画布来在新位图上绘制
         val canvas = Canvas(mergedBitmap)
+        canvas.drawColor(Color.WHITE)
         // 在画布上绘制第一个bitmap
         canvas.drawBitmap(bitmap1, 0f, 0f, null)
         // 在画布上绘制第二个bitmap，紧接着第一个bitmap
-        canvas.drawBitmap(bitmap2, 0f, bitmap1.height.toFloat(), null)
+        canvas.drawBitmap(bitmap2, (mergedBitmap.width-bitmap2.width)/2f, bitmap1.height.toFloat(), null)
+        canvas.drawBitmap(bitmap3, 0f, bitmap1.height.toFloat() + bitmap2.height.toFloat(), null)
         return mergedBitmap
     }
 
     //将隐藏view转换为bitmap
-    private fun createBitmapByView(context: Activity, view: View): Bitmap {
+    fun createBitmapByView(context: Activity, view: View, isHideView: Boolean = true): Bitmap {
         //计算设备分辨率
         val manager: WindowManager = context.getWindowManager()
         val metrics = DisplayMetrics()
@@ -81,10 +75,12 @@ class ShareUtils {
         //测量使得view指定大小
         val measureWidth = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY)
         val measureHeight = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.AT_MOST)
+        if (isHideView) {
+            view.measure(measureWidth, measureHeight)
+            //调用layout方法布局后，可以得到view的尺寸
+            view.layout(0, 0, view.measuredWidth, view.measuredHeight)
 
-        view.measure(measureWidth, measureHeight)
-        //调用layout方法布局后，可以得到view的尺寸
-        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+        }
 
         val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
