@@ -166,9 +166,9 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet3.setDrawIcons(false)
         lineDataSet3.mode = LineDataSet.Mode.LINEAR
         lineDataSet3.setDrawCircles(true)
-        lineDataSet3.setCircleColor(appContext.getColor(R.color.color_ff574c))
+        lineDataSet3.setCircleColor(appContext.getColor(R.color.color_ff824c))
         lineDataSet3.circleRadius=4f
-        lineDataSet3.color = appContext.getColor(R.color.color_ff574c)
+        lineDataSet3.color = appContext.getColor(R.color.color_ff824c)
         lineDataSet3.setDrawCircleHole(false)
         lineDataSet3.setDrawValues(false)
         lineDataSet3.axisDependency=YAxis.AxisDependency.RIGHT
