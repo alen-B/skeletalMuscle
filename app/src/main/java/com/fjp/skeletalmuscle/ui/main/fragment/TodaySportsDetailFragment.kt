@@ -226,6 +226,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         xAxis.mAxisMinimum = 0f
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textSize = 20.dp
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
@@ -252,7 +253,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         val values = ArrayList<BarEntry>()
         for (i in result.trend.indices) {
-            values.add(BarEntry(i.toFloat(), result.trend[i].calorie.toFloat()))
+            values.add(BarEntry(i.toFloat(), result.trend[i].calorie/1000f))
         }
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "消耗(千卡)")
@@ -284,6 +285,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val xAxis = horizontalBarChart.xAxis
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_cc1c1c1c)
         xAxis.textSize = 20.dp
         xAxis.labelCount = 4
@@ -349,6 +351,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -357,6 +360,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         leftAxis.setDrawGridLines(true)
         leftAxis.gridLineWidth = 0.5f
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.axisMinimum = 0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textSize = 20.dp
         val rightAxis: YAxis = lineChart.axisRight
@@ -374,6 +378,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.circleRadius=4f
         if (isUp) {
             lineDataSet.color = appContext.getColor(R.color.color_ffc019)
         } else {
@@ -392,7 +397,6 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         // set color of filled area
 
@@ -427,6 +431,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -447,6 +452,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         leftAxis.gridLineWidth = 0.5f
         leftAxis.textSize = 20.dp
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.axisMinimum = 0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
@@ -464,6 +470,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.circleRadius=4f
         lineDataSet.setCircleColor(ContextCompat.getColor(appContext, R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
@@ -479,7 +486,6 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         // set color of filled area
 
@@ -514,6 +520,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -531,6 +538,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.axisMinimum = 0f
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawLabels(true)
         leftAxis.setDrawAxisLine(false)
@@ -557,6 +565,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.circleRadius=4f
         lineDataSet.setDrawValues(false)
         lineDataSet.color = appContext.getColor(R.color.color_blue)
         // draw selection line as dashed
@@ -564,7 +573,6 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)

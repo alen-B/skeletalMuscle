@@ -184,6 +184,7 @@ object DateTimeUtil {
         val dayOfWeek = currentDate.dayOfWeek
         return currentDate.minusDays((dayOfWeek.value - 1).toLong())
     }
+
     fun getEndOfWeek(currentDate: LocalDate): LocalDate {
         val dayOfWeek = currentDate.dayOfWeek
         return currentDate.plusDays((DayOfWeek.SATURDAY.value - dayOfWeek.value).toLong())
@@ -210,15 +211,55 @@ object DateTimeUtil {
         return instant.toEpochMilli()
     }
 
+    fun completedTimeFromat(date:String,format:String): String {
+        val format = SimpleDateFormat(format, Locale.CHINA)
+        format.timeZone = TimeZone.getDefault()
+        return try {
+            return formatDate(format.parse(date),MM_SS)
+        } catch (e: Exception) {
+            println(e.message)
+            return ""
+        }
+    }
+
     fun formatShareTime(currentTimeMillis: Long): String {
-       val date = formatDate(currentTimeMillis,DATE_PATTERN_SS2).split(" ")
+        val date = formatDate(currentTimeMillis, DATE_PATTERN_SS2).split(" ")
         val today = LocalDate.now()
         val weekday = today.dayOfWeek
-        val weekStr: String = if(weekday== DayOfWeek.SUNDAY){
+        val weekStr: String = if (weekday == DayOfWeek.SUNDAY) {
             "周日"
-        }else{
-            "周${weekday.value+1}"
+        } else {
+            "周${number2Char(weekday.value)}"
         }
-        return date[0]+weekStr+date[1]
+        return date[0] + weekStr + date[1]
+    }
+
+    private fun number2Char(value: Int): String {
+
+        when (value) {
+            1 -> {
+                return "一"
+            }
+
+            2 -> {
+                return "二"
+            }
+
+            3 -> {
+                return "三"
+            }
+
+            4 -> {
+                return "四"
+            }
+
+            5 -> {
+                return "五"
+            }
+
+            else -> {
+                return "六"
+            }
+        }
     }
 }

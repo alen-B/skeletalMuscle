@@ -4,22 +4,29 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import coil.load
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
+import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityTodaySportsDetailBinding
 import com.fjp.skeletalmuscle.ui.main.adapter.TodaySportsDetailAdapter
 import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsDetailFragment
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.DateType
+import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDetailViewModel
 import com.flyco.tablayout.listener.OnTabSelectListener
 import me.hgj.jetpackmvvm.util.get
 
 class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, ActivityTodaySportsDetailBinding>() {
-
+    val shareViewModel  : ShareViewModel by viewModels()
 
     companion object {
         fun startActivity(context: Context, sportsType: SportsType, chartType: ChartType) {
@@ -126,8 +133,21 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, Activ
     }
 
     inner class ProxyClick {
-        fun clickSportsRecord() {
-
+        fun clickShare() {
+            val shareTitleView = View.inflate(this@TodaySportsDetailActivity, R.layout.share_title, null)
+            val shareTBottomView = View.inflate(this@TodaySportsDetailActivity, R.layout.share_bottom, null)
+            val avatarIv = shareTitleView.findViewById<CircleImageView>(R.id.avatarIv)
+            val nameTv = shareTitleView.findViewById<TextView>(R.id.nameTv)
+            val timeTv = shareTitleView.findViewById<TextView>(R.id.timeTv)
+            nameTv.text = App.userInfo.name
+            timeTv.text = DateTimeUtil.formatShareTime(System.currentTimeMillis())
+            avatarIv.load(App.userInfo.profile)
+            avatarIv.load(App.userInfo.profile, builder = {
+                allowHardware(false)
+                this.error(R.drawable.avatar_default)
+                this.placeholder(R.drawable.avatar_default)
+            })
+            shareViewModel.share(this@TodaySportsDetailActivity,shareTitleView,mDatabind.scrollView,shareTBottomView)
         }
 
         fun finish() {

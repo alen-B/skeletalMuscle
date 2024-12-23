@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import coil.load
-import com.example.pdftest.ui.ShareUtils
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
@@ -38,7 +37,7 @@ import me.hgj.jetpackmvvm.base.appContext
 
 class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedViewModel, ActivitySportsHightKneeCompletedBinding>() {
     lateinit var sportLiftLeg: SportLiftLeg
-    val shareViewmodel  :ShareViewModel by viewModels()
+    val shareViewModel  :ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -79,7 +78,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
         lineChart.extraBottomOffset=5f
-        lineChart.extraLeftOffset=25f
+
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -90,9 +89,10 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.setDrawGridLines(false)
         xAxis.textSize=20f
         xAxis.labelCount=2
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.formatDate(sportLiftLeg.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.MM_SS)
+               return DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
             }
 
         }
@@ -102,6 +102,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
+        leftAxis.axisMinimum=0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -138,7 +139,6 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         // set color of filled area
 
@@ -166,8 +166,6 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
         barChart.extraBottomOffset=15f
-        barChart.extraLeftOffset=45f
-        barChart.extraRightOffset=45f
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -177,12 +175,13 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.textSize=20f
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.labelCount= Math.min(2,sportLiftLeg.calorie.size)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
                 return if(index>=0 && index< sportLiftLeg.calorie.size){
-                    DateTimeUtil.formatDate(sportLiftLeg.calorie[index].record_time.toLong(),DateTimeUtil.MM_SS)
+                    DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie[index].record_time,DateTimeUtil.DATE_PATTERN_SS)
                 }else{
                     ""
                 }
@@ -195,6 +194,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
+        leftAxis.axisMinimum=0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -233,7 +233,6 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
         lineChart.extraBottomOffset=5f
-        lineChart.extraLeftOffset=25f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -245,6 +244,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         xAxis.textSize=20f
         xAxis.labelCount=2
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return "${value.toInt()+1}组"
@@ -257,6 +257,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
+        leftAxis.axisMinimum = 0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
         val rightAxis: YAxis = lineChart.axisRight
@@ -287,7 +288,6 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
@@ -344,7 +344,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
                 this.error(R.drawable.avatar_default)
                 this.placeholder(R.drawable.avatar_default)
             })
-            shareViewmodel.share(this@SportsHighKneeCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
+            shareViewModel.share(this@SportsHighKneeCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
 
 
         }

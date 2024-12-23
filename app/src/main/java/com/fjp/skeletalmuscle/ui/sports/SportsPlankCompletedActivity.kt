@@ -61,8 +61,6 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
         lineChart.extraBottomOffset=18f
-        lineChart.extraLeftOffset=24f
-        lineChart.extraRightOffset=24f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -72,9 +70,10 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.textSize=20f
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return sportFlatSupport.heart_rate[value.toInt()].record_time.split(" ")[1]
+                return DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
             }
         }
         xAxis.enableGridDashedLine(2f, 1f, 0f)
@@ -83,6 +82,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -108,24 +108,12 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
-        // text size of values
         lineDataSet.setDrawValues(false)
-
-
-        // draw selection line as dashed
         lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
 
-        // set the filled area
-
-        // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
-        // set color of filled area
-
-        // set color of filled area
         if (Utils.getSDKInt() >= 18) {
-            // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_red)
             lineDataSet.fillDrawable = drawable
         } else {
@@ -148,8 +136,6 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         barChart.setDrawGridBackground(false)
 
         barChart.extraBottomOffset=15f
-        barChart.extraLeftOffset=45f
-        barChart.extraRightOffset=45f
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -159,10 +145,11 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.textSize=20f
-        xAxis.labelCount= 2
+        xAxis.labelCount= 3
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return sportFlatSupport.calorie[value.toInt()].record_time.split(" ")[1]
+                return DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
             }
 
         }
@@ -175,6 +162,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
+        leftAxis.axisMinimum=0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
         val rightAxis: YAxis = barChart.axisRight

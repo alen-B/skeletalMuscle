@@ -29,6 +29,7 @@
             app:viewModel="@{viewModel}" />
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -187,7 +188,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_yellow_round_20"
             android:drawableEnd="@drawable/today_sports_data_share"
-            android:onClick="@{()-> click.clickSportsRecord()}"
+            android:onClick="@{()-> click.clickShare()}"
             android:text="@string/today_sports_data_share"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

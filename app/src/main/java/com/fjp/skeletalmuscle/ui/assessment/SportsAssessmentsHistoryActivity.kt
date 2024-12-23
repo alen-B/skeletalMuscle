@@ -66,6 +66,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(true)
         xAxis.textColor=getColor(R.color.color_801c1c1c)
@@ -129,7 +130,6 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
@@ -211,6 +211,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(true)
         xAxis.textColor=getColor(R.color.color_801c1c1c)
@@ -271,7 +272,6 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_green)
@@ -329,6 +329,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(true)
         xAxis.textColor=getColor(R.color.color_801c1c1c)
@@ -377,7 +378,6 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)

@@ -24,6 +24,7 @@ class SystemSettingFragment : BaseFragment<SystemSettingViewModel, FragmentSyste
         mDatabind.voiceInteractionLayout.showSwitch(this)
         val isCheck = CacheUtil.getVoiceInteraction()
         mDatabind.voiceInteractionLayout.setSwitchStatus(isCheck)
+        mDatabind.versionTv.text="Version:${AppUtils.getAppVersionName(requireContext())}"
     }
 
     override fun createObserver() {

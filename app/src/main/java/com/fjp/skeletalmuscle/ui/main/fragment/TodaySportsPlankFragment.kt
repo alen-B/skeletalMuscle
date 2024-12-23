@@ -61,6 +61,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -77,6 +78,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -113,7 +115,6 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         // set color of filled area
 
@@ -148,6 +149,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         barChart.description = description
         val xAxis = barChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -169,6 +171,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)

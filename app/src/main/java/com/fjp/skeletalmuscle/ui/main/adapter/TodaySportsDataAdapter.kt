@@ -122,6 +122,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         lineDataSet.setDrawIcons(false)
         lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         lineDataSet.setDrawCircles(true)
+        lineDataSet.circleRadius=4f
         lineDataSet.setColor(Color.parseColor("#FFDD82"))
 //        lineDataSet.setCircleColor(Color.BLACK)
 
@@ -144,7 +145,6 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         // set color of filled area
 
@@ -197,7 +197,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         leftAxis.isEnabled = false
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
-
+        leftAxis.axisMinimum = 0f
         val rightAxis: YAxis = barChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)

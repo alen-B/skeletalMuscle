@@ -64,6 +64,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.setDrawGridLines(false)
@@ -72,6 +73,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         leftAxis.setDrawGridLines(true)
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
+        leftAxis.axisMinimum = 0f
         leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
@@ -93,6 +95,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.circleRadius=4f
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
@@ -107,7 +110,6 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         // set color of filled area
 
@@ -145,6 +147,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -187,6 +190,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.setDrawGridLines(false)
@@ -197,6 +201,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawLabels(false)
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
@@ -218,6 +223,7 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
+        lineDataSet.circleRadius=4f
         lineDataSet.setDrawValues(false)
         lineDataSet.color = appContext.getColor(R.color.color_blue)
         // draw selection line as dashed
@@ -225,7 +231,6 @@ class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragme
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)

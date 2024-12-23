@@ -78,6 +78,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -96,6 +97,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(false)
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
@@ -131,7 +133,6 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         // set color of filled area
 
@@ -159,13 +160,12 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
         barChart.extraBottomOffset=15f
-        barChart.extraLeftOffset=45f
-        barChart.extraRightOffset=45f
         val description = Description()
         description.text = ""
         barChart.description = description
         val xAxis = barChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -188,6 +188,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -226,12 +227,12 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
         lineChart.extraBottomOffset=5f
-        lineChart.extraLeftOffset=25f
         val description = Description()
         description.text = ""
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -249,6 +250,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawLabels(false)
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
@@ -280,7 +282,6 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)

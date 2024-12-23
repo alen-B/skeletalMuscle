@@ -193,6 +193,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         leftAxis.textSize = 16.dp
+        leftAxis.axisMinimum = 0f
         leftAxis.valueFormatter= object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return "${upDegree[value.toInt()].up_degree}°"
@@ -227,7 +228,6 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
 
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         if (Utils.getSDKInt() >= 18) {
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_yellow)
@@ -265,6 +265,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
        leftAxis.textSize = 16.dp
+       leftAxis.axisMinimum = 0f
        leftAxis.valueFormatter= object : ValueFormatter() {
            override fun getFormattedValue(value: Float): String {
                return "${expandChestDegree[value.toInt()].expand_chest_degree}°"
@@ -299,7 +300,6 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
 
        lineDataSet.setDrawFilled(true)
-       lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
        if (Utils.getSDKInt() >= 18) {
            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
@@ -355,6 +355,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         lineChart.description = description
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
@@ -375,6 +376,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(true)
         leftAxis.textSize=20.dp
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
@@ -410,7 +412,6 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
 
         // set the filled area
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
 
         // set color of filled area
 
