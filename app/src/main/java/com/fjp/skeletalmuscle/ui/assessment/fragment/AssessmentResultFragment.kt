@@ -86,8 +86,8 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentH
         // the chart.
         if (curMonth == 1) {
             var curAssessment = assessmentHistory[curMonth - 1]
-            entries1.add(RadarEntry(curAssessment.grip/10f))
-            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries1.add(RadarEntry(curAssessment.grip/10f*2))
+            entries1.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries1.add(RadarEntry(curAssessment.weight.toFloat()))
             entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
@@ -99,57 +99,57 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentH
             entries2.add(RadarEntry(curAssessment.lift_leg.toFloat()))
 
             curAssessment = assessmentHistory[curMonth + 1]
-            entries3.add(RadarEntry(curAssessment.grip/10f))
-            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries3.add(RadarEntry(curAssessment.grip/10f*2))
+            entries3.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries3.add(RadarEntry(curAssessment.weight.toFloat()))
             entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))
 
         } else if (curMonth == 12) {
             var curAssessment = assessmentHistory[curMonth - 3]
-            entries1.add(RadarEntry(curAssessment.grip/10f))
-            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries1.add(RadarEntry(curAssessment.grip/10f*2))
+            entries1.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries1.add(RadarEntry(curAssessment.weight.toFloat()))
             entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
             curAssessment = assessmentHistory[curMonth - 2]
-            entries2.add(RadarEntry(curAssessment.grip/10f))
-            entries2.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries2.add(RadarEntry(curAssessment.grip/10f*2))
+            entries2.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries2.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries2.add(RadarEntry(curAssessment.weight.toFloat()))
             entries2.add(RadarEntry(curAssessment.lift_leg.toFloat()))
 
             curAssessment = assessmentHistory[curMonth - 1]
-            entries3.add(RadarEntry(curAssessment.grip/10f))
-            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries3.add(RadarEntry(curAssessment.grip/10f*2))
+            entries3.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries3.add(RadarEntry(curAssessment.weight.toFloat()))
             entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))
 
         } else if (curMonth == 11) {
             var curAssessment = assessmentHistory[curMonth - 2]
-            entries1.add(RadarEntry(curAssessment.grip/10f))
-            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries1.add(RadarEntry(curAssessment.grip/10f*2))
+            entries1.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries1.add(RadarEntry(curAssessment.weight.toFloat()))
             entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
             curAssessment = assessmentHistory[curMonth - 1]
-            entries2.add(RadarEntry(curAssessment.grip/10f))
-            entries2.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries2.add(RadarEntry(curAssessment.grip/10f*2))
+            entries2.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries2.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries2.add(RadarEntry(curAssessment.weight.toFloat()))
             entries2.add(RadarEntry(curAssessment.lift_leg.toFloat()))
 
             curAssessment = assessmentHistory[curMonth]
-            entries3.add(RadarEntry(curAssessment.grip/10f))
-            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries3.add(RadarEntry(curAssessment.grip/10f*2))
+            entries3.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries3.add(RadarEntry(curAssessment.weight.toFloat()))
             entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))
         } else {
             var curAssessment = assessmentHistory[curMonth - 1]
-            entries1.add(RadarEntry(curAssessment.grip/10f))
-            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
+            entries1.add(RadarEntry(curAssessment.grip/10f*2))
+            entries1.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
             entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries1.add(RadarEntry(curAssessment.weight.toFloat()))
             entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))

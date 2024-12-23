@@ -51,7 +51,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
     }
 
     private fun exportPDF(it: ExportData) {
-        showLoading("正在导出pdf文件....")
+
         try {
             PDFManager.createPDF(requireContext())
             if (mDatabind.curWeekRB.isChecked) {
@@ -163,6 +163,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
                     startTime = startDate.time
                     endTime = endDate.time
                 }
+                showLoading("正在导出pdf文件....")
                 mViewModel.getTodayData(startTime / 1000, endTime / 1000)
             }
 
