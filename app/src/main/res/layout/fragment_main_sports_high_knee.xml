@@ -130,15 +130,7 @@
             app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/main_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/sportTimeView"
-            app:layout_constraintStart_toStartOf="@+id/sportTimeView"
-            tools:ignore="ContentDescription" />
+
 
         <TextView
             android:id="@+id/minTv"
@@ -191,15 +183,7 @@
             app:layout_constraintTop_toTopOf="@+id/heartRateView" />
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/main_arrow_line"
-            app:layout_constraintBottom_toBottomOf="@+id/heartRateView"
-            app:layout_constraintStart_toStartOf="@+id/heartRateView"
-            tools:ignore="ContentDescription" />
+
 
         <TextView
             android:id="@+id/timesTv"
@@ -250,15 +234,7 @@
             app:layout_constraintStart_toStartOf="@+id/weightView"
             app:layout_constraintTop_toTopOf="@+id/weightView" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/main_arrow_up"
-            app:layout_constraintBottom_toBottomOf="@+id/weightView"
-            app:layout_constraintStart_toStartOf="@+id/weightView"
-            tools:ignore="ContentDescription" />
+
 
 
         <TextView
@@ -300,15 +276,6 @@
             app:layout_constraintTop_toTopOf="@+id/heatView" />
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/main_arrow_down"
-            app:layout_constraintBottom_toBottomOf="@+id/heatView"
-            app:layout_constraintStart_toStartOf="@+id/heatView"
-            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/kilocalorieTv"

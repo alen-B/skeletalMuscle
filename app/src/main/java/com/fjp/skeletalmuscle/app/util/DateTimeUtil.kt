@@ -26,6 +26,7 @@ object DateTimeUtil {
     var DATE_PATTERN_SS = "yyyy-MM-dd HH:mm:ss"
     var DATE_PATTERN_SS2 = "yyyy/MM/dd HH:mm:ss"
     var DATE_PATTERN_MM = "yyyy-MM-dd HH:mm"
+    var HH_MM_SS = "HH:mm:ss"
     var MM_SS = "mm:ss"
 
     /**

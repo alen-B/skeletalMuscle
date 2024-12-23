@@ -86,7 +86,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
         xAxis.labelCount=2
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.formatDate(sportLiftLeg.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.MM_SS)
+                return DateTimeUtil.formatDate(sportLiftLeg.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
             }
 
         }
@@ -175,7 +175,7 @@ class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
                 return if(index>=0 && index< sportLiftLeg.calorie.size){
-                    DateTimeUtil.formatDate(sportLiftLeg.calorie[index].record_time.toLong(),DateTimeUtil.MM_SS)
+                    DateTimeUtil.formatDate(sportLiftLeg.calorie[index].record_time.toLong(),DateTimeUtil.HH_MM_SS)
                 }else{
                     ""
                 }
