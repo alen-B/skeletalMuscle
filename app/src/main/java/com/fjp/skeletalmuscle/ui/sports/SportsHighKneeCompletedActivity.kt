@@ -58,8 +58,8 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         mDatabind.cardioTimeTotalMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.heart_lung_enhancement.toLong()) + "'"
         mDatabind.breakTimeTotalMinTv.text = DateTimeUtil.formSportTime(sportLiftLeg.extreme_breakthrough.toLong()) + "'"
         mViewModel.totalCount.set((sportLiftLeg.left_sport_amount + sportLiftLeg.right_sport_amount).toString())
-        mViewModel.leftCount.set((sportLiftLeg.left_sport_amount).toString())
-        mViewModel.rightCount.set(sportLiftLeg.right_sport_amount.toString())
+        mViewModel.leftCount.set((sportLiftLeg.left_times).toString())
+        mViewModel.rightCount.set(sportLiftLeg.right_times.toString())
         mViewModel.avgHeart.set(sportLiftLeg.avg_rate_value.toString())
         mViewModel.maxHeart.set(sportLiftLeg.max_rate_value.toString())
         initCalorieBarChart()
