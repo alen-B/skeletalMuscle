@@ -534,7 +534,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var gripCount = 0
     private var countTemp = 3//数据连续低于最大值5次则定位一次握力
     private var oldGrip = 0//odlGrip和grip连续相同三次定位一次握力，
-    private var preGrip = -1//防止用户握完之后没动，握力次数会自动增加，记录上一次被记录的握力值，如果相同不计数
+    private var preGrip = 0//防止用户握完之后没动，握力次数会自动增加，记录上一次被记录的握力值，如果相同不计数
     private fun initBluetooth() {
         //初始化ble设配器
         val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
