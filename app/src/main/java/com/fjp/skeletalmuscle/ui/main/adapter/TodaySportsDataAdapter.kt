@@ -160,7 +160,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
 
     }
 
@@ -231,7 +231,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         barData.barWidth = 0.4f
         barChart.data = barData
         barChart.setNoDataText("暂无数据")
-        barChart.animateY(500)
+        barChart.animateY(0)
     }
 }
 

@@ -50,6 +50,26 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         mViewModel.getAssessment(curYear.toString())
     }
 
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.assessmentHistoryResult.observe(this){
+            parseState(it,{assessmentHistory->
+                initData(assessmentHistory)
+
+            })
+        }
+    }
+
+    private fun initData(assessmentHistory: ArrayList<AssessmentHistoryData>) {
+        val fragments = arrayListOf<Fragment>(AssessmentResultFragment.newInstance(curYear,1,assessmentHistory), AssessmentResultFragment.newInstance(curYear,2,assessmentHistory), AssessmentResultFragment.newInstance(curYear,3,assessmentHistory), AssessmentResultFragment.newInstance(curYear,4,assessmentHistory), AssessmentResultFragment.newInstance(curYear,5,assessmentHistory), AssessmentResultFragment.newInstance(curYear,6,assessmentHistory), AssessmentResultFragment.newInstance(curYear,7,assessmentHistory), AssessmentResultFragment.newInstance(curYear,8,assessmentHistory), AssessmentResultFragment.newInstance(curYear,9,assessmentHistory), AssessmentResultFragment.newInstance(curYear,10,assessmentHistory), AssessmentResultFragment.newInstance(curYear,11,assessmentHistory), AssessmentResultFragment.newInstance(curYear,12,assessmentHistory))
+        mDatabind.viewpager.adapter = SportsAssessmentsHistoryAdapter(supportFragmentManager, fragments)
+        mDatabind.tabLayout.setViewPager(mDatabind.viewpager)
+        mDatabind.tabLayout.currentTab = curMonth
+        initWaistlineLineChart(assessmentHistory)
+        initTestLineChart(assessmentHistory)
+        initWeightLineChart(assessmentHistory)
+    }
+
     private fun initTestLineChart(assessmentHistory: ArrayList<AssessmentHistoryData>) {
         val lineChart = mDatabind.sportsLineChart
         lineChart.legend.isEnabled = false
@@ -97,6 +117,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         rightAxis.setDrawAxisLine(false)
         rightAxis.labelCount=10
         rightAxis.axisMinimum=0f
+        rightAxis.axisMaximum=60f
         rightAxis.xOffset=10f
         rightAxis.textSize=dp2px(20).toFloat()
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
@@ -153,7 +174,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         // set the filled area
         lineDataSet2.setDrawFilled(true)
-        lineDataSet2.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+//        lineDataSet2.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_yellow)
@@ -177,7 +198,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         // set the filled area
         lineDataSet3.setDrawFilled(true)
-        lineDataSet3.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+//        lineDataSet3.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_red)
@@ -194,7 +215,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
     }
     private fun initWeightLineChart(assessmentHistory: ArrayList<AssessmentHistoryData>) {
         val lineChart = mDatabind.weightLineChart
@@ -242,13 +263,13 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         rightAxis.setDrawAxisLine(false)
         rightAxis.labelCount=10
         rightAxis.axisMinimum=0f
+        rightAxis.axisMaximum=26f
         rightAxis.xOffset=23f
         rightAxis.textSize=dp2px(20).toFloat()
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         rightAxis.textColor=ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
-        val values3 = ArrayList<Entry>()
 
         for (i in assessmentHistory.indices) {
             values.add(BarEntry(i.toFloat(), assessmentHistory[i].weight.toFloat()))
@@ -295,7 +316,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
         // set the filled area
         lineDataSet2.setDrawFilled(true)
-        lineDataSet2.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+//        lineDataSet2.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_purple)
@@ -311,7 +332,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
     }
 
     private fun initWaistlineLineChart(assessmentHistory: ArrayList<AssessmentHistoryData>) {
@@ -391,28 +412,9 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
     }
 
-    override fun createObserver() {
-        super.createObserver()
-        mViewModel.assessmentHistoryResult.observe(this){
-            parseState(it,{assessmentHistory->
-                initData(assessmentHistory)
-
-            })
-        }
-    }
-
-    private fun initData(assessmentHistory: ArrayList<AssessmentHistoryData>) {
-        val fragments = arrayListOf<Fragment>(AssessmentResultFragment.newInstance(curYear,1,assessmentHistory), AssessmentResultFragment.newInstance(curYear,2,assessmentHistory), AssessmentResultFragment.newInstance(curYear,3,assessmentHistory), AssessmentResultFragment.newInstance(curYear,4,assessmentHistory), AssessmentResultFragment.newInstance(curYear,5,assessmentHistory), AssessmentResultFragment.newInstance(curYear,6,assessmentHistory), AssessmentResultFragment.newInstance(curYear,7,assessmentHistory), AssessmentResultFragment.newInstance(curYear,8,assessmentHistory), AssessmentResultFragment.newInstance(curYear,9,assessmentHistory), AssessmentResultFragment.newInstance(curYear,10,assessmentHistory), AssessmentResultFragment.newInstance(curYear,11,assessmentHistory), AssessmentResultFragment.newInstance(curYear,12,assessmentHistory))
-        mDatabind.viewpager.adapter = SportsAssessmentsHistoryAdapter(supportFragmentManager, fragments)
-        mDatabind.tabLayout.setViewPager(mDatabind.viewpager)
-        mDatabind.tabLayout.currentTab = curMonth
-      initWaistlineLineChart(assessmentHistory)
-        initTestLineChart(assessmentHistory)
-        initWeightLineChart(assessmentHistory)
-    }
 
     inner class ProxyClick {
 

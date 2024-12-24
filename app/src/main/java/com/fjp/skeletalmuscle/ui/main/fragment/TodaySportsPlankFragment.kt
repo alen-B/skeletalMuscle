@@ -130,7 +130,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
     }
 
 
@@ -198,7 +198,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         barData.barWidth = 0.2f
         barChart.data = barData
         barChart.setNoDataText("暂无数据")
-        barChart.animateY(500)
+        barChart.animateY(0)
     }
 
 

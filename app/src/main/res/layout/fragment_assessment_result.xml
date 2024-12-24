@@ -57,18 +57,18 @@
             app:layout_constraintTop_toTopOf="@+id/radarChart"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="60dp"
-            android:layout_marginStart="240dp"
+            android:layout_marginStart="230dp"
             android:textColor="@color/color_cc1c1c1c"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/situpTv"
             android:layout_width="wrap_content"
-            android:text="一分钟起坐运动次数"
+            android:text="一分钟起坐\n运动次数"
             android:textSize="@dimen/text_size_4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/radarChart"
-            android:layout_marginTop="110dp"
-            android:layout_marginEnd="190dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="230dp"
             android:textColor="@color/color_cc1c1c1c"
             android:layout_height="wrap_content"/>
         <TextView
@@ -78,8 +78,8 @@
             android:textSize="@dimen/text_size_4"
             app:layout_constraintBottom_toBottomOf="@+id/radarChart"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="60dp"
-            android:layout_marginStart="380dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="395dp"
             android:textColor="@color/color_cc1c1c1c"
             android:layout_height="wrap_content"/>
         <TextView
@@ -89,8 +89,8 @@
             android:text="腰围"
             app:layout_constraintBottom_toBottomOf="@+id/radarChart"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="60dp"
-            android:layout_marginEnd="380dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="395dp"
             android:textColor="@color/color_cc1c1c1c"
             android:layout_height="wrap_content"/>
         <TextView

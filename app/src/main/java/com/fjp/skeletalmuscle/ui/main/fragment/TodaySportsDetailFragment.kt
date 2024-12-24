@@ -265,7 +265,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         barData.barWidth = 0.2f
         barChart.data = barData
         barChart.setNoDataText("暂无数据")
-        barChart.animateY(500)
+        barChart.animateY(0)
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -333,7 +333,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         description.text = ""//去掉描述，必须设置为空字符串，要不然还会显示
         horizontalBarChart.description = description
         horizontalBarChart.setNoDataText("暂无数据")
-        horizontalBarChart.animateY(500)
+        horizontalBarChart.animateY(0)
 
     }
 
@@ -412,7 +412,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
     }
 
     private fun initHeartRatelineChart(result: HeartRateResult) {
@@ -501,7 +501,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
     }
 
     private fun initLegAngleLineChart(result: LiftLegTrendResult) {
@@ -614,7 +614,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
     }
 
 

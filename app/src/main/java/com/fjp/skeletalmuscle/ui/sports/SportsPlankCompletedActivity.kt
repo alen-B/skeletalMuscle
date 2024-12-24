@@ -123,7 +123,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         val barData = LineData(dataSets)
         lineChart.data = barData
         lineChart.setNoDataText("暂无数据")
-        lineChart.animateY(500)
+        lineChart.animateY(0)
     }
 
 
@@ -187,7 +187,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         barData.barWidth = 0.2f
         barChart.data = barData
         barChart.setNoDataText("暂无数据")
-        barChart.animateY(500)
+        barChart.animateY(0)
     }
 
     inner class ProxyClick {
