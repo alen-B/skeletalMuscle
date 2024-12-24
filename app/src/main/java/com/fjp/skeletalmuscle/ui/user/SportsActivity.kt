@@ -53,7 +53,11 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
 
     inner class ProxyClick {
         fun next() {
-            val selectedSports = mViewModel.dataArr.filter { it.isSelected }
+            val copyDataArr = mutableListOf<Sports>()
+            for ((index, sports) in mViewModel.dataArr.withIndex()) {
+                copyDataArr.add(Sports(mViewModel.dataArr[index].name,mViewModel.dataArr[index].child,mViewModel.dataArr[index].isSelected))
+            }
+            val selectedSports = copyDataArr.filter { it.isSelected }
             selectedSports.forEach {
                 it.child = it.child.filter { child -> child.isSelected } as ArrayList<SportsChild>
             }
@@ -61,6 +65,13 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
             selectedSports.forEach {
                 userSports.add(UserSports(it.child.map { it.name }, it.name))
             }
+            for ((index, _) in userSports.withIndex()) {
+                if (userSports.get(index).sport_name != "无" && userSports.get(index).child_sport_name.isEmpty()) {
+                    showToast("请选择运动第二分类")
+                    return
+                }
+            }
+            App.userInfo.sports = userSports
             mViewModel.dataArr.forEach {
                 if (it.name == getString(R.string.sports_type_no) && it.isSelected) {
                     CacheUtil.removeAccount(App.userInfo.mobile)
@@ -69,8 +80,8 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
                     CacheUtil.setAccounts(accounts)
                     CacheUtil.setUser(App.userInfo)
                     App.userInfo.device_no = SettingUtil.getDeviceId(this@SportsActivity)
-                    App.userInfo.sports = userSports
                     saveUserInfoViewModel.saveInfoReq(App.userInfo)
+                    return
                 }
             }
 

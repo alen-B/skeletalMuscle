@@ -20,7 +20,7 @@ class SportsAssessmentResultViewModel : SMBaseViewModel() {
     fun getLastTest() {
         request({
             HttpRequestCoroutine.getLatestTest()
-        }, sportsCalorieResult, true)
+        }, sportsCalorieResult)
 
     }
 }
