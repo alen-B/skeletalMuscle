@@ -139,7 +139,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
 
             PDFManager.close()
             dismissLoading()
-            Toast.makeText(context, "PDF生成成！功路径：${PDFManager.getFilePath()}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "PDF生成成！功路径：${PDFManager.getFilePath()}", Toast.LENGTH_LONG).show()
         } catch (e: IOException) {
             e.printStackTrace()
             dismissLoading()

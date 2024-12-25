@@ -46,6 +46,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST("login")
     suspend fun login(@Field("mobile") mobile: String, @Field("code") code: String): ApiResponse<UserInfo>
+    /**
+     * 获取个人信息
+     */
+    @GET("/user/get_info")
+    suspend fun getUserInfo(): ApiResponse<UserInfo>
 
     /**
      * 获取验证码

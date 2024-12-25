@@ -34,7 +34,7 @@ class AssessmentUtils {
 
         private const val WOManGripLevel01 = 18
         private const val WoManGripLevel02 = 15
-        fun testResult(legCount: Int, sitUpCount: Int, grip: Int, isMan: Boolean): String {
+        fun testResult(legCount: Int, sitUpCount: Int, grip: Int, isMan: Boolean):List<String> {
             val levels = arrayListOf(0, 0, 0)
             if (legCount >= LegCountLevel01) {//抬腿良好
                 levels[0] = 1
@@ -69,13 +69,12 @@ class AssessmentUtils {
                 }
             }
             return if (levels.contains(3)) {
-                "肌肉减少-根据测评结果，您处于肌肉减少状态，请寻求专业帮助。"
+                return arrayListOf("肌肉减少","根据测评结果，您处于肌肉减少状态，请寻求专业帮助。")
             } else if (levels.contains(2)) {
-                "肌肉可疑减少-根据测评结果，您的肌肉可疑减少，请适当增加锻炼量。"
+                return arrayListOf("肌肉可疑减少","根据测评结果，您的肌肉可疑减少，请适当增加锻炼量。")
             } else {
-                "肌肉正常-根据测评结果，您的锻炼效果显著，请继续保持哦！"
+                return arrayListOf("肌肉正常","-根据测评结果，您的锻炼效果显著，请继续保持哦！")
             }
-
         }
         fun getResultLevel(legCount: Int, sitUpCount: Int, grip: Float, isMan: Boolean): Int {
             val levels = arrayListOf(0, 0, 0)

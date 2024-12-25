@@ -3,20 +3,24 @@ package com.fjp.skeletalmuscle.ui.main
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.afollestad.date.dayOfMonth
 import com.afollestad.date.month
 import com.afollestad.date.year
 import com.fjp.skeletalmuscle.R
+import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
+import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.SportsRecord
@@ -26,6 +30,7 @@ import com.fjp.skeletalmuscle.data.model.bean.result.UpDegree
 import com.fjp.skeletalmuscle.databinding.ActivitySportsRecordBinding
 import com.fjp.skeletalmuscle.ui.main.adapter.SportsRecordLegAdapter
 import com.fjp.skeletalmuscle.viewmodel.request.RequestMainViewModel
+import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SportsRecordViewModel
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
@@ -45,6 +50,7 @@ import java.util.Calendar
 import kotlin.math.roundToInt
 
 class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsRecordBinding>() {
+    val shareViewModel  : ShareViewModel by viewModels()
     private val requestMainViewModel: RequestMainViewModel by viewModels()
     val calendar = Calendar.getInstance()
     override fun initView(savedInstanceState: Bundle?) {
@@ -448,6 +454,23 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         fun clickfinish() {
             this@SportsRecordActivity.finish()
         }
+        fun clickShare() {
+            val shareTitleView = View.inflate(this@SportsRecordActivity, R.layout.share_title, null)
+            val shareTBottomView = View.inflate(this@SportsRecordActivity, R.layout.share_bottom, null)
+            val avatarIv = shareTitleView.findViewById<CircleImageView>(R.id.avatarIv)
+            val nameTv = shareTitleView.findViewById<TextView>(R.id.nameTv)
+            val timeTv = shareTitleView.findViewById<TextView>(R.id.timeTv)
+            nameTv.text = App.userInfo.name
+            timeTv.text = DateTimeUtil.formatShareTime(System.currentTimeMillis())
+            avatarIv.load(App.userInfo.profile)
+            avatarIv.load(App.userInfo.profile, builder = {
+                allowHardware(false)
+                this.error(R.drawable.avatar_default)
+                this.placeholder(R.drawable.avatar_default)
+            })
+            shareViewModel.share(this@SportsRecordActivity,shareTitleView,mDatabind.scrollView.getChildAt(0),shareTBottomView)
+        }
+
     }
 
     override fun onResume() {

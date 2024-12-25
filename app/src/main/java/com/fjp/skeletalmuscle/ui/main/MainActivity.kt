@@ -9,6 +9,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.databinding.ActivityMainBinding
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
@@ -74,6 +75,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 it.printStackTrace()
                 showToast(getString(R.string.request_failed))
             })
+        }
+        requestMainViewModel.userInfoResult.observe(this) {
+            parseState(it, { userInfo ->
+                CacheUtil.setUser(userInfo)
+            })
+
         }
     }
 

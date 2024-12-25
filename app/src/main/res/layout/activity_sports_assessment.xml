@@ -230,16 +230,17 @@
             android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@+id/rTimesTv"
             app:layout_constraintStart_toEndOf="@+id/rTimesTv" />
+
         <ImageView
             android:id="@+id/centerBigIv"
-            android:visibility="gone"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/sports_high_leg_temp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/dataView"
@@ -312,17 +313,19 @@
             app:drawableStartCompat="@drawable/sports_assessment_times"
             app:layout_constraintStart_toStartOf="@+id/midLine"
             app:layout_constraintTop_toBottomOf="@+id/heartTv" />
+
         <TextView
             android:id="@+id/sportsNumberUnitTv"
             android:layout_width="wrap_content"
-            android:visibility="gone"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
             android:text="kg"
             android:textColor="@color/color_222"
             android:textSize="@dimen/text_size_4"
-            app:layout_constraintStart_toEndOf="@+id/sportsNumberTv"
-            app:layout_constraintBaseline_toBaselineOf="@+id/sportsNumberTv" />
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sportsNumberTv"
+            app:layout_constraintStart_toEndOf="@+id/sportsNumberTv" />
+
         <ImageView
             android:id="@+id/backIv"
             android:layout_width="144dp"
@@ -359,9 +362,9 @@
             android:layout_height="250dp"
             android:scaleType="centerInside"
             android:src="@drawable/assessment_05"
+            app:layout_constraintBottom_toTopOf="@+id/backIv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/backIv"
             app:layout_constraintTop_toBottomOf="@+id/title_layout" />
 
         <ImageView
@@ -374,16 +377,53 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/rLC"
             app:layout_constraintTop_toTopOf="@+id/rLC" />
+
         <TextView
             android:id="@+id/countdownText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="150sp"
+            android:layout_centerInParent="true"
             android:textColor="@color/color_ffc019"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="150sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_centerInParent="true"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/step1Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sports_assessment_grip_01"
+            android:textColor="@color/color_1c1c1c"
+            android:layout_marginTop="30dp"
+            android:textSize="@dimen/text_size_3"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/centerIv"
+            app:layout_constraintTop_toTopOf="@+id/centerIv" />
+
+        <TextView
+            android:id="@+id/step2Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/sports_assessment_grip_02"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="@dimen/text_size_3"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/centerIv"
+            app:layout_constraintTop_toBottomOf="@+id/step1Tv" />
+
+        <TextView
+            android:id="@+id/step3Tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/sports_assessment_grip_03"
+            android:textColor="@color/color_1c1c1c"
+            android:textSize="@dimen/text_size_3"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/centerIv"
+            app:layout_constraintTop_toBottomOf="@+id/step2Tv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

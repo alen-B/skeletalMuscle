@@ -26,7 +26,6 @@ import com.flyco.tablayout.listener.OnTabSelectListener
 import me.hgj.jetpackmvvm.util.get
 
 class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, ActivityTodaySportsDetailBinding>() {
-    val shareViewModel  : ShareViewModel by viewModels()
 
     companion object {
         fun startActivity(context: Context, sportsType: SportsType, chartType: ChartType) {
@@ -133,22 +132,6 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, Activ
     }
 
     inner class ProxyClick {
-        fun clickShare() {
-            val shareTitleView = View.inflate(this@TodaySportsDetailActivity, R.layout.share_title, null)
-            val shareTBottomView = View.inflate(this@TodaySportsDetailActivity, R.layout.share_bottom, null)
-            val avatarIv = shareTitleView.findViewById<CircleImageView>(R.id.avatarIv)
-            val nameTv = shareTitleView.findViewById<TextView>(R.id.nameTv)
-            val timeTv = shareTitleView.findViewById<TextView>(R.id.timeTv)
-            nameTv.text = App.userInfo.name
-            timeTv.text = DateTimeUtil.formatShareTime(System.currentTimeMillis())
-            avatarIv.load(App.userInfo.profile)
-            avatarIv.load(App.userInfo.profile, builder = {
-                allowHardware(false)
-                this.error(R.drawable.avatar_default)
-                this.placeholder(R.drawable.avatar_default)
-            })
-            shareViewModel.share(this@TodaySportsDetailActivity,shareTitleView,mDatabind.scrollView,shareTBottomView)
-        }
 
         fun finish() {
             this@TodaySportsDetailActivity.finish()

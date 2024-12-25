@@ -58,17 +58,22 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         App.userInfo?.let {
-            mDatabind.userNameLayout.setValue(it.name)
-            mDatabind.phoneLayout.setValue(it.mobile)
-            mDatabind.bornLayout.setValue(it.birthday)
+            setData(it)
 
-            mDatabind.sexLayout.setValue(it.sex)
-            mDatabind.weightLayout.setValue(it.weight.toString()+"kg")
-            mDatabind.heightLayout.setValue(it.height.toString()+"cm")
-            mDatabind.waistLinLayout.setValue(it.waistline+"cm")
-            mDatabind.avatarLayout.setAvatarIv(requireContext(),it.profile)
         }
 
+    }
+
+    private fun setData(userInfo: UserInfo) {
+        mDatabind.userNameLayout.setValue(userInfo.name)
+        mDatabind.phoneLayout.setValue(userInfo.mobile)
+        mDatabind.bornLayout.setValue(userInfo.birthday)
+
+        mDatabind.sexLayout.setValue(userInfo.sex)
+        mDatabind.weightLayout.setValue(userInfo.weight.toString()+"kg")
+        mDatabind.heightLayout.setValue(userInfo.height.toString()+"cm")
+        mDatabind.waistLinLayout.setValue(userInfo.waistline+"cm")
+        mDatabind.avatarLayout.setAvatarIv(requireContext(),userInfo.profile)
     }
 
     override fun createObserver() {
@@ -82,10 +87,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         saveUserInfoViewModel.saveResult.observe(this) {
             parseState(it, {
                 App.userInfo = tempUserInfo
-                mDatabind.heightLayout.setValue(App.userInfo.height.toString())
-                mDatabind.weightLayout.setValue(App.userInfo.weight.toString())
-                mDatabind.waistLinLayout.setValue(App.userInfo.waistline)
-                mDatabind.sexLayout.setValue(App.userInfo.sex)
+                setData(App.userInfo)
 
                 CacheUtil.setUser(App.userInfo)
             }, {

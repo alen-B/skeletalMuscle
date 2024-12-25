@@ -40,6 +40,13 @@ class HttpRequestManger {
         return apiService.login(mobile, code)
     }
 
+    /**
+     * 获取个人信息
+     */
+    suspend fun getUserInfo(): ApiResponse<UserInfo> {
+        return apiService.getUserInfo()
+    }
+
 
     /**
      * 获取验证码

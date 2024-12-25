@@ -30,6 +30,7 @@ import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
+import com.fjp.skeletalmuscle.app.weight.pop.PlankDeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.AssessmentType
 import com.fjp.skeletalmuscle.data.model.bean.BleDevice
 import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
@@ -65,6 +66,8 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
 
     private var leftLastPitch = 0f // 左腿上一个pitch值
     private var rightLastPitch = 0f // 右腿上一个pitch值
+    private var curLeftPitch = 0f
+    private var curRightPitch = 0f
 
     private var rightOldLevel = 0
     private var leftOldLevel = 0
@@ -202,7 +205,8 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
 
     private fun updateTimerTextView() {
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
-        val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
+        val sportsSecond = (elapsedTime /1000 % 60).toInt()
+        val timeString = String.format("%02d:%02d", sportsMinutes, sportsSecond)
         mViewModel.curTime.set(timeString)
         if (curType != AssessmentType.Grip) {
             mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
@@ -219,12 +223,62 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 }
             }
         }
-        if (totalTime - seconds == 0) {
+        if (totalTime - seconds == 0&& curType !=AssessmentType.Grip) {
             completed()
         }
     }
 
     fun completed() {
+
+        mDatabind.startTv.visibility = View.VISIBLE
+        mDatabind.nextSportsIv.visibility = View.GONE
+
+        when (curType) {
+            AssessmentType.HighLeg -> {
+                resetHandler()
+                isHighLeg(false)
+                curType = AssessmentType.UpDown
+                mViewModel.title.set("起坐运动即将开始！")
+                mDatabind.heartTv.setText("起坐次数")
+                mDatabind.nextSportsIv.setImageResource(R.drawable.assessment_06)
+                mDatabind.centerIv.setImageResource(R.drawable.assessment_07)
+                mDatabind.centerIv.visibility = View.VISIBLE
+                mDatabind.centerBigIv.visibility = View.GONE
+
+            }
+
+            AssessmentType.UpDown -> {
+                resetHandler()
+                curType = AssessmentType.Grip
+                mViewModel.title.set("握力运动即将开始！")
+                mDatabind.heartTv.setText("握力最大值")
+                mDatabind.sportsNumberUnitTv.visibility = View.VISIBLE
+                mDatabind.nextSportsIv.setImageResource(R.drawable.assessment_08)
+                mDatabind.centerIv.visibility = View.VISIBLE
+                mDatabind.step1Tv.visibility = View.VISIBLE
+                mDatabind.step2Tv.visibility = View.VISIBLE
+                mDatabind.step3Tv.visibility = View.VISIBLE
+                mDatabind.centerIv.setImageResource(R.drawable.assessment_09)
+                //移除高抬腿设备监听
+                SMBleManager.delDeviceResultDataListener(this)
+                mDatabind.centerBigIv.visibility = View.GONE
+            }
+
+            else -> {
+                println("=============================")
+                println("抬腿次数：" + (leftLegLifts + rightLegLifts))
+                println("起坐：" + totalSitUpTimes)
+                println("最大握力：" + maxGrip)
+                println("=============================")
+//                mViewModel.title.set("运动测评已全部完成！")
+                mDatabind.startTv.text = "提交"
+                mDatabind.startTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.drawable.fly), null)
+            }
+        }
+
+    }
+
+    private fun resetHandler() {
         if (isRunning) {
             isRunning = false
             handler.removeCallbacks(updateTimerTask)
@@ -234,46 +288,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         if (curType != AssessmentType.Grip) {
             mViewModel.sportsNumber.set("0")
         }
-
-        mDatabind.startTv.visibility = View.VISIBLE
-        mDatabind.centerIv.visibility = View.VISIBLE
-        mDatabind.nextSportsIv.visibility = View.GONE
-        mDatabind.centerBigIv.visibility = View.GONE
-        when (curType) {
-            AssessmentType.HighLeg -> {
-                isHighLeg(false)
-                curType = AssessmentType.UpDown
-                mViewModel.title.set("起坐运动即将开始！")
-                mDatabind.heartTv.setText("起坐次数")
-                mDatabind.nextSportsIv.setImageResource(R.drawable.assessment_06)
-                mDatabind.centerIv.setImageResource(R.drawable.assessment_07)
-
-            }
-
-            AssessmentType.UpDown -> {
-                curType = AssessmentType.Grip
-                mViewModel.title.set("握力运动即将开始！")
-                mDatabind.heartTv.setText("握力最大值")
-                mDatabind.sportsNumberUnitTv.visibility = View.VISIBLE
-                mDatabind.nextSportsIv.setImageResource(R.drawable.assessment_08)
-                mDatabind.centerIv.setImageResource(R.drawable.assessment_09)
-                //移除高抬腿设备监听
-                SMBleManager.delDeviceResultDataListener(this)
-            }
-
-            else -> {
-                println("=============================")
-                println("抬腿次数：" + (leftLegLifts + rightLegLifts))
-                println("起坐：" + totalSitUpTimes)
-                println("最大握力：" + maxGrip)
-                println("=============================")
-                //TODO 提交代码
-                mViewModel.title.set("运动测评已全部完成！")
-                mDatabind.startTv.text = "提交"
-                mDatabind.startTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.drawable.fly), null)
-            }
-        }
-
     }
 
     fun isHighLeg(show: Boolean) {
@@ -297,12 +311,12 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
 
         fun clickStart() {
 
-
             //标示所有都做完了
             if (mDatabind.startTv.text.equals("提交")) {
-                val result = AssessmentUtils.testResult(leftLegLifts + rightLegLifts, totalSitUpTimes, maxGrip, "男".equals(App.userInfo.sex))
-                val saveAssessmentRequest = SaveAssessmentRequest(maxGrip, leftLegLifts + rightLegLifts, result, totalSitUpTimes, waistline, weight)
+                val result = AssessmentUtils.testResult(leftLegLifts + rightLegLifts, totalSitUpTimes, maxGrip, "男" == App.userInfo.sex)
+                val saveAssessmentRequest = SaveAssessmentRequest(maxGrip, leftLegLifts + rightLegLifts, result[0], result[1], totalSitUpTimes, waistline, weight)
                 mViewModel.saveAssessment(saveAssessmentRequest)
+                return
             } else {
                 startCountdown(4)
                 mDatabind.centerIv.visibility = View.GONE
@@ -321,19 +335,22 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 mViewModel.title.set("请起坐运动一分钟")
 
             } else {
-                mViewModel.title.set("请握3次握力器")
+                mViewModel.title.set("请快速连续握3次握力器")
                 mDatabind.centerBigIv.visibility = View.VISIBLE
+                mDatabind.step1Tv.visibility = View.GONE
+                mDatabind.step2Tv.visibility = View.GONE
+                mDatabind.step3Tv.visibility = View.GONE
                 mDatabind.centerBigIv.setBackgroundResource(R.drawable.sports_grip_temp)
-                mDatabind.countdownTv.text = "还剩3次"
+                mDatabind.startTv.text = "请用力握握力器"
+                mDatabind.startTv.visibility = View.VISIBLE
+//                mDatabind.startTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.drawable.fly), null)
                 initBluetooth()
             }
-
-
         }
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = DeviceOffLinePop(this@SportsAssessmentActivity, SportsType.HIGH_KNEE, object : DeviceOffLinePop.Listener {
+        val deviceOffLinePop = PlankDeviceOffLinePop(this@SportsAssessmentActivity,  object : PlankDeviceOffLinePop.Listener {
 
 
             override fun reconnect(type: DeviceType) {
@@ -368,48 +385,46 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         if (!isRunning) {
             return
         }
-        val pitch = DeviceDataParse.parseData2Pitch(data)
+        curLeftPitch = DeviceDataParse.parseData2Pitch(data)
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
         println("===leftroll:${roll}")
         println("===leftyaw:${yaw}")
-        if(pitch > 180){
+        if (curLeftPitch > 180) {
             return
         }
         // 检查pitch是否大于100度
-        if (pitch > 90) {
+        if (curLeftPitch > 90) {
             // 抬腿过高，检查MediaPlayer是否已经在播放
             if (playAudioIsOpen && mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying && curType == AssessmentType.HighLeg) {
                 mediaPlayer_high!!.start() // 播放音频
             }
         }
         // 更新周期内最大的pitch值
-        if (pitch > leftLegmaxPitchInCycle) {
-            leftLegmaxPitchInCycle = pitch
+        if (curLeftPitch > leftLegmaxPitchInCycle) {
+            leftLegmaxPitchInCycle = curLeftPitch
             // 当pitch值达到新的高点时，重置下降标记
             leftIsDescending = false
         }
 
         // 检查是否开始下降
-        if (pitch < leftLastPitch) {
+        if (curLeftPitch < leftLastPitch) {
             if (!leftIsDescending) {
-                if (abs(pitch) > LIFT_THRESHOLD) {
+                if (abs(curLeftPitch) > LIFT_THRESHOLD) {
                     if (curType == AssessmentType.HighLeg) {
                         leftLegLifts++
                         mViewModel.leftLegAngle.set("L ${leftLegmaxPitchInCycle.toInt()}°")
                         mViewModel.sportsNumber.set((leftLegLifts + rightLegLifts).toString())
                         mViewModel.leftLegCount.set(leftLegLifts.toString())
                     } else if (curType == AssessmentType.UpDown) {
-                        leftSitUpTimes++
-                        totalSitUpTimes = Math.max(leftSitUpTimes, rightSitUpTimes)
-                        mViewModel.sportsNumber.set(totalSitUpTimes.toString())
+
                     }
                 }
             }
             leftIsDescending = true
         }
         // 如果已经开始下降，并且当前pitch值比较低，认为一个周期结束
-        if (leftIsDescending && pitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
+        if (leftIsDescending && curLeftPitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
             // 周期结束，检查最大pitch值是否在25到30之间
             if (leftLegmaxPitchInCycle >= 25 && leftLegmaxPitchInCycle <= 30 && curType == AssessmentType.HighLeg) {
                 // 播放提示音
@@ -422,8 +437,8 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
 //            leftIsDescending = false
         }
         // 更新上一个pitch值
-        leftLastPitch = pitch
-        setLeftCurLevelByPitch(pitch)
+        leftLastPitch = curLeftPitch
+        setLeftCurLevelByPitch(curLeftPitch)
     }
 
     fun setLeftCurLevelByPitch(pitch: Float) {
@@ -439,50 +454,53 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         if (!isRunning) {
             return
         }
-        val pitch = DeviceDataParse.parseData2Pitch(data)
+        curRightPitch = DeviceDataParse.parseData2Pitch(data)
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
         println("===rightroll:${roll}")
-        if(pitch > 180){
+        if (curRightPitch > 180) {
             return
         }
         println("===rightyaw:${yaw}")
-        if (pitch > 90) {
+        if (curRightPitch > 90) {
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放
-            if (mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying) {
+            if (mediaPlayer_high != null && !mediaPlayer_high!!.isPlaying && curType == AssessmentType.HighLeg) {
                 mediaPlayer_high!!.start() // 播放音频
             }
         }
         // 更新周期内最大的pitch值
-        if (pitch > rightLegmaxPitchInCycle) {
-            rightLegmaxPitchInCycle = pitch
+        if (curRightPitch > rightLegmaxPitchInCycle) {
+            rightLegmaxPitchInCycle = curRightPitch
             rightIsDescending = false // 当pitch值达到新的高点时，重置下降标记
         }
         // 检查是否开始下降
-        if (pitch < rightLastPitch) {
+        if (curRightPitch < rightLastPitch) {
             if (!rightIsDescending) {
-                if (abs(pitch) > LIFT_THRESHOLD) {
+                if (abs(curRightPitch) > LIFT_THRESHOLD) {
                     if (curType == AssessmentType.HighLeg) {
                         rightLegLifts++
                         mViewModel.sportsNumber.set((leftLegLifts + rightLegLifts).toString())
                         mViewModel.rightLegAngle.set("R ${rightLastPitch.toInt()}°")
                         mViewModel.rightLegCount.set(rightLegLifts.toString())
                     } else if (curType == AssessmentType.UpDown) {
-                        rightSitUpTimes++
-                        totalSitUpTimes = Math.max(leftSitUpTimes, rightSitUpTimes)
-                        mViewModel.sportsNumber.set(totalSitUpTimes.toString())
+                        if (Math.abs(curLeftPitch - curRightPitch) < 20) {
+                            rightSitUpTimes++
+                            totalSitUpTimes = Math.max(leftSitUpTimes, rightSitUpTimes)
+                            mViewModel.sportsNumber.set(totalSitUpTimes.toString())
+                        }
+
                     }
                 }
             }
             rightIsDescending = true
         }
         // 如果已经开始下降，并且当前pitch值比较低，认为一个周期结束
-        if (rightIsDescending && pitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
+        if (rightIsDescending && curRightPitch < 20) { // someLowThreshold是您定义的较低的值，比如10或更低
             // 周期结束，检查最大pitch值是否在25到30之间
             if (rightLegmaxPitchInCycle in 25.0..30.0) {
                 // 播放提示音
-                if (playAudioIsOpen && mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying) {
+                if (playAudioIsOpen && mediaPlayer_low != null && !mediaPlayer_low!!.isPlaying && curType == AssessmentType.HighLeg) {
                     mediaPlayer_low!!.start()
                 }
             }
@@ -491,9 +509,9 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
 //            rightIsDescending = false
         }
         // 更新上一个pitch值
-        rightLastPitch = pitch
+        rightLastPitch = curRightPitch
 
-        setRightCurLevelByPitch(pitch)
+        setRightCurLevelByPitch(curRightPitch)
     }
 
     fun setRightCurLevelByPitch(pitch: Float) {
@@ -537,10 +555,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     //蓝牙扫描辅助类
     private lateinit var mBleScanHelper: BleScanHelper
     private var maxGrip = 0
-    private var gripCount = 0
-    private var countTemp = 3//数据连续低于最大值5次则定位一次握力
-    private var oldGrip = 0//odlGrip和grip连续相同三次定位一次握力，
-    private var preGrip = 0//防止用户握完之后没动，握力次数会自动增加，记录上一次被记录的握力值，如果相同不计数
     private fun initBluetooth() {
         //初始化ble设配器
         val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -563,25 +577,10 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                     if (maxGrip < grip) {
                         maxGrip = grip
                     }
-                    if (preGrip == grip) {//如果用户握力一次之后没有再握，不计数
-                        return
-                    }
-                    if (oldGrip == grip) {
-                        countTemp--
-                    }
-                    oldGrip = grip
-                    if (countTemp == 0) {//如果连续次数小于最大值标示是一次握力
-                        mViewModel.sportsNumber.set((maxGrip / 10f).toString())
-                        gripCount++
-                        preGrip = oldGrip
-                        oldGrip = 0
-                        println("===握力值gripCount：" + gripCount)
-                        countTemp = 3
-                        mDatabind.countdownTv.text = "还剩${totalGripTimes - gripCount}次"
-                        if (gripCount == 3) {
-                            completed()
-                        }
-                    }
+                    mViewModel.sportsNumber.set((maxGrip / 10f).toString())
+                    completed()
+
+
                 }
             }
 
