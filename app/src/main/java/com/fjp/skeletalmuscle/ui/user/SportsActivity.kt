@@ -67,7 +67,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
             }
             for ((index, _) in userSports.withIndex()) {
                 if (userSports.get(index).sport_name != "无" && userSports.get(index).child_sport_name.isEmpty()) {
-                    showToast("请选择运动第二分类")
+                    showToast("请选择对应运动第二分类")
                     return
                 }
             }

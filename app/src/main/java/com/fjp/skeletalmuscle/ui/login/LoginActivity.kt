@@ -103,12 +103,12 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
                 if (it.name.isNullOrEmpty()) {//创建时间是0表示没有填写过个人信息
                     val intent = Intent(this@LoginActivity, InputNameActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else {
                     CacheUtil.setUser(it)
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
                 App.userInfo = it

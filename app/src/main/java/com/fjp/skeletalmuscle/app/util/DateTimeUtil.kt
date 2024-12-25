@@ -216,7 +216,7 @@ object DateTimeUtil {
         val format = SimpleDateFormat(format, Locale.CHINA)
         format.timeZone = TimeZone.getDefault()
         return try {
-            return formatDate(format.parse(date),MM_SS)
+            return formatDate(format.parse(date),HH_MM_SS)
         } catch (e: Exception) {
             println(e.message)
             return ""

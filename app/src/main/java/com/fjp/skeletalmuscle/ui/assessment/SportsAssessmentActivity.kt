@@ -373,6 +373,9 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         val yaw = DeviceDataParse.parseData2Yaw(data)
         println("===leftroll:${roll}")
         println("===leftyaw:${yaw}")
+        if(pitch > 180){
+            return
+        }
         // 检查pitch是否大于100度
         if (pitch > 90) {
             // 抬腿过高，检查MediaPlayer是否已经在播放
@@ -440,6 +443,9 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
         println("===rightroll:${roll}")
+        if(pitch > 180){
+            return
+        }
         println("===rightyaw:${yaw}")
         if (pitch > 90) {
             // 抬腿过高，播放提示音

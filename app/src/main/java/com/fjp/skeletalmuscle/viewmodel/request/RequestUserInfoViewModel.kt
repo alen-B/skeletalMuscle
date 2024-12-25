@@ -25,6 +25,6 @@ class RequestUserInfoViewModel : SMBaseViewModel() {
             }
         }, {
             updateImageFailed.value = true
-        })
+        },true,"正在上传头像...")
     }
 }

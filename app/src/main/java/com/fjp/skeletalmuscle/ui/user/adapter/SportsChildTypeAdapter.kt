@@ -17,12 +17,10 @@ class SportsChildTypeAdapter(data: ArrayList<SportsChild>, var clickItem: (item:
 
     override fun convert(holder: BaseViewHolder, item: SportsChild) {
         if (item.isSelected) {
-            holder.setVisible(R.id.singleSelectedIv, true)
             holder.setTextColorRes(R.id.contentTv, R.color.white)
-            holder.setBackgroundResource(R.id.contentTv, R.drawable.bg_selected)
+            holder.setBackgroundResource(R.id.contentTv, R.drawable.bg_yellow_round_20)
         } else {
             holder.setTextColorRes(R.id.contentTv, R.color.color_1c1c1c)
-            holder.setVisible(R.id.singleSelectedIv, false)
             holder.setBackgroundResource(R.id.contentTv, R.drawable.bg_gray_round_20)
         }
         holder.setText(R.id.contentTv, item.name)

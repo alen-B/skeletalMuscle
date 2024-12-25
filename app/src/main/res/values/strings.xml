@@ -149,10 +149,10 @@
     <string name="sports_record_total_consumption">总消耗</string>
     <string name="sports_record_avg_heart_rate">平均心率</string>
     <string name="sports_record_avg_high_angle">抬腿平均角度</string>
-    <string name="sports_record_avg">平均:</string>
-    <string name="sports_record_max">最高:</string>
-    <string name="sports_record_upleft">上举:</string>
-    <string name="sports_record_expand_chest">扩胸:</string>
+    <string name="sports_record_avg">平均：</string>
+    <string name="sports_record_max">最高：</string>
+    <string name="sports_record_upleft">上举：</string>
+    <string name="sports_record_expand_chest">扩胸：</string>
 
     <!--    选择您今天想完成的运动-->
     <string name="today_sports_title">选择您今天想完成的运动</string>
@@ -234,7 +234,7 @@
 
     <string name="high_knee_guide_step1_link_device">第一步\n检查设备是否已开启</string>
 
-    <string name="high_knee_guide_step2_title">连接中,请稍等</string>
+    <string name="high_knee_guide_step2_title">连接中，请稍等</string>
     <string name="high_knee_guide_reconnect">点击重连</string>
     <string name="high_knee_guide_step2_connect_wristband">连接心率手表</string>
     <string name="high_knee_guide_step2_wear_wristband">●\u0020 正确佩戴手环</string>
@@ -275,10 +275,10 @@
     <string name="high_knee_guide_step11_right_hand_grips_checked">右手握力器检测完成</string>
 
     <string name="now_start">准备好，即将开始！</string>
-    <string name="high_knee_main_title">您现在处于暖身激活阶段,继续努力！</string>
-    <string name="high_knee_main_title_fat_burning">您现在处于高效燃脂阶段,继续努力！</string>
-    <string name="high_knee_main_title_cardio">您现在处于心肺提升阶段,继续努力！</string>
-    <string name="high_knee_main_title_break">您现在处于极限突破阶段,继续努力！</string>
+    <string name="high_knee_main_title">您现在处于暖身激活阶段，继续努力！</string>
+    <string name="high_knee_main_title_fat_burning">您现在处于高效燃脂阶段，继续努力！</string>
+    <string name="high_knee_main_title_cardio">您现在处于心肺提升阶段，继续努力！</string>
+    <string name="high_knee_main_title_break">您现在处于极限突破阶段，继续努力！</string>
     <string name="high_knee_main_complete">结束</string>
     <string name="high_knee_main_stop">暂停</string>
     <string name="high_knee_main_continue">继续</string>
@@ -364,7 +364,7 @@
     <string name="request_bluetooth_permission_reject">蓝牙权限被拒绝</string>
     <string name="request_bluetooth_permission_go_setting">去设置</string>
     <string name="request_bluetooth_permission_cancel">取消</string>
-    <string name="bluetooth_scaning">正在扫描,请稍等...</string>
+    <string name="bluetooth_scaning">正在扫描，请稍等...</string>
     <string name="bluetooth_scaning_device_not_find">未扫描到对应设备，请重试</string>
     <string name="bluetooth_scaning_device_start_connect">开始连接设备...</string>
     <string name="bluetooth_scaning_device_connect_fail">尝试连接失败，请重试！</string>
