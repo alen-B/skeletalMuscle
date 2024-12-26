@@ -27,9 +27,9 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         mDatabind.click = ProxyClick()
         mViewModel.getLastTest()
         if (App.userInfo?.sex == getString(R.string.setting_sex_woman)) {
-            mViewModel.title.set("${App.userInfo?.name}奶奶，这里可以查看您的运动数据")
+            mViewModel.title.set("${App.userInfo.name}奶奶，这里可以查看您的运动数据")
         } else {
-            mViewModel.title.set("${App.userInfo?.name}爷爷，这里可以查看您的运动数据")
+            mViewModel.title.set("${App.userInfo.name}爷爷，这里可以查看您的运动数据")
         }
 
     }
@@ -46,13 +46,10 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
                 initRadarChart(it)
                 if (it != null) {
                     mDatabind.timeTv.visibility = View.VISIBLE
-                    mDatabind.timeTv.text = DateTimeUtil.formatDate(it.test_time, DateTimeUtil.DATE_PATTERN_SS)
-                    val results = it.result.split("-")
-                    if (results.size == 2) {
-                        mDatabind.dashboard.setValue(results[0])
-                        mDatabind.dashboard.setPointerAngle(AssessmentUtils.getResultLevel(it.lift_leg, it.sit_up, it.grip/10f, App.userInfo.sex == "男").toFloat())
-                        mDatabind.resultTv.text = results[1]
-                    }
+                    mDatabind.timeTv.text = DateTimeUtil.formatDate(it.test_time * 1000, DateTimeUtil.DATE_PATTERN_SS)
+                    mDatabind.dashboard.setValue(it.result)
+                    mDatabind.dashboard.setPointerAngle(AssessmentUtils.getResultLevel(it.lift_leg, it.sit_up, it.grip / 10f, App.userInfo.sex == "男").toFloat())
+                    mDatabind.resultTv.text = it.result_description
 
                 } else {
                     mDatabind.timeTv.visibility = View.GONE
@@ -83,7 +80,7 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         if (assessmentHistoryData == null) {
             mActivities = arrayOf(" - kg", " - 次", " - cm", " - kg", " - 次")
         } else {
-            mActivities = arrayOf("${assessmentHistoryData.grip/10f}kg", "${assessmentHistoryData.sit_up}次", "${assessmentHistoryData.waistline}cm", "${assessmentHistoryData.weight}kg", "${assessmentHistoryData.lift_leg}次")
+            mActivities = arrayOf("${assessmentHistoryData.grip / 10f}kg", "${assessmentHistoryData.sit_up}次", "${assessmentHistoryData.waistline}cm", "${assessmentHistoryData.weight}kg", "${assessmentHistoryData.lift_leg}次")
         }
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
@@ -114,7 +111,7 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
             entries1.add(RadarEntry(0f))
             entries1.add(RadarEntry(0f))
         } else {
-            entries1.add(RadarEntry(assessmentHistoryData.grip/10f))
+            entries1.add(RadarEntry(assessmentHistoryData.grip / 10f))
             entries1.add(RadarEntry(assessmentHistoryData.sit_up.toFloat()))
             entries1.add(RadarEntry(assessmentHistoryData.waistline.toFloat()))
             entries1.add(RadarEntry(assessmentHistoryData.weight.toFloat()))

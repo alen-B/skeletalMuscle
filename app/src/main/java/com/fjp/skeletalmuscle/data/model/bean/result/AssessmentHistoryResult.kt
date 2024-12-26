@@ -21,5 +21,6 @@ data class AssessmentHistoryData(
     val user_id: Int,
     val waistline: Int,
     val weight: Int,
-    val year: String
+    val year: String,
+    val result_description: String
 )

@@ -84,8 +84,8 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentH
         val sets = ArrayList<IRadarDataSet>()
         if (curMonth == 1) {
             val curAssessment = assessmentHistory[0]
-            entries1.add(RadarEntry(curAssessment.grip/10f*2))
-            entries1.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
+            entries1.add(RadarEntry(curAssessment.grip/10f))
+            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
             entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries1.add(RadarEntry(curAssessment.weight.toFloat()))
             entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
@@ -99,8 +99,8 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentH
 
         } else if (curMonth == 2) {
             var curAssessment = assessmentHistory[0]
-            entries1.add(RadarEntry(curAssessment.grip/10f*2))
-            entries1.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
+            entries1.add(RadarEntry(curAssessment.grip/10f))
+            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
             entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries1.add(RadarEntry(curAssessment.weight.toFloat()))
             entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
@@ -112,8 +112,8 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentH
             set1.setDrawHighlightIndicators(false)
             sets.add(set1)
             curAssessment = assessmentHistory[curMonth-1]
-            entries3.add(RadarEntry(curAssessment.grip/10f*2))
-            entries3.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
+            entries3.add(RadarEntry(curAssessment.grip/10f))
+            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
             entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries3.add(RadarEntry(curAssessment.weight.toFloat()))
             entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))
@@ -127,8 +127,8 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentH
             sets.add(set2)
         } else {
             var curAssessment = assessmentHistory[curMonth - 3]
-            entries1.add(RadarEntry(curAssessment.grip/10f*2))
-            entries1.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
+            entries1.add(RadarEntry(curAssessment.grip/10f))
+            entries1.add(RadarEntry(curAssessment.sit_up.toFloat()))
             entries1.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries1.add(RadarEntry(curAssessment.weight.toFloat()))
             entries1.add(RadarEntry(curAssessment.lift_leg.toFloat()))
@@ -141,8 +141,8 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentH
             sets.add(set1)
 
             curAssessment = assessmentHistory[curMonth - 2]
-            entries2.add(RadarEntry(curAssessment.grip/10f*2))
-            entries2.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
+            entries2.add(RadarEntry(curAssessment.grip/10f))
+            entries2.add(RadarEntry(curAssessment.sit_up.toFloat()))
             entries2.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries2.add(RadarEntry(curAssessment.weight.toFloat()))
             entries2.add(RadarEntry(curAssessment.lift_leg.toFloat()))
@@ -155,8 +155,8 @@ class AssessmentResultFragment(val year: Int, val curMonth: Int, val assessmentH
             sets.add(set2)
 
             curAssessment = assessmentHistory[curMonth-1]
-            entries3.add(RadarEntry(curAssessment.grip/10f*2))
-            entries3.add(RadarEntry(curAssessment.sit_up*2.toFloat()))
+            entries3.add(RadarEntry(curAssessment.grip/10f))
+            entries3.add(RadarEntry(curAssessment.sit_up.toFloat()))
             entries3.add(RadarEntry(curAssessment.waistline.toFloat()))
             entries3.add(RadarEntry(curAssessment.weight.toFloat()))
             entries3.add(RadarEntry(curAssessment.lift_leg.toFloat()))

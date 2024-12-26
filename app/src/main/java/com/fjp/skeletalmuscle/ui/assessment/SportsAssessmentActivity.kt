@@ -484,7 +484,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                         mViewModel.rightLegAngle.set("R ${rightLastPitch.toInt()}°")
                         mViewModel.rightLegCount.set(rightLegLifts.toString())
                     } else if (curType == AssessmentType.UpDown) {
-                        if (Math.abs(curLeftPitch - curRightPitch) < 20) {
+                        if (Math.abs(curLeftPitch - curRightPitch) < 25) {
                             rightSitUpTimes++
                             totalSitUpTimes = Math.max(leftSitUpTimes, rightSitUpTimes)
                             mViewModel.sportsNumber.set(totalSitUpTimes.toString())
