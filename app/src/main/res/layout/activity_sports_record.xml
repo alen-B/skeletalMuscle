@@ -221,8 +221,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:background="@drawable/bg_gray_round_20"
-                    android:padding="32dp"
-                    >
+                    android:padding="32dp">
 
                     <ImageView
                         android:id="@+id/legIcon"
@@ -273,349 +272,368 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/highKneeSportsTimCL"
-                        android:layout_width="173dp"
-                        android:layout_height="102dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_white_round_20"
-                        android:paddingStart="14dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="14dp"
-                        android:paddingBottom="10dp"
+                    <HorizontalScrollView
+                        android:id="@+id/scrollview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/legIcon">
 
-                        <TextView
-                            android:id="@+id/highKneeSportsTimeTitleTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_sports_time"
-                            android:textColor="@color/color_cc1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/highKneeSportsTimeValueTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:text="0"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_1"
-                            android:textStyle="bold"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/highKneeSportsTimeUnitTv"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/highKneeSportsTimCL"
+                                android:layout_width="173dp"
+                                android:layout_height="102dp"
+                                android:layout_marginTop="12dp"
+                                android:background="@drawable/bg_white_round_20"
+                                android:paddingStart="14dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="14dp"
+                                android:paddingBottom="10dp">
 
-                        <TextView
-                            android:id="@+id/highKneeSportsTimeUnitTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_min"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeSportsTimeValueTv" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                <TextView
+                                    android:id="@+id/highKneeSportsTimeTitleTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_sports_time"
+                                    android:textColor="@color/color_cc1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/highKneeBurnCaloriesCL"
-                        android:layout_width="173dp"
-                        android:layout_height="102dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/bg_white_round_20"
-                        android:paddingStart="14dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="14dp"
-                        android:paddingBottom="10dp"
-                        app:layout_constraintStart_toEndOf="@+id/highKneeSportsTimCL"
-                        app:layout_constraintTop_toTopOf="@+id/highKneeSportsTimCL">
+                                <TextView
+                                    android:id="@+id/highKneeSportsTimeValueTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="6dp"
+                                    android:text="0"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_1"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBaseline_toBaselineOf="@+id/highKneeSportsTimeUnitTv"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/highKneeBurnCaloriesTitleTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/today_sports_detail_calorie"
-                            android:textColor="@color/color_cc1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                                <TextView
+                                    android:id="@+id/highKneeSportsTimeUnitTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_min"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeSportsTimeValueTv" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/highKneeBurnCaloriesValueTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:text="0"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_1"
-                            android:textStyle="bold"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/highKneeBurnCaloriesUnitTv"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/highKneeBurnCaloriesCL"
+                                android:layout_width="173dp"
+                                android:layout_height="102dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginStart="16dp"
+                                android:background="@drawable/bg_white_round_20"
+                                android:paddingStart="14dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="14dp"
+                                android:paddingBottom="10dp">
 
-                        <TextView
-                            android:id="@+id/highKneeBurnCaloriesUnitTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_kilocalorie"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeBurnCaloriesValueTv" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                <TextView
+                                    android:id="@+id/highKneeBurnCaloriesTitleTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/today_sports_detail_calorie"
+                                    android:textColor="@color/color_cc1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/highKneeExerciseAmountCL"
-                        android:layout_width="wrap_content"
-                        android:layout_height="102dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/bg_white_round_20"
-                        android:paddingStart="14dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="14dp"
-                        android:paddingBottom="10dp"
-                        app:layout_constraintStart_toEndOf="@+id/highKneeBurnCaloriesCL"
-                        app:layout_constraintTop_toTopOf="@+id/highKneeSportsTimCL">
+                                <TextView
+                                    android:id="@+id/highKneeBurnCaloriesValueTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="6dp"
+                                    android:text="0"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_1"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBaseline_toBaselineOf="@+id/highKneeBurnCaloriesUnitTv"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/highKneeExerciseAmountTitleTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/today_sports_data_exercise_amount"
-                            android:textColor="@color/color_cc1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                                <TextView
+                                    android:id="@+id/highKneeBurnCaloriesUnitTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_kilocalorie"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeBurnCaloriesValueTv" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/highKneeExerciseAmountTotalValueTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:text="0"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_3"
-                            android:textStyle="bold"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/highKneeExerciseAmountTotalUnitTv"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/highKneeExerciseAmountCL"
+                                android:layout_width="wrap_content"
+                                android:layout_height="102dp"
+                                android:layout_marginStart="16dp"
+                                android:background="@drawable/bg_white_round_20"
+                                android:paddingStart="14dp"
+                                android:layout_marginTop="12dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="14dp"
+                                android:paddingBottom="10dp">
 
-                        <TextView
-                            android:id="@+id/highKneeExerciseAmountTotalUnitTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_times_angle"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountTotalValueTv" />
+                                <TextView
+                                    android:id="@+id/highKneeExerciseAmountTitleTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/today_sports_data_exercise_amount"
+                                    android:textColor="@color/color_cc1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="4dp"
-                            android:background="@color/color_331c1c1c"
-                            app:layout_constraintBottom_toBottomOf="@+id/highKneeExerciseAmountTotalValueTv"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountTotalUnitTv" />
+                                <TextView
+                                    android:id="@+id/highKneeExerciseAmountTotalValueTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="6dp"
+                                    android:text="0"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_1"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBaseline_toBaselineOf="@+id/highKneeExerciseAmountTotalUnitTv"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/upRTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="5dp"
-                            android:text="R"
-                            android:textColor="@color/color_801c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountTotalUnitTv"
-                            app:layout_constraintTop_toTopOf="@+id/highKneeExerciseAmountRightValueTv" />
+                                <TextView
+                                    android:id="@+id/highKneeExerciseAmountTotalUnitTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_times_angle"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountTotalValueTv" />
 
-                        <TextView
-                            android:id="@+id/highKneeExerciseAmountRightValueTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:text="0"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_3"
-                            android:textStyle="bold"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/highKneeExerciseAmountTotalUnitTv"
-                            app:layout_constraintStart_toEndOf="@+id/upRTv"
-                            app:layout_constraintTop_toTopOf="parent" />
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="35dp"
+                                    android:layout_marginStart="4dp"
+                                    android:background="@color/color_331c1c1c"
+                                    app:layout_constraintBottom_toBottomOf="@+id/highKneeExerciseAmountTotalValueTv"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountTotalUnitTv" />
 
-                        <TextView
-                            android:id="@+id/highKneeExerciseAmountRightUnitTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_times_angle"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountRightValueTv" />
+                                <TextView
+                                    android:id="@+id/upRTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="R"
+                                    android:textColor="@color/color_801c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountTotalUnitTv"
+                                    app:layout_constraintTop_toTopOf="@+id/highKneeExerciseAmountRightValueTv" />
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="4dp"
-                            android:background="@color/color_331c1c1c"
-                            app:layout_constraintBottom_toBottomOf="@+id/highKneeExerciseAmountTotalValueTv"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountRightUnitTv" />
+                                <TextView
+                                    android:id="@+id/highKneeExerciseAmountRightValueTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="6dp"
+                                    android:text="0"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_1"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBaseline_toBaselineOf="@+id/highKneeExerciseAmountTotalUnitTv"
+                                    app:layout_constraintStart_toEndOf="@+id/upRTv"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/upLTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="5dp"
-                            android:text="L"
-                            android:textColor="@color/color_801c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountRightUnitTv"
-                            app:layout_constraintTop_toTopOf="@+id/highKneeExerciseAmountRightValueTv" />
+                                <TextView
+                                    android:id="@+id/highKneeExerciseAmountRightUnitTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_times_angle"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountRightValueTv" />
 
-                        <TextView
-                            android:id="@+id/highKneeExerciseAmountLeftValueTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:text="0"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_3"
-                            android:textStyle="bold"
-                            app:layout_constraintBaseline_toBaselineOf="@+id/highKneeExerciseAmountTotalUnitTv"
-                            app:layout_constraintStart_toEndOf="@+id/upLTv"
-                            app:layout_constraintTop_toTopOf="parent" />
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="35dp"
+                                    android:layout_marginStart="4dp"
+                                    android:background="@color/color_331c1c1c"
+                                    app:layout_constraintBottom_toBottomOf="@+id/highKneeExerciseAmountTotalValueTv"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountRightUnitTv" />
 
-                        <TextView
-                            android:id="@+id/highKneeExerciseAmountLeftUnitTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_times_angle"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountLeftValueTv" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                <TextView
+                                    android:id="@+id/upLTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="L"
+                                    android:textColor="@color/color_801c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountRightUnitTv"
+                                    app:layout_constraintTop_toTopOf="@+id/highKneeExerciseAmountRightValueTv" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/highKneeAngleCL"
-                        android:layout_width="227dp"
-                        android:layout_height="102dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/bg_white_round_20"
-                        android:paddingStart="14dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="14dp"
-                        app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountCL"
-                        app:layout_constraintTop_toTopOf="@+id/highKneeSportsTimCL">
+                                <TextView
+                                    android:id="@+id/highKneeExerciseAmountLeftValueTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="6dp"
+                                    android:text="0"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_1"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBaseline_toBaselineOf="@+id/highKneeExerciseAmountTotalUnitTv"
+                                    app:layout_constraintStart_toEndOf="@+id/upLTv"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/highKneeAngleTitleTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sports_record_avg_high_angle"
-                            android:textColor="@color/color_cc1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                                <TextView
+                                    android:id="@+id/highKneeExerciseAmountLeftUnitTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_times_angle"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    android:layout_marginStart="3dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeExerciseAmountLeftValueTv" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/highKneeAngleUpRTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="R"
-                            android:textColor="@color/color_801c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/highKneeAngleRightValueTv" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/highKneeAngleCL"
+                                android:layout_width="227dp"
+                                android:layout_height="102dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginStart="16dp"
+                                android:background="@drawable/bg_white_round_20"
+                                android:paddingStart="14dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="14dp">
 
-                        <TextView
-                            android:id="@+id/highKneeAngleRightValueTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:text="0°"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_1"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeAngleUpRTv" />
+                                <TextView
+                                    android:id="@+id/highKneeAngleTitleTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sports_record_avg_high_angle"
+                                    android:textColor="@color/color_cc1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="4dp"
-                            android:background="@color/color_331c1c1c"
-                            app:layout_constraintBottom_toBottomOf="@+id/highKneeAngleRightValueTv"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeAngleRightValueTv"
-                            app:layout_constraintTop_toTopOf="@+id/highKneeAngleRightValueTv" />
+                                <TextView
+                                    android:id="@+id/highKneeAngleUpRTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="R"
+                                    android:textColor="@color/color_801c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="@+id/highKneeAngleRightValueTv" />
 
-                        <TextView
-                            android:id="@+id/highKneeAngleUpLTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="5dp"
-                            android:text="L"
-                            android:textColor="@color/color_801c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeAngleRightValueTv"
-                            app:layout_constraintTop_toTopOf="@+id/highKneeAngleRightValueTv" />
+                                <TextView
+                                    android:id="@+id/highKneeAngleRightValueTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="6dp"
+                                    android:text="0°"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_1"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeAngleUpRTv" />
 
-                        <TextView
-                            android:id="@+id/highKneeAngleLeftValueTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:text="0°"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_1"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/highKneeAngleUpLTv" />
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="35dp"
+                                    android:layout_marginStart="4dp"
+                                    android:background="@color/color_331c1c1c"
+                                    app:layout_constraintBottom_toBottomOf="@+id/highKneeAngleRightValueTv"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeAngleRightValueTv"
+                                    app:layout_constraintTop_toTopOf="@+id/highKneeAngleRightValueTv" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                <TextView
+                                    android:id="@+id/highKneeAngleUpLTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="L"
+                                    android:textColor="@color/color_801c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeAngleRightValueTv"
+                                    app:layout_constraintTop_toTopOf="@+id/highKneeAngleRightValueTv" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/highKneeEnduranceCL"
-                        android:layout_width="0dp"
-                        android:layout_height="102dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/bg_white_round_20"
-                        android:paddingStart="14dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="14dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/highKneeAngleCL"
-                        app:layout_constraintTop_toTopOf="@+id/highKneeSportsTimCL">
+                                <TextView
+                                    android:id="@+id/highKneeAngleLeftValueTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="6dp"
+                                    android:text="0°"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_1"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/highKneeAngleUpLTv" />
 
-                        <TextView
-                            android:id="@+id/highKneeEnduranceTitleTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_endurance"
-                            android:textColor="@color/color_cc1c1c1c"
-                            android:textSize="@dimen/text_size_5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/highKneeEnduranceValueTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:text="0"
-                            android:textColor="@color/color_1c1c1c"
-                            android:textSize="@dimen/text_size_1"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/highKneeEnduranceCL"
+                                android:layout_width="150dp"
+                                android:layout_height="102dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="12dp"
+                                android:background="@drawable/bg_white_round_20"
+                                android:paddingStart="14dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="14dp"
+                                app:layout_constraintEnd_toEndOf="parent">
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                <TextView
+                                    android:id="@+id/highKneeEnduranceTitleTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_endurance"
+                                    android:textColor="@color/color_cc1c1c1c"
+                                    android:textSize="@dimen/text_size_5"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/highKneeEnduranceValueTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="6dp"
+                                    android:text="0"
+                                    android:layout_marginStart="3dp"
+                                    android:textColor="@color/color_1c1c1c"
+                                    android:textSize="@dimen/text_size_1"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </HorizontalScrollView>
 
                     <TextView
                         android:id="@+id/sportNameTv"
@@ -627,7 +645,7 @@
                         android:textColor="@color/color_1c1c1c"
                         android:textSize="@dimen/text_size_4"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/highKneeSportsTimCL"
+                        app:layout_constraintTop_toBottomOf="@+id/scrollview"
                         tools:ignore="ContentDescription" />
 
                     <LinearLayout
@@ -853,9 +871,9 @@
                         android:id="@+id/lineChart"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/activeLL"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/heartTimeTv" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -941,8 +959,8 @@
                         android:id="@+id/dumbbellAvgAngleTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
                         android:layout_marginStart="13dp"
+                        android:layout_marginTop="13dp"
                         android:text="@string/today_sports_data_avg_angle"
                         android:textColor="@color/color_1c1c1c"
                         android:textSize="@dimen/text_size_5"
@@ -953,12 +971,12 @@
                         android:id="@+id/expandChestValueTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0°"
                         android:layout_marginEnd="13dp"
+                        android:text="0°"
                         android:textColor="@color/color_1c1c1c"
                         android:textSize="@dimen/text_size_3"
-                        app:layout_constraintEnd_toEndOf="@+id/bgAngleView"
                         app:layout_constraintBottom_toBottomOf="@+id/dumbbellAvgAngleTv"
+                        app:layout_constraintEnd_toEndOf="@+id/bgAngleView"
                         app:layout_constraintTop_toTopOf="@+id/dumbbellAvgAngleTv" />
 
                     <TextView
@@ -967,8 +985,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/sports_record_expand_chest"
                         android:textColor="@color/color_801c1c1c"
-                        app:drawableStartCompat="@drawable/left_leg_angle_reactangle"
                         android:textSize="@dimen/text_size_5"
+                        app:drawableStartCompat="@drawable/left_leg_angle_reactangle"
                         app:layout_constraintBaseline_toBaselineOf="@+id/expandChestValueTv"
                         app:layout_constraintEnd_toStartOf="@+id/expandChestValueTv" />
 
@@ -1001,6 +1019,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/bgAngleView"
                         app:layout_constraintStart_toStartOf="@+id/bgAngleView"
                         app:layout_constraintTop_toBottomOf="@+id/dumbbellAvgAngleTv" />
+
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/dumbbellExpandChestLineChart"
                         android:layout_width="0dp"
@@ -1025,8 +1044,8 @@
                         android:id="@+id/dumbbellHeartRateTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
                         android:layout_marginStart="13dp"
+                        android:layout_marginTop="13dp"
                         android:text="@string/high_knee_main_heart_rate_trend"
                         android:textColor="@color/color_1c1c1c"
                         android:textSize="@dimen/text_size_5"
@@ -1037,12 +1056,12 @@
                         android:id="@+id/dumbbellAvgHeartRateValueTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
                         android:layout_marginEnd="13dp"
+                        android:text="0"
                         android:textColor="@color/color_1c1c1c"
                         android:textSize="@dimen/text_size_3"
-                        app:layout_constraintEnd_toEndOf="@+id/bgHeartRateView"
                         app:layout_constraintBottom_toBottomOf="@+id/dumbbellHeartRateTv"
+                        app:layout_constraintEnd_toEndOf="@+id/bgHeartRateView"
                         app:layout_constraintTop_toTopOf="@+id/dumbbellHeartRateTv" />
 
                     <TextView
@@ -1071,7 +1090,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/bg_gray_round_20"
-                    android:padding="32dp">
+                    android:padding="32dp"
+                    android:paddingBottom="16dp">
 
                     <ImageView
                         android:id="@+id/plankIcon"
@@ -1129,12 +1149,12 @@
                         android:layout_marginTop="12dp"
                         android:background="@drawable/bg_white_round_20"
                         android:paddingStart="14dp"
-                        app:layout_constraintHorizontal_weight="1"
                         android:paddingTop="10dp"
                         android:paddingEnd="14dp"
                         android:paddingBottom="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/plankBurnCaloriesCL"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/plankScoreTv">
 
                         <TextView
@@ -1179,11 +1199,11 @@
                         android:background="@drawable/bg_white_round_20"
                         android:paddingStart="14dp"
                         android:paddingTop="10dp"
-                        app:layout_constraintHorizontal_weight="1"
                         android:paddingEnd="14dp"
                         android:paddingBottom="10dp"
-                        app:layout_constraintStart_toEndOf="@+id/plankSportsTimCL"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/plankSportsTimCL"
                         app:layout_constraintTop_toTopOf="@+id/plankSportsTimCL">
 
                         <TextView
@@ -1237,8 +1257,8 @@
                         android:id="@+id/plankHeartRateTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
                         android:layout_marginStart="13dp"
+                        android:layout_marginTop="13dp"
                         android:text="@string/high_knee_main_heart_rate_trend"
                         android:textColor="@color/color_1c1c1c"
                         android:textSize="@dimen/text_size_5"
@@ -1249,12 +1269,12 @@
                         android:id="@+id/plankAvgHeartRateValueTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
                         android:layout_marginEnd="13dp"
+                        android:text="0"
                         android:textColor="@color/color_1c1c1c"
                         android:textSize="@dimen/text_size_3"
-                        app:layout_constraintEnd_toEndOf="@+id/bgPlankView"
                         app:layout_constraintBottom_toBottomOf="@+id/plankHeartRateTv"
+                        app:layout_constraintEnd_toEndOf="@+id/bgPlankView"
                         app:layout_constraintTop_toTopOf="@+id/plankHeartRateTv" />
 
                     <TextView
@@ -1298,6 +1318,7 @@
                 android:scaleType="center"
                 android:src="@drawable/arrow_right" />
         </io.alterac.blurkit.BlurLayout>
+
         <Button
             android:id="@+id/shareBtn"
             style="@style/SMButtonPre"

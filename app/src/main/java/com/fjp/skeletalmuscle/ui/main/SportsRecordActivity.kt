@@ -368,7 +368,8 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.textSize=20.dp
-        xAxis.setDrawAxisLine(false)
+        xAxis.labelCount =5
+        xAxis.setDrawAxisLine(true)
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
@@ -385,7 +386,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         leftAxis.setDrawLabels(true)
         leftAxis.textSize=20.dp
         leftAxis.axisMinimum = 0f
-        leftAxis.labelCount=4
+        leftAxis.labelCount=3
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
