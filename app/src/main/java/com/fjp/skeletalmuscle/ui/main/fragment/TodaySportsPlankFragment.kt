@@ -65,6 +65,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
+        xAxis.labelCount=3
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return DateTimeUtil.formatDate(sportFlatSupport.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
@@ -158,7 +159,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return if(value.toInt()>=0 && value.toInt()< sportFlatSupport.calorie.size){
-                    DateTimeUtil.formatDate(sportFlatSupport.calorie[value.toInt()].record_time.toLong(),DateTimeUtil.HH_MM_SS)
+                    DateTimeUtil.formatDate(sportFlatSupport.calorie[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
                 }else{
                     ""
                 }

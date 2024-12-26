@@ -169,7 +169,8 @@
             android:onClick="@{()-> click.finish()}"
             app:blk_blurRadius="25"
             app:blk_cornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/shareBtn"
+            android:layout_marginBottom="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <ImageView

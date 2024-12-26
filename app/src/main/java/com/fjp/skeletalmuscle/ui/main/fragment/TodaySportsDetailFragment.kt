@@ -362,6 +362,8 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.axisMinimum = 0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        leftAxis.labelCount=5
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textSize = 20.dp
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
@@ -454,7 +456,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.axisMinimum = 0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-
+        leftAxis.labelCount=5
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
@@ -544,6 +546,7 @@ class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val d
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         leftAxis.textSize = 20.dp
+        leftAxis.labelCount=5
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
