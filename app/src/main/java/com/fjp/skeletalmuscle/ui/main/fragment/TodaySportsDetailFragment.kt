@@ -9,6 +9,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
@@ -41,14 +42,27 @@ import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.parseState
 
 
-class TodaySportsDetailFragment(val sportsType: SportsType, val type: Int, val dateType: DateType) : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
+class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
     val request: RequestTodaySportsDetailFragmentViewModel by viewModels()
-
+    var sportsType: SportsType = SportsType.HIGH_KNEE
+    var type: Int = 0
+    var dateType: DateType = DateType.DAY
     companion object {
-        fun newInstance(sportsType: SportsType, chartType: Int, dateType: DateType) = TodaySportsDetailFragment(sportsType, chartType, dateType)
+        fun newInstance(sportsType: SportsType, chartType: Int, dateType: DateType):TodaySportsDetailFragment {
+            val fragment = TodaySportsDetailFragment()
+            val bundle = Bundle()
+            bundle.putString(Constants.INTENT_SPORTS_TYPE, sportsType.name)
+            bundle.putInt(Constants.INTENT_KEY_TYPE, chartType)
+            bundle.putString(Constants.INTENT_KEY_DATE_TYPE, dateType.name)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        sportsType = SportsType.valueOf(arguments?.get(Constants.INTENT_SPORTS_TYPE)as String)
+        type = arguments?.getInt(Constants.INTENT_KEY_TYPE)!!
+        dateType = DateType.valueOf(arguments?.get(Constants.INTENT_KEY_DATE_TYPE)as String)
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         when (type) {

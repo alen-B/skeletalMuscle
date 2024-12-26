@@ -40,8 +40,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
                 showReCompletedDialog(account.phone)
 
             }
-
-
         })
         val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(changeAccountPop)
 

@@ -2,6 +2,7 @@ package com.fjp.skeletalmuscle.ui.main.fragment
 
 import android.os.Bundle
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
@@ -9,13 +10,20 @@ import com.fjp.skeletalmuscle.databinding.FragmentMainSportsDumbbellBinding
 import com.fjp.skeletalmuscle.ui.main.TodaySportsActivity
 import com.fjp.skeletalmuscle.viewmodel.state.MainSportsDumbbellViewModel
 
-class MainSportsDumbbellFragment(val todayDataResult: TodayDataResult) : BaseFragment<MainSportsDumbbellViewModel, FragmentMainSportsDumbbellBinding>() {
-
+class MainSportsDumbbellFragment : BaseFragment<MainSportsDumbbellViewModel, FragmentMainSportsDumbbellBinding>() {
+    lateinit var  todayDataResult: TodayDataResult
     companion object {
-        fun newInstance(todayDataResult: TodayDataResult) = MainSportsDumbbellFragment(todayDataResult)
+        fun newInstance(todayDataResult: TodayDataResult):MainSportsDumbbellFragment {
+            val fragment = MainSportsDumbbellFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.INTENT_KEY_TODAY_SPORTS_DATA, todayDataResult)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        todayDataResult = arguments?.get(Constants.INTENT_KEY_TODAY_SPORTS_DATA) as TodayDataResult
         mDatabind.viewModel = mViewModel
         if(todayDataResult.sport_dumbbell.sport_time!=0L){
             mDatabind.click = ProxyClick()

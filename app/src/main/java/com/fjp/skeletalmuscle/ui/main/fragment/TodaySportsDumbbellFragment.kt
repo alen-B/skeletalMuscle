@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.SportDumbbell
@@ -27,13 +28,20 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
-class TodaySportsDumbbellFragment(val sportDumbbell: SportDumbbell) : BaseFragment<TodaySportsDumbbellViewModel, FragmentTodaySportsDumbbellBinding>() {
-
+class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel, FragmentTodaySportsDumbbellBinding>() {
+    lateinit var sportDumbbell: SportDumbbell
     companion object {
-        fun newInstance(sportDumbbell: SportDumbbell) = TodaySportsDumbbellFragment(sportDumbbell)
+        fun newInstance(sportDumbbell: SportDumbbell): TodaySportsDumbbellFragment{
+            val fragment = TodaySportsDumbbellFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.INTENT_KEY_TODAY_SPORTS_DATA, sportDumbbell)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        sportDumbbell = arguments?.get(Constants.INTENT_KEY_TODAY_SPORTS_DATA) as SportDumbbell
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportDumbbell.sport_time))

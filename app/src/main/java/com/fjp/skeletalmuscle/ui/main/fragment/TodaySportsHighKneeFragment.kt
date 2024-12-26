@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.SportLiftLeg
@@ -30,13 +31,20 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
-class TodaySportsHighKneeFragment(val sportLiftLeg: SportLiftLeg) : BaseFragment<TodaySportsHighKneeViewModel, FragmentTodaySportsHighKneeBinding>() {
-
+class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, FragmentTodaySportsHighKneeBinding>() {
+    lateinit var sportLiftLeg: SportLiftLeg
     companion object {
-        fun newInstance(sportLiftLeg: SportLiftLeg) = TodaySportsHighKneeFragment(sportLiftLeg)
+        fun newInstance(sportLiftLeg: SportLiftLeg):TodaySportsHighKneeFragment{
+            val fragment = TodaySportsHighKneeFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.INTENT_KEY_TODAY_SPORTS_DATA, sportLiftLeg)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        sportLiftLeg = arguments?.get(Constants.INTENT_KEY_TODAY_SPORTS_DATA) as SportLiftLeg
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.curScore.set(sportLiftLeg.score.toString())

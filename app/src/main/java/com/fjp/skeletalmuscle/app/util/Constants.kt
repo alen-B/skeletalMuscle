@@ -14,7 +14,7 @@ class Constants {
         const val INTENT_KEY_YEAR = "year"
         const val INTENT_KEY_MONTH = "month"
         const val INTENT_KEY_DAY = "day"
-        const val INTENT_SPORTS_TYPE = "sports_ty0pe"
+        const val INTENT_SPORTS_TYPE = "sports_type"
         const val INTENT_IS_SERVICE_AGREEMENT = "is_service_agreement"
         const val INTENT_COMPLETED = "completed"
         const val INTENT_KEY_PHONE = "phone"
@@ -27,6 +27,8 @@ class Constants {
         const val CONNECT_DEVICE_TYPE_EXERCISE = 2
         const val INTENT_KEY_WEIGHT = "weight"
         const val INTENT_KEY_WAISTLINE = "waistline"
+        const val INTENT_KEY_TYPE = "type"
+        const val INTENT_KEY_DATE_TYPE = "dateType"
 
         const val GTS_UUID_SERVICE = "6E400001-B5A3-F393-E0A9-E50E24DCCA9D"
         const val GTS_UUID_CHARACTERISTIC_WRITE = "6E400002-B5A3-F393-E0A9-E50E24DCCA9D"

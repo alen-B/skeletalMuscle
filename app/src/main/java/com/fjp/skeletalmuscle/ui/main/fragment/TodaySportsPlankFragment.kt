@@ -1,16 +1,15 @@
 package com.fjp.skeletalmuscle.ui.main.fragment
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsPlankBinding
-import com.fjp.skeletalmuscle.ui.main.CalendarActivity
 import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
 import com.fjp.skeletalmuscle.viewmodel.state.ChartType
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsPlankViewModel
@@ -23,26 +22,33 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 
-class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFragment<TodaySportsPlankViewModel, FragmentTodaySportsPlankBinding>() {
+class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, FragmentTodaySportsPlankBinding>() {
+    lateinit var sportFlatSupport: SportFlatSupport
 
     companion object {
-        fun newInstance(sportFlatSupport: SportFlatSupport) = TodaySportsPlankFragment(sportFlatSupport)
+        fun newInstance(sportFlatSupport: SportFlatSupport):TodaySportsPlankFragment {
+            val fragment = TodaySportsPlankFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.INTENT_KEY_TODAY_SPORTS_DATA, sportFlatSupport)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        sportFlatSupport = arguments?.get(Constants.INTENT_KEY_TODAY_SPORTS_DATA) as SportFlatSupport
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.curScore.set(sportFlatSupport.score.toString())
         mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportFlatSupport.sport_time))
         mViewModel.heat.set(sportFlatSupport.avg_rate_value.toString())
-        mViewModel.calorie.set((sportFlatSupport.sum_calorie/1000).toString())
+        mViewModel.calorie.set((sportFlatSupport.sum_calorie / 1000).toString())
         initCalorieBarChart()
         initHeartRateLineChart()
     }
@@ -55,7 +61,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=18f
+        lineChart.extraBottomOffset = 18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -65,14 +71,14 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.labelCount=3
+        xAxis.labelCount = 3
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.formatDate(sportFlatSupport.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
+                return DateTimeUtil.formatDate(sportFlatSupport.heart_rate[value.toInt()].record_time.toLong() * 1000, DateTimeUtil.HH_MM_SS)
             }
 
         }
-        xAxis.textSize=20f
+        xAxis.textSize = 20f
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -100,7 +106,7 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setCircleColor(ContextCompat.getColor(appContext, R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
@@ -142,9 +148,9 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
-        barChart.extraBottomOffset=15f
-        barChart.extraLeftOffset=45f
-        barChart.extraRightOffset=45f
+        barChart.extraBottomOffset = 15f
+        barChart.extraLeftOffset = 45f
+        barChart.extraRightOffset = 45f
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -154,13 +160,13 @@ class TodaySportsPlankFragment(val sportFlatSupport: SportFlatSupport) : BaseFra
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount= 2
+        xAxis.textSize = 20f
+        xAxis.labelCount = 2
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return if(value.toInt()>=0 && value.toInt()< sportFlatSupport.calorie.size){
-                    DateTimeUtil.formatDate(sportFlatSupport.calorie[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
-                }else{
+                return if (value.toInt() >= 0 && value.toInt() < sportFlatSupport.calorie.size) {
+                    DateTimeUtil.formatDate(sportFlatSupport.calorie[value.toInt()].record_time.toLong() * 1000, DateTimeUtil.HH_MM_SS)
+                } else {
                     ""
                 }
             }
