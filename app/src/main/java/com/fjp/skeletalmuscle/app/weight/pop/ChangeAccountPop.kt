@@ -13,6 +13,7 @@ import com.fjp.skeletalmuscle.app.weight.recyclerview.SpaceItemDecoration
 import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.ui.setting.SettingActivity
 import com.fjp.skeletalmuscle.ui.setting.adapter.AccountAdapter
+import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.impl.FullScreenPopupView
 import io.alterac.blurkit.BlurLayout
 
@@ -53,7 +54,6 @@ class ChangeAccountPop(val context: Activity, val listener: Listener) : FullScre
             context.startActivity(Intent(context, SettingActivity::class.java))
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         blurLayout.pauseBlur()

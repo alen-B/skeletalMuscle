@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.dismissLoadingExt
 import com.fjp.skeletalmuscle.app.ext.showLoadingExt
+import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.weight.pop.ChangeAccountPop
 import com.fjp.skeletalmuscle.data.model.bean.Account
@@ -36,9 +37,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
         val changeAccountPop = ChangeAccountPop(this, object : ChangeAccountPop.Listener {
 
             override fun onclick(account: Account, pop: ChangeAccountPop) {
-                val intent = Intent(this@BaseActivity, LoginActivity::class.java)
-                intent.putExtra(Constants.INTENT_KEY_PHONE, account.phone)
-                startActivity(intent)
+                showReCompletedDialog(account.phone)
+
             }
 
 
@@ -49,6 +49,18 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
 
     }
 
+    fun showReCompletedDialog(phone:String) {
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("创建账号", "是否退出当前账号，创建新账号？", {
+            finishAffinity()
+            CacheUtil.setIsLogin(false)
+            CacheUtil.setUser(null)
+            val intent = Intent(this@BaseActivity, LoginActivity::class.java)
+            intent.putExtra(Constants.INTENT_KEY_PHONE, phone)
+            startActivity(intent)
+        }, { })
+        pop.show()
+
+    }
     /**
      * 创建liveData观察者
      */
