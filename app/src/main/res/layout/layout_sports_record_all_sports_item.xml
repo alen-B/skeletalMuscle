@@ -12,7 +12,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintBottom_toTopOf="@+id/titleTv"
         app:layout_constraintEnd_toStartOf="@+id/unitTv"
-        android:text="46"
+        android:text="0"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_height="wrap_content" />
 
