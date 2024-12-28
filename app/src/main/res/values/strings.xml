@@ -411,7 +411,7 @@
 
     <string name="sports_assessment_grip_01">①\u0020 取出握力器</string>
     <string name="sports_assessment_grip_02">②\u0020 按下握力器“开关/设置”</string>
-    <string name="sports_assessment_grip_03">③\u0020 按下握力器“清零/开始”</string>
+    <string name="sports_assessment_grip_03">③\u0020 按下2次握力器“清零/开始”</string>
 
 
 </resources>
