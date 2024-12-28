@@ -8,6 +8,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -36,6 +37,10 @@ import com.fjp.skeletalmuscle.viewmodel.request.SaveUserInfoViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.SuportsViewModel
 import com.lxj.xpopup.XPopup
+import com.tencent.map.geolocation.TencentLocation
+import com.tencent.map.geolocation.TencentLocationListener
+import com.tencent.map.geolocation.TencentLocationManager
+import com.tencent.map.geolocation.TencentLocationRequest
 import me.hgj.jetpackmvvm.ext.parseState
 
 
@@ -68,7 +73,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
         fun next() {
             val copyDataArr = mutableListOf<Sports>()
             for ((index, sports) in mViewModel.dataArr.withIndex()) {
-                copyDataArr.add(Sports(mViewModel.dataArr[index].name,mViewModel.dataArr[index].child,mViewModel.dataArr[index].isSelected))
+                copyDataArr.add(Sports(mViewModel.dataArr[index].name, mViewModel.dataArr[index].child, mViewModel.dataArr[index].isSelected))
             }
             val selectedSports = copyDataArr.filter { it.isSelected }
             selectedSports.forEach {
@@ -138,6 +143,7 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
 
         }
     }
+
     private val REQUEST_LOCATION_PERMISSION = 1
 
     private fun checkPermissions() {
@@ -164,37 +170,38 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
 
     private fun getLocation() {
         val retult = LocationUtil.isLocServiceEnable(this)
-        println("retult:"+retult)
+        println("retult:" + retult)
         try {
 //            if (locationManager == null) {
-             locationManager =  this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            val criteria =  Criteria()
+            locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val criteria = Criteria()
             criteria.setAltitudeRequired(true)
             val bestProvider = locationManager?.getBestProvider(criteria, false)
             //最佳定位方式LocationManager.GPS_PROVIDER LocationManager.NETWORK_PROVIDER
             locationManager?.requestLocationUpdates(bestProvider!!, 0, 0f, myLocationListener)
-        } catch (e:SecurityException ) {
+        } catch (e: SecurityException) {
             e.printStackTrace()
         }
     }
-   val myLocationListener = object: LocationListener {
-       override fun onLocationChanged(location: Location) {
-           locationManager?.removeUpdates(this)
-          App.userInfo.latitude =location.latitude
-           App.userInfo.longitude =location.longitude
-           showToast(location.latitude.toString())
-       }
 
-       override fun onProviderDisabled(provider: String) {
-           super.onProviderDisabled(provider)
-           showToast(provider)
-       }
+    val myLocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            locationManager?.removeUpdates(this)
+            App.userInfo.latitude = location.latitude
+            App.userInfo.longitude = location.longitude
+            showToast(location.latitude.toString())
+        }
 
-       override fun onProviderEnabled(provider: String) {
-           super.onProviderEnabled(provider)
-           showToast("onProviderEnabled:"+provider)
+        override fun onProviderDisabled(provider: String) {
+            super.onProviderDisabled(provider)
+            showToast(provider)
+        }
 
-       }
+        override fun onProviderEnabled(provider: String) {
+            super.onProviderEnabled(provider)
+            showToast("onProviderEnabled:" + provider)
 
-   };
+        }
+
+    };
 }

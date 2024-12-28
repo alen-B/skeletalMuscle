@@ -19,9 +19,9 @@ class AccountAdapter(data: MutableList<Account>, var clickItem: (item: Account, 
 
     override fun convert(holder: BaseViewHolder, item: Account) {
         holder.setText(R.id.nameTv, item.name)
-
         if (holder.bindingAdapterPosition == 0) {
-            holder.setImageResource(R.id.avatarIv, R.drawable.account_add)
+            holder.setIsRecyclable(false)
+            holder.setBackgroundResource(R.id.avatarIv, R.drawable.account_add)
         }else{
             holder.getView<CircleImageView>(R.id.avatarIv).load(item.avatar, builder =  {
                 error(R.drawable.avatar_default)

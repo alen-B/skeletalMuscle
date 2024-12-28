@@ -126,6 +126,7 @@
             style="@style/SMButton"
             android:layout_width="240dp"
             android:text="@string/setting_system_update_version_disupdate"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/updateBtn"
             android:background="@drawable/bg_cacaca_round_20"
@@ -136,6 +137,7 @@
             style="@style/SMButton"
             android:layout_width="240dp"
             android:text="@string/setting_system_update_version_update"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
