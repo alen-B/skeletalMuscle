@@ -2,6 +2,7 @@ package com.fjp.skeletalmuscle.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
@@ -11,6 +12,9 @@ import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
+import com.fjp.skeletalmuscle.app.weight.pop.AssessTipPop
+import com.fjp.skeletalmuscle.app.weight.pop.ChangeAccountPop
+import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.databinding.ActivityMainBinding
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
 import com.fjp.skeletalmuscle.ui.main.adapter.ViewPagerFragmentAdapter
@@ -20,6 +24,7 @@ import com.fjp.skeletalmuscle.ui.main.fragment.MainSportsPlankFragment
 import com.fjp.skeletalmuscle.ui.user.adapter.MainSportsRateAdapter
 import com.fjp.skeletalmuscle.viewmodel.request.RequestMainViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.MainViewModel
+import com.lxj.xpopup.XPopup
 import com.zhpan.indicator.enums.IndicatorStyle
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.ext.util.dp2px
@@ -56,6 +61,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.createObserver()
         requestMainViewModel.mainLiveData.observe(this) {
             parseState(it, { todayData ->
+                mViewModel.showAssess.set(!todayData.is_assess)
+                findViewById<TextView>(R.id.assessTv).setOnClickListener {
+                    showAssessTipPop()
+                }
                 fragments.clear()
                 mViewModel.curScore.set(todayData.score.toString())
                 fragments.add(MainSportsHighKneeFragment.newInstance(todayData))
@@ -82,6 +91,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             })
 
         }
+    }
+
+    private fun showAssessTipPop() {
+
+        val assessTipPop = AssessTipPop(this)
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(assessTipPop)
+        pop.show()
     }
 
     override fun onResume() {

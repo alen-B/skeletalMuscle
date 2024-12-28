@@ -74,8 +74,26 @@
             android:visibility="@{viewModel.showRightText ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/curIndexTv"
             app:layout_constraintEnd_toEndOf="parent" />
-
+        <TextView
+            android:id="@+id/assessTv"
+            android:layout_width="wrap_content"
+            android:drawableLeft="@drawable/title_assess_tip"
+            android:text="本月尚未进行运动测评"
+            android:textSize="20sp"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:background="@drawable/bg_gray_round_35"
+            android:textColor="@color/color_1c1c1c"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="5dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:visibility="@{viewModel.showAssess ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toStartOf="@+id/settingLL"
+            android:layout_height="66dp"/>
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/settingLL"
             android:orientation="horizontal"
             android:layout_width="213dp"
             android:visibility="@{viewModel.showSetting ? View.VISIBLE : View.GONE}"

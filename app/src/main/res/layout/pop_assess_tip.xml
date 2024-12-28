@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.alterac.blurkit.BlurLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/blurLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#aa000000"
+        android:padding="35dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="93dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/leftIv"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/title_assess_left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="开始本次运动测评"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/leftIv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/contentLL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/bg_gray_round_20"
+            android:orientation="vertical"
+            android:padding="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/assessBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="186dp"
+                android:background="@drawable/bg_white_round_20"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                app:layout_constraintTop_toTopOf="@+id/deviceView">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="您本月尚未进行运动测评，\n 请前往测评。"
+                    android:textSize="40sp" />
+
+                <ImageView
+                    android:layout_width="147dp"
+                    android:layout_height="122dp"
+                    android:background="@drawable/assess_warning" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="144dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/bg_white_round_20"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="@+id/deviceView">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="32dp"
+                    android:background="@drawable/assess_tip_note" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="测评贴士"
+                        android:textColor="@color/color_1c1c1c"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="定期科学评估能够精准了解您的身体情况，为您量身定制\n更高效的运动指南，助力更安全的健身效果。"
+                        android:textColor="@color/color_801c1c1c"
+                        android:textSize="22sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/assessBtn"
+            style="@style/SMButton"
+            android:layout_width="240dp"
+            android:layout_marginEnd="35dp"
+            android:background="@drawable/bg_yellow_round_20"
+            android:text="运动测评"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/disAssessBtn" />
+
+        <Button
+            android:id="@+id/disAssessBtn"
+            style="@style/SMButton"
+            android:layout_width="240dp"
+            android:background="@drawable/bg_cacaca_round_20"
+            android:text="暂不测评"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</io.alterac.blurkit.BlurLayout>

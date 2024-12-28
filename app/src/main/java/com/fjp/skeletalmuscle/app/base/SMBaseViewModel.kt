@@ -18,6 +18,7 @@ open class SMBaseViewModel : BaseViewModel() {
     var rightImg = ObservableField<Int>()
     var showRightText = ObservableField(false)
     var showSetting = ObservableField(false)
+    var showAssess = ObservableField(false)
     var curIndex = ObservableField("1")
     var totalIndex = ObservableField("9")
 }
