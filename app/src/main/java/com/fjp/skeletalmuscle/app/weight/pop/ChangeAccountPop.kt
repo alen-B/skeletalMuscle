@@ -37,8 +37,8 @@ class ChangeAccountPop(val context: Activity, val listener: Listener) : FullScre
         super.onCreate()
         val accounts = CacheUtil.getAccounts()
         accounts.add(0, Account("添加账号", "", ""))
-//        val filterAccounts = accounts.filter { it.name != "" }
-        val adapter = AccountAdapter(accounts.toMutableList()) { account, _ ->
+        val filterAccounts = accounts.filter { it.name != "" }
+        val adapter = AccountAdapter(filterAccounts.toMutableList()) { account, _ ->
             listener.onclick(account, this)
         }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)

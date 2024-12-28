@@ -57,7 +57,6 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
         mViewModel.curIndex.set("8")
         mViewModel.totalIndex.set("/10")
         mViewModel.showRightText.set(true)
-//        checkPermissions()
         sportsAdapter = SportsTypeAdapter(mViewModel.dataArr, clickItem = { item ->
 
             curItem = item
@@ -143,65 +142,4 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
 
         }
     }
-
-    private val REQUEST_LOCATION_PERMISSION = 1
-
-    private fun checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf<String>(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
-        } else {
-            // 权限已授予，执行获取位置信息的操作
-            getLocation()
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 权限已授予，执行获取位置信息的操作
-                getLocation()
-            } else {
-                // 权限被拒绝
-                Toast.makeText(this, "位置权限被拒绝", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun getLocation() {
-        val retult = LocationUtil.isLocServiceEnable(this)
-        println("retult:" + retult)
-        try {
-//            if (locationManager == null) {
-            locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            val criteria = Criteria()
-            criteria.setAltitudeRequired(true)
-            val bestProvider = locationManager?.getBestProvider(criteria, false)
-            //最佳定位方式LocationManager.GPS_PROVIDER LocationManager.NETWORK_PROVIDER
-            locationManager?.requestLocationUpdates(bestProvider!!, 0, 0f, myLocationListener)
-        } catch (e: SecurityException) {
-            e.printStackTrace()
-        }
-    }
-
-    val myLocationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location) {
-            locationManager?.removeUpdates(this)
-            App.userInfo.latitude = location.latitude
-            App.userInfo.longitude = location.longitude
-            showToast(location.latitude.toString())
-        }
-
-        override fun onProviderDisabled(provider: String) {
-            super.onProviderDisabled(provider)
-            showToast(provider)
-        }
-
-        override fun onProviderEnabled(provider: String) {
-            super.onProviderEnabled(provider)
-            showToast("onProviderEnabled:" + provider)
-
-        }
-
-    };
 }

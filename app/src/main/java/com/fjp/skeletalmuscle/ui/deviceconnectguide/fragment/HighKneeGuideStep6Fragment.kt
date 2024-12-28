@@ -63,7 +63,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
         mDatabind.step21Tv.text = getString(R.string.dumbbell_connect_right_device_step1)
         mDatabind.step22Tv.text = getString(R.string.dumbbell_connect_right_device_step2)
         mDatabind.step23Tv.text = getString(R.string.dumbbell_connect_right_device_step3)
-        val rightLegDevice = SMBleManager.connectedDevices.get(DeviceType.RIGHT_DUMBBELL)
+        val rightLegDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL]
         if (rightLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
         } else {
@@ -80,7 +80,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
         mDatabind.step21Tv.text = getString(R.string.hand_grips_connect_right_device_step1)
         mDatabind.step22Tv.text = getString(R.string.hand_grips_connect_right_device_step2)
         mDatabind.step23Tv.text = getString(R.string.hand_grips_connect_right_device_step3)
-        val rightLegDevice = SMBleManager.connectedDevices.get(DeviceType.RIGHT_HAND_GRIPS)
+        val rightLegDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_HAND_GRIPS]
         if (rightLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
         } else {
@@ -99,7 +99,7 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
     }
 
     private fun initHighKnee() {
-        val rightLegDevice = SMBleManager.connectedDevices.get(DeviceType.RIGHT_LEG)
+        val rightLegDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
         if (rightLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
             mViewModel.title.set(getString(R.string.high_knee_guide_step7_title))

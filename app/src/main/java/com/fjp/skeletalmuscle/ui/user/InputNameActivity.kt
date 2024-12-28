@@ -29,10 +29,9 @@ class InputNameActivity : BaseActivity<InputNameViewModel, ActivityInputNameBind
         mLocationManager.requestSingleFreshLocation(request, object : TencentLocationListener {
             override fun onLocationChanged(location: TencentLocation?, p1: Int, p2: String?) {
                 location?.let {
-                    App.userInfo.latitude = it.latitude
-                    App.userInfo.longitude = it.longitude
-                    it.name
-                    it.address
+                    App.userInfo.latitude = it.latitude.toString()
+                    App.userInfo.longitude = it.longitude.toString()
+                    App.userInfo.address = it.address+it.name
                 }
             }
 

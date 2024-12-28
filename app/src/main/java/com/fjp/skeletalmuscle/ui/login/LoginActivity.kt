@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.ui.login
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -11,7 +12,9 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -131,6 +134,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
     inner class ProxyClick {
         fun login() {
+
             when {
                 (!mViewModel.mobile.get().isPhone()) -> showToast(getString(R.string.login_input_success_phone))
                 mViewModel.verificationCode.get()!!.isEmpty() -> showToast(getString(R.string.login_input_code))
@@ -138,9 +142,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                     showToast(getString(R.string.login_agreement_no_checked))
                     YoYo.with(Techniques.Shake).duration(700).repeat(1).playOn(mDatabind.agreementTv)
                 }
-
                 else -> {
-                    reqeustLoginViewModel.loginReq(mViewModel.mobile.get()!!, mViewModel.verificationCode.get()!!)
+                    checkPermissions()
                 }
             }
 
@@ -176,4 +179,27 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         }
     }
 
+    private val REQUEST_LOCATION_PERMISSION = 1
+
+    private fun checkPermissions() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf<String>(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
+        } else {
+            // 权限已授予，执行获取位置信息的操作
+            reqeustLoginViewModel.loginReq(mViewModel.mobile.get()!!, mViewModel.verificationCode.get()!!)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 权限已授予，执行获取位置信息的操作
+                reqeustLoginViewModel.loginReq(mViewModel.mobile.get()!!, mViewModel.verificationCode.get()!!)
+            } else {
+                // 权限被拒绝
+                Toast.makeText(this, "位置权限被拒绝", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }

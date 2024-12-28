@@ -30,7 +30,7 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
 
     override fun onResume() {
         super.onResume()
-        val GTSDevice = SMBleManager.connectedDevices.get(DeviceType.GTS)
+        val GTSDevice = SMBleManager.connectedDevices[DeviceType.GTS]
         if (GTSDevice == null) {
             connectDevice()
         } else {

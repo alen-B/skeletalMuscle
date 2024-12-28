@@ -61,7 +61,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.createObserver()
         requestMainViewModel.mainLiveData.observe(this) {
             parseState(it, { todayData ->
-                mViewModel.showAssess.set(!todayData.is_assess)
+                mViewModel.showAssess.set(todayData.is_assess==0)
                 findViewById<TextView>(R.id.assessTv).setOnClickListener {
                     showAssessTipPop()
                 }
