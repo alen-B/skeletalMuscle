@@ -220,6 +220,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:configChanges="orientation|screenLayout"
+            android:launchMode="singleTop"
             android:exported="true"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="sensorLandscape" />
@@ -227,6 +228,7 @@
             android:name=".ui.main.MainActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="sensorLandscape">
 
             <!-- <intent-filter> -->

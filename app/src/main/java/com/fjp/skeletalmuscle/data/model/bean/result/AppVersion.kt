@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class AppVersion(
     val `data`: VersionData,
     val message: String,
-    val status: String
+    val code: Int
 )
 
 @Parcelize

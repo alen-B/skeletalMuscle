@@ -53,9 +53,6 @@ class NewVersionPop(val context: Activity, val listener: Listener,val version:Ve
         progressBar = findViewById(R.id.progressBar)
         blurLayout.startBlur()
 
-        findViewById<ImageView>(R.id.settingIv)?.setOnClickListener {
-            context.startActivity(Intent(context, SettingActivity::class.java))
-        }
     }
 
     fun setProgress(progress:Int){

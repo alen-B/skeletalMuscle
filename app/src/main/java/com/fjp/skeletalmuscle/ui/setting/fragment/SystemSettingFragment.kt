@@ -31,7 +31,7 @@ class SystemSettingFragment : BaseFragment<SystemSettingViewModel, FragmentSyste
         super.createObserver()
         mViewModel.appVersion.observe(this) {
             versionData = it
-            if (it.version != AppUtils.getAppVersionName(requireContext())) {
+            if (it.version != AppUtils.getAppVersionName(requireContext())&& it.download_url.isNotEmpty()) {
                 mDatabind.updateVersionLayout.setValue("发现新版本", R.drawable.red_point)
             }
         }

@@ -44,37 +44,6 @@
                 app:layout_constraintStart_toEndOf="@+id/leftIv"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="147dp"
-                android:layout_height="66dp"
-                android:background="@drawable/bg_4dcacaca_round_35"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/tipIv"
-                    android:layout_width="42dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/title_tip_white"
-                    tools:ignore="ContentDescription" />
-
-                <View
-                    android:layout_width="3dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:background="@color/color_4dcacaca" />
-
-                <ImageView
-                    android:id="@+id/settingIv"
-                    android:layout_width="42dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/title_setting"
-                    tools:ignore="ContentDescription" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

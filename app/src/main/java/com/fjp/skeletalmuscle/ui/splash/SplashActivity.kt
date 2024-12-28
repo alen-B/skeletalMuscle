@@ -60,7 +60,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
     override fun createObserver() {
         super.createObserver()
         systemSettingViewModel.appVersion.observe(this){
-            if (it.version != AppUtils.getAppVersionName(this)) {
+            if (it.version != AppUtils.getAppVersionName(this) && it.download_url.isNotEmpty()) {
                 newVersion=true
                 showNewVersionPop()
             }
@@ -78,6 +78,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
             }
 
             override fun onClickNotUpdate() {
+                newVersion=false
                 doNext()
             }
 

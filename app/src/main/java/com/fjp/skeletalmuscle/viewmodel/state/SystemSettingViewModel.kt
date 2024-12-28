@@ -13,7 +13,7 @@ class SystemSettingViewModel : SMBaseViewModel() {
     fun checkVersion() {
         requestNoCheck({ HttpRequestCoroutine.checkVersion() }, {
             //请求成功 自己拿到数据做业务需求操作
-            if (it.status == "success") {
+            if (it.code ==200) {
                 //结果正确
                 appVersion.value = it.data
             }
