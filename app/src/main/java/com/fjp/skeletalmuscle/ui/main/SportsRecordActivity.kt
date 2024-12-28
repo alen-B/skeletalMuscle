@@ -126,8 +126,8 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
             mDatabind.highKneeSportsTimeValueTv.text = DateTimeUtil.sceond2Min(time)
             mDatabind.highKneeBurnCaloriesValueTv.text = (sportLiftLeg.sum_calorie/1000).toString()
             mDatabind.highKneeExerciseAmountTotalValueTv.text = (sportLiftLeg.left_sport_amount+sportLiftLeg.right_sport_amount).toString()
-            mDatabind.highKneeExerciseAmountRightValueTv.text = (sportLiftLeg.right_sport_amount).toString()
-            mDatabind.highKneeExerciseAmountLeftValueTv.text = (sportLiftLeg.left_sport_amount).toString()
+            mDatabind.highKneeExerciseAmountRightValueTv.text = (sportLiftLeg.right_times).toString()
+            mDatabind.highKneeExerciseAmountLeftValueTv.text = (sportLiftLeg.left_times).toString()
             mDatabind.highKneeAngleRightValueTv.text ="${ sportLiftLeg.avg_right_degree}°"
             mDatabind.highKneeAngleLeftValueTv.text = "${sportLiftLeg.avg_left_degree}°"
             mDatabind.highKneeEnduranceValueTv.text = (sportLiftLeg.cardiorespiratory_endurance).toString()
