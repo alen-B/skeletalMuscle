@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ucrop_photobox"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!--    <androidx.appcompat.widget.Toolbar-->
+    <!--        android:id="@+id/toolbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@color/ucrop_color_toolbar"-->
+    <!--        android:minHeight="?attr/actionBarSize">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/toolbar_title"-->
+    <!--            style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:textSize="38sp"-->
+    <!--            android:text="@string/ucrop_label_edit_photo"-->
+    <!--            android:textColor="@color/ucrop_color_toolbar_widget" />-->
+
+    <!--    </androidx.appcompat.widget.Toolbar>-->
+    <LinearLayout
+        android:id="@+id/titleLL"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center_vertical"
+        android:background="@color/ucrop_color_white">
+
+        <ImageView
+            android:id="@+id/closeIv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="28dp"
+            android:background="@drawable/ucrop_ic_cross"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="裁剪"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#4E71FF"
+            android:layout_gravity="center_horizontal"
+            android:textSize="45sp" />
+
+        <TextView
+            android:id="@+id/sureIv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="确定"
+            android:textColor="#1c1c1c"
+            android:layout_marginEnd="28dp"
+            android:textSize="35sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/ucrop_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/controls_wrapper"
+        android:layout_below="@+id/titleLL"
+        android:layout_marginBottom="-12dp">
+
+        <ImageView
+            android:id="@+id/image_view_logo"
+            android:layout_width="@dimen/ucrop_default_crop_logo_size"
+            android:layout_height="@dimen/ucrop_default_crop_logo_size"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ucrop_vector_ic_crop"
+            tools:background="@drawable/ucrop_vector_ic_crop"
+            tools:ignore="ContentDescription,MissingPrefix" />
+
+        <com.yalantis.ucrop.view.UCropView
+            android:id="@+id/ucrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/controls_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

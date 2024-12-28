@@ -25,4 +25,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "SkeletalMuscle"
-include ':app', ':JetpackMvvm', ":lib_appupdate"
+include ':app', ':JetpackMvvm', ":lib_appupdate",":ucrop"

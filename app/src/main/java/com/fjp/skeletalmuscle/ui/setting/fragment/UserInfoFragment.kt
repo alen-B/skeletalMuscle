@@ -3,6 +3,7 @@ package com.fjp.skeletalmuscle.ui.setting.fragment
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.FrameLayout
@@ -31,6 +32,7 @@ import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.lxj.xpopup.XPopup
+import com.yalantis.ucrop.UCrop
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.NumberUtils
@@ -44,6 +46,7 @@ import java.util.TimeZone
 
 
 class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding>() {
+    var mDestinationUri: File? = null
     val saveUserInfoViewModel: SaveUserInfoViewModel by viewModels()
     val requestUserInfoViewModel: RequestUserInfoViewModel by viewModels()
     var tempUserInfo: UserInfo = App.userInfo
@@ -70,10 +73,10 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         mDatabind.bornLayout.setValue(userInfo.birthday)
 
         mDatabind.sexLayout.setValue(userInfo.sex)
-        mDatabind.weightLayout.setValue(userInfo.weight.toString()+"kg")
-        mDatabind.heightLayout.setValue(userInfo.height.toString()+"cm")
-        mDatabind.waistLinLayout.setValue(userInfo.waistline+"cm")
-        mDatabind.avatarLayout.setAvatarIv(requireContext(),userInfo.profile)
+        mDatabind.weightLayout.setValue(userInfo.weight.toString() + "kg")
+        mDatabind.heightLayout.setValue(userInfo.height.toString() + "cm")
+        mDatabind.waistLinLayout.setValue(userInfo.waistline + "cm")
+        mDatabind.avatarLayout.setAvatarIv(requireContext(), userInfo.profile)
     }
 
     override fun createObserver() {
@@ -98,7 +101,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         requestUserInfoViewModel.avatar.observe(this) {
             appContext.showToast("更新成功")
             App.userInfo.profile = it
-            mDatabind.avatarLayout.setAvatarIv(requireContext(),App.userInfo.profile)
+            mDatabind.avatarLayout.setAvatarIv(requireContext(), App.userInfo.profile)
             CacheUtil.setUser(App.userInfo)
             eventViewModel.updateAvatarEvent.postValue(it)
         }
@@ -149,6 +152,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         fun clickUpdateSex() {
             showSingleSelectedDialog(SingleSelectType.SEX)
         }
+
         fun clickExit() {
             val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
                 CacheUtil.setUser(null)
@@ -277,7 +281,8 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         PictureSelector.create(this).openSystemGallery(SelectMimeType.ofImage()).isOriginalSkipCompress(false).forSystemResult(object : OnResultCallbackListener<LocalMedia?> {
             override fun onResult(result: ArrayList<LocalMedia?>) {
                 println(result)
-                updateAvatar(result[0]?.compressPath)
+//                updateAvatar(result[0]?.compressPath)
+                result[0]?.realPath?.let { startCropActivity(it) }
             }
 
             override fun onCancel() {
@@ -290,11 +295,20 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         PictureSelector.create(this).openCamera(SelectMimeType.ofImage()).isOriginalSkipCompress(false).forResult(object : OnResultCallbackListener<LocalMedia?> {
             override fun onResult(result: ArrayList<LocalMedia?>) {
                 println(result)
-                updateAvatar(result[0]?.realPath)
+//                updateAvatar(result[0]?.realPath)
+                result[0]?.realPath?.let { startCropActivity(it) }
             }
 
             override fun onCancel() {}
         })
+    }
+
+    fun startCropActivity(orinPath: String) {
+        mDestinationUri = File(mActivity.cacheDir, "/temp.jpg")
+        val orinFile = File(orinPath)
+        val option = UCrop.Options()
+        option.setToolbarTitleSize(40)
+        UCrop.of<Any>(Uri.fromFile(orinFile), Uri.fromFile(mDestinationUri)).withOptions(option).withAspectRatio(1f, 1f).withMaxResultSize(100, 100).start(mActivity, this)
     }
 
     private fun updateAvatar(path: String?) {
@@ -328,7 +342,13 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
             appContext.showToast("请打开读写权限")
         }
 
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == Activity.RESULT_OK) {
+            updateAvatar(mDestinationUri?.path)
+        }
     }
 
 }
