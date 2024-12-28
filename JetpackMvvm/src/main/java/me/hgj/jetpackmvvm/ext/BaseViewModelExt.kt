@@ -1,5 +1,6 @@
 package me.hgj.jetpackmvvm.ext
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
@@ -9,12 +10,14 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
+import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.base.fragment.BaseVmFragment
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.ext.util.loge
 import me.hgj.jetpackmvvm.network.AppException
 import me.hgj.jetpackmvvm.network.BaseResponse
 import me.hgj.jetpackmvvm.network.ExceptionHandle
+import me.hgj.jetpackmvvm.network.NetworkUtil
 import me.hgj.jetpackmvvm.state.ResultState
 import me.hgj.jetpackmvvm.state.paresException
 import me.hgj.jetpackmvvm.state.paresResult
@@ -47,7 +50,12 @@ fun <T> BaseVmActivity<*>.parseState(resultState: ResultState<T>, onSuccess: (T)
 
         is ResultState.Error -> {
             dismissLoading()
-            onError?.run { this(resultState.error) }
+            if(!NetworkUtil.isNetworkAvailable(appContext)){
+                Toast.makeText(this, "网络连接异常，请检测网络是否正常", Toast.LENGTH_LONG).show()
+            }else{
+
+                onError?.run { this(resultState.error) }
+            }
         }
     }
 }
