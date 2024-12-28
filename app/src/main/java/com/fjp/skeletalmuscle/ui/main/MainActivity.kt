@@ -6,9 +6,11 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import coil.load
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
@@ -90,6 +92,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 CacheUtil.setUser(userInfo)
             })
 
+        }
+        eventViewModel.updateAvatarEvent.observeInActivity(this) {
+            mViewModel.smAvatar.set(it)
         }
     }
 
