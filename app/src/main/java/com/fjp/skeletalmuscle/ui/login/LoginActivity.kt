@@ -43,7 +43,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
 
         mDatabind.viewModel = mViewModel
         val phone = intent.getStringExtra(Constants.INTENT_KEY_PHONE)
-        mViewModel.mobile.set(phone)
+
 
         mDatabind.click = ProxyClick()
         mViewModel.title.set(resources.getString(R.string.login_title))
@@ -57,7 +57,10 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 mViewModel.mobile.set(s)
             }
         })
-        mDatabind.phoneEt.setText(phone)
+        if(phone!=null){
+            mViewModel.mobile.set(phone)
+            mDatabind.phoneEt.setText(phone)
+        }
         initAgreement()
 
     }
