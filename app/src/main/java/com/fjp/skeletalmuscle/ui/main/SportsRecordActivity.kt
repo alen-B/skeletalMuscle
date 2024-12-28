@@ -152,7 +152,6 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
 
         if(todayData.sport_dumbbell!=null && todayData.sport_dumbbell.sport_time!=0L){
             mDatabind.dumbbeBg.visibility = View.VISIBLE
-
             mDatabind.dumbbellScoreTv.text = todayData.sport_dumbbell.score.toString()
             mDatabind.upliftValueTv.text = "${todayData.sport_dumbbell.avg_up_degree}°"
             mDatabind.expandChestValueTv.text = "${todayData.sport_dumbbell.avg_expand_chest_degree.toString()}°"
@@ -373,7 +372,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.formatDate(heartRate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.MM_SS)
+                return DateTimeUtil.formatDate(heartRate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
             }
 
         }
