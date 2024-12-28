@@ -364,7 +364,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     }
 
     override fun GTSDisConnected() {
-        showOffLinePop()
     }
 
     override fun leftLegDisConnected() {

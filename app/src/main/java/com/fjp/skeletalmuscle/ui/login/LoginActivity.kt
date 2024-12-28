@@ -11,6 +11,7 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -57,6 +58,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 mViewModel.mobile.set(s)
             }
         })
+      
         if(phone!=null){
             mViewModel.mobile.set(phone)
             mDatabind.phoneEt.setText(phone)

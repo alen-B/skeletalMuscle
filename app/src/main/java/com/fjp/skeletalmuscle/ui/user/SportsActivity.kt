@@ -1,18 +1,9 @@
 package com.fjp.skeletalmuscle.ui.user
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Criteria
-import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fjp.skeletalmuscle.R
@@ -22,7 +13,6 @@ import com.fjp.skeletalmuscle.app.ext.init
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
-import com.fjp.skeletalmuscle.app.util.LocationUtil
 import com.fjp.skeletalmuscle.app.util.SettingUtil
 import com.fjp.skeletalmuscle.app.weight.pop.AddSportsTypePop
 import com.fjp.skeletalmuscle.data.model.bean.Account
@@ -37,10 +27,6 @@ import com.fjp.skeletalmuscle.viewmodel.request.SaveUserInfoViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.SuportsViewModel
 import com.lxj.xpopup.XPopup
-import com.tencent.map.geolocation.TencentLocation
-import com.tencent.map.geolocation.TencentLocationListener
-import com.tencent.map.geolocation.TencentLocationManager
-import com.tencent.map.geolocation.TencentLocationRequest
 import me.hgj.jetpackmvvm.ext.parseState
 
 
@@ -49,7 +35,6 @@ class SportsActivity : BaseActivity<SuportsViewModel, ActivitySuportsBinding>() 
     lateinit var sportsAdapter: SportsTypeAdapter
     lateinit var sportsChildAdapter: SportsChildTypeAdapter
     var curItem: Sports? = null
-    var locationManager: LocationManager? = null
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mViewModel.title.set(getString(R.string.sports_type_title))

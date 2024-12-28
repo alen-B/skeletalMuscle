@@ -294,7 +294,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         val score: Int = liftLegRequest.score
         val sum_calorie: Int = (caloriesBurned * 1000).toInt()
         val warm_up_activation: Int = liftLegRequest.warm_up_activation
-        return SportLiftLeg(sport_time, avg_left_degree, avg_rate_value, avg_right_degree, calorie, cardiorespiratory_endurance, efficient_grease_burning, extreme_breakthrough, heart_lung_enhancement, heart_rate, 0, left_times, max_rate_value, min_rate_value, record, right_times, score, sum_calorie, 0, warm_up_activation, avg_left_degree * left_times, avg_right_degree * right_times)
+        return SportLiftLeg(sport_time, avg_left_degree, avg_rate_value, avg_right_degree, calorie, cardiorespiratory_endurance, efficient_grease_burning, extreme_breakthrough, heart_lung_enhancement, heart_rate, 0, left_times, max_rate_value, min_rate_value, record, right_times, score, sum_calorie, 0, warm_up_activation, avg_left_degree * left_times, avg_right_degree * right_times, App.sportsTime * 60)
 
     }
 
@@ -536,11 +536,11 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             totalHeartRate += interestedValue // interestedValue是心率的值
 
             heartRateCount++
-            val warnHeartRate: Double = (220 - age).toDouble()
-            if (interestedValue > warnHeartRate) {
+            val maxHeartRate: Double = (220 - age).toDouble()
+            val heartRatePercentage: Double = interestedValue / maxHeartRate
+            if (interestedValue > maxHeartRate) {
                 showToast("您的⼼率已超标，请注意休息！")
             }
-            val heartRatePercentage: Double = interestedValue / (maxHeartRate * 1.0)
             // 更新区间时间，每次心率读数都假设是10秒钟的时间
             if (heartRatePercentage < 0.6) {
                 warmupTime += 10

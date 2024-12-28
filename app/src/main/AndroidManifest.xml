@@ -211,8 +211,25 @@
         <activity
             android:name=".ui.user.InputNameActivity"
             android:configChanges="orientation|screenLayout"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:exported="true"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+<!--        <activity-->
+<!--            android:name="com.fjp.skeletalmuscle.ui.main.EditTextActivity"-->
+<!--            android:configChanges="orientation|screenLayout"-->
+<!--            android:windowSoftInputMode="stateVisible|adjustResize"-->
+<!--            android:exported="true"-->
+<!--            android:screenOrientation="sensorLandscape" >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
             android:name=".ui.user.SelectGenderActivity"
             android:configChanges="orientation|screenLayout"
@@ -220,10 +237,8 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:configChanges="orientation|screenLayout"
             android:launchMode="singleTop"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.main.MainActivity"

@@ -167,7 +167,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         showToast("完成了运动")
         pauseTimer()
         score = getScore()
-        var request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate)
+        var request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate,App.sportsTime * 60)
         if (request.end_time - request.start_time > App.sportsTime * 60) {
             request.end_time = request.start_time + App.sportsTime * 60
         }
@@ -305,12 +305,11 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             totalHeartRate += interestedValue // interestedValue是心率的值
 
             heartRateCount++
-            heartRateCount++
-            val warnHeartRate: Double = (220 - age).toDouble()
-            if (interestedValue > warnHeartRate) {
+            val maxHeartRate: Double = (220 - age).toDouble()
+            val heartRatePercentage: Double = interestedValue / maxHeartRate
+            if (interestedValue > maxHeartRate) {
                 showToast("您的⼼率已超标，请注意休息！")
             }
-            val heartRatePercentage: Double = interestedValue / (maxHeartRate * 1.0)
             // 更新区间时间，每次心率读数都假设是10秒钟的时间
             if (heartRatePercentage < 0.6) {
                 warmupTime += 10

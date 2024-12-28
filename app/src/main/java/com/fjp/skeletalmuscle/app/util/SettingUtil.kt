@@ -188,6 +188,11 @@ object SettingUtil {
         if(telephonyManager == null){
             return "获取deviceId失败"
         }
-        return telephonyManager!!.deviceId
+        return try {
+            telephonyManager.deviceId
+        }catch (e:Exception){
+            ""
+        }
+
     }
 }

@@ -29,7 +29,7 @@
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             style="@style/SMEditText"
             android:layout_width="0dp"
             android:layout_height="140dp"
