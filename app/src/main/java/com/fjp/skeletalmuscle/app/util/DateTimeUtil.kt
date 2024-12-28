@@ -160,7 +160,7 @@ object DateTimeUtil {
         val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN2)
         val startDateFormatted = startOfWeek.format(formatter)
         val endDateFormatted = endOfWeek.format(formatter)
-        return startDateFormatted + "-" + endDateFormatted
+        return startDateFormatted + " - " + endDateFormatted
     }
 
     fun getCurMonth(): String {

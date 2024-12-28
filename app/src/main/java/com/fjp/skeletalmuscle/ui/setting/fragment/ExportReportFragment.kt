@@ -248,7 +248,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
                     return@TimePickerBuilder
                 }
                 endDate = date
-                mDatabind.curCustomerEndTv.text = "-$formatDate"
+                mDatabind.curCustomerEndTv.text = " - $formatDate"
             }
 
 
