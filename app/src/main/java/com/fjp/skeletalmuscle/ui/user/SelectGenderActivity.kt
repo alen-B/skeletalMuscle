@@ -55,8 +55,4 @@ class SelectGenderActivity : BaseActivity<SelectGenderViewModel, ActivitySelectG
         }
     }
 
-    override fun createObserver() {
-        super.createObserver()
-
-    }
 }

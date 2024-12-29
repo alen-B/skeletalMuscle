@@ -32,6 +32,9 @@ class InputNameActivity : BaseActivity<InputNameViewModel, ActivityInputNameBind
                     App.userInfo.latitude = it.latitude.toString()
                     App.userInfo.longitude = it.longitude.toString()
                     App.userInfo.address = it.address+it.name
+                    App.userInfo.province = it.province
+                    App.userInfo.city = it.city
+                    App.userInfo.district = it.district
                 }
             }
 
