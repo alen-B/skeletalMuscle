@@ -387,8 +387,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         curLeftPitch = DeviceDataParse.parseData2Pitch(data)
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===leftroll:${roll}")
-        println("===leftyaw:${yaw}")
         if (curLeftPitch > 180) {
             return
         }
@@ -454,13 +452,11 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             return
         }
         curRightPitch = DeviceDataParse.parseData2Pitch(data)
-        val roll = DeviceDataParse.parseData2Roll(data)
-        val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===rightroll:${roll}")
+//        val roll = DeviceDataParse.parseData2Roll(data)
+//        val yaw = DeviceDataParse.parseData2Yaw(data)
         if (curRightPitch > 180) {
             return
         }
-        println("===rightyaw:${yaw}")
         if (curRightPitch > 90) {
             // 抬腿过高，播放提示音
             // 抬腿过高，检查MediaPlayer是否已经在播放
@@ -572,7 +568,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                     var lengthStr = rawDataStr?.substring(46, 50)
                     //将长度转10进制
                     val grip = Integer.parseInt(lengthStr, 16)
-                    println("===握力值：" + grip)
                     if (maxGrip < grip) {
                         maxGrip = grip
                     }

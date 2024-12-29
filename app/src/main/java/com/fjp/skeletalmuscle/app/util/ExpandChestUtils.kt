@@ -103,7 +103,6 @@ class Action(type: ActionType, start: Long, end: Long, deltaPitch: Double, delta
             // 检测动作开始
             val deltaPitch = Math.abs(current.pitch - prev.pitch)
             val deltaYaw = current.yaw - prev.yaw
-            println("-----检测动作开始：deltaPitch：${deltaPitch}   ${THRESHOLD_DELTA_PITCH}")
             // 判断是否为上举动作开始
             if (deltaPitch > THRESHOLD_DELTA_PITCH && Math.abs(deltaYaw) < THRESHOLD_DELTA_YAW) {
                 inAction = true
@@ -128,7 +127,6 @@ class Action(type: ActionType, start: Long, end: Long, deltaPitch: Double, delta
                     maxPitch = current.pitch
                 }
 
-                println("-----检测动作结束：current.pitch：${current.pitch}   ${THRESHOLD_PITCH_END}")
                 // 检测动作结束
                 if (current.pitch < THRESHOLD_PITCH_END) {
                     inAction = false
@@ -142,7 +140,6 @@ class Action(type: ActionType, start: Long, end: Long, deltaPitch: Double, delta
                     // 计算评分
                     val upScore = ALPHA1 * deltaPitch + ALPHA2 * aVert + ALPHA3 * wPitch
                     val outScore = BETA1 * deltaYaw + BETA2 * 0.0 // 扩胸评分为0，因为是上举
-                    println("-----检测动作结束：upScore：${upScore}")
                     // 分类
                     var detectedType: ActionType
 //                    if (upScore > outScore) {
@@ -158,8 +155,6 @@ class Action(type: ActionType, start: Long, end: Long, deltaPitch: Double, delta
                     detectedActions.add(action)
 
                     // 打印动作信息
-                    println("Detected Action: $detectedType")
-                    println("Start Time: $actionStart, End Time: $actionEnd")
                     if (detectedType == ActionType.OVERHEAD) {
                         println("Delta Pitch: $deltaPitch°, Max Pitch: $maxPitch°")
                     } else {
@@ -201,15 +196,12 @@ class Action(type: ActionType, start: Long, end: Long, deltaPitch: Double, delta
                     detectedActions.add(action)
 
                     // 打印动作信息
-                    println("Detected Action: $detectedType")
-                    println("Start Time: $actionStart, End Time: $actionEnd")
                     if (detectedType == ActionType.EXPANSION) {
                         println("Delta Yaw: $deltaYaw°, Max Yaw: $maxYaw°")
                     } else {
                         println("Delta Pitch: $deltaPitch°, Max Pitch: $maxPitch°")
                     }
 
-                    println("=======================================")
                 }
             }
         }

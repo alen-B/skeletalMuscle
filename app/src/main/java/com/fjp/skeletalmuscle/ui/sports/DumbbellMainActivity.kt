@@ -298,8 +298,6 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         }
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===leftroll:${roll}")
-        println("===leftyaw:${yaw}")
         // 更新周期内最大的roll值
         if (roll > leftLegmaxRollInCycle) {
             leftLegmaxRollInCycle = roll
@@ -354,8 +352,6 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 //        val pitch = DeviceDataParse.parseData2Pitch(data)
         val roll = DeviceDataParse.parseData2Roll(data)
         val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===rightroll:${roll}")
-        println("===rightyaw:${yaw}")
 
         // 更新周期内最大的pitch值
         if (roll > rightLegmaxRollInCycle) {

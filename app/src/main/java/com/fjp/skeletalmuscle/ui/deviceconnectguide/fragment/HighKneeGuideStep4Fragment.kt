@@ -148,16 +148,12 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             override fun onNext(device: BleDevice) {
                 if (device.device.name != null && device.device.name.startsWith(DeviceType.LEFT_HAND_GRIPS.value)) {
                     val rawDataStr = DeviceDataParse.bytesToHexString(device.scanRecordBytes)
-                    println("====扫描到的握力数据数据是：" + rawDataStr)
                     var lengthStr = rawDataStr?.substring(46, 50)
                     //将长度转10进制
-                    println("====扫描到的握力数据数据是lengthStr：" + lengthStr)
                     val grip = Integer.parseInt(lengthStr, 16)
-                    println("====扫描到的握力是：" + grip / 10f + "kg")
                     if (maxGrip < grip) {
                         maxGrip = grip
                     }
-                    println("====最大握力数据：" + maxGrip)
                 }
             }
 
@@ -235,7 +231,6 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
     override fun onDestroyView() {
         super.onDestroyView()
         listener = null
-        println("=========listener =null ==========")
     }
 
 }

@@ -241,7 +241,6 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         liftLegRequest.end_time = System.currentTimeMillis() / 1000
         liftLegRequest.cardiorespiratory_endurance = getCardiorespiratorEndurance()
 
-        println("=====请求参数：liftLegRequest.cardiorespiratory_endurance" + liftLegRequest.cardiorespiratory_endurance)
         if (liftLegRequest.end_time - liftLegRequest.start_time > App.sportsTime * 60) {
             liftLegRequest.end_time = liftLegRequest.start_time + App.sportsTime * 60
         }
@@ -365,9 +364,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             actionDetector.process(dataPoint)
         }
         val pitch = DeviceDataParse.parseData2Pitch(data)
-        val roll = DeviceDataParse.parseData2Roll(data)
-        val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===左设备: pitch:${pitch}     roll:${roll}    yaw:${yaw}")
+//        val roll = DeviceDataParse.parseData2Roll(data)
+//        val yaw = DeviceDataParse.parseData2Yaw(data)
         if(pitch > 180){
             return
         }
@@ -444,9 +442,8 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             return
         }
         val pitch = DeviceDataParse.parseData2Pitch(data)
-        val roll = DeviceDataParse.parseData2Roll(data)
-        val yaw = DeviceDataParse.parseData2Yaw(data)
-        println("===右设备: pitch:${pitch}     roll:${roll}    yaw:${yaw}")
+//        val roll = DeviceDataParse.parseData2Roll(data)
+//        val yaw = DeviceDataParse.parseData2Yaw(data)
         if(pitch > 180){
             return
         }

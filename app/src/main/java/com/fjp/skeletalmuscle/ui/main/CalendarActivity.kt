@@ -94,8 +94,6 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
                     day = calendar.day.toString()
                 }
                 if (it.date == "${calendar.year}-${calendar.month}-${day}") {
-                    println("===it.date     :" + it.date)
-                    println("===click date  :" + "${calendar.year}-${calendar.month}-${calendar.day}")
                     val intent = Intent(this@CalendarActivity, SportsRecordActivity::class.java)
                     intent.putExtra(Constants.INTENT_KEY_YEAR, calendar.year)
                     intent.putExtra(Constants.INTENT_KEY_MONTH, calendar.month)

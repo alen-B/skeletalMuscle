@@ -164,7 +164,6 @@ class HighKneeGuideStep6Fragment : BaseFragment<HighKneeGuideStep6ViewModel, Fra
     override fun onDestroy() {
         super.onDestroy()
         listener = null
-        println("=========listener =null ==========")
     }
 }
 
