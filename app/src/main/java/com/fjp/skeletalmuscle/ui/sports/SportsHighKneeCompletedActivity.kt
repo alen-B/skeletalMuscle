@@ -92,7 +92,13 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-               return DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                val index = value.toInt()
+                return if(index >=0 && index<sportLiftLeg.calorie.size){
+                    DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                }else {
+                    ""
+                }
+
             }
 
         }

@@ -32,7 +32,7 @@
         <TextView
             android:id="@+id/gripTv"
             android:layout_width="wrap_content"
-            android:text="握力运动最高"
+            android:text="握力运动最高(kg)"
             android:textSize="@dimen/text_size_4"
             app:layout_constraintTop_toBottomOf="@+id/titleTv"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
         <TextView
             android:id="@+id/weightTv"
             android:layout_width="wrap_content"
-            android:text="体重"
+            android:text="体重(kg)"
             android:textSize="@dimen/text_size_4"
             app:layout_constraintBottom_toBottomOf="@+id/radarChart"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +86,7 @@
             android:id="@+id/waistTv"
             android:layout_width="wrap_content"
             android:textSize="@dimen/text_size_4"
-            android:text="腰围"
+            android:text="腰围(cm)"
             app:layout_constraintBottom_toBottomOf="@+id/radarChart"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="20dp"

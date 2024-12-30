@@ -94,7 +94,12 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         xAxis.labelCount=2
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.formatDate(sportLiftLeg.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
+                val index = value.toInt()
+                if(index>=0 && index < sportLiftLeg.heart_rate.size){
+                    return DateTimeUtil.formatDate(sportLiftLeg.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
+                }else{
+                    return ""
+                }
             }
 
         }

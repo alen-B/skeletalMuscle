@@ -74,7 +74,12 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                val index = value.toInt()
+                return if(index >=0 && index<sportFlatSupport.heart_rate.size){
+                    DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                }else {
+                    ""
+                }
             }
         }
         xAxis.enableGridDashedLine(2f, 1f, 0f)
@@ -150,7 +155,12 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                val index = value.toInt()
+                return if(index >=0 && index <sportFlatSupport.heart_rate.size){
+                    DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                }else{
+                    ""
+                }
             }
 
         }

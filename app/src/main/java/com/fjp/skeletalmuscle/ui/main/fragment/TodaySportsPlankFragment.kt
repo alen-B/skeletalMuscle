@@ -32,7 +32,7 @@ class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, Fragmen
     lateinit var sportFlatSupport: SportFlatSupport
 
     companion object {
-        fun newInstance(sportFlatSupport: SportFlatSupport):TodaySportsPlankFragment {
+        fun newInstance(sportFlatSupport: SportFlatSupport): TodaySportsPlankFragment {
             val fragment = TodaySportsPlankFragment()
             val bundle = Bundle()
             bundle.putParcelable(Constants.INTENT_KEY_TODAY_SPORTS_DATA, sportFlatSupport)
@@ -74,7 +74,12 @@ class TodaySportsPlankFragment : BaseFragment<TodaySportsPlankViewModel, Fragmen
         xAxis.labelCount = 3
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.formatDate(sportFlatSupport.heart_rate[value.toInt()].record_time.toLong() * 1000, DateTimeUtil.HH_MM_SS)
+                val index = value.toInt()
+                if (index >= 0 && index < sportFlatSupport.heart_rate.size) {
+                    return DateTimeUtil.formatDate(sportFlatSupport.heart_rate[value.toInt()].record_time.toLong() * 1000, DateTimeUtil.HH_MM_SS)
+                } else {
+                    return ""
+                }
             }
 
         }

@@ -20,7 +20,6 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
@@ -30,14 +29,14 @@ import me.hgj.jetpackmvvm.ext.util.dp2px
 import java.time.LocalDate
 
 class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryViewModel, ActivitySportsAssessmentsHistoryBinding>() {
-    var curYear= LocalDate.now().year
-    var curMonth= LocalDate.now().monthValue
+    var curYear = LocalDate.now().year
+    var curMonth = LocalDate.now().monthValue
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.title.set(getString(R.string.sports_assessment_history_title))
 
-        mDatabind.tabLayout.setOnTabSelectListener(object: OnTabSelectListener{
+        mDatabind.tabLayout.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
                 curMonth = position
             }
@@ -52,8 +51,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
 
     override fun createObserver() {
         super.createObserver()
-        mViewModel.assessmentHistoryResult.observe(this){
-            parseState(it,{assessmentHistory->
+        mViewModel.assessmentHistoryResult.observe(this) {
+            parseState(it, { assessmentHistory ->
                 initData(assessmentHistory)
 
             })
@@ -61,7 +60,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
     }
 
     private fun initData(assessmentHistory: ArrayList<AssessmentHistoryData>) {
-        val fragments = arrayListOf<Fragment>(AssessmentResultFragment.newInstance(curYear,1,assessmentHistory), AssessmentResultFragment.newInstance(curYear,2,assessmentHistory), AssessmentResultFragment.newInstance(curYear,3,assessmentHistory), AssessmentResultFragment.newInstance(curYear,4,assessmentHistory), AssessmentResultFragment.newInstance(curYear,5,assessmentHistory), AssessmentResultFragment.newInstance(curYear,6,assessmentHistory), AssessmentResultFragment.newInstance(curYear,7,assessmentHistory), AssessmentResultFragment.newInstance(curYear,8,assessmentHistory), AssessmentResultFragment.newInstance(curYear,9,assessmentHistory), AssessmentResultFragment.newInstance(curYear,10,assessmentHistory), AssessmentResultFragment.newInstance(curYear,11,assessmentHistory), AssessmentResultFragment.newInstance(curYear,12,assessmentHistory))
+        val fragments = arrayListOf<Fragment>(AssessmentResultFragment.newInstance(curYear, 1, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 2, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 3, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 4, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 5, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 6, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 7, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 8, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 9, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 10, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 11, assessmentHistory), AssessmentResultFragment.newInstance(curYear, 12, assessmentHistory))
         mDatabind.viewpager.adapter = SportsAssessmentsHistoryAdapter(supportFragmentManager, fragments)
         mDatabind.tabLayout.setViewPager(mDatabind.viewpager)
         mDatabind.tabLayout.currentTab = curMonth
@@ -79,8 +78,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
 
-        lineChart.extraBottomOffset=18f
-        lineChart.extraRightOffset=18f
+        lineChart.extraBottomOffset = 18f
+        lineChart.extraRightOffset = 18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -89,14 +88,14 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(true)
-        xAxis.textColor=getColor(R.color.color_801c1c1c)
-        xAxis.labelCount=10
-        xAxis.yOffset=23f
-        xAxis.textSize=dp2px(20).toFloat()
+        xAxis.textColor = getColor(R.color.color_801c1c1c)
+        xAxis.labelCount = 10
+        xAxis.yOffset = 23f
+        xAxis.textSize = dp2px(20).toFloat()
         xAxis.enableGridDashedLine(2f, 1f, 0f)
-        xAxis.valueFormatter=object: ValueFormatter(){
+        xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return "${(value+1).toInt()}月"
+                return "${(value + 1).toInt()}月"
             }
         }
 
@@ -106,22 +105,22 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        leftAxis.labelCount=10
-        leftAxis.xOffset=23f
+        leftAxis.labelCount = 10
+        leftAxis.xOffset = 23f
         leftAxis.axisMinimum = 0f
-        leftAxis.textColor=ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        leftAxis.textSize=dp2px(20).toFloat()
+        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        leftAxis.textSize = dp2px(20).toFloat()
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.setDrawGridLines(false)
         rightAxis.setDrawAxisLine(false)
-        rightAxis.labelCount=10
-        rightAxis.axisMinimum=0f
-        rightAxis.axisMaximum=60f
-        rightAxis.xOffset=10f
-        rightAxis.textSize=dp2px(20).toFloat()
+        rightAxis.labelCount = 10
+        rightAxis.axisMinimum = 0f
+        rightAxis.axisMaximum = 60f
+        rightAxis.xOffset = 10f
+        rightAxis.textSize = dp2px(20).toFloat()
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
-        rightAxis.textColor=ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        rightAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
         val values3 = ArrayList<Entry>()
@@ -129,12 +128,12 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         for (i in assessmentHistory.indices) {
             values.add(BarEntry(i.toFloat(), assessmentHistory[i].lift_leg.toFloat()))
         }
-        for (i in  assessmentHistory.indices) {
-            values2.add(BarEntry(i.toFloat(),  assessmentHistory[i].sit_up.toFloat()))
+        for (i in assessmentHistory.indices) {
+            values2.add(BarEntry(i.toFloat(), assessmentHistory[i].sit_up.toFloat()))
         }
 
         for (i in assessmentHistory.indices) {
-            values3.add(BarEntry(i.toFloat(),  assessmentHistory[i].grip/10f))
+            values3.add(BarEntry(i.toFloat(), assessmentHistory[i].grip / 10f))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -142,9 +141,9 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
         lineDataSet.setCircleColor(appContext.getColor(R.color.color_blue))
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setDrawValues(false)
-        lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
+        lineDataSet.axisDependency = YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_blue)
         // draw selection line as dashed
         lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
@@ -164,11 +163,11 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(true)
         lineDataSet2.setCircleColor(appContext.getColor(R.color.color_ffc019))
-        lineDataSet2.circleRadius=4f
+        lineDataSet2.circleRadius = 4f
         lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
-        lineDataSet2.axisDependency=YAxis.AxisDependency.LEFT
+        lineDataSet2.axisDependency = YAxis.AxisDependency.LEFT
         // draw selection line as dashed
         lineDataSet2.enableDashedHighlightLine(10f, 5f, 0f)
 
@@ -188,11 +187,11 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet3.mode = LineDataSet.Mode.LINEAR
         lineDataSet3.setDrawCircles(true)
         lineDataSet3.setCircleColor(appContext.getColor(R.color.color_ff824c))
-        lineDataSet3.circleRadius=4f
+        lineDataSet3.circleRadius = 4f
         lineDataSet3.color = appContext.getColor(R.color.color_ff824c)
         lineDataSet3.setDrawCircleHole(false)
         lineDataSet3.setDrawValues(false)
-        lineDataSet3.axisDependency=YAxis.AxisDependency.RIGHT
+        lineDataSet3.axisDependency = YAxis.AxisDependency.RIGHT
         // draw selection line as dashed
         lineDataSet3.enableDashedHighlightLine(10f, 5f, 0f)
 
@@ -217,6 +216,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.setNoDataText("暂无数据")
         lineChart.animateY(0)
     }
+
     private fun initWeightLineChart(assessmentHistory: ArrayList<AssessmentHistoryData>) {
         val lineChart = mDatabind.weightLineChart
         lineChart.legend.isEnabled = false
@@ -225,8 +225,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=18f
-        lineChart.extraRightOffset=18f
+        lineChart.extraBottomOffset = 18f
+        lineChart.extraRightOffset = 18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -235,14 +235,14 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(true)
-        xAxis.textColor=getColor(R.color.color_801c1c1c)
-        xAxis.labelCount=10
-        xAxis.yOffset=10f
-        xAxis.textSize=dp2px(20).toFloat()
+        xAxis.textColor = getColor(R.color.color_801c1c1c)
+        xAxis.labelCount = 10
+        xAxis.yOffset = 10f
+        xAxis.textSize = dp2px(20).toFloat()
         xAxis.enableGridDashedLine(2f, 1f, 0f)
-        xAxis.valueFormatter=object: ValueFormatter(){
+        xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return "${(value+1).toInt()}月"
+                return "${(value + 1).toInt()}月"
             }
         }
 
@@ -252,22 +252,22 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        leftAxis.labelCount=10
-        leftAxis.xOffset=23f
+        leftAxis.labelCount = 10
+        leftAxis.xOffset = 23f
         leftAxis.axisMinimum = 0f
-        leftAxis.textColor=ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        leftAxis.textSize=dp2px(20).toFloat()
+        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        leftAxis.textSize = dp2px(20).toFloat()
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.setDrawGridLines(false)
         rightAxis.setDrawAxisLine(false)
-        rightAxis.labelCount=10
-        rightAxis.axisMinimum=0f
-        rightAxis.axisMaximum=26f
-        rightAxis.xOffset=23f
-        rightAxis.textSize=dp2px(20).toFloat()
+        rightAxis.labelCount = 10
+        rightAxis.axisMinimum = 0f
+        rightAxis.axisMaximum = 26f
+        rightAxis.xOffset = 23f
+        rightAxis.textSize = dp2px(20).toFloat()
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
-        rightAxis.textColor=ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        rightAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
 
@@ -275,7 +275,7 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
             values.add(BarEntry(i.toFloat(), assessmentHistory[i].weight.toFloat()))
         }
         for (i in assessmentHistory.indices) {
-            values2.add(BarEntry(i.toFloat(),  assessmentHistory[i].bmi.toFloat()))
+            values2.add(BarEntry(i.toFloat(), assessmentHistory[i].bmi.toFloat()))
         }
 
         val dataSets = ArrayList<ILineDataSet>()
@@ -284,9 +284,9 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
         lineDataSet.setCircleColor(appContext.getColor(R.color.color_23d3f2))
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setDrawValues(false)
-        lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
+        lineDataSet.axisDependency = YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_23d3f2)
         // draw selection line as dashed
         lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
@@ -306,11 +306,11 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(true)
         lineDataSet2.setCircleColor(appContext.getColor(R.color.color_8e4cff))
-        lineDataSet2.circleRadius=4f
+        lineDataSet2.circleRadius = 4f
         lineDataSet2.color = appContext.getColor(R.color.color_8e4cff)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
-        lineDataSet2.axisDependency=YAxis.AxisDependency.RIGHT
+        lineDataSet2.axisDependency = YAxis.AxisDependency.RIGHT
         // draw selection line as dashed
         lineDataSet2.enableDashedHighlightLine(10f, 5f, 0f)
 
@@ -342,8 +342,8 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineChart.isDragEnabled = false
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
-        lineChart.extraBottomOffset=18f
-        lineChart.extraRightOffset=18f
+        lineChart.extraBottomOffset = 18f
+        lineChart.extraRightOffset = 18f
         lineChart.setDrawGridBackground(false)
         val description = Description()
         description.text = ""
@@ -353,14 +353,14 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(true)
-        xAxis.textColor=getColor(R.color.color_801c1c1c)
-        xAxis.labelCount=10
-        xAxis.yOffset=10f
-        xAxis.textSize=dp2px(20).toFloat()
+        xAxis.textColor = getColor(R.color.color_801c1c1c)
+        xAxis.labelCount = 10
+        xAxis.yOffset = 10f
+        xAxis.textSize = dp2px(20).toFloat()
         xAxis.enableGridDashedLine(2f, 1f, 0f)
-        xAxis.valueFormatter=object: ValueFormatter(){
+        xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return "${(value+1).toInt()}月"
+                return "${(value + 1).toInt()}月"
             }
         }
 
@@ -370,14 +370,14 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        leftAxis.labelCount=10
-        leftAxis.xOffset=23f
+        leftAxis.labelCount = 10
+        leftAxis.xOffset = 23f
         leftAxis.axisMinimum = 0f
-        leftAxis.textColor=ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        leftAxis.textSize=dp2px(20).toFloat()
+        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        leftAxis.textSize = dp2px(20).toFloat()
         val rightAxis: YAxis = lineChart.axisRight
         leftAxis.axisMinimum = 0f
-        rightAxis.isEnabled=false
+        rightAxis.isEnabled = false
         val values = ArrayList<Entry>()
 
         for (i in assessmentHistory.indices) {
@@ -390,9 +390,9 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
         lineDataSet.setCircleColor(appContext.getColor(R.color.color_blue))
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setDrawValues(false)
-        lineDataSet.axisDependency=YAxis.AxisDependency.LEFT
+        lineDataSet.axisDependency = YAxis.AxisDependency.LEFT
         lineDataSet.color = appContext.getColor(R.color.color_blue)
         // draw selection line as dashed
         lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
@@ -419,16 +419,17 @@ class SportsAssessmentsHistoryActivity : BaseActivity<SportsAssessmentsHistoryVi
     inner class ProxyClick {
 
         fun clickPreYear() {
-            curYear = DateTimeUtil.getPreYear(curYear,curMonth)
+            curYear = DateTimeUtil.getPreYear(curYear, curMonth)
             mViewModel.calendarTitle.set("${curYear}年")
             mViewModel.getAssessment(curYear.toString())
         }
 
         fun clickNextYear() {
-            curYear = DateTimeUtil.getNextYear(curYear,curMonth)
+            curYear = DateTimeUtil.getNextYear(curYear, curMonth)
             mViewModel.calendarTitle.set("${curYear}年")
             mViewModel.getAssessment(curYear.toString())
         }
+
         fun clickFinish() {
             finish()
         }

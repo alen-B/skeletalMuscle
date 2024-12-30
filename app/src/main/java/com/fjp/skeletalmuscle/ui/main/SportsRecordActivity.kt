@@ -372,7 +372,13 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return DateTimeUtil.formatDate(heartRate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
+                val index = value.toInt()
+                return if(index >=0 && index <heartRate.size){
+                    DateTimeUtil.formatDate(heartRate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
+                }else{
+                    ""
+                }
+
             }
 
         }

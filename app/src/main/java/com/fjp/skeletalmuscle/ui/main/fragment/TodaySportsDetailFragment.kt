@@ -257,7 +257,13 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         //设置底部文字显示格式化
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return result.trend[value.toInt()].time
+                val index = value.toInt()
+                return if(index >=0 && index <result.trend.size ){
+                    result.trend[value.toInt()].time
+                }else{
+                    ""
+                }
+
             }
 
         }
@@ -472,7 +478,12 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         }
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return result.trend[value.toInt()].time
+                val index = value.toInt()
+                return if(index >=0 && index<result.trend.size){
+                    result.trend[value.toInt()].time
+                }else {
+                    ""
+                }
             }
         }
         val leftAxis = lineChart.axisLeft
@@ -588,7 +599,13 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
             }
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    return if (leftLegRecord.size > rightLegRecord.size) leftLegRecord[value.toInt()].time else rightLegRecord[value.toInt()].time
+                    val index = value.toInt()
+                    if(index >=0 && index<Math.max(leftLegRecord.size ,rightLegRecord.size)){
+                        return if (leftLegRecord.size > rightLegRecord.size) leftLegRecord[value.toInt()].time else rightLegRecord[value.toInt()].time
+                    }else{
+                        return ""
+                    }
+
                 }
 
             }
@@ -600,7 +617,12 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
-                    return result.trend[value.toInt()].time
+                    val index = value.toInt()
+                    if(index >= 0 && index<result.trend.size){
+                        return result.trend[value.toInt()].time
+                    }else{
+                        return ""
+                    }
                 }
 
             }

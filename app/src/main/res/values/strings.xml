@@ -397,12 +397,12 @@
     <string name="sports_assessment_history_title">历史运动测评结果</string>
     <string name="sports_assessment_history_pre_year">前一年</string>
     <string name="sports_assessment_history_next_year">后一年</string>
-    <string name="sports_assessment_history_max_grips">握力巅峰</string>
-    <string name="sports_assessment_history_sit_up_times">起坐次数</string>
-    <string name="sports_assessment_history_high_leg_times">高抬腿次数</string>
+    <string name="sports_assessment_history_max_grips">握力巅峰(kg)</string>
+    <string name="sports_assessment_history_sit_up_times">起坐次数(次)</string>
+    <string name="sports_assessment_history_high_leg_times">高抬腿次数(次)</string>
     <string name="sports_assessment_history_assessment">运动测评指标</string>
     <string name="sports_assessment_history_weight_and_bmi">体重和BMI趋势图</string>
-    <string name="sports_assessment_history_weight">体重</string>
+    <string name="sports_assessment_history_weight">体重(kg)</string>
     <string name="sports_assessment_history_bmi">BMI</string>
     <string name="sports_assessment_history_waist">腰围示意图</string>
     <string name="sports_assessment_history_result_max_grips">握力运动最高</string>
