@@ -57,18 +57,7 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, Activ
             }
 
         })
-        if (chartType == ChartType.BURN_CALORIES.type) {
-            mDatabind.bottomBgView.visibility = View.VISIBLE
-            mDatabind.allSportsTitleTv.visibility = View.VISIBLE
-            mDatabind.allTabLayout.visibility = View.VISIBLE
-            mDatabind.allSportsViewpager.visibility = View.VISIBLE
 
-            val allSportsViewpager = mDatabind.allSportsViewpager
-            val fragments = arrayListOf<Fragment>(TodaySportsDetailFragment.newInstance(sportsType, ChartType.All_CALORIES.type, DateType.DAY), TodaySportsDetailFragment.newInstance(sportsType, ChartType.All_CALORIES.type, DateType.WEEK), TodaySportsDetailFragment.newInstance(sportsType, ChartType.All_CALORIES.type, DateType.MONTH), TodaySportsDetailFragment.newInstance(sportsType, ChartType.All_CALORIES.type, DateType.YEAR))
-            allSportsViewpager.adapter = TodaySportsDetailAdapter(supportFragmentManager, fragments)
-            mDatabind.allTabLayout.setViewPager(allSportsViewpager)
-
-        }
     }
 
     private fun getChartType(chartType: Int): String {

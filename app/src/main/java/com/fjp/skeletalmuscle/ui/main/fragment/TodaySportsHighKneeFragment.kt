@@ -247,12 +247,7 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         xAxis.textSize=20f
         xAxis.labelCount=2
-        xAxis.valueFormatter = object : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                return "${value.toInt()+1}组"
-            }
 
-        }
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
@@ -277,6 +272,12 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         val rightLegRecord = sportLiftLeg.record.filter { it.type == 2 }
         for (i in rightLegRecord.indices) {
             values2.add(BarEntry(i.toFloat(), rightLegRecord[i].right_degree.toFloat()))
+        }
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return "${value.toInt()+1}组"
+            }
+
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")

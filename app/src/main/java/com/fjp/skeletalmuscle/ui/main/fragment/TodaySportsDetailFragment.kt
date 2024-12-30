@@ -32,7 +32,6 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
@@ -47,8 +46,9 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
     var sportsType: SportsType = SportsType.HIGH_KNEE
     var type: Int = 0
     var dateType: DateType = DateType.DAY
+
     companion object {
-        fun newInstance(sportsType: SportsType, chartType: Int, dateType: DateType):TodaySportsDetailFragment {
+        fun newInstance(sportsType: SportsType, chartType: Int, dateType: DateType): TodaySportsDetailFragment {
             val fragment = TodaySportsDetailFragment()
             val bundle = Bundle()
             bundle.putString(Constants.INTENT_SPORTS_TYPE, sportsType.name)
@@ -60,9 +60,9 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        sportsType = SportsType.valueOf(arguments?.get(Constants.INTENT_SPORTS_TYPE)as String)
+        sportsType = SportsType.valueOf(arguments?.get(Constants.INTENT_SPORTS_TYPE) as String)
         type = arguments?.getInt(Constants.INTENT_KEY_TYPE)!!
-        dateType = DateType.valueOf(arguments?.get(Constants.INTENT_KEY_DATE_TYPE)as String)
+        dateType = DateType.valueOf(arguments?.get(Constants.INTENT_KEY_DATE_TYPE) as String)
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         when (type) {
@@ -244,10 +244,18 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textSize = 20.dp
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        xAxis.labelCount = Math.min(6,result.trend.size)
+        if (dateType == DateType.DAY) {
+            xAxis.labelCount = Math.min(6, result.trend.size)
+        } else if (dateType == DateType.WEEK) {
+            xAxis.labelCount = 7
+        } else if (dateType == DateType.MONTH) {
+            xAxis.labelCount = 10
+        } else {
+            xAxis.labelCount = 12
+        }
 //        val dayFormatterData = getFormatterData(ChartType.BURN_CALORIES)
         //设置底部文字显示格式化
-        xAxis.valueFormatter =  object : ValueFormatter() {
+        xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return result.trend[value.toInt()].time
             }
@@ -267,7 +275,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
         val values = ArrayList<BarEntry>()
         for (i in result.trend.indices) {
-            values.add(BarEntry(i.toFloat(), result.trend[i].calorie/1000f))
+            values.add(BarEntry(i.toFloat(), result.trend[i].calorie / 1000f))
         }
         val dataSets = ArrayList<IBarDataSet>()
         val barDataSet = BarDataSet(values, "消耗(千卡)")
@@ -376,7 +384,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.axisMinimum = 0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        leftAxis.labelCount=5
+        leftAxis.labelCount = 5
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.textSize = 20.dp
         val rightAxis: YAxis = lineChart.axisRight
@@ -394,7 +402,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         if (isUp) {
             lineDataSet.color = appContext.getColor(R.color.color_ffc019)
         } else {
@@ -452,16 +460,20 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.textSize = 20.dp
-        xAxis.labelCount =if(result.trend.size<8) result.trend.size else 6
+//        if(dateType == DateType.DAY){
+//            xAxis.labelCount = Math.min(6,result.trend.size)
+//        }else if(dateType == DateType.WEEK){
+//            xAxis.labelCount = 7
+//        }else if(dateType == DateType.MONTH){
+//            xAxis.labelCount =10
+//        }
+        if (dateType == DateType.YEAR) {
+            xAxis.labelCount = 11
+        }
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return if (value.toInt() >= 0 && value.toInt() < result.trend.size) {
-                    result.trend[value.toInt()].time
-                } else {
-                    ""
-                }
+                return result.trend[value.toInt()].time
             }
-
         }
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -470,7 +482,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.axisMinimum = 0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        leftAxis.labelCount=5
+        leftAxis.labelCount = 5
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
@@ -479,14 +491,14 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         val values = ArrayList<Entry>()
 
         for (i in result.trend.indices) {
-            values.add(BarEntry(i.toFloat(), result.trend[i].rate_value.toFloat()))
+            values.add(BarEntry(i.toFloat(), result.trend[i].rate_value.toFloat(), result.trend[i].time))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setCircleColor(ContextCompat.getColor(appContext, R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
@@ -530,7 +542,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         lineChart.setDrawGridBackground(false)
 
         lineChart.extraBottomOffset = 18f
-        lineChart.extraRightOffset = 18f
+//        lineChart.extraRightOffset = 18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -542,14 +554,11 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         xAxis.setDrawGridLines(false)
         xAxis.setDrawLabels(true)
         xAxis.textSize = 20.dp
-        xAxis.labelCount =if(result.trend.size<8) result.trend.size else 8
-        xAxis.enableGridDashedLine(2f, 1f, 0f)
-        xAxis.valueFormatter = object : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                return "${value.toInt()+1}组"
-            }
-
+        if (dateType === DateType.YEAR) {
+            xAxis.labelCount = 11
         }
+        xAxis.enableGridDashedLine(2f, 1f, 0f)
+
 
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -560,7 +569,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         leftAxis.textSize = 20.dp
-        leftAxis.labelCount=5
+        leftAxis.labelCount = 5
         val rightAxis: YAxis = lineChart.axisRight
         rightAxis.gridLineWidth = 0.5f
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
@@ -568,21 +577,41 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
+        if (dateType === DateType.DAY) {
+            val leftLegRecord = result.trend.filter { it.left_degree != 0.0 }
+            for (i in leftLegRecord.indices) {
+                values.add(BarEntry(i.toFloat(), leftLegRecord[i].left_degree.toFloat()))
+            }
+            val rightLegRecord = result.trend.filter { it.right_degree != 0.0 }
+            for (i in rightLegRecord.indices) {
+                values2.add(BarEntry(i.toFloat(), rightLegRecord[i].right_degree.toFloat()))
+            }
+            xAxis.valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return if (leftLegRecord.size > rightLegRecord.size) leftLegRecord[value.toInt()].time else rightLegRecord[value.toInt()].time
+                }
 
-        val leftLegRecord = result.trend.filter { it.left_degree != 0.0 }
-        for (i in leftLegRecord.indices) {
-            values.add(BarEntry(i.toFloat(), leftLegRecord[i].left_degree.toFloat()))
+            }
+        } else {
+            for (i in result.trend.indices) {
+                values.add(BarEntry(i.toFloat(), result.trend[i].left_degree.toFloat()))
+                values2.add(BarEntry(i.toFloat(), result.trend[i].right_degree.toFloat()))
+            }
+
+            xAxis.valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return result.trend[value.toInt()].time
+                }
+
+            }
         }
-        val rightLegRecord = result.trend.filter { it.right_degree != 0.0 }
-        for (i in rightLegRecord.indices) {
-            values2.add(BarEntry(i.toFloat(), rightLegRecord[i].right_degree.toFloat()))
-        }
+
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setDrawValues(false)
         lineDataSet.color = appContext.getColor(R.color.color_blue)
         // draw selection line as dashed
@@ -604,18 +633,18 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         lineDataSet2.setDrawCircles(true)
         lineDataSet.setDrawCircles(true)
         lineDataSet.setCircleColors(resources.getColor(R.color.color_blue))
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
         lineDataSet2.setCircleColors(resources.getColor(R.color.color_ffc019))
-        lineDataSet2.circleRadius=4f
+        lineDataSet2.circleRadius = 4f
         // draw selection line as dashed
         lineDataSet2.enableDashedHighlightLine(10f, 5f, 0f)
 
         // set the filled area
         lineDataSet2.setDrawFilled(true)
-        lineDataSet2.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+//        lineDataSet2.fillFormatter = IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
         if (Utils.getSDKInt() >= 18) {
             // drawables only supported on api level 18 and above
             val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_yellow)
