@@ -13,6 +13,8 @@ import com.fjp.skeletalmuscle.data.model.bean.result.CalendarResult
 import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SaveLiftLegResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SavePlankResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellExpandChestAndUpResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeResult
@@ -96,7 +98,7 @@ class HttpRequestManger {
      * 高抬腿
      *
      */
-    suspend fun saveLiftLeg(liftLegRequest: LiftLegRequest): ApiResponse<String> {
+    suspend fun saveLiftLeg(liftLegRequest: LiftLegRequest): ApiResponse<SaveLiftLegResult> {
         return apiService.saveLiftLeg(liftLegRequest)
     }
 
@@ -112,7 +114,7 @@ class HttpRequestManger {
      * 平板支撑
      *
      */
-    suspend fun saveflatSupport(flatSupportRequest: FlatSupportRequest): ApiResponse<String> {
+    suspend fun saveflatSupport(flatSupportRequest: FlatSupportRequest): ApiResponse<SavePlankResult> {
         return apiService.saveflatSupport(flatSupportRequest)
     }
 

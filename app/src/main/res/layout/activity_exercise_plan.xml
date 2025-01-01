@@ -27,17 +27,6 @@
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
 
-        <ImageView
-            android:id="@+id/sportsTypeIv"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:visibility="gone"
-            app:bitmap="@{viewModel.sportsIcon}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintEnd_toStartOf="@+id/typeTv"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/typeTv"
@@ -46,11 +35,10 @@
             android:text="@{viewModel.sportsType}"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_3"
-            app:layout_constraintBottom_toBottomOf="@+id/sportsTypeIv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="12dp"
-            app:layout_constraintTop_toTopOf="@+id/sportsTypeIv" />
+            app:layout_constraintTop_toBottomOf="@+id/title_layout" />
         <!--  运动处方View      -->
         <View
             android:id="@+id/exerciseView"
@@ -63,7 +51,7 @@
             app:layout_constraintEnd_toStartOf="@+id/deviceView"
             app:layout_constraintHorizontal_weight="580"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sportsTypeIv" />
+            app:layout_constraintTop_toBottomOf="@+id/typeTv" />
 
         <TextView
             android:id="@+id/exerciseDataTv"
@@ -591,7 +579,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="502"
             app:layout_constraintStart_toEndOf="@+id/exerciseView"
-            app:layout_constraintTop_toBottomOf="@+id/sportsTypeIv" />
+            app:layout_constraintTop_toBottomOf="@+id/typeTv" />
 
         <TextView
             android:id="@+id/deviceLinkTv"

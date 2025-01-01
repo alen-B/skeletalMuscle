@@ -51,8 +51,8 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportLiftLeg.sport_time))
         mViewModel.endurance.set(sportLiftLeg.cardiorespiratory_endurance.toString())
         mViewModel.heat.set((sportLiftLeg.sum_calorie / 1000).toString())
-        mDatabind.avgLeftTv.setText("${sportLiftLeg.avg_left_degree}°")
-        mDatabind.avgRightTv.setText("${sportLiftLeg.avg_right_degree}°")
+        mDatabind.avgLeftTv.text = "${sportLiftLeg.avg_left_degree}°"
+        mDatabind.avgRightTv.text = "${sportLiftLeg.avg_right_degree}°"
         mDatabind.warmupTimePB.setProgressPercentage(((sportLiftLeg.warm_up_activation / (sportLiftLeg.sport_time).toDouble()) * 100), true)
         mDatabind.fatBurningTimePb.setProgressPercentage(((sportLiftLeg.efficient_grease_burning / (sportLiftLeg.sport_time).toDouble()) * 100), true)
         mDatabind.cardioTimePb.setProgressPercentage(((sportLiftLeg.heart_lung_enhancement / (sportLiftLeg.sport_time).toDouble()) * 100), true)

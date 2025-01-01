@@ -17,4 +17,5 @@ data class LiftLegRequest(
     var warm_up_activation: Int,//暖身激活
     var extreme_breakthrough: Int,//极限突破
     var heart_lung_enhancement: Int,//心肺提升
+    var sport_time: Int,//运动时长
 )

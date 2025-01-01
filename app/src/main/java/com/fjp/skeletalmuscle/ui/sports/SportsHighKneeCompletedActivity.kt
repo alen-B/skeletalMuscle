@@ -14,6 +14,7 @@ import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
+import com.fjp.skeletalmuscle.data.model.bean.result.SaveLiftLegResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportLiftLeg
 import com.fjp.skeletalmuscle.databinding.ActivitySportsHightKneeCompletedBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
@@ -36,7 +37,7 @@ import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.appContext
 
 class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedViewModel, ActivitySportsHightKneeCompletedBinding>() {
-    lateinit var sportLiftLeg: SportLiftLeg
+    lateinit var sportLiftLeg: SaveLiftLegResult
     val shareViewModel  :ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
@@ -46,9 +47,9 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         mViewModel.curScore.set(sportLiftLeg.score.toString())
         mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportLiftLeg.sport_time))
         mViewModel.endurance.set(sportLiftLeg.cardiorespiratory_endurance.toString())
-        mViewModel.heat.set((sportLiftLeg.sum_calorie / 1000).toString())
-        mDatabind.avgLeftTv.setText("${sportLiftLeg.avg_left_degree}°")
-        mDatabind.avgRightTv.setText("${sportLiftLeg.avg_right_degree}°")
+        mViewModel.heat.set((sportLiftLeg.calorie / 1000).toString())
+        mDatabind.avgLeftTv.text = "${Math.round(sportLiftLeg.avg_left_degree)}°"
+        mDatabind.avgRightTv.text = "${Math.round(sportLiftLeg.avg_right_degree)}°"
         mDatabind.warmupTimePB.setProgressPercentage(((sportLiftLeg.warm_up_activation / (sportLiftLeg.sport_time).toDouble()) * 100), true)
         mDatabind.fatBurningTimePb.setProgressPercentage(((sportLiftLeg.efficient_grease_burning / (sportLiftLeg.sport_time).toDouble()) * 100), true)
         mDatabind.cardioTimePb.setProgressPercentage(((sportLiftLeg.heart_lung_enhancement / (sportLiftLeg.sport_time).toDouble()) * 100), true)
@@ -93,8 +94,8 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index<sportLiftLeg.calorie.size){
-                    DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                return if(index >=0 && index<sportLiftLeg.heart_rate.size){
+                    DateTimeUtil.completedTimeFromat(sportLiftLeg.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
                 }else {
                     ""
                 }
@@ -182,12 +183,12 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.setDrawGridLines(false)
         xAxis.textSize=20f
         xAxis.setAvoidFirstLastClipping(true)
-        xAxis.labelCount= Math.min(2,sportLiftLeg.calorie.size)
+        xAxis.labelCount= Math.min(2,sportLiftLeg.calorie_list.size)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index>=0 && index< sportLiftLeg.calorie.size){
-                    DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie[index].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                return if(index>=0 && index< sportLiftLeg.calorie_list.size){
+                    DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie_list[index].record_time,DateTimeUtil.DATE_PATTERN_SS)
                 }else{
                     ""
                 }
@@ -213,7 +214,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
         var index = 0f
-        for (i in sportLiftLeg.calorie) {
+        for (i in sportLiftLeg.calorie_list) {
             values.add(BarEntry(index, i.calorie.toFloat()))
             index++
         }
@@ -276,11 +277,11 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
 
         val leftLegRecord = sportLiftLeg.record.filter { it.type == 1 }
         for (i in leftLegRecord.indices) {
-            values.add(BarEntry(i.toFloat(), leftLegRecord[i].left_degree.toFloat()))
+            values.add(BarEntry(i.toFloat(), leftLegRecord[i].degree.toFloat()))
         }
         val rightLegRecord = sportLiftLeg.record.filter { it.type == 2 }
         for (i in rightLegRecord.indices) {
-            values2.add(BarEntry(i.toFloat(), rightLegRecord[i].right_degree.toFloat()))
+            values2.add(BarEntry(i.toFloat(), rightLegRecord[i].degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")

@@ -12,6 +12,8 @@ import com.fjp.skeletalmuscle.data.model.bean.result.CalendarResult
 import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SaveLiftLegResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SavePlankResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendDumbbellExpandChestAndUpResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeResult
@@ -84,7 +86,7 @@ interface ApiService {
      *
      */
     @POST("sport/lift_leg")
-    suspend fun saveLiftLeg(@Body liftLegRequest: LiftLegRequest): ApiResponse<String>
+    suspend fun saveLiftLeg(@Body liftLegRequest: LiftLegRequest): ApiResponse<SaveLiftLegResult>
 
     /**
      * 哑铃
@@ -98,7 +100,7 @@ interface ApiService {
      *
      */
     @POST("sport/flat_support")
-    suspend fun saveflatSupport(@Body flatSupportRequest: FlatSupportRequest): ApiResponse<String>
+    suspend fun saveflatSupport(@Body flatSupportRequest: FlatSupportRequest): ApiResponse<SavePlankResult>
 
     /**
      * 今日运动所有数据获取

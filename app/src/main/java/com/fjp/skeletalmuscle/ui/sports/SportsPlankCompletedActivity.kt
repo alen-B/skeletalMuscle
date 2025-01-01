@@ -15,6 +15,7 @@ import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
+import com.fjp.skeletalmuscle.data.model.bean.result.SavePlankResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.ActivitySportsPlankCompletedBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
@@ -37,7 +38,7 @@ import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.appContext
 
 class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,ActivitySportsPlankCompletedBinding>() {
-    lateinit var sportFlatSupport: SportFlatSupport
+    lateinit var sportFlatSupport: SavePlankResult
     val shareViewmodel  : ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
         sportFlatSupport = intent.getParcelableExtra(Constants.INTENT_SPORT_PLANK)!!
@@ -47,7 +48,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         mViewModel.curScore.set(sportFlatSupport.score.toString())
         mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportFlatSupport.sport_time))
         mViewModel.heat.set(sportFlatSupport.avg_rate_value.toString())
-        mViewModel.calorie.set((sportFlatSupport.sum_calorie/1000).toString())
+        mViewModel.calorie.set((sportFlatSupport.calorie/1000).toString())
         initCalorieBarChart()
         initHeartRateLineChart()
     }
@@ -156,8 +157,8 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index <sportFlatSupport.heart_rate.size){
-                    DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                return if(index >=0 && index <sportFlatSupport.calorie_list.size){
+                    DateTimeUtil.completedTimeFromat(sportFlatSupport.calorie_list[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
                 }else{
                     ""
                 }
@@ -184,8 +185,8 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         barChart.legend.isEnabled = false
         val values = ArrayList<BarEntry>()
 
-        for (i in sportFlatSupport.calorie.indices) {
-            values.add(BarEntry(i.toFloat(), sportFlatSupport.calorie[i].calorie.toFloat()))
+        for (i in sportFlatSupport.calorie_list.indices) {
+            values.add(BarEntry(i.toFloat(), sportFlatSupport.calorie_list[i].calorie.toFloat()))
 
         }
         val dataSets = ArrayList<IBarDataSet>()

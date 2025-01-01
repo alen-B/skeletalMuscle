@@ -25,9 +25,6 @@ import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.appContext
 
 class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercisePlanBinding>(), SMBleManager.DeviceListener {
-    private val DEFAULT_SPORTS_TIME_LEG_KNEE = "8"
-    private val DEFAULT_SPORTS_TIME_DUMBBELL = "5"
-    private val DEFAULT_SPORTS_TIME_PLANK = "2"
     private val SPORTS_TIME_MIN_LEG_KNEE = 2
     private val SPORTS_TIME_MIN_DUMBBELL = 2
     private val SPORTS_TIME_MIN_PLANK = 1
@@ -43,7 +40,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        mViewModel.title.set(getString(R.string.today_sports_title))
+        mViewModel.title.set(getString(R.string.exercise_plan_title))
         mViewModel.leftImg.set(R.drawable.title_icon_sports_record)
         findViewById<TextView>(R.id.titleTv).setTextColor(ContextCompat.getColor(appContext, R.color.white))
         SMBleManager.addDeviceResultDataListener(this)

@@ -6,6 +6,7 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
 import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
 import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
+import com.fjp.skeletalmuscle.data.model.bean.result.SavePlankResult
 import com.fjp.skeletalmuscle.data.repository.request.HttpRequestCoroutine
 import me.hgj.jetpackmvvm.ext.request
 import me.hgj.jetpackmvvm.state.ResultState
@@ -25,7 +26,7 @@ class PlankViewModel : SMBaseViewModel() {
     val rightLegCount = ObservableField("0")
     val maxTime = App.sportsTime//单位分钟
 
-    var plankLiveData = MutableLiveData<ResultState<String>>()
+    var plankLiveData = MutableLiveData<ResultState<SavePlankResult>>()
     fun saveflatSupport(request: FlatSupportRequest) {
         request({
             HttpRequestCoroutine.saveflatSupport(request)

@@ -115,12 +115,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         val now = LocalDateTime.now()
         val hour = now.hour
 
-        val timeOfDay = if (hour < 12) "上午好" else "下午好"
-        if (App.userInfo?.sex == getString(R.string.setting_sex_woman)) {
-            mViewModel.title.set("${App.userInfo?.name}奶奶，${timeOfDay}")
-        } else {
-            mViewModel.title.set("${App.userInfo?.name}爷爷，${timeOfDay}")
-        }
+            mViewModel.title.set("嘿，您来了，欢迎${App.userInfo?.name}。")
     }
 
 

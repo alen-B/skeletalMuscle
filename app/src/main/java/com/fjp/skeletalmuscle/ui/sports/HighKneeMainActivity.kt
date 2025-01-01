@@ -47,7 +47,7 @@ import kotlin.math.ceil
 
 
 class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMainBinding>(), SMBleManager.DeviceListener {
-    var liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0)
+    var liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0,0)
     private val requestHighKneeViewModel: RequestHighKneeViewModel by viewModels()
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
@@ -167,7 +167,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 mDatabind.scoreViewTv.visibility = View.VISIBLE
                 mDatabind.scoreViewTv.visibility = View.VISIBLE
                 mViewModel.title.set(getString(R.string.high_knee_main_title))
-                liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0)
+                liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0,0)
                 startTimer()
             }
 
@@ -244,6 +244,10 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (liftLegRequest.end_time - liftLegRequest.start_time > App.sportsTime * 60) {
             liftLegRequest.end_time = liftLegRequest.start_time + App.sportsTime * 60
         }
+        if(seconds> App.sportsTime*60){
+            seconds = App.sportsTime*60
+        }
+        liftLegRequest.sport_time = seconds
         requestHighKneeViewModel.saveLiftLeg(liftLegRequest)
 
     }
@@ -260,8 +264,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             parseState(it, {
                 showToast("发送成功")
                 val intent = Intent(this@HighKneeMainActivity, SportsHighKneeCompletedActivity::class.java)
-                val sportLiftLeg = getSportLiftLeg()
-                intent.putExtra(Constants.INTENT_SPORT_LIFT_LEG, sportLiftLeg)
+                intent.putExtra(Constants.INTENT_SPORT_LIFT_LEG, it)
                 startActivity(intent)
                 finish()
             }, {
@@ -270,31 +273,6 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             })
 
         }
-    }
-
-    private fun getSportLiftLeg(): SportLiftLeg {
-        val sport_time: Long = elapsedTime / 1000
-        val avg_left_degree: Int = (leftLegAngleSum / leftLegLifts).toInt()
-        val avg_rate_value: Int = liftLegRequest.record.sumBy { it.degree } / liftLegRequest.record.size
-        val avg_right_degree: Int = (rightLegAngleSum / rightLegLifts).toInt()
-        val calorie: List<Calorie> = liftLegRequest.calorie
-        val cardiorespiratory_endurance: Double = liftLegRequest.cardiorespiratory_endurance
-        val efficient_grease_burning: Int = liftLegRequest.efficient_grease_burning
-        val extreme_breakthrough: Int = liftLegRequest.extreme_breakthrough
-        val heart_lung_enhancement: Int = liftLegRequest.heart_lung_enhancement
-        val heart_rate: List<HeartRate> = liftLegRequest.heart_rate
-        val left_times: Int = leftLegLifts
-        val max_rate_value: Int = maxHeartRate
-        val min_rate_value: Int = minHeartRate
-        val record: List<TodayRecord> = liftLegRequest.record.map { record ->
-            TodayRecord(0, 0, 0, DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN_SS, record.record_time).time.toInt(), record.type, record.degree, record.degree)
-        }
-        val right_times: Int = rightLegLifts
-        val score: Int = liftLegRequest.score
-        val sum_calorie: Int = (caloriesBurned * 1000).toInt()
-        val warm_up_activation: Int = liftLegRequest.warm_up_activation
-        return SportLiftLeg(sport_time, avg_left_degree, avg_rate_value, avg_right_degree, calorie, cardiorespiratory_endurance, efficient_grease_burning, extreme_breakthrough, heart_lung_enhancement, heart_rate, 0, left_times, max_rate_value, min_rate_value, record, right_times, score, sum_calorie, 0, warm_up_activation, avg_left_degree * left_times, avg_right_degree * right_times, App.sportsTime * 60)
-
     }
 
     inner class ProxyClick {

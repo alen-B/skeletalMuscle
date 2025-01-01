@@ -84,8 +84,8 @@ class SingleSelectActivity : BaseActivity<SingleSelectViewModel, ActivitySingleS
             mViewModel.curIndex.set("6")
             title = getString(R.string.waist_line_title)
             unit = getString(R.string.unit_cm)
-            for (i in 0..50) {
-                mViewModel.dataArr.add(i, i + 70)
+            for (i in 0..80) {
+                mViewModel.dataArr.add(i, i + 40)
             }
         } else if (singleSelectType == SingleSelectType.DAY_ONE_WEEK.type) {
             mViewModel.curIndex.set("9")

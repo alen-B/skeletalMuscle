@@ -167,7 +167,10 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         showToast("完成了运动")
         pauseTimer()
         score = getScore()
-        var request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate,App.sportsTime * 60)
+        if(seconds> App.sportsTime*60){
+            seconds = App.sportsTime*60
+        }
+        val request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate,App.sportsTime * 60,seconds)
         if (request.end_time - request.start_time > App.sportsTime * 60) {
             request.end_time = request.start_time + App.sportsTime * 60
         }
@@ -208,8 +211,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         mViewModel.plankLiveData.observe(this) {
             parseState(it, {
                 val intent = Intent(this@PlankActivity, SportsPlankCompletedActivity::class.java)
-                val sportFlatSupport = getSportFlatSupport()
-                intent.putExtra(Constants.INTENT_SPORT_PLANK, sportFlatSupport)
+                intent.putExtra(Constants.INTENT_SPORT_PLANK, it)
                 startActivity(intent)
                 finish()
             }, {
@@ -219,10 +221,6 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         }
     }
 
-    private fun getSportFlatSupport(): SportFlatSupport {
-
-        return SportFlatSupport(elapsedTime / 1000, (maxHeartRate + minHeartRate) / 2, calories, heartRate, 0, maxHeartRate, minHeartRate, getScore(), (caloriesBurned * 1000).toInt(), 0)
-    }
 
     inner class ProxyClick {
 

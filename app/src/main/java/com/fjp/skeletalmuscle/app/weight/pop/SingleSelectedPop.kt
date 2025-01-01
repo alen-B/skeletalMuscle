@@ -52,7 +52,6 @@ class SingleSelectedPop(context: Context, var type: SingleSelectType, val listen
         sureTv.setOnClickListener { listener.onSelected(mOptionsItems[curIndex], this@SingleSelectedPop) }
         wheelView.setOnItemSelectedListener { index ->
             curIndex = index
-            listener.onSelected(mOptionsItems[index], this@SingleSelectedPop)
         }
     }
 
@@ -73,9 +72,9 @@ class SingleSelectedPop(context: Context, var type: SingleSelectType, val listen
                 list.add("${i}kg")
             }
         } else if (type == SingleSelectType.WAIST_LINE) {
-            for (i in 70..120) {
+            for (i in 40..120) {
                 if (App.userInfo.waistline.equals(i.toString())) {
-                    curIndex = i - 70
+                    curIndex = i - 40
                 }
                 list.add("${i}cm")
             }

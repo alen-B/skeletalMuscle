@@ -15,6 +15,6 @@ class LoginViewModel : SMBaseViewModel() {
     val verificationCode = ObservableField("127127")
     val verificationCodeisEnabled = ObservableField(true)
     val verificationCodeText = ObservableField(appContext.getString(R.string.login_get_verification_code))
-    val agreement = ObservableField(false)
+    val agreement = ObservableField(true)
 
 }
