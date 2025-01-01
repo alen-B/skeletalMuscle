@@ -30,7 +30,7 @@ class App : BaseApp() {
         lateinit var appViewModelInstance: AppViewModel
         var userInfo = UserInfo("", "", 0, arrayListOf(), 0, 0, 0, "", "", "", "", 0, 0, arrayListOf<UserSports>(), 0, 0, "", 0, "", "")
         var sportsType = SportsType.HIGH_KNEE
-        var sportsTime = 8
+        var sportsTime = 2
         var legAngle = 90
         lateinit var mBle: Ble<BleDevice>
     }

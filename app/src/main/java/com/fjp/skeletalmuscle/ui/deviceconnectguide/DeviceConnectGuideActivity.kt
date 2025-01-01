@@ -39,8 +39,7 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
         mDatabind.click = ProxyClick()
         if (App.sportsType == SportsType.ASSESSMENT) {
             fragments = arrayListOf(HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance())
-        }
-        if (App.sportsType == SportsType.PLANK) {
+        }else if (App.sportsType == SportsType.PLANK) {
             fragments = arrayListOf(HighKneeGuideStep2Fragment.newInstance())
         }
         mDatabind.viewpager.init(supportFragmentManager, lifecycle, fragments, false)

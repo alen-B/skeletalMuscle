@@ -47,7 +47,7 @@ import kotlin.math.ceil
 
 
 class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMainBinding>(), SMBleManager.DeviceListener {
-    var liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0,0)
+    var liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0,0,0)
     private val requestHighKneeViewModel: RequestHighKneeViewModel by viewModels()
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
@@ -167,7 +167,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 mDatabind.scoreViewTv.visibility = View.VISIBLE
                 mDatabind.scoreViewTv.visibility = View.VISIBLE
                 mViewModel.title.set(getString(R.string.high_knee_main_title))
-                liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0,0)
+                liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0,0,0)
                 startTimer()
             }
 
@@ -248,6 +248,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             seconds = App.sportsTime*60
         }
         liftLegRequest.sport_time = seconds
+        liftLegRequest.plan_sport_time = App.sportsTime*60
         requestHighKneeViewModel.saveLiftLeg(liftLegRequest)
 
     }
@@ -332,15 +333,11 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     override fun rightHandGripsConnected() {
     }
 
-    val actionDetector = ActionDetector()
     override fun onLeftDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
         }
-        val dataPoint = DeviceDataParse.parseData2DataPoint(data)
-        if (dataPoint != null) {
-            actionDetector.process(dataPoint)
-        }
+
         val pitch = DeviceDataParse.parseData2Pitch(data)
 //        val roll = DeviceDataParse.parseData2Roll(data)
 //        val yaw = DeviceDataParse.parseData2Yaw(data)

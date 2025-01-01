@@ -1,18 +1,29 @@
-package com.fjp.skeletalmuscle.ui.main.fragment
+package com.fjp.skeletalmuscle.ui.sports
 
 import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import coil.load
 import com.fjp.skeletalmuscle.R
-import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.App
+import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
-import com.fjp.skeletalmuscle.data.model.bean.SportsType
+import com.fjp.skeletalmuscle.app.weight.CircleImageView
+import com.fjp.skeletalmuscle.app.weight.pop.SharePop
+import com.fjp.skeletalmuscle.data.model.bean.result.SaveDumbbellResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SavePlankResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportDumbbell
-import com.fjp.skeletalmuscle.databinding.FragmentTodaySportsDumbbellBinding
-import com.fjp.skeletalmuscle.ui.main.TodaySportsDetailActivity
-import com.fjp.skeletalmuscle.viewmodel.state.ChartType
-import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDumbbellViewModel
+import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
+import com.fjp.skeletalmuscle.databinding.ActivitySportsDumbbellCompletedBinding
+import com.fjp.skeletalmuscle.databinding.ActivitySportsPlankCompletedBinding
+import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
+import com.fjp.skeletalmuscle.viewmodel.state.SportsDumbbellCompletedViewModel
+import com.fjp.skeletalmuscle.viewmodel.state.SportsPlankCompletedViewModel
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -27,37 +38,94 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
+import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.appContext
 
-class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel, FragmentTodaySportsDumbbellBinding>() {
-    lateinit var sportDumbbell: SportDumbbell
-    companion object {
-        fun newInstance(sportDumbbell: SportDumbbell): TodaySportsDumbbellFragment{
-            val fragment = TodaySportsDumbbellFragment()
-            val bundle = Bundle()
-            bundle.putParcelable(Constants.INTENT_KEY_TODAY_SPORTS_DATA, sportDumbbell)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-
+class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedViewModel,ActivitySportsDumbbellCompletedBinding>() {
+    lateinit var dumbbellResult: SaveDumbbellResult
+    val shareViewmodel  : ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
-        sportDumbbell = arguments?.get(Constants.INTENT_KEY_TODAY_SPORTS_DATA) as SportDumbbell
+        dumbbellResult = intent.getParcelableExtra(Constants.INTENT_COMPLETED)!!
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportDumbbell.sport_time))
-        mViewModel.curScore.set(sportDumbbell.score.toString())
-        mViewModel.heartRate.set(sportDumbbell.avg_rate_value.toString())
-        mViewModel.weight.set(sportDumbbell.weight.toString())
-        mViewModel.calorie.set((sportDumbbell.sum_calorie / 1000).toString())
-        mViewModel.upTimes.set(sportDumbbell.up_times.toString())
-        mViewModel.expandChestTimes.set(sportDumbbell.expand_chest_times.toString())
-        mViewModel.upDegree.set(sportDumbbell.avg_up_degree.toString() + "°")
-        mViewModel.expandChestDegree.set(sportDumbbell.avg_expand_chest_degree.toString() + "°")
-
+        mViewModel.title.set(getString(R.string.sports_completed_title))
+        mViewModel.sportsTime.set(DateTimeUtil.formSportTime(dumbbellResult.sport_time))
+        mViewModel.curScore.set(dumbbellResult.score.toString())
+        mViewModel.heartRate.set(dumbbellResult.avg_rate_value.toString())
+        mViewModel.weight.set(dumbbellResult.weight.toString())
+        mViewModel.calorie.set((dumbbellResult.calorie / 1000).toString())
+        mViewModel.upTimes.set(dumbbellResult.up_times.toString())
+        mViewModel.expandChestTimes.set(dumbbellResult.expand_chest_times.toString())
+        mViewModel.upDegree.set(dumbbellResult.avg_up_degree.toString() + "°")
+        mViewModel.expandChestDegree.set(dumbbellResult.avg_expand_chest_degree.toString() + "°")
+//
         initCalorieBarChart()
         initHeartRateLineChart()
         initLegAngleLineChart()
+    }
+    private fun initCalorieBarChart() {
+        val barChart = mDatabind.calorieBarChat
+        barChart.setTouchEnabled(false)
+        barChart.isDragEnabled = false
+        barChart.setScaleEnabled(false)
+        barChart.setDrawBorders(false)
+        barChart.setDrawGridBackground(false)
+        barChart.extraBottomOffset=5f
+        val description = Description()
+        description.text = ""
+        barChart.description = description
+        val xAxis = barChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setAvoidFirstLastClipping(true)
+        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        xAxis.setDrawGridLines(false)
+        xAxis.textSize=20f
+        xAxis.labelCount= Math.min(2,dumbbellResult.calorie_list.size)
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                val index = value.toInt()
+                return if(index >=0 && index <dumbbellResult.calorie_list.size){
+                    DateTimeUtil.completedTimeFromat(dumbbellResult.calorie_list[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
+                }else{
+                    ""
+                }
+            }
+
+        }
+        val leftAxis = barChart.axisLeft
+        leftAxis.setDrawGridLines(true)
+        leftAxis.enableGridDashedLine(2f, 1f, 0f)
+        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
+        leftAxis.gridLineWidth = 0f
+        leftAxis.axisMinimum = 0f
+        leftAxis.setDrawLabels(false)
+        leftAxis.setDrawAxisLine(false)
+        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
+
+        val rightAxis: YAxis = barChart.axisRight
+        rightAxis.gridLineWidth = 0.5f
+        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
+        rightAxis.isEnabled = false
+
+        barChart.legend.isEnabled = false
+        val values = ArrayList<BarEntry>()
+
+        for (i in dumbbellResult.heart_rate.indices) {
+            values.add(BarEntry(i.toFloat(), dumbbellResult.heart_rate[i].rate_value.toFloat()))
+
+        }
+        val dataSets = ArrayList<IBarDataSet>()
+        val barDataSet = BarDataSet(values, "千卡")
+        dataSets.add(barDataSet)
+        barDataSet.setDrawIcons(false)
+        barDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
+        barDataSet.setDrawValues(false)//不显示柱状图上数据
+        val barData = BarData(dataSets)
+        barData.barWidth = 0.2f
+        barChart.data = barData
+        barChart.setNoDataText("暂无数据")
+        barChart.animateY(0)
     }
 
     private fun initHeartRateLineChart() {
@@ -83,10 +151,10 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                if(index>=0 && index < sportDumbbell.heart_rate.size){
-                    return DateTimeUtil.formatDate(sportDumbbell.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
+                return if(index >=0 && index <dumbbellResult.heart_rate.size){
+                    DateTimeUtil.completedTimeFromat(dumbbellResult.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
                 }else{
-                    return ""
+                    ""
                 }
             }
 
@@ -109,8 +177,8 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
 
         val values = ArrayList<Entry>()
 
-        for (i in sportDumbbell.calorie.indices) {
-            values.add(BarEntry(i.toFloat(), sportDumbbell.calorie[i].calorie.toFloat()))
+        for (i in dumbbellResult.heart_rate.indices) {
+            values.add(BarEntry(i.toFloat(), dumbbellResult.heart_rate[i].rate_value.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -150,74 +218,6 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         lineChart.setNoDataText("暂无数据")
         lineChart.animateY(0)
     }
-
-
-    private fun initCalorieBarChart() {
-        val barChart = mDatabind.calorieBarChat
-        barChart.setTouchEnabled(false)
-        barChart.isDragEnabled = false
-        barChart.setScaleEnabled(false)
-        barChart.setDrawBorders(false)
-        barChart.setDrawGridBackground(false)
-        barChart.extraBottomOffset=5f
-        val description = Description()
-        description.text = ""
-        barChart.description = description
-        val xAxis = barChart.xAxis
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setAvoidFirstLastClipping(true)
-        xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-        xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount= Math.min(2,sportDumbbell.calorie.size)
-        xAxis.valueFormatter = object : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                val index = value.toInt()
-                return if(index>=0 && index< sportDumbbell.calorie.size){
-                    DateTimeUtil.formatDate(sportDumbbell.calorie[index].record_time.toLong(),DateTimeUtil.HH_MM_SS)
-                }else{
-                    ""
-                }
-            }
-
-        }
-
-        val leftAxis = barChart.axisLeft
-        leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f, 1f, 0f)
-        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
-        leftAxis.gridLineWidth = 0f
-        leftAxis.axisMinimum = 0f
-        leftAxis.setDrawLabels(false)
-        leftAxis.setDrawAxisLine(false)
-        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
-
-        val rightAxis: YAxis = barChart.axisRight
-        rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
-        rightAxis.isEnabled = false
-
-        barChart.legend.isEnabled = false
-        val values = ArrayList<BarEntry>()
-
-        for (i in sportDumbbell.heart_rate.indices) {
-            values.add(BarEntry(i.toFloat(), sportDumbbell.heart_rate[i].rate_value.toFloat()))
-
-        }
-        val dataSets = ArrayList<IBarDataSet>()
-        val barDataSet = BarDataSet(values, "千卡")
-        dataSets.add(barDataSet)
-        barDataSet.setDrawIcons(false)
-        barDataSet.color = ContextCompat.getColor(appContext, R.color.color_blue)
-        barDataSet.setDrawValues(false)//不显示柱状图上数据
-        val barData = BarData(dataSets)
-        barData.barWidth = 0.2f
-        barChart.data = barData
-        barChart.setNoDataText("暂无数据")
-        barChart.animateY(0)
-    }
-
     private fun initLegAngleLineChart() {
         val lineChart = mDatabind.legAngleLineChart
         lineChart.legend.isEnabled = false
@@ -226,6 +226,7 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
+        lineChart.extraBottomOffset=5f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -253,11 +254,13 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
 
         val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
-        for (i in sportDumbbell.up_degree.indices) {
-            values.add(BarEntry(i.toFloat(), sportDumbbell.up_degree[i].up_degree.toFloat()))
+        val legAngle  = dumbbellResult.record.filter { it.type == 1 }
+        for (i in legAngle.indices) {
+            values.add(BarEntry(i.toFloat(), legAngle[i].degree.toFloat()))
         }
-        for (i in sportDumbbell.expand_chest_degree.indices) {
-            values2.add(BarEntry(i.toFloat(), sportDumbbell.expand_chest_degree[i].expand_chest_degree.toFloat()))
+        val expandAngle  = dumbbellResult.record.filter { it.type == 2 }
+        for (i in expandAngle.indices) {
+            values2.add(BarEntry(i.toFloat(),expandAngle[i].degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -311,20 +314,45 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         lineChart.animateY(0)
     }
 
-
     inner class ProxyClick {
-        fun clickCalorie() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.BURN_CALORIES)
+        fun clickShare() {
+//            sharePop()
+            val shareTitleView = View.inflate(this@SportsDumbbellCompletedActivity, R.layout.share_title, null)
+            val shareTBottomView = View.inflate(this@SportsDumbbellCompletedActivity, R.layout.share_bottom, null)
+            val avatarIv = shareTitleView.findViewById<CircleImageView>(R.id.avatarIv)
+            val nameTv = shareTitleView.findViewById<TextView>(R.id.nameTv)
+            val timeTv = shareTitleView.findViewById<TextView>(R.id.timeTv)
+            nameTv.text = App.userInfo.name
+            timeTv.text = DateTimeUtil.formatShareTime(System.currentTimeMillis())
+            avatarIv.load(App.userInfo.profile)
+            avatarIv.load(App.userInfo.profile, builder = {
+                allowHardware(false)
+                this.error(R.drawable.avatar_default)
+                this.placeholder(R.drawable.avatar_default)
+            })
+            shareViewmodel.share(this@SportsDumbbellCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
+        }
+
+        fun clickCompleted() {
+            finish()
 
         }
 
-        fun clickHeartRate() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.HEART_RATE_TREND)
-        }
+        fun clickFinish() {
+            finish()
 
-        fun clickAngle() {
-            TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.DUMBBELL_AVG_ANGLE)
         }
+    }
 
+    fun sharePop() {
+        val sharePop = SharePop(this@SportsDumbbellCompletedActivity, object : SharePop.Listener {
+            override fun share(pop: SharePop) {
+                pop.dismiss()
+            }
+
+        })
+        val pop = XPopup.Builder(this@SportsDumbbellCompletedActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(sharePop)
+
+        pop.show()
     }
 }

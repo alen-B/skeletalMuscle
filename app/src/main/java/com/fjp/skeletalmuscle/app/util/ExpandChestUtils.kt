@@ -74,8 +74,8 @@ class Action(type: ActionType, start: Long, end: Long, deltaPitch: Double, delta
     private val detectedActions: MutableList<Action> = ArrayList()
 
     // 动作计数
-    private var overheadCount = 0
-    private var expansionCount = 0
+    var overheadCount = 0
+    var expansionCount = 0
     var inAction = false
     var currentActionType: ActionType? = null
     var actionStart = 0L

@@ -26,7 +26,6 @@ import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
 import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
-import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.ActivityPlankBinding
 import com.fjp.skeletalmuscle.viewmodel.state.PlankViewModel
 import com.lxj.xpopup.XPopup
@@ -70,9 +69,9 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             elapsedTime = currentTime - startTime
             // 检查是否暂停
             seconds++
-            if(seconds > App.sportsTime * 60 * 2 / 3){
+            if (seconds > App.sportsTime * 60 * 2 / 3) {
                 mViewModel.title.set("加油，再坚持一下！")
-            }else if (seconds >= 30) {
+            } else if (seconds >= 30) {
                 mViewModel.title.set("太棒了，您做的很好，继续！")
             }
             updateTimerTextView()
@@ -167,13 +166,15 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         showToast("完成了运动")
         pauseTimer()
         score = getScore()
-        if(seconds> App.sportsTime*60){
-            seconds = App.sportsTime*60
+        if (seconds > App.sportsTime * 60) {
+            seconds = App.sportsTime * 60
         }
-        val request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate,App.sportsTime * 60,seconds)
+        val request = FlatSupportRequest(requestStartTime, System.currentTimeMillis() / 1000, score, calories, heartRate, App.sportsTime * 60, seconds)
         if (request.end_time - request.start_time > App.sportsTime * 60) {
             request.end_time = request.start_time + App.sportsTime * 60
         }
+        request.sport_time = seconds
+        request.plan_sport_time = App.sportsTime * 60
         mViewModel.saveflatSupport(request)
     }
 

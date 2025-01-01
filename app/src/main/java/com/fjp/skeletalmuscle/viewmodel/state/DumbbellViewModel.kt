@@ -1,8 +1,16 @@
 package com.fjp.skeletalmuscle.viewmodel.state
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
+import com.fjp.skeletalmuscle.data.model.bean.DumbbellRequest
+import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
+import com.fjp.skeletalmuscle.data.model.bean.result.SaveDumbbellResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SaveLiftLegResult
+import com.fjp.skeletalmuscle.data.repository.request.HttpRequestCoroutine
+import me.hgj.jetpackmvvm.ext.request
+import me.hgj.jetpackmvvm.state.ResultState
 
 /**
  *Author:Mr'x
@@ -18,4 +26,12 @@ class DumbbellViewModel : SMBaseViewModel() {
     val leftLegCount = ObservableField("0")
     val rightLegCount = ObservableField("0")
     val maxTime = App.sportsTime//单位分钟
+    var dumbbellLiveData = MutableLiveData<ResultState<SaveDumbbellResult>>()
+    fun saveDumbbell(dumbbellRequest: DumbbellRequest) {
+        request({
+            HttpRequestCoroutine.saveDumbbell(dumbbellRequest)
+        }, dumbbellLiveData, true)
+
+    }
+
 }

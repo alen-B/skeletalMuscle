@@ -54,8 +54,8 @@ class DumbbellDeviceOffLinePop(context: Context, val listener: Listener) : FullS
             leftIv.setBackgroundResource(R.drawable.off_line)
 
         }
-        val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
-        if (leftLegDevice == null) {
+        val lefDumbbellDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
+        if (lefDumbbellDevice == null) {
             disConnectedAccount++
             leftKneeLL.setBackgroundResource(R.drawable.bg_device_offline)
             leftKneeTv.text = context.getString(R.string.device_off_line_left_dumbbell)
@@ -64,8 +64,8 @@ class DumbbellDeviceOffLinePop(context: Context, val listener: Listener) : FullS
             leftKneeIv.setBackgroundResource(R.drawable.device_disconnect)
         }
 
-        val rightLegDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
-        if (rightLegDevice == null) {
+        val rightDumbbellDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL]
+        if (rightDumbbellDevice == null) {
             disConnectedAccount++
             rightKneeLL.setBackgroundResource(R.drawable.bg_device_offline)
             leftIv.setBackgroundResource(R.drawable.off_line)
@@ -77,8 +77,8 @@ class DumbbellDeviceOffLinePop(context: Context, val listener: Listener) : FullS
 
         connectBtn.setOnClickListener {
             val gts = SMBleManager.connectedDevices[DeviceType.GTS]
-            val leftLeg = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
-            val rightLeg = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
+            val leftDumbbell = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
+            val rightDumbbell = SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL]
             if (gts == null) {
                 SMBleManager.scanDevices(DeviceType.GTS.value, DeviceType.GTS, object : SMBleManager.DeviceStatusListener {
                     override fun disConnected() {
@@ -100,8 +100,8 @@ class DumbbellDeviceOffLinePop(context: Context, val listener: Listener) : FullS
 
                 })
             }
-            if (leftLeg == null) {
-                SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
+            if (leftDumbbell == null) {
+                SMBleManager.scanDevices(DeviceType.LEFT_DUMBBELL.value, DeviceType.LEFT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
                     override fun disConnected() {
                     }
 
@@ -120,8 +120,8 @@ class DumbbellDeviceOffLinePop(context: Context, val listener: Listener) : FullS
 
                 })
             }
-            if (rightLeg == null) {
-                SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
+            if (rightDumbbell == null) {
+                SMBleManager.scanDevices(DeviceType.RIGHT_DUMBBELL.value, DeviceType.RIGHT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
                     override fun disConnected() {
                     }
 
@@ -140,7 +140,7 @@ class DumbbellDeviceOffLinePop(context: Context, val listener: Listener) : FullS
 
                 })
             }
-            if (gts != null && leftLeg != null && rightLeg != null) {
+            if (gts != null && leftDumbbell != null && rightDumbbell != null) {
                 listener.completed()
                 dismiss()
             }

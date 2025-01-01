@@ -188,7 +188,15 @@
                 android:background="@drawable/bg_1a4e71ff_8"
                 tools:ignore="ContentDescription" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
+        <ImageView
+            android:id="@+id/centerIv"
+            android:layout_width="wrap_content"
+            android:background="@drawable/sports_dumbbell_temp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"/>
         <View
             android:id="@+id/rTimesView"
             android:layout_width="140dp"
@@ -257,15 +265,7 @@
             android:textColor="@color/color_99222222"
             android:textSize="@dimen/text_size_3"
             android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/centerIv"
-            android:layout_width="wrap_content"
-            android:background="@drawable/sports_dumbbell_temp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="wrap_content"/>
+
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
             android:id="@+id/progressBar"
             android:layout_width="0dp"

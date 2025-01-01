@@ -2,7 +2,6 @@ package com.fjp.skeletalmuscle.ui.sports
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -12,30 +11,35 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import com.clj.fastble.BleManager
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
+import com.fjp.skeletalmuscle.app.util.ActionDetector
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
+import com.fjp.skeletalmuscle.data.model.bean.Calorie
+import com.fjp.skeletalmuscle.data.model.bean.DumbbellRequest
+import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
+import com.fjp.skeletalmuscle.data.model.bean.Record
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityDumbbellMainBinding
 import com.fjp.skeletalmuscle.viewmodel.state.DumbbellViewModel
 import com.lxj.xpopup.XPopup
+import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
-import kotlin.math.abs
 import kotlin.math.ceil
 
 class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMainBinding>(), SMBleManager.DeviceListener {
+    val dumbbellRequest = DumbbellRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, 0, 5, 0, 0)
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
     private var isRunning: Boolean = false
@@ -53,15 +57,9 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     private var heartRateCount = 0
     private var sportsMinutes = 0 //运动了多少分钟
     private var caloriesBurned: Double = 0.0 //消耗了多少千卡
+    private var oldCaloriesBurned: Double = 0.0 //上个阶段消耗的卡路里
     private var sportsTotalScore: Int = 0//运动中的总得分
     private var sportsAvgScore: Int = 0//运动中的平均分数
-
-    private var oldCaloriesBurned: Double = 0.0 //上个阶段消耗的卡路里
-
-    private var leftLegAngleSum = 0.0
-    private var rightLegAngleSum = 0.0
-    private var leftLegmaxRollInCycle = 0f // 记录周期内左腿最大的Roll值
-    private var rightLegmaxRollInCycle = 0f // 记录周期内右腿最大的Roll值
     private var age = 1
     private var weight = 1
     private var isMale = true
@@ -70,15 +68,11 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     private var fatBurningTime = 0.0
     private var cardioTime = 0.0
     private var breakTime = 0.0
-    private var leftLastRoll = 0f // 左腿上一个Roll值
-    private var rightLastRoll = 0f // 右腿上一个Roll值
 
     private var rightOldLevel = -1
     private var leftOldLevel = -1
     private var leftIsDescending = false // 标记是否已经开始下降
     private var rightIsDescending = false // 标记是否已经开始下降
-    private var mediaPlayer_high: MediaPlayer? = null
-    private var mediaPlayer_low: MediaPlayer? = null
     private var leftLevelViews = mutableListOf<ImageView>()
     private var rightLevelViews = mutableListOf<ImageView>()
     private val updateTimerTask = object : Runnable {
@@ -96,11 +90,9 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-//        mViewModel.title.set(getString(R.string.high_knee_main_title))
         startTimer()
-        //TODO 整个流程完成后需要计算出当前用户的年龄
         App.userInfo?.let {
-            age = DateUtils.calculateAge(Date(it.birthday), Date(System.currentTimeMillis()))
+            age = DateUtils.calculateAge(DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, it.birthday), Date(System.currentTimeMillis()))
             weight = it.weight
             isMale = it.sex == getString(R.string.setting_sex_man)
         }
@@ -122,25 +114,22 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         SMBleManager.connectedDevices[DeviceType.GTS]?.let {
             SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE)
         }
-        SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let {
+        SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]?.let {
             SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE)
         }
-        SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let {
+        SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL]?.let {
             SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE)
         }
-
-        initMediaPlayerHigh()
-        initMediaPlayerLow()
     }
 
 
     private fun startCountdown() {
         val countDownTimer = object : CountDownTimer(4000L, 1000) {
             override fun onTick(millis: Long) {
-                if(Math.ceil(millis/1000.0).toInt()-1==0){
+                if (Math.ceil(millis / 1000.0).toInt() - 1 == 0) {
                     mDatabind.countdownText.text = "GO"
-                }else{
-                    mDatabind.countdownText.text = (Math.ceil(millis/1000.0).toInt()-1).toString()
+                } else {
+                    mDatabind.countdownText.text = (Math.ceil(millis / 1000.0).toInt() - 1).toString()
                 }
                 animateText()
 
@@ -170,51 +159,29 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mDatabind.countdownText.startAnimation(scaleAnimation) // 启动动画
     }
 
-    private fun initMediaPlayerHigh() {
-        mediaPlayer_high = MediaPlayer.create(this, R.raw.ttgg) // 假设您的音频文件放在res/raw目录下
-        mediaPlayer_high!!.setOnCompletionListener { mp ->
-            // 准备MediaPlayer以便下次播放
-            mp.release() // 释放旧的MediaPlayer资源
-            mediaPlayer_high = MediaPlayer.create(applicationContext, R.raw.ttgg) // 更新引用
-        }
-    }
-
-    private fun initMediaPlayerLow() {
-        mediaPlayer_low = MediaPlayer.create(this, R.raw.tgd) // 假设您的音频文件放在res/raw目录下
-        mediaPlayer_low!!.setOnCompletionListener { mp ->
-            // 准备MediaPlayer以便下次播放
-            mp.release() // 释放旧的MediaPlayer资源
-            mediaPlayer_low = MediaPlayer.create(applicationContext, R.raw.tgd) // 更新引用
-        }
-    }
-
     private fun startTimer() {
-        if (!isRunning) {
-            startTime = SystemClock.uptimeMillis() - elapsedTime
-            isRunning = true
-            mDatabind.stopBtn.text = getString(R.string.high_knee_main_stop)
-            handler.post(updateTimerTask)
-            val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.stop_icon)
-            mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
-        }
+        startTime = SystemClock.uptimeMillis() - elapsedTime
+        isRunning = true
+        mDatabind.stopBtn.text = getString(R.string.high_knee_main_stop)
+        handler.post(updateTimerTask)
+        val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.stop_icon)
+        mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
     }
 
     private fun pauseTimer() {
-        if (isRunning) {
-            isRunning = false
-            pauseTime = SystemClock.uptimeMillis()
-            mDatabind.stopBtn.text = getString(R.string.high_knee_main_continue)
-            handler.removeCallbacks(updateTimerTask)
-
-            val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.star_icon)
-            mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
-        }
+        isRunning = false
+        pauseTime = SystemClock.uptimeMillis()
+        mDatabind.stopBtn.text = getString(R.string.high_knee_main_continue)
+        handler.removeCallbacks(updateTimerTask)
+        val drawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.star_icon)
+        mDatabind.stopBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
     }
 
     private fun updateTimerTextView() {
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         val seconds = ((elapsedTime / 1000) % 60).toInt()
         if (sportsMinutes == mViewModel.maxTime) {
+            showToast("完成了运动")
             completed()
         }
         val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
@@ -224,13 +191,27 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
     fun completed() {
         pauseTimer()
-        showToast("完成了运动")
-        pauseTimer()
-//        val intent = Intent(this@DumbbellMainActivity, SportsCompletedActivity::class.java)
-//        val highKneeSports = HighKneeSports(elapsedTime, minHeartRate, maxHeartRate, leftLegLifts + rightLegLifts, DateUtils.formatDouble(abs(caloriesBurned)), sportsAvgScore, warmupTime, fatBurningTime, cardioTime, breakTime)
-//        intent.putExtra(Constants.INTENT_COMPLETED, highKneeSports)
-        startActivity(intent)
-        finish()
+        if (seconds > App.sportsTime * 60) {
+            seconds = App.sportsTime * 60
+        }
+        dumbbellRequest.sport_time = seconds
+        dumbbellRequest.plan_sport_time = App.sportsTime * 60
+        mViewModel.saveDumbbell(dumbbellRequest)
+    }
+
+    override fun createObserver() {
+        super.createObserver()
+        mViewModel.dumbbellLiveData.observe(this) {
+            parseState(it, {
+                val intent = Intent(this@DumbbellMainActivity, SportsDumbbellCompletedActivity::class.java)
+                intent.putExtra(Constants.INTENT_COMPLETED, it)
+                startActivity(intent)
+                finish()
+            }, {
+                showToast(getString(R.string.request_failed))
+                showReCompletedDialog()
+            })
+        }
     }
 
     inner class ProxyClick {
@@ -252,13 +233,13 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = DeviceOffLinePop(this@DumbbellMainActivity,SportsType.DUMBBELL, object : DeviceOffLinePop.Listener {
-            override fun reconnect(type:DeviceType) {
-                if(type == DeviceType.GTS){
+        val deviceOffLinePop = DeviceOffLinePop(this@DumbbellMainActivity, SportsType.DUMBBELL, object : DeviceOffLinePop.Listener {
+            override fun reconnect(type: DeviceType) {
+                if (type == DeviceType.GTS) {
                     SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
-                }else if(type == DeviceType.LEFT_LEG){
+                } else if (type == DeviceType.LEFT_LEG) {
                     SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
-                }else if(type == DeviceType.RIGHT_LEG){
+                } else if (type == DeviceType.RIGHT_LEG) {
                     SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
                 }
 
@@ -292,40 +273,23 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     override fun rightHandGripsConnected() {
     }
 
+    val actionDetector = ActionDetector()
     override fun onLeftDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
         }
-        val roll = DeviceDataParse.parseData2Roll(data)
-        val yaw = DeviceDataParse.parseData2Yaw(data)
-        // 更新周期内最大的roll值
-        if (roll > leftLegmaxRollInCycle) {
-            leftLegmaxRollInCycle = roll
-            // 当roll值达到新的高点时，重置下降标记
-            leftIsDescending = false
+        val dataPoint = DeviceDataParse.parseData2DataPoint(data)
+        if (dataPoint != null) {
+            actionDetector.process(dataPoint)
         }
-        // 检查是否开始下降
-        if (roll < leftLastRoll) {
-            if (!leftIsDescending) {
-                if (abs(roll) > UPLIFT_THRESHOLD) {
-                    mViewModel.leftLegAngle.set("L ${leftLegmaxRollInCycle.toInt()}°")
-                    leftLegLifts++
-                    leftLegAngleSum += leftLegmaxRollInCycle.toDouble()
-                    mViewModel.leftLegCount.set(leftLegLifts.toString())
-//                    getAvgScore(abs(leftLegmaxRollInCycle))
-                }
-            }
-            leftIsDescending = true
+        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
+            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
         }
-        // 如果已经开始下降，并且当前roll值比较低，认为一个周期结束
-        if (leftIsDescending && roll < UPLIFT_THRESHOLD) {
-
-            // 重置周期内最大的pitch值和下降标记
-            leftLegmaxRollInCycle = 0f
+        if (actionDetector.expansionCount.toString() != mViewModel.rightLegCount.get()) {
+            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
         }
-        // 更新上一个pitch值
-        leftLastRoll = roll
-//        setLeftCurLevelByPitch(pitch)
+        mViewModel.leftLegCount.set(actionDetector.overheadCount.toString())
+        mViewModel.rightLegCount.set(actionDetector.expansionCount.toString())
     }
 
     fun setLeftCurLevelByPitch(pitch: Float) {
@@ -349,36 +313,19 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         if (!isRunning) {
             return
         }
-//        val pitch = DeviceDataParse.parseData2Pitch(data)
-        val roll = DeviceDataParse.parseData2Roll(data)
-        val yaw = DeviceDataParse.parseData2Yaw(data)
+        val dataPoint = DeviceDataParse.parseData2DataPoint(data)
+        if (dataPoint != null) {
+            actionDetector.process(dataPoint)
+        }
+        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
+            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
+        }
+        if (actionDetector.expansionCount.toString() != mViewModel.rightLegCount.get()) {
+            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
+        }
+        mViewModel.leftLegCount.set(actionDetector.overheadCount.toString())
+        mViewModel.rightLegCount.set(actionDetector.expansionCount.toString())
 
-        // 更新周期内最大的pitch值
-        if (roll > rightLegmaxRollInCycle) {
-            rightLegmaxRollInCycle = roll
-            rightIsDescending = false // 当pitch值达到新的高点时，重置下降标记
-        }
-        // 检查是否开始下降
-        if (roll < rightLegmaxRollInCycle) {
-            if (!rightIsDescending) {
-                if (abs(roll) > UPLIFT_THRESHOLD) {
-                    rightLegLifts++
-                    mViewModel.rightLegAngle.set("R ${rightLastRoll.toInt()}°")
-                    rightLegAngleSum += abs(rightLegmaxRollInCycle).toDouble()
-                    mViewModel.rightLegCount.set(rightLegLifts.toString())
-                    getAvgScore(abs(rightLegmaxRollInCycle))
-                }
-            }
-            rightIsDescending = true
-        }
-        // 如果已经开始下降，并且当前pitch值比较低，认为一个周期结束
-        if (rightIsDescending && roll < UPLIFT_THRESHOLD) {
-            rightLegmaxRollInCycle = 0f
-        }
-        // 更新上一个pitch值
-        rightLastRoll = roll
-
-//        setRightCurLevelByPitch(pitch)
     }
 
     fun setRightCurLevelByPitch(pitch: Float) {
@@ -464,6 +411,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             println("===心肺提升时间:  " + cardioTime)
             println("===极限突破:  " + breakTime)
             oldCaloriesBurned = caloriesBurned
+            dumbbellRequest.calorie.add(Calorie((((caloriesBurned - oldCaloriesBurned).coerceAtLeast(0.0)) * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
+            dumbbellRequest.heart_rate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
         }
     }
 
@@ -611,15 +560,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         super.onDestroy()
         handler.removeCallbacks(updateTimerTask)
         SMBleManager.delDeviceResultDataListener(this)
-        if (mediaPlayer_high != null) {
-            mediaPlayer_high!!.release() // 释放MediaPlayer资源
-            mediaPlayer_high = null
-        }
-        if (mediaPlayer_low != null) {
-            mediaPlayer_low!!.release() // 释放MediaPlayer资源
-            mediaPlayer_low = null
-        }
     }
+
     fun showExitDialog() {
         val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要退出吗？", {
             finish()
@@ -643,6 +585,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         pop.show()
 
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         showExitDialog()

@@ -43,7 +43,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         if (App.sportsType == SportsType.HIGH_KNEE ) {
             initHighKnee()
         } else if (App.sportsType == SportsType.DUMBBELL) {
-            initHighKnee()
+            initDumbbell()
         } else if (App.sportsType == SportsType.HAND_GRIPS) {
             initHandGrips()
         }else if(App.sportsType == SportsType.ASSESSMENT){
@@ -71,6 +71,8 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
 
     }
     private fun initHighKnee() {
+
+        mDatabind.iconIv.setBackgroundResource(R.drawable.high_knee_guide5_icon)
         val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         if (leftLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
@@ -169,6 +171,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         mDatabind.step21Tv.text = getString(R.string.dumbbell_connect_left_device_step1)
         mDatabind.step22Tv.text = getString(R.string.dumbbell_connect_left_device_step2)
         mDatabind.step23Tv.text = getString(R.string.dumbbell_connect_left_device_step3)
+        mDatabind.iconIv.setBackgroundResource(R.drawable.dumbbell)
         val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
         if (leftLegDevice != null) {
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)

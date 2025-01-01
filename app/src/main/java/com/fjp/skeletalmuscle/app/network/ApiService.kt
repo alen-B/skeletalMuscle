@@ -12,6 +12,7 @@ import com.fjp.skeletalmuscle.data.model.bean.result.CalendarResult
 import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
 import com.fjp.skeletalmuscle.data.model.bean.result.HeartRateResult
 import com.fjp.skeletalmuscle.data.model.bean.result.LiftLegTrendResult
+import com.fjp.skeletalmuscle.data.model.bean.result.SaveDumbbellResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SaveLiftLegResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SavePlankResult
 import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendCalorieResult
@@ -93,7 +94,7 @@ interface ApiService {
      *
      */
     @POST("sport/dumbbell")
-    suspend fun saveDumbbell(@Body dumbbellRequest: DumbbellRequest): ApiResponse<String>
+    suspend fun saveDumbbell(@Body dumbbellRequest: DumbbellRequest): ApiResponse<SaveDumbbellResult>
 
     /**
      * 平板支撑

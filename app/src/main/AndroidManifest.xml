@@ -116,6 +116,11 @@
             android:exported="true"
             android:screenOrientation="sensorLandscape"/>
         <activity
+            android:name=".ui.sports.SportsDumbbellCompletedActivity"
+            android:configChanges="orientation|screenLayout"
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
             android:name=".ui.assessment.SportsAssessmentActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"

@@ -106,10 +106,6 @@ class TodaySelectSportsActivity : BaseActivity<TodaySelectSportsViewModel, Activ
 
     fun startExericisePlanActivity() {
         val intent = Intent(this@TodaySelectSportsActivity, ExercisePlanActivity::class.java)
-        if(mViewModel.curSports.type == SportsType.DUMBBELL){
-            showToast("正在开发中....")
-            return ;
-        }
         App.sportsType = mViewModel.curSports.type
         startActivity(intent)
     }
