@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
  *Time:2024/12/1
  *Description:
  */
-data class DumbbellRequest(val calorie: MutableList<Calorie>, val end_time: Int, val heart_rate: MutableList<HeartRate>, val record: MutableList<Record>, val score: Int, val start_time: Int, val weight: Int,var sport_time:Int,var plan_sport_time:Int)
+data class DumbbellRequest(val calorie: MutableList<Calorie>, var end_time: Long, val heart_rate: MutableList<HeartRate>, val record: MutableList<Record>, val score: Int, val start_time: Long, val weight: Int,var sport_time:Int,var plan_sport_time:Int)
 
 @Parcelize
 data class Calorie(val calorie: Int, val record_time: String): Parcelable

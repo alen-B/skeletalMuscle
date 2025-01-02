@@ -39,7 +39,7 @@ import java.util.Date
 import kotlin.math.ceil
 
 class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMainBinding>(), SMBleManager.DeviceListener {
-    val dumbbellRequest = DumbbellRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, 0, 5, 0, 0)
+    val dumbbellRequest = DumbbellRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis()/1000, 5, 0, 0)
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
     private var isRunning: Boolean = false
@@ -195,6 +195,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             seconds = App.sportsTime * 60
         }
         dumbbellRequest.sport_time = seconds
+        dumbbellRequest.end_time = System.currentTimeMillis()/1000
         dumbbellRequest.plan_sport_time = App.sportsTime * 60
         mViewModel.saveDumbbell(dumbbellRequest)
     }
