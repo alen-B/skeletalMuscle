@@ -13,8 +13,8 @@ android {
         applicationId "com.fjp.skeletalmuscle"
         minSdk 26
         targetSdk 33
-        versionCode 10011
-        versionName "1.1.1"
+        versionCode 10012
+        versionName "1.1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

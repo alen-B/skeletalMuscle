@@ -6,9 +6,9 @@ package com.fjp.skeletalmuscle.app.util
  */
 data class DataPoint( // 时间戳或样本序号
     var timestamp: Long,
-    var pitch: Double,// Pitch角度
-    var yaw: Double, // Yaw角度
-    var roll: Double,// Roll角度
+    var pitch: Double,// Pitch角度（俯仰角）
+    var yaw: Double, // Yaw角度（偏航角）
+    var roll: Double,// Roll角度（横滚角）
     var ax: Double,//X方向加速度 (g)
     var ay: Double,// Y方向加速度 (g)
     var az: Double,// Z方向加速度 (g)
@@ -55,9 +55,6 @@ class Action(type: ActionType, start: Long, end: Long, deltaPitch: Double, delta
         // 阈值参数，可根据实际数据调整
         private const val THRESHOLD_DELTA_PITCH = 16.0 // 上举动作Pitch增量阈值
         private const val THRESHOLD_DELTA_YAW = 50.0 // 扩胸动作Yaw增量阈值
-        private const val THRESHOLD_A_VERT = 1.0 // 垂直方向加速度阈值 (g)
-        private const val THRESHOLD_W_PITCH = 50.0 // 绕Pitch轴角速度阈值 (°/s)
-        private const val THRESHOLD_W_YAW = 50.0 // 绕Yaw轴角速度阈值 (°/s)
 
         // 权重参数，可根据实际数据调整
         private const val ALPHA1 = 1.0

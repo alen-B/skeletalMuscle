@@ -22,6 +22,7 @@ import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
+import com.fjp.skeletalmuscle.app.util.ExerciseDetector
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.Calorie
@@ -82,7 +83,9 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             // 检查是否暂停
             seconds++
             updateTimerTextView()
-            handler.postDelayed(this, 1000)
+            if (isRunning) {
+                handler.postDelayed(this, 1000)
+            }
         }
     }
 
@@ -281,16 +284,19 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         }
         val dataPoint = DeviceDataParse.parseData2DataPoint(data)
         if (dataPoint != null) {
-            actionDetector.process(dataPoint)
+//            actionDetector.process(dataPoint)
+            ExerciseDetector.processData(dataPoint.pitch,dataPoint.yaw,dataPoint.ay,dataPoint.az)
+            println("===上举次数：${ExerciseDetector.upCount}")
+            println("===扩胸次数：${ExerciseDetector.chestCount}")
         }
-        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
-            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
-        }
-        if (actionDetector.expansionCount.toString() != mViewModel.rightLegCount.get()) {
-            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
-        }
-        mViewModel.leftLegCount.set(actionDetector.overheadCount.toString())
-        mViewModel.rightLegCount.set(actionDetector.expansionCount.toString())
+//        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
+//            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
+//        }
+//        if (actionDetector.expansionCount.toString() != mViewModel.rightLegCount.get()) {
+//            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
+//        }
+//        mViewModel.leftLegCount.set(actionDetector.overheadCount.toString())
+//        mViewModel.rightLegCount.set(actionDetector.expansionCount.toString())
     }
 
     fun setLeftCurLevelByPitch(pitch: Float) {
@@ -314,18 +320,20 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         if (!isRunning) {
             return
         }
-        val dataPoint = DeviceDataParse.parseData2DataPoint(data)
+        val dataPoint = DeviceDataParse.parseData2DataPoint2(data)
         if (dataPoint != null) {
-            actionDetector.process(dataPoint)
+//            ExerciseDetector.processData(dataPoint.pitch,dataPoint.yaw,dataPoint.ay,dataPoint.az)
+//            println("===上举次数：${ExerciseDetector.upCount}")
+//            println("===扩胸次数：${ExerciseDetector.chestCount}")
         }
-        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
-            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
-        }
-        if (actionDetector.expansionCount.toString() != mViewModel.rightLegCount.get()) {
-            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
-        }
-        mViewModel.leftLegCount.set(actionDetector.overheadCount.toString())
-        mViewModel.rightLegCount.set(actionDetector.expansionCount.toString())
+//        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
+//            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
+//        }
+//        if (actionDetector.expansionCount.toString() != mViewModel.rightLegCount.get()) {
+//            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
+//        }
+//        mViewModel.leftLegCount.set(actionDetector.overheadCount.toString())
+//        mViewModel.rightLegCount.set(actionDetector.expansionCount.toString())
 
     }
 
