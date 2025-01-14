@@ -29,6 +29,7 @@ import com.fjp.skeletalmuscle.viewmodel.state.SingleSelectType
 import com.fjp.skeletalmuscle.viewmodel.state.UserInfoViewModel
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
+import com.luck.picture.lib.config.SelectModeConfig
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.lxj.xpopup.XPopup
@@ -256,18 +257,9 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(TakePhotoPop(requireContext(), object : TakePhotoPop.Listener {
             override fun onclickItem(index: Int, pop: TakePhotoPop) {
                 if (index == TakePhotoPop.TAKE_PHOTO) {
-                    if (PermissionUtils.hasPermission(context!!, android.Manifest.permission.CAMERA)) {
                         takePhoto()
-                    } else {
-                        PermissionUtils.requestPermission(activity as Activity, arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE), takePhotoCode)
-                    }
                 } else if (index == TakePhotoPop.ALBUM) {
-                    if (PermissionUtils.hasPermission(context!!, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         takeAlbum()
-                    } else {
-                        PermissionUtils.requestPermission(activity as Activity, arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE), takeAlbumCode)
-                    }
-
                 }
                 pop.dismiss()
             }
@@ -278,7 +270,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
     }
 
     fun takeAlbum() {
-        PictureSelector.create(this).openSystemGallery(SelectMimeType.ofImage()).isOriginalSkipCompress(false).forSystemResult(object : OnResultCallbackListener<LocalMedia?> {
+        PictureSelector.create(this).openSystemGallery(SelectMimeType.ofImage()).setSelectionMode(SelectModeConfig.SINGLE).isOriginalSkipCompress(false).forSystemResult(object : OnResultCallbackListener<LocalMedia?> {
             override fun onResult(result: ArrayList<LocalMedia?>) {
                 println(result)
 //                updateAvatar(result[0]?.compressPath)
