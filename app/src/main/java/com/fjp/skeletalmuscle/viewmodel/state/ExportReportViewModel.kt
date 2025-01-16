@@ -13,7 +13,7 @@ class ExportReportViewModel : SMBaseViewModel() {
     fun getTodayData(startTime: Long,endTime: Long) {
         request({
             HttpRequestCoroutine.getExportData(startTime,endTime)
-        }, exportLiveData)
+        }, exportLiveData,true,"正在获取PDF数据...")
 
     }
 }

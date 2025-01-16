@@ -1,9 +1,13 @@
 package com.fjp.skeletalmuscle.app.util
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Environment
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
+import com.itextpdf.kernel.colors.Color
+import com.itextpdf.kernel.colors.ColorConstants
+import com.itextpdf.kernel.colors.DeviceRgb
 import com.itextpdf.kernel.font.PdfFont
 import com.itextpdf.kernel.font.PdfFontFactory
 import com.itextpdf.kernel.pdf.PdfDocument
@@ -12,11 +16,19 @@ import com.itextpdf.kernel.pdf.canvas.draw.SolidLine
 import com.itextpdf.layout.Document
 import com.itextpdf.layout.element.Cell
 import com.itextpdf.layout.element.IBlockElement
+import com.itextpdf.layout.element.Image
 import com.itextpdf.layout.element.LineSeparator
 import com.itextpdf.layout.element.Paragraph
+import com.itextpdf.layout.element.Text
+import com.itextpdf.layout.property.BorderRadius
+import com.itextpdf.layout.property.HorizontalAlignment
 import com.itextpdf.layout.property.TextAlignment
+import com.itextpdf.layout.property.VerticalAlignment
+import me.hgj.jetpackmvvm.ext.util.screenWidth
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+
 
 /**
  *Author:Mr'x
@@ -33,14 +45,10 @@ object PDFManager {
         if (!dir.exists()) {
             dir.mkdirs()
         }
-        var title = "${App.userInfo?.name}爷爷，骨骼肌运动报告"
-        if (App.userInfo?.sex == context.getString(R.string.setting_sex_woman)) {
-            title = "${App.userInfo?.name}奶奶的，骨骼肌运动报告"
-        }
+        var title = "${App.userInfo?.name}·骨骼肌运动报告"
         // 创建要保存的PDF文件对象
         file = File(dir, "${title}${DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)}.pdf")
         try {
-            val font = PdfFontFactory.createFont("STSongStd-Light", "UniGB-UCS2-H", false)
             // 创建PdfWriter，将其与要生成的PDF文件关联起来
             val writer = PdfWriter(file)
             // 通过PdfWriter实例创建PdfDocument对象
@@ -55,12 +63,40 @@ object PDFManager {
 
     }
 
-    fun createCell(value: String, textAligment: TextAlignment = TextAlignment.CENTER): Cell {
-        return Cell().add(Paragraph(value).setFont(font)).setTextAlignment(textAligment)
+    fun createCell(value: String, textAligment: TextAlignment = TextAlignment.CENTER,color:Color= DeviceRgb(0, 0, 0)): Cell {
+        return Cell().add(Paragraph(value).setFontColor(color).setFont(font)).setTextAlignment(textAligment).setBorder(null).setHorizontalAlignment(HorizontalAlignment.CENTER).setVerticalAlignment(VerticalAlignment.MIDDLE)
+    }
+    fun createCellAndBackground(vararg text: Text,color:Color= DeviceRgb(0, 0, 0),cellBackGround:Color,isFirst:Boolean,isLast:Boolean): Cell {
+        val paragraph = Paragraph()
+        text.forEach {
+            it.setFont(font)
+            paragraph.add(it)
+        }
+       val cell =  Cell().add(paragraph.setFont(font)).setBorder(null).setTextAlignment(TextAlignment.CENTER).setBackgroundColor(cellBackGround).setHeight(36f).setVerticalAlignment(VerticalAlignment.MIDDLE)
+        if(isFirst){
+            cell.setBorderTopLeftRadius(BorderRadius(4f))
+            cell.setBorderBottomLeftRadius(BorderRadius(4f))
+        }
+        if(isLast){
+            cell.setBorderTopRightRadius(BorderRadius(4f))
+            cell.setBorderBottomRightRadius(BorderRadius(4f))
+        }
+        return cell
     }
 
-    fun createParagraph(value: String, textAligment: TextAlignment = TextAlignment.LEFT, fontSize: Float = 12f) {
-        document.add(Paragraph(value).setTextAlignment(textAligment).setFont(font).setFontSize(fontSize))
+    fun createParagraph(value: String, textAligment: TextAlignment = TextAlignment.LEFT, fontSize: Float = 12f,fontColor:Color = ColorConstants.BLACK) {
+        document.add(Paragraph(value).setTextAlignment(textAligment).setFont(font).setFontSize(fontSize).setFontColor(fontColor))
+    }
+    fun createParagraph(vararg value : Text) {
+        val paragraph = Paragraph()
+        value.forEach {
+            it.setFont(font)
+            paragraph.add(it)
+        }
+        document.add(paragraph)
+    }
+    fun createParagraphAndBgColor(value: String, textAligment: TextAlignment = TextAlignment.LEFT, fontSize: Float = 12f,bgColor: Color = DeviceRgb(244, 249, 255)) {
+        document.add(Paragraph(value).setTextAlignment(textAligment).setFont(font).setFontSize(fontSize).setBackgroundColor(bgColor))
     }
 
     fun createLine() {
@@ -73,6 +109,13 @@ object PDFManager {
         document.add(element)
     }
 
+    fun createText(text:String,size:Float,textColor:Color):Text{
+        return Text(text).setFont(font).setFontSize(size).setFontColor(textColor)
+    }
+
+    fun addImage(img: Image) {
+        document.add(img)
+    }
     fun getFilePath(): String {
         if (this@PDFManager::file.isInitialized) {
             return file.absolutePath
@@ -82,5 +125,11 @@ object PDFManager {
 
     fun close() {
         document.close()
+    }
+
+    fun bitmapToBytes(bitmap: Bitmap): ByteArray {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        return stream.toByteArray()
     }
 }

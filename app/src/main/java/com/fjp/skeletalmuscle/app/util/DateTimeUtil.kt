@@ -138,14 +138,10 @@ object DateTimeUtil {
     fun formatExportTime(seconds: Long): String {
         val hours = seconds / 3600
         val remainingSecondsAfterHours = seconds % 3600
-        val minutes = remainingSecondsAfterHours / 60
+        var minutes = remainingSecondsAfterHours / 60
         val remainingSecondsAfterMinutes = remainingSecondsAfterHours % 60
+        return "${String.format("%02d", hours)}:${String.format("%02d", minutes)}:${String.format("%02d", remainingSecondsAfterMinutes)}"
 
-        return when {
-            hours > 0 -> "$hours:$minutes:$remainingSecondsAfterMinutes "
-            minutes > 0 -> "00:$minutes:$remainingSecondsAfterMinutes"
-            else -> "00:00:$remainingSecondsAfterMinutes"
-        }
     }
 
     fun sceond2Min(seconds: Long): String {
@@ -212,11 +208,11 @@ object DateTimeUtil {
         return instant.toEpochMilli()
     }
 
-    fun completedTimeFromat(date:String,format:String): String {
+    fun completedTimeFromat(date: String, format: String): String {
         val format = SimpleDateFormat(format, Locale.CHINA)
         format.timeZone = TimeZone.getDefault()
         return try {
-            return formatDate(format.parse(date),HH_MM_SS)
+            return formatDate(format.parse(date), HH_MM_SS)
         } catch (e: Exception) {
             println(e.message)
             return ""
