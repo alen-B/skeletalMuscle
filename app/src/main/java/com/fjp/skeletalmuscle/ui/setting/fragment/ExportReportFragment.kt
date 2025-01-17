@@ -22,6 +22,9 @@ import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.PDFManager
 import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
+import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportDumbbell
+import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportFlatSupport
+import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportLiftLeg
 import com.fjp.skeletalmuscle.databinding.FragmentExportReportBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ExportReportViewModel
 import com.itextpdf.io.image.ImageDataFactory
@@ -60,7 +63,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
             super.handleMessage(msg)
             showLoading("正在生成PDF...")
             lifecycleScope.launch {
-                withContext(Dispatchers.IO){
+                withContext(Dispatchers.IO) {
                     exportPDF(exportData)
                 }
                 dismissLoading()
@@ -93,19 +96,19 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
             val pageWidth: Float = PageSize.A4.width
             val pageHeight: Float = PageSize.A4.height
             PDFManager.createPDF(requireContext())
-            val title = "${App.userInfo.name} 骨骼肌运动报告"
+            val title = "${App.userInfo.name},骨骼肌运动报告"
             PDFManager.createParagraph(title, TextAlignment.LEFT, 18f)
-            PDFManager.add(Paragraph().setWidth(pageWidth / 5 * 2).setHeight(1f).setBackgroundColor(DeviceRgb(0, 0, 0)))
-            val icon = BitmapFactory.decodeResource(resources, R.drawable.pdf_icon)
-            val imgData = ImageDataFactory.create(PDFManager.bitmapToBytes(icon))
-            val image = Image(imgData)
-            image.scale(0.5f, 0.5f)
+            PDFManager.add(Paragraph().setWidth(pageWidth / 5 * 2).setHeight(0.5f).setBackgroundColor(DeviceRgb(0, 0, 0)))
+//            val icon = BitmapFactory.decodeResource(resources, R.drawable.pdf_icon)
+//            val imgData = ImageDataFactory.create(PDFManager.bitmapToBytes(icon))
+//            val image = Image(imgData)
+//            image.scale(0.5f, 0.5f)
 //            image.setWidth(60f)
             // 设置图片位置为右上角
-            val imageWidth: Float = image.getImageScaledWidth()
-            val imageHeight: Float = image.getImageScaledHeight()
-            image.setFixedPosition(pageWidth - imageWidth - 40, pageHeight - imageHeight * 2)
-            PDFManager.addImage(image)
+//            val imageWidth: Float = image.getImageScaledWidth()
+//            val imageHeight: Float = image.getImageScaledHeight()
+//            image.setFixedPosition(pageWidth - imageWidth - 40, pageHeight - imageHeight * 2)
+//            PDFManager.addImage(image)
 //
             if (mDatabind.curWeekRB.isChecked) {
                 PDFManager.createParagraph("报告日期：" + mDatabind.curWeekTv.text, TextAlignment.LEFT, 8f, fontColor = ColorConstants.GRAY)
@@ -128,14 +131,14 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
             div1.setPadding(10f)
             div1.setMarginRight(10f)
             div1.setBackgroundColor(DeviceRgb(244, 249, 255)).setBorderRadius(BorderRadius(4f))
-            div1.add(Paragraph(PDFManager.createText("用户姓名：" + App.userInfo.name + "\n性别：${App.userInfo.sex}" + "\n出生日期：${App.userInfo.birthday}", 12f, DeviceRgb(0, 0, 0))))
+            div1.add(Paragraph(PDFManager.createText("用户姓名：" + App.userInfo.name + "\n性别：${App.userInfo.sex}" + "\n出生日期：${App.userInfo.birthday}", 11f, DeviceRgb(0, 0, 0))))
             cell1.add(div1)
             val div2 = Div()
             div2.setWidth(UnitValue.createPercentValue(100f))
             div2.setPadding(10f)
             div2.setMarginLeft(10f)
             div2.setBackgroundColor(DeviceRgb(244, 249, 255)).setBorderRadius(BorderRadius(4f))
-            div2.add(Paragraph(PDFManager.createText("身高：${App.userInfo.height}cm" + "\n体重：${App.userInfo.weight}kg" + "\n腰围：${App.userInfo.waistline}cm", 12f, DeviceRgb(0, 0, 0))))
+            div2.add(Paragraph(PDFManager.createText("身高：${App.userInfo.height}cm" + "\n体重：${App.userInfo.weight}kg" + "\n腰围：${App.userInfo.waistline}cm", 11f, DeviceRgb(0, 0, 0))))
 
             val cell2 = Cell()
             cell2.add(div2)
@@ -154,68 +157,65 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
             run.setAutoScale(true)
             run.setHeight(40f)
             allSportstable.addCell(Cell().add(run).setBorder(null))
-//            allSportstable.addCell(PDFManager.createCellAndBackground(Text("运动总结").setFontColor(ColorConstants.WHITE).setFontSize(16f), Text(""), cellBackGround = DeviceRgb(30, 157, 144), isFirst = false, isLast = false))
-            allSportstable.addCell(PDFManager.createCellAndBackground(Text("平均得分 ").setFontSize(12f).setFontColor(ColorConstants.GRAY), Text(it.score.toString() + "分").setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)), cellBackGround = DeviceRgb(244, 249, 255), isFirst = true, isLast = false).setMarginLeft(40f))
-            allSportstable.addCell(PDFManager.createCellAndBackground(Text("运动时长 ").setFontSize(12f).setFontColor(ColorConstants.GRAY), Text(DateTimeUtil.formatExportTime(it.sport_time.toLong())).setFontSize(12f).setFontColor(ColorConstants.BLACK), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = false))
-            allSportstable.addCell(PDFManager.createCellAndBackground(Text("消耗卡路里 ").setFontSize(12f).setFontColor(ColorConstants.GRAY), Text("${it.calorie_total / 1000f}千卡").setFontSize(12f).setFontColor(ColorConstants.BLACK), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = false))
-            allSportstable.addCell(PDFManager.createCellAndBackground(Text("平均心率 ").setFontSize(12f).setFontColor(ColorConstants.GRAY), Text(it.avg_rate_value.toString()).setFontColor(ColorConstants.BLACK).setFontSize(12f), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = true))
+            allSportstable.addCell(PDFManager.createCellAndBackground(Text("平均得分 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text(it.score.toString() + "分").setFontSize(10f).setFontColor(DeviceRgb(30, 157, 144)), cellBackGround = DeviceRgb(244, 249, 255), isFirst = true, isLast = false).setMarginLeft(40f))
+            allSportstable.addCell(PDFManager.createCellAndBackground(Text("运动时长 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text(DateTimeUtil.formatExportTime(it.sport_time.toLong())).setFontSize(10f).setFontColor(ColorConstants.BLACK), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = false))
+            allSportstable.addCell(PDFManager.createCellAndBackground(Text("消耗卡路里 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text("${it.calorie_total / 1000f}千卡").setFontSize(10f).setFontColor(ColorConstants.BLACK), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = false))
+            allSportstable.addCell(PDFManager.createCellAndBackground(Text("平均心率 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text(it.avg_rate_value.toString()).setFontColor(ColorConstants.BLACK).setFontSize(10f), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = true))
             PDFManager.add(allSportstable)
             if (it.sport_lift_leg != null) {
-                PDFManager.createParagraph(Text("高抬腿运动 ").setFontSize(20f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_lift_leg.score.toString()).setFontSize(20f).setFontColor(DeviceRgb(30, 157, 144)))
-                val highLegTab = Table(UnitValue.createPercentArray(7))
+                PDFManager.createParagraph(Text("高抬腿运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_lift_leg.score.toString()).setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
+                val highLegTab = Table(UnitValue.createPercentArray(floatArrayOf(30f, 30f, 30f, 30f,30f,30f)))
                 highLegTab.setBorder(null)
                 // 添加表头行
 //                highLegTab.addHeaderCell(PDFManager.createCell("平均得分"))
-                highLegTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY))
-                highLegTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY))
-                highLegTab.addHeaderCell(PDFManager.createCell("平均心率", color = ColorConstants.GRAY))
-                highLegTab.addHeaderCell(PDFManager.createCell("暖身激活", color = ColorConstants.GRAY))
-                highLegTab.addHeaderCell(PDFManager.createCell("高效燃脂", color = ColorConstants.GRAY))
-                highLegTab.addHeaderCell(PDFManager.createCell("心肺提升", color = ColorConstants.GRAY))
-                highLegTab.addHeaderCell(PDFManager.createCell("极限突破", color = ColorConstants.GRAY))
+                highLegTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("运动总数", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("左腿运动量", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("右腿运动量", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("心肺能力", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
 //                highLegTab.addCell(PDFManager.createCell(it.sport_lift_leg.score.toString()))
-                highLegTab.addCell(PDFManager.createCell(DateTimeUtil.formatExportTime(it.sport_lift_leg.sport_time.toLong())))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.sum_calorie / 1000}千卡"))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.avg_rate_value}"))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.warm_up_activation}"))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.efficient_grease_burning}"))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.heart_lung_enhancement}"))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.extreme_breakthrough}"))
+                highLegTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_lift_leg.sport_time.toLong()) + "分钟",textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.sum_calorie / 1000}千卡",textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.left_times+it.sport_lift_leg.right_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.left_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.right_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.cardiorespiratory_endurance}",textAligment = TextAlignment.LEFT).setWidth(80f))
                 PDFManager.add(highLegTab)
                 PDFManager.createLine()
             }
-
             if (it.sport_dumbbell != null) {
-                PDFManager.createParagraph(Text("哑铃运动 ").setFontSize(20f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_dumbbell.score.toString()).setFontSize(20f).setFontColor(DeviceRgb(30, 157, 144)))
-                val dumbbellTab = Table(UnitValue.createPercentArray(4))
+                PDFManager.createParagraph(Text("哑铃运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_dumbbell.score.toString()).setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
+                val dumbbellTab = Table(UnitValue.createPercentArray(floatArrayOf(80f, 80f, 80f, 80f, 80f)))
                 dumbbellTab.setBorder(null)
 //                dumbbellTab.addHeaderCell(PDFManager.createCell("平均得分"))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("上举次数", color = ColorConstants.GRAY))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("扩胸次数", color = ColorConstants.GRAY))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("哑铃重量", color = ColorConstants.GRAY))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("上举次数", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("扩胸次数", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("哑铃重量", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
 
 //                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.score.toString()))
-                dumbbellTab.addCell(PDFManager.createCell(DateTimeUtil.formatExportTime(it.sport_dumbbell.sport_time.toLong())))
-                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.up_times.toString()))
-                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.expand_chest_times.toString()))
-                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.weight.toString() + "kg"))
+                dumbbellTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_dumbbell.sport_time.toLong()) + "分钟",textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.sum_calorie / 1000}千卡",textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.up_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.expand_chest_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.weight.toString() + "kg",textAligment = TextAlignment.LEFT).setWidth(80f))
 
                 PDFManager.add(dumbbellTab)
                 PDFManager.createLine()
             }
-
             if (it.sport_flat_support != null) {
-                PDFManager.createParagraph(Text("平板支撑运动 ").setFontSize(20f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_flat_support.score.toString()).setFontSize(20f).setFontColor(DeviceRgb(30, 157, 144)))
+                PDFManager.createParagraph(Text("平板支撑运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_flat_support.score.toString()).setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
                 val plankTab = Table(UnitValue.createPercentArray(2))
                 plankTab.setBorder(null)
 //                plankTab.addHeaderCell(PDFManager.createCell("平均得分"))
-                plankTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY))
-                plankTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY))
+                plankTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                plankTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
 
 //                plankTab.addCell(PDFManager.createCell(it.sport_flat_support.score.toString())) 30 157 144
-                plankTab.addCell(PDFManager.createCell(DateTimeUtil.formatExportTime(it.sport_flat_support.sport_time.toLong())))
-                plankTab.addCell(PDFManager.createCell("${it.sport_flat_support.sum_calorie / 1000}千卡"))
+                plankTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_flat_support.sport_time.toLong()) + "分钟",textAligment = TextAlignment.LEFT).setWidth(80f))
+                plankTab.addCell(PDFManager.createCell("${it.sport_flat_support.sum_calorie / 1000}千卡",textAligment = TextAlignment.LEFT).setWidth(80f))
                 PDFManager.add(plankTab)
                 PDFManager.createLine()
             }

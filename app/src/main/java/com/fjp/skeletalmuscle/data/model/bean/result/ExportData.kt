@@ -9,9 +9,9 @@ data class ExportData(
     val avg_rate_value: Int,
     val calorie_total: Int,
     val score: Int,
-    val sport_dumbbell: ExportSportDumbbell,
-    val sport_flat_support: ExportSportFlatSupport,
-    val sport_lift_leg: ExportSportLiftLeg,
+    var sport_dumbbell: ExportSportDumbbell,
+    var sport_flat_support: ExportSportFlatSupport,
+    var sport_lift_leg: ExportSportLiftLeg,
     val sport_time: Int
 )
 
@@ -20,7 +20,8 @@ data class ExportSportDumbbell(
     val score: Int,
     val sport_time: Int,
     val up_times: Int,
-    val weight: Int
+    val weight: Int,
+    val sum_calorie: Int
 )
 
 data class ExportSportFlatSupport(
