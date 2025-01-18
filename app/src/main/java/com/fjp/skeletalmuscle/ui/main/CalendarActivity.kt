@@ -88,12 +88,18 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
         if (isClick) {
             list.forEach {
                 var day = "1"
+                var month = "1"
                 if (calendar.day < 10) {
                     day = "0" + calendar.day
                 } else {
                     day = calendar.day.toString()
                 }
-                if (it.date == "${calendar.year}-${calendar.month}-${day}") {
+                if(calendar.month<10){
+                    month = "0${calendar.month}"
+                }else{
+                    month = calendar.month.toString()
+                }
+                if (it.date == "${calendar.year}-${month}-${day}") {
                     val intent = Intent(this@CalendarActivity, SportsRecordActivity::class.java)
                     intent.putExtra(Constants.INTENT_KEY_YEAR, calendar.year)
                     intent.putExtra(Constants.INTENT_KEY_MONTH, calendar.month)
