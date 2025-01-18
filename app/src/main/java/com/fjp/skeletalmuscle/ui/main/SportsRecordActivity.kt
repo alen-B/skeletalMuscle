@@ -145,7 +145,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
             mDatabind.rpb4Time.text = DateTimeUtil.formatTime(sportLiftLeg.extreme_breakthrough.toLong())
             mDatabind.maxValueTv.text = sportLiftLeg.max_rate_value.toString()
             mDatabind.avgValueTv.text = sportLiftLeg.avg_rate_value.toString()
-            initLineChart(mDatabind.lineChart,sportLiftLeg.heart_rate)
+            initLineChart(mDatabind.lineChart,sportLiftLeg.heart_rate,3)
         }else{
             mDatabind.heightLegBg.visibility = View.GONE
         }
@@ -329,13 +329,13 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         mViewModel.dumbbellSportsDate.add(SportsRecord("消耗卡路里", (dummbbell.sum_calorie/1000).toString(), "千卡"))
         mDatabind.dumbbellRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.dumbbellSportsDate))
         mDatabind.dumbbellRecyclerView.addItemDecoration(SpaceItemDecoration(16.dp.toInt(), 0))
-        initLineChart(mDatabind.dumbbellHeartRateLineChart,dummbbell.heart_rate)
+        initLineChart(mDatabind.dumbbellHeartRateLineChart,dummbbell.heart_rate,4)
 //        dumbbellAngleLineChart
     }
 
     private fun initSportsPlank(todayData: TodayDataResult) {
         var flatSupport = todayData.sport_flat_support!!
-        initLineChart(mDatabind.plankHeartRateLineChart,flatSupport.heart_rate)
+        initLineChart(mDatabind.plankHeartRateLineChart,flatSupport.heart_rate,5)
     }
 
 
@@ -348,7 +348,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         requestMainViewModel.getTodayData("${calendar.year}-${calendar.month+1}-${calendar.dayOfMonth}")
     }
 
-    private fun initLineChart(lineChart: LineChart, heartRate: List<HeartRate>,) {
+    private fun initLineChart(lineChart: LineChart, heartRate: List<HeartRate>,labelCount:Int) {
         lineChart.legend.isEnabled = false
         lineChart.setTouchEnabled(false)
         lineChart.isDragEnabled = false
@@ -367,7 +367,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.textSize=20.dp
-        xAxis.labelCount =5
+        xAxis.labelCount =labelCount
         xAxis.setDrawAxisLine(true)
         xAxis.enableGridDashedLine(2f, 1f, 0f)
         xAxis.valueFormatter = object : ValueFormatter() {
