@@ -1,82 +1,47 @@
 package com.fjp.skeletalmuscle.app.util
 
+import com.fjp.skeletalmuscle.data.model.bean.Record
+import kotlin.math.abs
+
 object ExerciseDetector {
-    private const val PITCH_THRESHOLD_UP = 40.0 // 上举运动的俯仰角阈值
-    private const val PITCH_THRESHOLD_DOWN = 20.0 // 上举运动的俯仰角阈值
-    private const val YAW_THRESHOLD = 30.0 // 扩胸运动的横滚角阈值
-    private const val ACCELERATION_THRESHOLD = 10.0 // 加速度阈值
     private const val ACCELERATION_THRESHOLD_Z = 5.0 // z加速度阈值
+    val records:MutableList<Record> =  mutableListOf()
     var upCount = 0 // 上举运动次数
-        private set
     var chestCount = 0 // 扩胸运动次数
-        private set
     private var isUpInProgress = false // 上举运动是否正在进行
-    private var isChestInProgress = false // 扩胸运动是否正在进行
-    private var minYaw = 0.0
-    private var maxYaw = 0.0
-    private var isExtend = false
     private var isAdded = false//当前动作是否已经添加了一次扩胸运动
-    fun processData(pitch: Double, yaw: Double, accelY: Double, accelZ: Double) {
-        if (pitch < 120 && pitch > 80) {
-            // 检测上举运动
-            if (accelZ > ACCELERATION_THRESHOLD_Z && !isUpInProgress) {
-                isUpInProgress = true
-            } else if (accelZ < ACCELERATION_THRESHOLD_Z && isUpInProgress) {
-                upCount++
-                isUpInProgress = false
+    private var minAngle = 30.0//最小角度变化
+    private var maxAngle = 90.0//最大角度变化
+
+
+    //上举运动只记录一个哑铃的，两个哑铃都记录次数显示会不对
+    fun processData(leftPitch: Double, leftYaw: Double, leftAccelY: Double, leftAccelZ: Double, rightPitch: Double, rightYaw: Double,isLeftData:Boolean) {
+        if (leftPitch < 120 && leftPitch > 80) {
+            if(isLeftData){
+                // 检测上举运动
+                if (leftAccelZ > ACCELERATION_THRESHOLD_Z && !isUpInProgress) {
+                    isUpInProgress = true
+                } else if (leftAccelZ < ACCELERATION_THRESHOLD_Z && isUpInProgress) {
+                    upCount++
+                    records.add(Record(0,DateTimeUtil.formatDate(System.currentTimeMillis(),DateTimeUtil.DATE_PATTERN_SS),1))
+                    isUpInProgress = false
+                }
             }
         } else {
-//            if (minYaw == 0.0) {
-//                minYaw = yaw
-//                maxYaw = yaw
-//            }
-//
-//            if (maxYaw < yaw) {
-//                maxYaw = yaw
-//                //表示在扩胸
-//                isExtend = true
-//            }else{
-//                isAdded=false
-//                isExtend = false
-//            }
-//            println("+++角度:maxYaw：${maxYaw }   minYaw:${minYaw}  yaw:${yaw}")
-//            if (!isExtend && !isAdded) {
-//                isAdded=true
-//                chestCount++
-//                isExtend = false
-////                println("+++最大角度:${Math.abs(maxYaw - minYaw)}")
-//                minYaw = yaw
-//                maxYaw = yaw
-//            }
-//            if (yaw > YAW_THRESHOLD && !isChestInProgress) {
-//                isChestInProgress = true
-//            } else if (yaw < YAW_THRESHOLD && accelY > ACCELERATION_THRESHOLD && isChestInProgress) {
-//                chestCount++
-//                isChestInProgress = false
-//            }
-
-            println("==yaw:${yaw}    accelY:${accelY}   isChestInProgress:${isChestInProgress}")
-        }
-
-
-        // 检测扩胸运动
-
-    }
-
-    fun movingAverageFilter(data: DoubleArray, windowSize: Int): DoubleArray {
-        val dataLength = data.size
-        if (dataLength < windowSize) {
-            return data
-        }
-        val filteredData = DoubleArray(dataLength - windowSize + 1)
-        for (i in filteredData.indices) {
-            var sum = 0.0
-            for (j in 0 until windowSize) {
-                sum += data[i + j]
+            println("-----rightYaw${rightYaw}   leftYaw:${leftYaw}    abs:${+abs(rightYaw - leftYaw)}")
+            if (!isAdded && abs(rightYaw - leftYaw) > maxAngle) {
+//                println("abs(leftYaw - rightYaw):${abs(rightYaw - leftYaw)}  isAdded:${isAdded}")
+                chestCount++
+                records.add(Record(0,DateTimeUtil.formatDate(System.currentTimeMillis(),DateTimeUtil.DATE_PATTERN_SS),2))
+                isAdded = true
             }
-            filteredData[i] = sum / windowSize
+
+            if (abs(rightYaw - leftYaw) < minAngle) {
+                isAdded = false
+            }
+
         }
-        return filteredData
+
     }
 
 

@@ -31,6 +31,7 @@
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="35dp"
+            android:layout_marginTop="200dp"
             android:background="@drawable/bg_white_round_20"
             android:gravity="center_horizontal"
             android:paddingBottom="12dp"
@@ -39,55 +40,55 @@
             <TextView
                 android:id="@+id/lCurDataTv"
                 android:layout_width="wrap_content"
-                android:textColor="@color/color_222"
-                android:textSize="@dimen/text_size_2"
-                android:text="@{viewModel.leftLegAngle}"
+                android:textColor="#99494949"
+                android:textSize="@dimen/text_size_3"
+                android:text="上举"
                 android:layout_height="wrap_content" />
 
-            <ImageView
-                android:id="@+id/lIv1"
-                android:layout_width="110dp"
-                android:layout_marginTop="24dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_e64e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/lIv1"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_e64e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <ImageView
-                android:id="@+id/lIv2"
-                android:layout_width="110dp"
-                android:layout_marginTop="2dp"
-                android:scaleType="centerCrop"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_b34e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/lIv2"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:background="@drawable/bg_b34e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <ImageView
-                android:id="@+id/lIv3"
-                android:layout_width="110dp"
-                android:layout_marginTop="2dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_804e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/lIv3"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_804e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <ImageView
-                android:id="@+id/lIv4"
-                android:layout_width="110dp"
-                android:layout_marginTop="2dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_3d4e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/lIv4"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_3d4e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <ImageView
-                android:id="@+id/lIv5"
-                android:layout_width="110dp"
-                android:layout_marginTop="2dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_1a4e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/lIv5"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_1a4e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
@@ -131,62 +132,63 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="35dp"
             android:paddingBottom="12dp"
+            android:layout_marginTop="200dp"
             android:background="@drawable/bg_white_round_20"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/rCurDataTv"
-                android:text="@{viewModel.rightLegAngle}"
+                android:text="扩胸"
                 android:layout_width="wrap_content"
-                android:textColor="@color/color_222"
-                android:textSize="@dimen/text_size_2"
+                android:textColor="#99494949"
+                android:textSize="@dimen/text_size_3"
                 android:layout_height="wrap_content" />
 
-            <ImageView
-                android:id="@+id/rIv1"
-                android:layout_width="110dp"
-                android:layout_marginTop="24dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_e64e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/rIv1"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_e64e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <ImageView
-                android:id="@+id/rIv2"
-                android:layout_width="110dp"
-                android:layout_marginTop="2dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_b34e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/rIv2"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_b34e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <ImageView
-                android:id="@+id/rIv3"
-                android:layout_width="110dp"
-                android:layout_marginTop="2dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_804e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/rIv3"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_804e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <ImageView
-                android:id="@+id/rIv4"
-                android:layout_width="110dp"
-                android:layout_marginTop="2dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_3d4e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/rIv4"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_3d4e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <ImageView
-                android:id="@+id/rIv5"
-                android:layout_width="110dp"
-                android:layout_marginTop="2dp"
-                android:layout_height="40dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/bg_1a4e71ff_8"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/rIv5"-->
+<!--                android:layout_width="110dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:background="@drawable/bg_1a4e71ff_8"-->
+<!--                tools:ignore="ContentDescription" />-->
         </androidx.appcompat.widget.LinearLayoutCompat>
         <ImageView
             android:id="@+id/centerIv"
@@ -235,6 +237,7 @@
             android:layout_width="166dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="35dp"
+            android:visibility="gone"
             android:background="@drawable/bg_white_80_round_20"
             app:layout_constraintTop_toTopOf="@+id/rTimesView"
             app:layout_constraintBottom_toBottomOf="@+id/rTimesView"
@@ -252,6 +255,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             android:textColor="@color/color_222"
             android:textSize="70sp"
+            android:visibility="gone"
             android:text="88"
             android:layout_height="wrap_content" />
 

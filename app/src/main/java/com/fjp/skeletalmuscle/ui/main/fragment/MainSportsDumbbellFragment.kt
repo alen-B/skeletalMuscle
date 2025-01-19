@@ -31,7 +31,7 @@ class MainSportsDumbbellFragment : BaseFragment<MainSportsDumbbellViewModel, Fra
             mViewModel.sportsTime.set(DateTimeUtil.formSportTime(todayDataResult.sport_dumbbell.sport_time))
             mViewModel.heartRate.set(todayDataResult.sport_dumbbell.avg_rate_value.toString())
             mViewModel.weight.set(todayDataResult.sport_dumbbell.weight.toString())
-            mViewModel.heat.set(todayDataResult.sport_dumbbell.sum_calorie.toString())
+            mViewModel.heat.set((todayDataResult.sport_dumbbell.sum_calorie/1000).toString())
         }
 
 

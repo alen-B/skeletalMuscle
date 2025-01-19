@@ -123,8 +123,8 @@ class HttpRequestManger {
      * 今日运动所有数据获取
      *time="2024-11-01"
      */
-    suspend fun getTodayData(time: String): ApiResponse<TodayDataResult> {
-        return apiService.getTodayData(time)
+    suspend fun getTodayData(time: String,endTime:String): ApiResponse<TodayDataResult> {
+        return apiService.getTodayData(time,endTime)
     }
 
     /**

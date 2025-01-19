@@ -19,6 +19,7 @@ import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.ActionDetector
 import com.fjp.skeletalmuscle.app.util.Constants
+import com.fjp.skeletalmuscle.app.util.DataPoint
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
@@ -40,7 +41,7 @@ import java.util.Date
 import kotlin.math.ceil
 
 class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMainBinding>(), SMBleManager.DeviceListener {
-    val dumbbellRequest = DumbbellRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis()/1000, 5, 0, 0)
+    val dumbbellRequest = DumbbellRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 5, 0, 0)
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
     private var isRunning: Boolean = false
@@ -93,6 +94,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
+        ExerciseDetector.upCount=0
+        ExerciseDetector.chestCount=0
         startTimer()
         App.userInfo?.let {
             age = DateUtils.calculateAge(DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, it.birthday), Date(System.currentTimeMillis()))
@@ -102,17 +105,17 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
         startCountdown()
 //        showOffLinePop()
-        leftLevelViews.add(mDatabind.lIv1)
-        leftLevelViews.add(mDatabind.lIv2)
-        leftLevelViews.add(mDatabind.lIv3)
-        leftLevelViews.add(mDatabind.lIv4)
-        leftLevelViews.add(mDatabind.lIv5)
-
-        rightLevelViews.add(mDatabind.rIv1)
-        rightLevelViews.add(mDatabind.rIv2)
-        rightLevelViews.add(mDatabind.rIv3)
-        rightLevelViews.add(mDatabind.rIv4)
-        rightLevelViews.add(mDatabind.rIv5)
+//        leftLevelViews.add(mDatabind.lIv1)
+//        leftLevelViews.add(mDatabind.lIv2)
+//        leftLevelViews.add(mDatabind.lIv3)
+//        leftLevelViews.add(mDatabind.lIv4)
+//        leftLevelViews.add(mDatabind.lIv5)
+//
+//        rightLevelViews.add(mDatabind.rIv1)
+//        rightLevelViews.add(mDatabind.rIv2)
+//        rightLevelViews.add(mDatabind.rIv3)
+//        rightLevelViews.add(mDatabind.rIv4)
+//        rightLevelViews.add(mDatabind.rIv5)
         SMBleManager.addDeviceResultDataListener(this)
         SMBleManager.connectedDevices[DeviceType.GTS]?.let {
             SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE)
@@ -198,8 +201,10 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             seconds = App.sportsTime * 60
         }
         dumbbellRequest.sport_time = seconds
-        dumbbellRequest.end_time = System.currentTimeMillis()/1000
+        dumbbellRequest.end_time = System.currentTimeMillis() / 1000
         dumbbellRequest.plan_sport_time = App.sportsTime * 60
+        dumbbellRequest.record.addAll(ExerciseDetector.records)
+//        dumbbellRequest.score = score
         mViewModel.saveDumbbell(dumbbellRequest)
     }
 
@@ -277,26 +282,21 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     override fun rightHandGripsConnected() {
     }
 
-    val actionDetector = ActionDetector()
+    var leftDataPoint: DataPoint = DataPoint(0L, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    var rightDataPoint: DataPoint = DataPoint(0L, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
     override fun onLeftDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
         }
-        val dataPoint = DeviceDataParse.parseData2DataPoint(data)
-        if (dataPoint != null) {
-//            actionDetector.process(dataPoint)
-            ExerciseDetector.processData(dataPoint.pitch,dataPoint.yaw,dataPoint.ay,dataPoint.az)
-            println("===上举次数：${ExerciseDetector.upCount}")
-            println("===扩胸次数：${ExerciseDetector.chestCount}")
+        val parseData = DeviceDataParse.parseData2DataPoint(data)
+        if (parseData != null) {
+            leftDataPoint = parseData
         }
-//        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
-//            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
-//        }
-//        if (actionDetector.expansionCount.toString() != mViewModel.rightLegCount.get()) {
-//            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
-//        }
-//        mViewModel.leftLegCount.set(actionDetector.overheadCount.toString())
-//        mViewModel.rightLegCount.set(actionDetector.expansionCount.toString())
+        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,true)
+        println("===上举次数：${ExerciseDetector.upCount}")
+        println("===扩胸次数：${ExerciseDetector.chestCount}")
+        mViewModel.leftLegCount.set(ExerciseDetector.upCount.toString())
+        mViewModel.rightLegCount.set(ExerciseDetector.chestCount.toString())
     }
 
     fun setLeftCurLevelByPitch(pitch: Float) {
@@ -320,20 +320,21 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         if (!isRunning) {
             return
         }
-        val dataPoint = DeviceDataParse.parseData2DataPoint2(data)
-        if (dataPoint != null) {
-//            ExerciseDetector.processData(dataPoint.pitch,dataPoint.yaw,dataPoint.ay,dataPoint.az)
+        val parseData = DeviceDataParse.parseData2DataPoint(data)
+        if (parseData != null) {
+            rightDataPoint = parseData
+        }
+        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,false)
 //            println("===上举次数：${ExerciseDetector.upCount}")
 //            println("===扩胸次数：${ExerciseDetector.chestCount}")
-        }
 //        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
 //            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
 //        }
 //        if (actionDetector.expansionCount.toString() != mViewModel.rightLegCount.get()) {
 //            dumbbellRequest.record.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
 //        }
-//        mViewModel.leftLegCount.set(actionDetector.overheadCount.toString())
-//        mViewModel.rightLegCount.set(actionDetector.expansionCount.toString())
+        mViewModel.leftLegCount.set(ExerciseDetector.upCount.toString())
+        mViewModel.rightLegCount.set(ExerciseDetector.chestCount.toString())
 
     }
 
@@ -408,7 +409,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
                 mViewModel.title.set(getString(R.string.high_knee_main_title_break))
             }
             // 计算卡路里消耗
-            caloriesBurned = calculateCaloriesBurned(age, weight.toDouble(), interestedValue, seconds.toFloat() / 60, isMale)
+            caloriesBurned = calculateCaloriesBurned(age, weight.toDouble(), interestedValue, seconds / 60f, isMale)
             //消耗 caloriesBurned 千卡
             //暖身激活时间 warmupTime 秒
             //高效燃脂 fatBurningTime 秒
@@ -419,9 +420,9 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             println("===高效燃脂:  " + fatBurningTime)
             println("===心肺提升时间:  " + cardioTime)
             println("===极限突破:  " + breakTime)
-            oldCaloriesBurned = caloriesBurned
             dumbbellRequest.calorie.add(Calorie((((caloriesBurned - oldCaloriesBurned).coerceAtLeast(0.0)) * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
             dumbbellRequest.heart_rate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
+            oldCaloriesBurned = caloriesBurned
         }
     }
 
@@ -433,17 +434,17 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_3d4e71ff_20)
-        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_e64e71ff_8)
-        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_b34e71ff_8)
-        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_804e71ff_8)
-        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_3d4e71ff_8)
-        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_1a4e71ff_8)
-
-        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_e64e71ff_8)
-        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_b34e71ff_8)
-        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_804e71ff_8)
-        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_3d4e71ff_8)
-        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_1a4e71ff_8)
+//        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_e64e71ff_8)
+//        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_b34e71ff_8)
+//        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_804e71ff_8)
+//        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_3d4e71ff_8)
+//        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_1a4e71ff_8)
+//
+//        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_e64e71ff_8)
+//        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_b34e71ff_8)
+//        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_804e71ff_8)
+//        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_3d4e71ff_8)
+//        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_1a4e71ff_8)
 
     }
 
@@ -454,17 +455,17 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this, R.color.color_ccfcefce))
         mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_fat_burning)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_fat_burning)
-        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_fat_burning)
-        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_fat_burning)
-        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_fat_burning)
-        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_fat_burning)
-        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_fat_burning)
-
-        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_fat_burning)
-        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_fat_burning)
-        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_fat_burning)
-        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_fat_burning)
-        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_fat_burning)
+//        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_fat_burning)
+//        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_fat_burning)
+//        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_fat_burning)
+//        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_fat_burning)
+//        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_fat_burning)
+//
+//        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_fat_burning)
+//        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_fat_burning)
+//        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_fat_burning)
+//        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_fat_burning)
+//        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_fat_burning)
 
     }
 
@@ -475,17 +476,17 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this, R.color.color_3dff824c))
         mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_cardio)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_cardio)
-        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_cardio)
-        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_cardio)
-        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_cardio)
-        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_cardio)
-        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_cardio)
-
-        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_cardio)
-        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_cardio)
-        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_cardio)
-        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_cardio)
-        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_cardio)
+//        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_cardio)
+//        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_cardio)
+//        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_cardio)
+//        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_cardio)
+//        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_cardio)
+//
+//        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_cardio)
+//        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_cardio)
+//        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_cardio)
+//        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_cardio)
+//        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_cardio)
 
     }
 
@@ -496,17 +497,17 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mDatabind.progressBar.setBackgroundDrawableColor(ContextCompat.getColor(this, R.color.color_1aff574c))
         mDatabind.rTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_break)
         mDatabind.lTimesView.setBackgroundResource(R.drawable.bg_high_knee_times_break)
-        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_break)
-        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_break)
-        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_break)
-        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_break)
-        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_break)
-
-        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_break)
-        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_break)
-        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_break)
-        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_break)
-        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_break)
+//        mDatabind.lIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_break)
+//        mDatabind.lIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_break)
+//        mDatabind.lIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_break)
+//        mDatabind.lIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_break)
+//        mDatabind.lIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_break)
+//
+//        mDatabind.rIv1.setBackgroundResource(R.drawable.bg_high_knee_level_5_break)
+//        mDatabind.rIv2.setBackgroundResource(R.drawable.bg_high_knee_level_4_break)
+//        mDatabind.rIv3.setBackgroundResource(R.drawable.bg_high_knee_level_3_break)
+//        mDatabind.rIv4.setBackgroundResource(R.drawable.bg_high_knee_level_2_break)
+//        mDatabind.rIv5.setBackgroundResource(R.drawable.bg_high_knee_level_1_break)
     }
 
     override fun onLeftHandGripsData(data: ByteArray) {

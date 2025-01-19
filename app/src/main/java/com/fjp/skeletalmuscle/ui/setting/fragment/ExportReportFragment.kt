@@ -25,6 +25,7 @@ import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
 import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportDumbbell
 import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportFlatSupport
 import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportLiftLeg
+import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.databinding.FragmentExportReportBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ExportReportViewModel
 import com.itextpdf.io.image.ImageDataFactory
@@ -56,7 +57,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
     val PERMISSION_REQUEST_CODE = 201
     lateinit var pvTime: TimePickerView
     var endDate: Date = Date()
-    lateinit var exportData: ExportData
+    lateinit var exportData: TodayDataResult
     lateinit var startDate: Date
     val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
@@ -81,7 +82,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
 
     override fun createObserver() {
         super.createObserver()
-        mViewModel.exportLiveData.observe(this) {
+        mViewModel.exportDataLiveData.observe(this) {
             parseState(it, {
                 exportData = it
                 handler.sendEmptyMessage(200)
@@ -90,7 +91,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         }
     }
 
-    private fun exportPDF(it: ExportData) {
+    private fun exportPDF(it: TodayDataResult) {
 
         try {
             val pageWidth: Float = PageSize.A4.width
@@ -244,7 +245,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
                     endTime = endDate.time
                 }
 
-                mViewModel.getTodayData(startTime / 1000, endTime / 1000)
+                mViewModel.getExportData(DateTimeUtil.formatDate(startTime, DateTimeUtil.DATE_PATTERN), DateTimeUtil.formatDate(endTime, DateTimeUtil.DATE_PATTERN))
             }
 
         }

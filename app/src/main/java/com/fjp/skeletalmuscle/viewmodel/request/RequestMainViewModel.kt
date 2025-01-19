@@ -19,7 +19,7 @@ class RequestMainViewModel : BaseViewModel() {
     var userInfoResult = MutableLiveData<ResultState<UserInfo>>()
     fun getTodayData(time:String) {
         request({
-            HttpRequestCoroutine.getTodayData(time)
+            HttpRequestCoroutine.getTodayData(time,time)
         }, mainLiveData)
 
     }

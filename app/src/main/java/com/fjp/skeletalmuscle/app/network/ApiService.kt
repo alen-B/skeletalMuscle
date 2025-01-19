@@ -108,7 +108,7 @@ interface ApiService {
      *time="2024-11-01"
      */
     @GET("sport/get_today_data")
-    suspend fun getTodayData(@Query("time") time: String): ApiResponse<TodayDataResult>
+    suspend fun getTodayData(@Query("time") time: String,@Query("end_time") endTime: String): ApiResponse<TodayDataResult>
 
     /**
      * 高抬腿-卡路里趋势图
