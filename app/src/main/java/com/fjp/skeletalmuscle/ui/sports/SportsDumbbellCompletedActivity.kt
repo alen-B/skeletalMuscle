@@ -56,8 +56,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         mViewModel.calorie.set((dumbbellResult.calorie / 1000).toString())
         mViewModel.upTimes.set(dumbbellResult.up_times.toString())
         mViewModel.expandChestTimes.set(dumbbellResult.expand_chest_times.toString())
-        mViewModel.upDegree.set(dumbbellResult.avg_up_degree.toString() + "°")
-        mViewModel.expandChestDegree.set(dumbbellResult.avg_expand_chest_degree.toString() + "°")
+        mViewModel.expandChestDegree.set(String.format("%.0f", dumbbellResult.avg_expand_chest_degree) + "°")
 //
         initCalorieBarChart()
         initHeartRateLineChart()
@@ -252,42 +251,17 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         rightAxis.isEnabled = false
 
-        val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
-        val legAngle  = dumbbellResult.record.filter { it.type == 1 }
-        for (i in legAngle.indices) {
-            values.add(BarEntry(i.toFloat(), legAngle[i].degree.toFloat()))
-        }
         val expandAngle  = dumbbellResult.record.filter { it.type == 2 }
         for (i in expandAngle.indices) {
             values2.add(BarEntry(i.toFloat(),expandAngle[i].degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
-        val lineDataSet = LineDataSet(values, "千卡")
-        lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
-        lineDataSet.setDrawValues(false)
-        lineDataSet.color = appContext.getColor(R.color.color_blue)
-        // draw selection line as dashed
-        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
-
-        // set the filled area
-        lineDataSet.setDrawFilled(true)
-        if (Utils.getSDKInt() >= 18) {
-            // drawables only supported on api level 18 and above
-            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
-            lineDataSet.fillDrawable = drawable
-        } else {
-            lineDataSet.fillColor = Color.BLACK
-        }
-
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(true)
-        lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
+        lineDataSet2.color = appContext.getColor(R.color.color_blue)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
         // draw selection line as dashed
@@ -306,7 +280,6 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
 
         // set color of filled area
 
-        dataSets.add(lineDataSet)
         dataSets.add(lineDataSet2)
         val barData = LineData(dataSets)
         lineChart.data = barData

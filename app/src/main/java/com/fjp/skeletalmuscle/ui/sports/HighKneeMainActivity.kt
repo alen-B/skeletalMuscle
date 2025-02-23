@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
@@ -110,6 +111,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
     var curHeartRateLevel: HeartRateLevel = HeartRateLevel.WARMUP_TIME
     override fun initView(savedInstanceState: Bundle?) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.title.set(getString(R.string.now_start))
@@ -738,6 +740,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(updateTimerTask)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         SMBleManager.delDeviceResultDataListener(this)
         if (mediaPlayer_high != null) {
             mediaPlayer_high!!.release() // 释放MediaPlayer资源

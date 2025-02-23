@@ -443,33 +443,6 @@
                 app:layout_constraintStart_toStartOf="@+id/legAngleView"
                 app:layout_constraintTop_toTopOf="@+id/legAngleView" />
 
-
-            <TextView
-                android:id="@+id/avgUpliftIv"
-                android:layout_width="76dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:textSize="@dimen/text_size_4"
-                android:text="@string/exercise_plan_uplift"
-                android:textColor="@color/color_e8a800"
-                android:background="@drawable/bg_ffc019_20_round_20"
-                app:layout_constraintStart_toStartOf="@+id/legAngleTitleTv"
-                app:layout_constraintTop_toBottomOf="@+id/legAngleTitleTv"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/avgRightTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@{viewModel.upDegree}"
-                android:textColor="@color/color_222"
-                android:textSize="@dimen/text_size_1"
-                app:layout_constraintBaseline_toBottomOf="@+id/avgUpliftIv"
-                app:layout_constraintBottom_toBottomOf="@+id/avgUpliftIv"
-                app:layout_constraintStart_toEndOf="@+id/avgUpliftIv" />
-
             <TextView
                 android:id="@+id/avgLeftIv"
                 android:layout_width="76dp"
@@ -481,7 +454,7 @@
                 android:textColor="@color/color_4e71ff"
                 android:background="@drawable/bg_294e71ff_round_20"
                 app:layout_constraintStart_toStartOf="@+id/legAngleTitleTv"
-                app:layout_constraintTop_toBottomOf="@+id/avgUpliftIv"
+                app:layout_constraintTop_toBottomOf="@+id/legAngleTitleTv"
                 tools:ignore="ContentDescription" />
 
 
@@ -489,13 +462,11 @@
                 android:id="@+id/avgLeftTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:text="@{viewModel.expandChestDegree}"
                 android:textColor="@color/color_222"
                 android:textSize="@dimen/text_size_1"
-                app:layout_constraintBaseline_toBottomOf="@+id/avgLeftIv"
-                app:layout_constraintBottom_toBottomOf="@+id/avgLeftIv"
-                app:layout_constraintStart_toEndOf="@+id/avgLeftIv" />
+                app:layout_constraintTop_toBottomOf="@+id/avgLeftIv"
+                app:layout_constraintStart_toStartOf="@+id/legAngleTitleTv" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/legAngleLineChart"

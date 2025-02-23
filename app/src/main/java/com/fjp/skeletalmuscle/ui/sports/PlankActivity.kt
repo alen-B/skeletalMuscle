@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import androidx.core.content.ContextCompat
@@ -83,6 +84,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
 
     var curHeartRateLevel: HeartRateLevel = HeartRateLevel.WARMUP_TIME
     override fun initView(savedInstanceState: Bundle?) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         mViewModel.title.set("平板支撑运动")
@@ -372,6 +374,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(updateTimerTask)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         SMBleManager.delDeviceResultDataListener(this)
     }
 

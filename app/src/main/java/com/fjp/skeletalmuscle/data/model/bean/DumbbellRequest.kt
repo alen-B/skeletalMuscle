@@ -16,5 +16,7 @@ data class Calorie(val calorie: Int, val record_time: String): Parcelable
 @Parcelize
 data class HeartRate(val rate_value: Int, val record_time: String): Parcelable
 
+
+//type:1上举，2扩胸
 @Parcelize
 data class Record(val degree: Int, val record_time: String, val type: Int): Parcelable

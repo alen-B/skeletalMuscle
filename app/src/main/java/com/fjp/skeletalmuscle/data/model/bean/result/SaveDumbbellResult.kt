@@ -13,7 +13,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class SaveDumbbellResult(
-    val avg_expand_chest_degree: Int,
+    val avg_expand_chest_degree: Double,
     val avg_rate_value: Int,
     val avg_up_degree: Int,
     val calorie: Int,

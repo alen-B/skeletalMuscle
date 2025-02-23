@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
@@ -92,10 +93,12 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
     var curHeartRateLevel: HeartRateLevel = HeartRateLevel.WARMUP_TIME
     override fun initView(savedInstanceState: Bundle?) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         ExerciseDetector.upCount=0
         ExerciseDetector.chestCount=0
+        //用于接受用户
         startTimer()
         App.userInfo?.let {
             age = DateUtils.calculateAge(DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, it.birthday), Date(System.currentTimeMillis()))
@@ -324,7 +327,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         if (parseData != null) {
             rightDataPoint = parseData
         }
-        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,false)
+        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,false,)
 //            println("===上举次数：${ExerciseDetector.upCount}")
 //            println("===扩胸次数：${ExerciseDetector.chestCount}")
 //        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {
@@ -568,6 +571,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
     override fun onDestroy() {
         super.onDestroy()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         handler.removeCallbacks(updateTimerTask)
         SMBleManager.delDeviceResultDataListener(this)
     }

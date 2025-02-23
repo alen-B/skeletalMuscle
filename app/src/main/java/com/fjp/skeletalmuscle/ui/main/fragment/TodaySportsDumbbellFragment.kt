@@ -52,8 +52,7 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         mViewModel.calorie.set((sportDumbbell.sum_calorie / 1000).toString())
         mViewModel.upTimes.set(sportDumbbell.up_times.toString())
         mViewModel.expandChestTimes.set(sportDumbbell.expand_chest_times.toString())
-        mViewModel.upDegree.set(sportDumbbell.avg_up_degree.toString() + "°")
-        mViewModel.expandChestDegree.set(sportDumbbell.avg_expand_chest_degree.toString() + "°")
+        mViewModel.expandChestDegree.set(String.format("%.0f", sportDumbbell.avg_expand_chest_degree) + "°")
 
         initCalorieBarChart()
         initHeartRateLineChart()
@@ -251,40 +250,17 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_gray)
         rightAxis.isEnabled = false
 
-        val values = ArrayList<Entry>()
         val values2 = ArrayList<Entry>()
-        for (i in sportDumbbell.up_degree.indices) {
-            values.add(BarEntry(i.toFloat(), sportDumbbell.up_degree[i].up_degree.toFloat()))
-        }
         for (i in sportDumbbell.expand_chest_degree.indices) {
             values2.add(BarEntry(i.toFloat(), sportDumbbell.expand_chest_degree[i].expand_chest_degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
-        val lineDataSet = LineDataSet(values, "千卡")
-        lineDataSet.setDrawIcons(false)
-        lineDataSet.mode = LineDataSet.Mode.LINEAR
-        lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
-        lineDataSet.setDrawValues(false)
-        lineDataSet.color = appContext.getColor(R.color.color_blue)
-        // draw selection line as dashed
-        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
-
-        // set the filled area
-        lineDataSet.setDrawFilled(true)
-        if (Utils.getSDKInt() >= 18) {
-            // drawables only supported on api level 18 and above
-            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_blue)
-            lineDataSet.fillDrawable = drawable
-        } else {
-            lineDataSet.fillColor = Color.BLACK
-        }
 
         val lineDataSet2 = LineDataSet(values2, "千卡")
         lineDataSet2.setDrawIcons(false)
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(true)
-        lineDataSet2.color = appContext.getColor(R.color.color_ffc019)
+        lineDataSet2.color = appContext.getColor(R.color.color_blue)
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
         // draw selection line as dashed
@@ -301,9 +277,6 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
             lineDataSet2.fillColor = Color.BLACK
         }
 
-        // set color of filled area
-
-        dataSets.add(lineDataSet)
         dataSets.add(lineDataSet2)
         val barData = LineData(dataSets)
         lineChart.data = barData
@@ -315,7 +288,6 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
     inner class ProxyClick {
         fun clickCalorie() {
             TodaySportsDetailActivity.startActivity(requireContext(), SportsType.DUMBBELL, ChartType.BURN_CALORIES)
-
         }
 
         fun clickHeartRate() {

@@ -16,7 +16,6 @@ class SportsDumbbellCompletedViewModel : SMBaseViewModel() {
     val heat = ObservableField("0")
     val calorie = ObservableField("0")
     val upTimes = ObservableField("0")
-    val upDegree = ObservableField("0")
     val expandChestDegree = ObservableField("0")
     val expandChestTimes = ObservableField("0")
 }
