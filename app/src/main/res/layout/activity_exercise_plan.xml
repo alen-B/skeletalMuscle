@@ -719,6 +719,7 @@
 <!--            app:layout_constraintStart_toStartOf="parent">-->
 
             <ImageView
+                android:id="@+id/backIv"
                 android:layout_width="144dp"
                 android:layout_height="144dp"
                 app:layout_constraintBottom_toBottomOf="@+id/shareBtn"

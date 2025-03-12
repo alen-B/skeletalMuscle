@@ -1,5 +1,7 @@
 package com.fjp.skeletalmuscle.app.weight;
 
+import static com.zhpan.bannerview.utils.BannerUtils.dp2px;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,12 +14,12 @@ import com.fjp.skeletalmuscle.R;
 
 public class DashboardView extends View {
     private Paint paint;
-    private int maxCircleRadius = 95;
-    private int minCircleRadius = 70;
+    private int maxCircleRadius = dp2px(95);
+    private int minCircleRadius = dp2px(70);
 
 
-    private float pointerLength = 20;
-    private float pointerAngle = 90;
+    private float pointerLength = dp2px(20);
+    private float pointerAngle = dp2px(90);
     private Paint textPaint;
     private Paint pointerPaint;
     private String text = "暂无数据";
@@ -44,18 +46,18 @@ public class DashboardView extends View {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.WHITE);
-        paint.setStrokeWidth(28);
+        paint.setStrokeWidth(dp2px(28));
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(getContext().getColor(R.color.color_1c1c1c));
-        textPaint.setTextSize(18);
+        textPaint.setTextSize(dp2px(18));
         textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         pointerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        pointerPaint.setStrokeWidth(5);
+        pointerPaint.setStrokeWidth(dp2px(5));
         pointerPaint.setStrokeCap(Paint.Cap.ROUND);
         pointerPaint.setColor(getContext().getColor(R.color.white));
-        pointerPaint.setShadowLayer(3, 3, 3, getContext().getColor(R.color.color_801c1c1c));
+        pointerPaint.setShadowLayer(dp2px(3), dp2px(3), dp2px(3), getContext().getColor(R.color.color_801c1c1c));
     }
 
 
@@ -110,7 +112,7 @@ public class DashboardView extends View {
 
 
         //画蓝色区域
-        paint.setStrokeWidth(14);
+        paint.setStrokeWidth(dp2px(14));
         paint.setColor(Color.parseColor("#dfe6ff"));
         canvas.drawArc(rectf,
                 180,
@@ -132,7 +134,7 @@ public class DashboardView extends View {
                 paint);
 
         paint.setColor(Color.parseColor("#FFFFFF"));
-        paint.setStrokeWidth(8);
+        paint.setStrokeWidth(dp2px(8));
         canvas.drawArc(rectf,
                 182,
                 2,

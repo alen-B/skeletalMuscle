@@ -34,6 +34,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        println("===============4")
         mDatabind.viewModel = mViewModel
         mDatabind.click = Proxy()
     }

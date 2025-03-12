@@ -16,6 +16,7 @@ class HighKneeGuideStep1Fragment : BaseFragment<HighKneeGuideStep1ViewModel, Fra
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
+        println("===============1")
         if (App.sportsType == SportsType.HIGH_KNEE) {
             //目前默认数据是高抬腿的不需要做处理
         } else if (App.sportsType == SportsType.DUMBBELL) {

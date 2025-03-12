@@ -144,11 +144,11 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
 
     override fun onResume() {
         super.onResume()
-        mDatabind.blurLayout.startBlur()
+//        mDatabind.blurLayout.startBlur()
     }
 
     override fun onPause() {
         super.onPause()
-        mDatabind.blurLayout.pauseBlur()
+//        mDatabind.blurLayout.pauseBlur()
     }
 }

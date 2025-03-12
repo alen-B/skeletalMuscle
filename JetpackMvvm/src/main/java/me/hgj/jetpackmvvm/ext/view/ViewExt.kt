@@ -1,5 +1,6 @@
 package me.hgj.jetpackmvvm.ext.view
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -14,7 +15,14 @@ fun View.visible() {
     visibility = View.VISIBLE
 }
 
-
+fun Context.dp2px(dp: Int): Int {
+    val scale = resources.displayMetrics.density
+    return (dp * scale + 0.5f).toInt()
+}
+fun View.dp2px(dp: Int): Int {
+    val scale = resources.displayMetrics.density
+    return (dp * scale + 0.5f).toInt()
+}
 /**
  * 设置view占位隐藏
  */
