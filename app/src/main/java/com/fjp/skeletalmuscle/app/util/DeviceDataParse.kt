@@ -83,6 +83,7 @@ object DeviceDataParse {
             val pitch: Float = Math.abs(twoBytesToFloat(data[14], data[15]) + 100)
             val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
             val yaw: Float = Math.abs(twoBytesToFloat(data[18], data[19]))
+            println("=-=-=- roll:${roll}       yaw:${yaw}")
             println("左pintch:${pitch}  roll:${roll}  yaw:${yaw} x方向加速度：${axL}  y方向加速度：${ayL}   z方向加速度：${azL}  绕x轴角速度：${wx} 绕y轴角速度：${wy}  绕z轴角速度：${wz}")
             // 检查pitch是否大于100度
             val point = DataPoint(System.currentTimeMillis(), pitch.toDouble(), yaw.toDouble(), roll.toDouble(), axL.toDouble(), ayL.toDouble(), azL.toDouble(), wx.toDouble(), wy.toDouble(), wz.toDouble())

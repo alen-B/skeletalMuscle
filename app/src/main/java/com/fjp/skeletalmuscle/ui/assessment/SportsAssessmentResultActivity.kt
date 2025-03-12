@@ -27,9 +27,9 @@ class SportsAssessmentResultActivity : BaseActivity<SportsAssessmentResultViewMo
         mDatabind.click = ProxyClick()
         mViewModel.getLastTest()
         if (App.userInfo?.sex == getString(R.string.setting_sex_woman)) {
-            mViewModel.title.set("${App.userInfo.name}奶奶，这里可以查看您的运动数据")
+            mViewModel.title.set("${App.userInfo.name}，这里可以查看您的运动数据")
         } else {
-            mViewModel.title.set("${App.userInfo.name}爷爷，这里可以查看您的运动数据")
+            mViewModel.title.set("${App.userInfo.name}，这里可以查看您的运动数据")
         }
 
     }

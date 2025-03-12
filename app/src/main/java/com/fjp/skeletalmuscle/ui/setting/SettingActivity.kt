@@ -122,12 +122,12 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
         super.onResume()
         //解决拍照后变成竖屏显示的问题
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        mDatabind.blurLayout.startBlur()
+//        mDatabind.blurLayout.startBlur()
     }
 
     override fun onPause() {
         super.onPause()
-        mDatabind.blurLayout.pauseBlur()
+//        mDatabind.blurLayout.pauseBlur()
     }
 
     override fun onDestroy() {

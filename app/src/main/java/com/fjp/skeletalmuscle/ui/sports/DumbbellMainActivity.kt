@@ -295,7 +295,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         if (parseData != null) {
             leftDataPoint = parseData
         }
-        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,true)
+        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw,leftDataPoint.roll,leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,rightDataPoint.roll,rightDataPoint.ax,rightDataPoint.ay,rightDataPoint.az,true)
         println("===上举次数：${ExerciseDetector.upCount}")
         println("===扩胸次数：${ExerciseDetector.chestCount}")
         mViewModel.leftLegCount.set(ExerciseDetector.upCount.toString())
@@ -326,8 +326,10 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         val parseData = DeviceDataParse.parseData2DataPoint(data)
         if (parseData != null) {
             rightDataPoint = parseData
+            println("parseData.roll:  "+parseData.roll)
         }
-        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,false,)
+        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw,leftDataPoint.roll,leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,rightDataPoint.roll,rightDataPoint.ax,rightDataPoint.ay,rightDataPoint.az,false)
+//        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw,false,)
 //            println("===上举次数：${ExerciseDetector.upCount}")
 //            println("===扩胸次数：${ExerciseDetector.chestCount}")
 //        if (actionDetector.overheadCount.toString() != mViewModel.leftLegCount.get()) {

@@ -117,24 +117,26 @@
                 app:year_view_scheme_color="#f17706" />
         </com.haibin.calendarview.CalendarLayout>
 
-        <io.alterac.blurkit.BlurLayout
-            android:id="@+id/blurLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:blk_cornerRadius="20dp"
-            android:onClick="@{()-> click.clickfinish()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="144dp"
-            app:blk_blurRadius="25"
-            android:layout_height="144dp">
+<!--        <io.alterac.blurkit.BlurLayout-->
+<!--            android:id="@+id/blurLayout"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:blk_cornerRadius="20dp"-->
+<!--            android:onClick="@{()-> click.clickfinish()}"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:layout_width="144dp"-->
+<!--            app:blk_blurRadius="25"-->
+<!--            android:layout_height="144dp">-->
 
             <ImageView
                 android:layout_width="144dp"
+                app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/arrow_right"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:background="@drawable/bg_back_gray"
                 android:onClick="@{()-> click.clickfinish()}"
                 android:scaleType="center"
                 android:layout_height="144dp" />
-        </io.alterac.blurkit.BlurLayout>
+<!--        </io.alterac.blurkit.BlurLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

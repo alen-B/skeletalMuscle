@@ -49,7 +49,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
         mDatabind.click = ProxyClick()
         mViewModel.title.set(resources.getString(R.string.login_title))
         mViewModel.showRightImg.set(true)
-        mViewModel.rightImg.set(R.drawable.login_title_right_icon)
+        mViewModel.rightImg.set(R.drawable.setting_app_icon)
         val phoneTextWatcherSpace = PhoneTextWatcher()
         mDatabind.phoneEt.addTextChangedListener(phoneTextWatcherSpace)
         // 设置格式化输入的回调
