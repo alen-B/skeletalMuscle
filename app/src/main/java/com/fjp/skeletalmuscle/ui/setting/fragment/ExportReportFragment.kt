@@ -1,15 +1,20 @@
 package com.fjp.skeletalmuscle.ui.setting.fragment
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.provider.DocumentsContract
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -21,13 +26,12 @@ import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.PDFManager
-import com.fjp.skeletalmuscle.data.model.bean.result.ExportData
-import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportDumbbell
-import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportFlatSupport
-import com.fjp.skeletalmuscle.data.model.bean.result.ExportSportLiftLeg
 import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.databinding.FragmentExportReportBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ExportReportViewModel
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.Permission
+import com.hjq.permissions.XXPermissions
 import com.itextpdf.io.image.ImageDataFactory
 import com.itextpdf.kernel.colors.ColorConstants
 import com.itextpdf.kernel.colors.DeviceRgb
@@ -48,12 +52,13 @@ import kotlinx.coroutines.withContext
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.parseState
 import java.io.IOException
+import java.io.OutputStream
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
 
 
-class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportReportBinding> {
+class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportReportBinding>() {
     val PERMISSION_REQUEST_CODE = 201
     lateinit var pvTime: TimePickerView
     var endDate: Date = Date()
@@ -74,8 +79,6 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         }
     }
 
-    constructor() : super()
-
     companion object {
         fun newInstance() = ExportReportFragment()
     }
@@ -90,6 +93,8 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
 
         }
     }
+
+
 
     private fun exportPDF(it: TodayDataResult) {
 
@@ -165,23 +170,23 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
             PDFManager.add(allSportstable)
             if (it.sport_lift_leg != null) {
                 PDFManager.createParagraph(Text("高抬腿运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_lift_leg.score.toString()).setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
-                val highLegTab = Table(UnitValue.createPercentArray(floatArrayOf(30f, 30f, 30f, 30f,30f,30f)))
+                val highLegTab = Table(UnitValue.createPercentArray(floatArrayOf(30f, 30f, 30f, 30f, 30f, 30f)))
                 highLegTab.setBorder(null)
                 // 添加表头行
 //                highLegTab.addHeaderCell(PDFManager.createCell("平均得分"))
-                highLegTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addHeaderCell(PDFManager.createCell("运动总数", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addHeaderCell(PDFManager.createCell("左腿运动量", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addHeaderCell(PDFManager.createCell("右腿运动量", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addHeaderCell(PDFManager.createCell("心肺能力", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("运动总数", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("左腿运动量", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("右腿运动量", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addHeaderCell(PDFManager.createCell("心肺能力", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
 //                highLegTab.addCell(PDFManager.createCell(it.sport_lift_leg.score.toString()))
-                highLegTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_lift_leg.sport_time.toLong()) + "分钟",textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.sum_calorie / 1000}千卡",textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.left_times+it.sport_lift_leg.right_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.left_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.right_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
-                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.cardiorespiratory_endurance}",textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_lift_leg.sport_time.toLong()) + "分钟", textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.sum_calorie / 1000}千卡", textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.left_times + it.sport_lift_leg.right_times}次", textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.left_times}次", textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.right_times}次", textAligment = TextAlignment.LEFT).setWidth(80f))
+                highLegTab.addCell(PDFManager.createCell("${it.sport_lift_leg.cardiorespiratory_endurance}", textAligment = TextAlignment.LEFT).setWidth(80f))
                 PDFManager.add(highLegTab)
                 PDFManager.createLine()
             }
@@ -190,18 +195,18 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
                 val dumbbellTab = Table(UnitValue.createPercentArray(floatArrayOf(80f, 80f, 80f, 80f, 80f)))
                 dumbbellTab.setBorder(null)
 //                dumbbellTab.addHeaderCell(PDFManager.createCell("平均得分"))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("上举次数", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("扩胸次数", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("哑铃重量", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("上举次数", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("扩胸次数", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("哑铃重量", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
 
 //                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.score.toString()))
-                dumbbellTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_dumbbell.sport_time.toLong()) + "分钟",textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.sum_calorie / 1000}千卡",textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.up_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.expand_chest_times}次",textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.weight.toString() + "kg",textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_dumbbell.sport_time.toLong()) + "分钟", textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.sum_calorie / 1000}千卡", textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.up_times}次", textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.expand_chest_times}次", textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.weight.toString() + "kg", textAligment = TextAlignment.LEFT).setWidth(80f))
 
                 PDFManager.add(dumbbellTab)
                 PDFManager.createLine()
@@ -211,12 +216,12 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
                 val plankTab = Table(UnitValue.createPercentArray(2))
                 plankTab.setBorder(null)
 //                plankTab.addHeaderCell(PDFManager.createCell("平均得分"))
-                plankTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
-                plankTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY,textAligment = TextAlignment.LEFT).setWidth(80f))
+                plankTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                plankTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
 
 //                plankTab.addCell(PDFManager.createCell(it.sport_flat_support.score.toString())) 30 157 144
-                plankTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_flat_support.sport_time.toLong()) + "分钟",textAligment = TextAlignment.LEFT).setWidth(80f))
-                plankTab.addCell(PDFManager.createCell("${it.sport_flat_support.sum_calorie / 1000}千卡",textAligment = TextAlignment.LEFT).setWidth(80f))
+                plankTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_flat_support.sport_time.toLong()) + "分钟", textAligment = TextAlignment.LEFT).setWidth(80f))
+                plankTab.addCell(PDFManager.createCell("${it.sport_flat_support.sum_calorie / 1000}千卡", textAligment = TextAlignment.LEFT).setWidth(80f))
                 PDFManager.add(plankTab)
                 PDFManager.createLine()
             }
@@ -230,23 +235,48 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
     inner class ProxyClick {
 
         fun clickExport() {
-            if (checkPermission()) {
-                var startTime: Long = 0
-                var endTime: Long = 0
-                if (mDatabind.curWeekRB.isChecked) {
-                    startTime = DateTimeUtil.getFirstDayTimeOfWeek()
-                    endTime = System.currentTimeMillis()
+            XXPermissions.with(this@ExportReportFragment)
+                // 申请单个权限
+                .permission(Permission.MANAGE_EXTERNAL_STORAGE)
+                // 设置权限请求拦截器（局部设置）
+                //.interceptor(new PermissionInterceptor())
+                // 设置不触发错误检测机制（局部设置）
+                //.unchecked()
+                .request(object : OnPermissionCallback {
 
-                } else if (mDatabind.curMonthRB.isChecked) {
-                    startTime = DateTimeUtil.getFirstDayTimeOfMonth()
-                    endTime = System.currentTimeMillis()
-                } else {
-                    startTime = startDate.time
-                    endTime = endDate.time
-                }
+                    override fun onGranted(permissions: MutableList<String>, allGranted: Boolean) {
+                        if (!allGranted) {
+                            context?.showToast("获取部分权限成功，但部分权限未正常授予")
+                            return
+                        }
 
-                mViewModel.getExportData(DateTimeUtil.formatDate(startTime, DateTimeUtil.DATE_PATTERN), DateTimeUtil.formatDate(endTime, DateTimeUtil.DATE_PATTERN))
-            }
+                        var startTime: Long = 0
+                        var endTime: Long = 0
+                        if (mDatabind.curWeekRB.isChecked) {
+                            startTime = DateTimeUtil.getFirstDayTimeOfWeek()
+                            endTime = System.currentTimeMillis()
+
+                        } else if (mDatabind.curMonthRB.isChecked) {
+                            startTime = DateTimeUtil.getFirstDayTimeOfMonth()
+                            endTime = System.currentTimeMillis()
+                        } else {
+                            startTime = startDate.time
+                            endTime = endDate.time
+                        }
+
+                        mViewModel.getExportData(DateTimeUtil.formatDate(startTime, DateTimeUtil.DATE_PATTERN), DateTimeUtil.formatDate(endTime, DateTimeUtil.DATE_PATTERN))
+                    }
+
+                    override fun onDenied(permissions: MutableList<String>, doNotAskAgain: Boolean) {
+                        if (doNotAskAgain) {
+                            context?.showToast("被永久拒绝授权，请手动授予权限")
+                            // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                            XXPermissions.startPermissionActivity(context!!, permissions)
+                        } else {
+                            context?.showToast("获取存储权限失败")
+                        }
+                    }
+                })
 
         }
 
@@ -261,15 +291,35 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
 
 
     fun checkPermission(): Boolean {
-        // 检查写外部存储权限是否已授予
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // 若未授予权限，则发起权限申请
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Android 11 及以上版本
+            // 虽然 Android 11 及以上对文件访问有新的存储机制，但仍可请求 MANAGE_EXTERNAL_STORAGE 权限（不推荐在应用商店发布的应用使用）
+            val permissions = arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+            ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_REQUEST_CODE)
             return false
-        } else {
-            // 权限已授予，可直接调用生成PDF方法
-            return true
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android 6.0 到 Android 10
+            val readPermission = ContextCompat.checkSelfPermission(appContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+            val writePermission = ContextCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+            if (readPermission != PackageManager.PERMISSION_GRANTED || writePermission != PackageManager.PERMISSION_GRANTED) {
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ActivityCompat.requestPermissions(requireActivity(), permissions, PERMISSION_REQUEST_CODE)
+                return false
+            } else {
+                return true
+            }
         }
+        return true
+//        // 检查写外部存储权限是否已授予
+//        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            // 若未授予权限，则发起权限申请
+//            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
+//            return false
+//        } else {
+//            // 权限已授予，可直接调用生成PDF方法
+//            return true
+//        }
     }
 
 
@@ -375,5 +425,6 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         mDialog.show()
 
     }
+
 
 }

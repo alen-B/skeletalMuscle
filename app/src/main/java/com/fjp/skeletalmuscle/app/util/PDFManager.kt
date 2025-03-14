@@ -39,13 +39,16 @@ object PDFManager {
     lateinit var file: File
     fun createPDF(context: Context) {
         font = PdfFontFactory.createFont("STSongStd-Light", "UniGB-UCS2-H", false)
-        val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "骨骼肌PDF")
+        val dir = File(Environment.getExternalStorageDirectory(), "骨骼肌报告")
         if (!dir.exists()) {
             dir.mkdirs()
         }
-        var title = "${App.userInfo?.name}·骨骼肌运动报告"
+        var title = "${App.userInfo?.name}骨骼肌运动报告"
         // 创建要保存的PDF文件对象
-        file = File(dir, "${title}${DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)}.pdf")
+        file = File(dir, "${title}${DateTimeUtil.getCurDate2Str()}.pdf")
+        if(!file.exists()){
+            file.createNewFile()
+        }
         try {
             // 创建PdfWriter，将其与要生成的PDF文件关联起来
             val writer = PdfWriter(file)

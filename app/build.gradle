@@ -129,6 +129,8 @@ dependencies {
     implementation project(path: ':lib_appupdate')
     implementation project(path: ':ucrop')
     implementation 'com.tencent.map.geolocation:TencentLocationSdk-openplatform:7.5.4.3'
+//    implementation 'com.yanzhenjie:permission:2.0.3'
+    implementation 'com.github.getActivity:XXPermissions:20.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

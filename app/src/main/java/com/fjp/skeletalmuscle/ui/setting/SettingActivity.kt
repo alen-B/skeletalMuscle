@@ -2,7 +2,9 @@ package com.fjp.skeletalmuscle.ui.setting
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import coil.load
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
@@ -20,6 +22,7 @@ import com.fjp.skeletalmuscle.viewmodel.state.SettingViewModel
 import com.lxj.xpopup.XPopup
 
 class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>() {
+    val PERMISSION_REQUEST_CODE = 201
     private val USERINFO = 0
     private val DEVICE = 1
     private val SYSTEMS_ETTING = 2
@@ -132,5 +135,17 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
 
     override fun onDestroy() {
         super.onDestroy()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            val allPermissionsGranted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+            if (allPermissionsGranted) {
+                Toast.makeText(this, "读写权限已授予", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "读写权限被拒绝", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
