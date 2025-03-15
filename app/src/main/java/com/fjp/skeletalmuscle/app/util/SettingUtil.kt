@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.view.View
 import android.widget.ProgressBar
@@ -184,15 +185,7 @@ object SettingUtil {
     }
 
     fun getDeviceId(context: Context): String {
-        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
-        if(telephonyManager == null){
-            return "获取deviceId失败"
-        }
-        return try {
-            telephonyManager.deviceId
-        }catch (e:Exception){
-            ""
-        }
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)
 
     }
 }

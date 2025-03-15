@@ -266,6 +266,7 @@
             app:layout_constraintStart_toEndOf="@+id/scoreViewTv"
             app:layout_constraintEnd_toEndOf="@+id/scoreView"
             android:text="@string/main_rate"
+            android:visibility="gone"
             android:textColor="@color/color_99222222"
             android:textSize="@dimen/text_size_3"
             android:layout_height="wrap_content" />
