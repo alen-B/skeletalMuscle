@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import coil.load
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
@@ -25,13 +24,12 @@ import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsHighKneeFragment
 import com.fjp.skeletalmuscle.ui.main.fragment.TodaySportsPlankFragment
 import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.TodaySportsDataViewModel
-import com.zhpan.indicator.enums.IndicatorStyle
-import me.hgj.jetpackmvvm.ext.util.dp2px
 import me.hgj.jetpackmvvm.util.get
 
 class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityTodaySportsDataBinding>() {
     val fragments = arrayListOf<Fragment>()
-    val shareViewmodel  : ShareViewModel by viewModels()
+    val shareViewmodel: ShareViewModel by viewModels()
+
     companion object {
         fun start(context: Context, todayDataResult: TodayDataResult, sportsType: SportsType) {
             val intent = Intent(context, TodaySportsActivity::class.java)
@@ -50,16 +48,16 @@ class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityToday
         val type = intent.get(Constants.INTENT_KEY_TODAY_SPORTS_TYPE, SportsType.HIGH_KNEE.type)
         val todaySportsData = intent.getParcelableExtra<TodayDataResult>(Constants.INTENT_KEY_TODAY_SPORTS_DATA)
 
-        if(type == SportsType.HIGH_KNEE.type){
+        if (type == SportsType.HIGH_KNEE.type) {
             if (todaySportsData?.sport_lift_leg != null) {
                 fragments.add(TodaySportsHighKneeFragment.newInstance(todaySportsData?.sport_lift_leg))
             }
-        }else if(type == SportsType.DUMBBELL.type){
-            if (todaySportsData?.sport_dumbbell != null ) {
+        } else if (type == SportsType.DUMBBELL.type) {
+            if (todaySportsData?.sport_dumbbell != null) {
                 fragments.add(TodaySportsDumbbellFragment.newInstance(todaySportsData?.sport_dumbbell))
             }
-        }else if(type == SportsType.PLANK.type){
-            if (todaySportsData?.sport_flat_support != null ) {
+        } else if (type == SportsType.PLANK.type) {
+            if (todaySportsData?.sport_flat_support != null) {
                 fragments.add(TodaySportsPlankFragment.newInstance(todaySportsData?.sport_flat_support))
             }
         }
@@ -93,9 +91,8 @@ class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityToday
                 this.placeholder(R.drawable.avatar_default)
             })
             fragments[0].view?.let {
-                shareViewmodel.share(this@TodaySportsActivity,shareTitleView,it,shareTBottomView)
+                shareViewmodel.share(this@TodaySportsActivity, shareTitleView, it, shareTBottomView)
             }
-
 
 
         }

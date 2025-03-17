@@ -20,7 +20,6 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
-import com.fjp.skeletalmuscle.app.util.ActionDetector
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
@@ -34,8 +33,6 @@ import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
 import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.Record
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
-import com.fjp.skeletalmuscle.data.model.bean.result.SportLiftLeg
-import com.fjp.skeletalmuscle.data.model.bean.result.TodayRecord
 import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
 import com.fjp.skeletalmuscle.viewmodel.request.RequestHighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel
@@ -48,7 +45,7 @@ import kotlin.math.ceil
 
 
 class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMainBinding>(), SMBleManager.DeviceListener {
-    var liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0,0,0)
+    var liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0, 0, 0)
     private val requestHighKneeViewModel: RequestHighKneeViewModel by viewModels()
     private var startTime: Long = 0
     private var elapsedTime: Long = 0
@@ -169,7 +166,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                 mDatabind.scoreViewTv.visibility = View.VISIBLE
                 mDatabind.scoreViewTv.visibility = View.VISIBLE
                 mViewModel.title.set(getString(R.string.high_knee_main_title))
-                liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0,0,0)
+                liftLegRequest = LiftLegRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 0.0, 0, 0, 0, 0, 0, 0)
                 startTimer()
             }
 
@@ -246,18 +243,18 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (liftLegRequest.end_time - liftLegRequest.start_time > App.sportsTime * 60) {
             liftLegRequest.end_time = liftLegRequest.start_time + App.sportsTime * 60
         }
-        if(seconds> App.sportsTime*60){
-            seconds = App.sportsTime*60
+        if (seconds > App.sportsTime * 60) {
+            seconds = App.sportsTime * 60
         }
         liftLegRequest.sport_time = seconds
-        liftLegRequest.plan_sport_time = App.sportsTime*60
+        liftLegRequest.plan_sport_time = App.sportsTime * 60
         requestHighKneeViewModel.saveLiftLeg(liftLegRequest)
 
     }
 
     private fun getCardiorespiratorEndurance(): Double {
         // 抬腿频率
-        val rate = (leftLegLifts + rightLegLifts)*1f / (System.currentTimeMillis() / 1000 - liftLegRequest.start_time) / 60
+        val rate = (leftLegLifts + rightLegLifts) * 1f / (System.currentTimeMillis() / 1000 - liftLegRequest.start_time) / 60
         return String.format("%.2f", rate * (leftLegAngleSum + rightLegAngleSum) / (leftLegLifts + rightLegLifts)).toDouble()
     }
 
@@ -343,7 +340,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         val pitch = DeviceDataParse.parseData2Pitch(data)
 //        val roll = DeviceDataParse.parseData2Roll(data)
 //        val yaw = DeviceDataParse.parseData2Yaw(data)
-        if(pitch > 180){
+        if (pitch > 180) {
             return
         }
         if (pitch > 90) {
@@ -421,7 +418,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         val pitch = DeviceDataParse.parseData2Pitch(data)
 //        val roll = DeviceDataParse.parseData2Roll(data)
 //        val yaw = DeviceDataParse.parseData2Yaw(data)
-        if(pitch > 180){
+        if (pitch > 180) {
             return
         }
         if (pitch > 90) {

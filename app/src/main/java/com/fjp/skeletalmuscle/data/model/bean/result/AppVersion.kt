@@ -8,11 +8,7 @@ import kotlinx.parcelize.Parcelize
  *Time:2024/12/7
  *Description:
  */
-data class AppVersion(
-    val `data`: VersionData,
-    val message: String,
-    val code: Int
-)
+data class AppVersion(val `data`: VersionData, val message: String, val code: Int)
 
 @Parcelize
 data class VersionData(
@@ -21,4 +17,4 @@ data class VersionData(
     val download_url: String,
     val id: Int,
     val version: String,
-): Parcelable
+) : Parcelable

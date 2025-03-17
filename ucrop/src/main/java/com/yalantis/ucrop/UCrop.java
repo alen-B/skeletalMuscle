@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.provider.MediaStore;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;

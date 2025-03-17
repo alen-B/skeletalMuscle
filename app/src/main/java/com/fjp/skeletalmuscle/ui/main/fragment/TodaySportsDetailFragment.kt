@@ -258,9 +258,9 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index <result.trend.size ){
+                return if (index >= 0 && index < result.trend.size) {
                     result.trend[value.toInt()].time
-                }else{
+                } else {
                     ""
                 }
 
@@ -479,9 +479,9 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index<result.trend.size){
+                return if (index >= 0 && index < result.trend.size) {
                     result.trend[value.toInt()].time
-                }else {
+                } else {
                     ""
                 }
             }
@@ -600,9 +600,9 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     val index = value.toInt()
-                    if(index >=0 && index<Math.max(leftLegRecord.size ,rightLegRecord.size)){
+                    if (index >= 0 && index < Math.max(leftLegRecord.size, rightLegRecord.size)) {
                         return if (leftLegRecord.size > rightLegRecord.size) leftLegRecord[value.toInt()].time else rightLegRecord[value.toInt()].time
-                    }else{
+                    } else {
                         return ""
                     }
 
@@ -618,9 +618,9 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
             xAxis.valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     val index = value.toInt()
-                    if(index >= 0 && index<result.trend.size){
+                    if (index >= 0 && index < result.trend.size) {
                         return result.trend[value.toInt()].time
-                    }else{
+                    } else {
                         return ""
                     }
                 }

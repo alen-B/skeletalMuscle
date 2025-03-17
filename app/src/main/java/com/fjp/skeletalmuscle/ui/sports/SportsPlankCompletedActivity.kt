@@ -1,7 +1,6 @@
 package com.fjp.skeletalmuscle.ui.sports
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -16,7 +15,6 @@ import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
 import com.fjp.skeletalmuscle.data.model.bean.result.SavePlankResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.ActivitySportsPlankCompletedBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SportsPlankCompletedViewModel
@@ -29,7 +27,6 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
@@ -37,9 +34,9 @@ import com.github.mikephil.charting.utils.Utils
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.appContext
 
-class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,ActivitySportsPlankCompletedBinding>() {
+class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel, ActivitySportsPlankCompletedBinding>() {
     lateinit var sportFlatSupport: SavePlankResult
-    val shareViewmodel  : ShareViewModel by viewModels()
+    val shareViewmodel: ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
         sportFlatSupport = intent.getParcelableExtra(Constants.INTENT_SPORT_PLANK)!!
         mDatabind.viewModel = mViewModel
@@ -48,7 +45,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         mViewModel.curScore.set(sportFlatSupport.score.toString())
         mViewModel.sportsTime.set(DateTimeUtil.formSportTime(sportFlatSupport.sport_time))
         mViewModel.heat.set(sportFlatSupport.avg_rate_value.toString())
-        mViewModel.calorie.set((sportFlatSupport.calorie/1000).toString())
+        mViewModel.calorie.set((sportFlatSupport.calorie / 1000).toString())
         initCalorieBarChart()
         initHeartRateLineChart()
     }
@@ -61,7 +58,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=18f
+        lineChart.extraBottomOffset = 18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -70,15 +67,15 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount=3
+        xAxis.textSize = 20f
+        xAxis.labelCount = 3
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index<sportFlatSupport.heart_rate.size){
-                    DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
-                }else {
+                return if (index >= 0 && index < sportFlatSupport.heart_rate.size) {
+                    DateTimeUtil.completedTimeFromat(sportFlatSupport.heart_rate[value.toInt()].record_time, DateTimeUtil.DATE_PATTERN_SS)
+                } else {
                     ""
                 }
             }
@@ -110,7 +107,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setCircleColor(ContextCompat.getColor(appContext, R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
@@ -142,7 +139,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
 
-        barChart.extraBottomOffset=15f
+        barChart.extraBottomOffset = 15f
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -151,15 +148,15 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount= 2
+        xAxis.textSize = 20f
+        xAxis.labelCount = 2
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index <sportFlatSupport.calorie_list.size){
-                    DateTimeUtil.completedTimeFromat(sportFlatSupport.calorie_list[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
-                }else{
+                return if (index >= 0 && index < sportFlatSupport.calorie_list.size) {
+                    DateTimeUtil.completedTimeFromat(sportFlatSupport.calorie_list[value.toInt()].record_time, DateTimeUtil.DATE_PATTERN_SS)
+                } else {
                     ""
                 }
             }
@@ -174,7 +171,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
         leftAxis.gridLineWidth = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
-        leftAxis.axisMinimum=0f
+        leftAxis.axisMinimum = 0f
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
 
         val rightAxis: YAxis = barChart.axisRight
@@ -218,7 +215,7 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
                 this.error(R.drawable.avatar_default)
                 this.placeholder(R.drawable.avatar_default)
             })
-            shareViewmodel.share(this@SportsPlankCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
+            shareViewmodel.share(this@SportsPlankCompletedActivity, shareTitleView, mDatabind.shareCl, shareTBottomView)
         }
 
         fun clickCompleted() {

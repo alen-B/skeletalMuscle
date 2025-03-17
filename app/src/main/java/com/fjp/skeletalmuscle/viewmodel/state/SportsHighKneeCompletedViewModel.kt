@@ -1,13 +1,7 @@
 package com.fjp.skeletalmuscle.viewmodel.state
 
-import android.app.Activity
-import android.graphics.Bitmap
-import android.view.View
 import androidx.databinding.ObservableField
-import androidx.lifecycle.viewModelScope
-import com.example.pdftest.ui.ShareUtils
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
-import kotlinx.coroutines.launch
 
 /**
  *Author:Mr'x

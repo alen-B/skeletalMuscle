@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
 import com.fjp.skeletalmuscle.data.model.bean.DumbbellRequest
-import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.result.SaveDumbbellResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SaveLiftLegResult
 import com.fjp.skeletalmuscle.data.repository.request.HttpRequestCoroutine
 import me.hgj.jetpackmvvm.ext.request
 import me.hgj.jetpackmvvm.state.ResultState

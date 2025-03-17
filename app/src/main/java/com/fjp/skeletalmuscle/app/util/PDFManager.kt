@@ -46,7 +46,7 @@ object PDFManager {
         var title = "${App.userInfo?.name}骨骼肌运动报告"
         // 创建要保存的PDF文件对象
         file = File(dir, "${title}${DateTimeUtil.getCurDate2Str()}.pdf")
-        if(!file.exists()){
+        if (!file.exists()) {
             file.createNewFile()
         }
         try {

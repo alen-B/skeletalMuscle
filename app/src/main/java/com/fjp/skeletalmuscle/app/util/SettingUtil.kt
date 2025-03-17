@@ -9,7 +9,6 @@ import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.preference.PreferenceManager
 import android.provider.Settings
-import android.telephony.TelephonyManager
 import android.view.View
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat

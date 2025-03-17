@@ -24,14 +24,14 @@ class SystemSettingFragment : BaseFragment<SystemSettingViewModel, FragmentSyste
         mDatabind.voiceInteractionLayout.showSwitch(this)
         val isCheck = CacheUtil.getVoiceInteraction()
         mDatabind.voiceInteractionLayout.setSwitchStatus(isCheck)
-        mDatabind.versionTv.text="Version:${AppUtils.getAppVersionName(requireContext())}"
+        mDatabind.versionTv.text = "Version:${AppUtils.getAppVersionName(requireContext())}"
     }
 
     override fun createObserver() {
         super.createObserver()
         mViewModel.appVersion.observe(this) {
             versionData = it
-            if (it.version != AppUtils.getAppVersionName(requireContext())&& it.download_url.isNotEmpty()) {
+            if (it.version != AppUtils.getAppVersionName(requireContext()) && it.download_url.isNotEmpty()) {
                 mDatabind.updateVersionLayout.setValue("发现新版本", R.drawable.red_point)
             }
         }

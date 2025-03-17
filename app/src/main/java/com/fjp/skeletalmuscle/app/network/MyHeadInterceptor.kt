@@ -14,7 +14,7 @@ class MyHeadInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
-        if(!chain.request().url().url().toString().contains("login")){
+        if (!chain.request().url().url().toString().contains("login")) {
             builder.addHeader("token", App.userInfo.auth_token).build()
         }
         builder.addHeader("device", "Android").build()

@@ -1,7 +1,6 @@
 package com.fjp.skeletalmuscle.ui.user
 
 import android.content.Intent
-import android.location.LocationManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager

@@ -74,6 +74,7 @@
             android:visibility="@{viewModel.showRightText ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/curIndexTv"
             app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/assessTv"
             android:layout_width="wrap_content"
@@ -91,7 +92,8 @@
             android:paddingEnd="14dp"
             android:visibility="@{viewModel.showAssess ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toStartOf="@+id/settingLL"
-            android:layout_height="66dp"/>
+            android:layout_height="66dp" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/settingLL"
             android:orientation="horizontal"

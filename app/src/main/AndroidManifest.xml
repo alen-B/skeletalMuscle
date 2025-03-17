@@ -24,8 +24,8 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission
         android:name="android.permission.BLUETOOTH"
@@ -39,7 +39,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
     <queries package="${applicationId}">
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
@@ -115,12 +116,12 @@
             android:name=".ui.sports.SportsHighKneeCompletedActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.sports.SportsDumbbellCompletedActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".ui.assessment.SportsAssessmentActivity"
             android:configChanges="orientation|screenLayout"
@@ -155,11 +156,11 @@
             android:name=".ui.main.TodaySelectSportsActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
-            android:screenOrientation="sensorLandscape" >
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
+            android:screenOrientation="sensorLandscape">
+            <!--             <intent-filter>-->
+            <!--             <action android:name="android.intent.action.MAIN" />-->
+            <!--             <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--             </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.main.SportsRecordActivity"
@@ -197,11 +198,11 @@
             android:name=".ui.user.SportsActivity"
             android:configChanges="orientation|screenLayout"
             android:exported="true"
-            android:screenOrientation="sensorLandscape" >
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
+            android:screenOrientation="sensorLandscape">
+            <!--             <intent-filter>-->
+            <!--             <action android:name="android.intent.action.MAIN" />-->
+            <!--             <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--             </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.user.SingleSelectActivity"
@@ -219,23 +220,23 @@
             android:configChanges="orientation|screenLayout"
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:exported="true"
-            android:screenOrientation="sensorLandscape" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            android:screenOrientation="sensorLandscape">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
-<!--        <activity-->
-<!--            android:name="com.fjp.skeletalmuscle.ui.main.EditTextActivity"-->
-<!--            android:configChanges="orientation|screenLayout"-->
-<!--            android:windowSoftInputMode="stateVisible|adjustResize"-->
-<!--            android:exported="true"-->
-<!--            android:screenOrientation="sensorLandscape" >-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <!--        <activity-->
+        <!--            android:name="com.fjp.skeletalmuscle.ui.main.EditTextActivity"-->
+        <!--            android:configChanges="orientation|screenLayout"-->
+        <!--            android:windowSoftInputMode="stateVisible|adjustResize"-->
+        <!--            android:exported="true"-->
+        <!--            android:screenOrientation="sensorLandscape" >-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
         <activity
             android:name=".ui.user.SelectGenderActivity"
             android:configChanges="orientation|screenLayout"
@@ -276,7 +277,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-        <meta-data android:name="TencentMapSDK" android:value="INXBZ-LA4KT-YGPXK-VZFWR-PASQO-XMBVD" />
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="INXBZ-LA4KT-YGPXK-VZFWR-PASQO-XMBVD" />
     </application>
 
 </manifest>

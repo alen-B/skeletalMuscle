@@ -66,6 +66,9 @@ object ExerciseDetector {
                     isExpanding = true
                 } else if (curAngle < 40 && isExpanding) {
                     chestCount++
+                    if (maxAngle > 180) {
+                        maxAngle -= 180
+                    }
                     records.add(Record(maxAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
                     isExpanding = false
                     maxAngle = 0
@@ -73,27 +76,6 @@ object ExerciseDetector {
             }
 
 
-//            if (isLeftData) {
-//                leftAngleSet.add(leftYaw)
-//                rightAngleSet.add(rightYaw)
-//                // 检测扩胸运动
-//                if (leftAccelX > ACCELERATION_THRESHOLD_AccelX && !isDescending) {
-//                    isDescending = true
-//                } else if (leftAccelX < ACCELERATION_THRESHOLD_AccelX && isDescending) {
-//                    val leftAngle = leftAngleSet.last()-leftAngleSet.first()
-//                    val rightAngle = rightAngleSet.last()-rightAngleSet.first()
-//                    if(leftAngle > 50 && rightAngle>50){
-//                        isDescending = false
-//                        chestCount++
-//                        println("111111111111=leftAngle:   ${leftAngle}     rightAngle:${rightAngle}")
-//                        records.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
-//                        leftAngleSet.clear()
-//                        rightAngleSet.clear()
-//                    }
-//
-//
-//                }
-//            }
         }
 
     }

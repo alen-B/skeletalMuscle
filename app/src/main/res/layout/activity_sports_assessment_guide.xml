@@ -27,6 +27,7 @@
         <include
             layout="@layout/layout_title"
             app:viewModel="@{viewModel}" />
+
         <TextView
             android:id="@+id/secondTitleTv"
             android:layout_width="wrap_content"
@@ -35,7 +36,8 @@
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
             app:layout_constraintStart_toStartOf="parent"
             android:textSize="@dimen/text_size_2"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             app:layout_constraintTop_toBottomOf="@+id/secondTitleTv"
@@ -57,26 +59,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             bind:noRepeatClick="@{()-> click.clickStart()}" />
 
-<!--        <io.alterac.blurkit.BlurLayout-->
-<!--            android:id="@+id/blurLayout"-->
-<!--            android:layout_width="144dp"-->
-<!--            android:layout_height="144dp"-->
-<!--            android:onClick="@{()-> click.clickFinish()}"-->
-<!--            app:blk_blurRadius="25"-->
-<!--            app:blk_cornerRadius="20dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent">-->
+        <!--        <io.alterac.blurkit.BlurLayout-->
+        <!--            android:id="@+id/blurLayout"-->
+        <!--            android:layout_width="144dp"-->
+        <!--            android:layout_height="144dp"-->
+        <!--            android:onClick="@{()-> click.clickFinish()}"-->
+        <!--            app:blk_blurRadius="25"-->
+        <!--            app:blk_cornerRadius="20dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent">-->
 
-            <ImageView
-                android:layout_width="144dp"
-                android:layout_height="144dp"
-                android:background="@drawable/bg_back_gray"
-                android:onClick="@{()-> click.clickFinish()}"
-                android:scaleType="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/arrow_right" />
-<!--        </io.alterac.blurkit.BlurLayout>-->
+        <ImageView
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:background="@drawable/bg_back_gray"
+            android:onClick="@{()-> click.clickFinish()}"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/arrow_right" />
+        <!--        </io.alterac.blurkit.BlurLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

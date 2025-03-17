@@ -9,7 +9,7 @@ import android.location.LocationManager
  *Time:2024/12/28
  *Description:
  */
-object  LocationUtil {
+object LocationUtil {
     fun isLocServiceEnable(context: Context): Boolean {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)

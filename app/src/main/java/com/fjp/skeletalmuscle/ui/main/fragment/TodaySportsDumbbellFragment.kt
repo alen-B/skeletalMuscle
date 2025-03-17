@@ -31,8 +31,9 @@ import me.hgj.jetpackmvvm.base.appContext
 
 class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel, FragmentTodaySportsDumbbellBinding>() {
     lateinit var sportDumbbell: SportDumbbell
+
     companion object {
-        fun newInstance(sportDumbbell: SportDumbbell): TodaySportsDumbbellFragment{
+        fun newInstance(sportDumbbell: SportDumbbell): TodaySportsDumbbellFragment {
             val fragment = TodaySportsDumbbellFragment()
             val bundle = Bundle()
             bundle.putParcelable(Constants.INTENT_KEY_TODAY_SPORTS_DATA, sportDumbbell)
@@ -67,7 +68,7 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=5f
+        lineChart.extraBottomOffset = 5f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -77,14 +78,14 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount=2
+        xAxis.textSize = 20f
+        xAxis.labelCount = 2
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                if(index>=0 && index < sportDumbbell.heart_rate.size){
-                    return DateTimeUtil.formatDate(sportDumbbell.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
-                }else{
+                if (index >= 0 && index < sportDumbbell.heart_rate.size) {
+                    return DateTimeUtil.formatDate(sportDumbbell.heart_rate[value.toInt()].record_time.toLong() * 1000, DateTimeUtil.HH_MM_SS)
+                } else {
                     return ""
                 }
             }
@@ -116,7 +117,7 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setCircleColor(resources.getColor(R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
@@ -158,7 +159,7 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
-        barChart.extraBottomOffset=5f
+        barChart.extraBottomOffset = 5f
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -168,14 +169,14 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount= Math.min(2,sportDumbbell.calorie.size)
+        xAxis.textSize = 20f
+        xAxis.labelCount = Math.min(2, sportDumbbell.calorie.size)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index>=0 && index< sportDumbbell.calorie.size){
-                    DateTimeUtil.formatDate(sportDumbbell.calorie[index].record_time.toLong(),DateTimeUtil.HH_MM_SS)
-                }else{
+                return if (index >= 0 && index < sportDumbbell.calorie.size) {
+                    DateTimeUtil.formatDate(sportDumbbell.calorie[index].record_time.toLong(), DateTimeUtil.HH_MM_SS)
+                } else {
                     ""
                 }
             }

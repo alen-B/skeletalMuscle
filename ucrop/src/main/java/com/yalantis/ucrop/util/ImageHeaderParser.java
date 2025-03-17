@@ -385,9 +385,9 @@ public class ImageHeaderParser {
     /**
      * Copy exif information represented by originalExif into the file represented by imageOutputPath.
      *
-     * @param originalExif The exif info from the original input file
-     * @param width output image new width
-     * @param height output image new height
+     * @param originalExif    The exif info from the original input file
+     * @param width           output image new width
+     * @param height          output image new height
      * @param imageOutputPath The path to the output file
      */
     public static void copyExif(ExifInterface originalExif, int width, int height, String imageOutputPath) {
@@ -406,20 +406,20 @@ public class ImageHeaderParser {
      * Copy exif information from the file represented by imageInputUri into the file represented by imageOutputPath and
      * overwrites it's width and height with the given ones.
      *
-     * @param context The context from which to obtain a content resolver
-     * @param width output image new width
-     * @param height output image new height
-     * @param imageInputUri The {@link Uri} that represents the input file
+     * @param context         The context from which to obtain a content resolver
+     * @param width           output image new width
+     * @param height          output image new height
+     * @param imageInputUri   The {@link Uri} that represents the input file
      * @param imageOutputPath The path to the output file
      */
     public static void copyExif(Context context, int width, int height, Uri imageInputUri, String imageOutputPath) {
-        if(context == null) {
+        if (context == null) {
             Log.d(TAG, "context is null");
             return;
         }
 
         InputStream ins = null;
-        try  {
+        try {
             ins = context.getContentResolver().openInputStream(imageInputUri);
             ExifInterface originalExif = new ExifInterface(ins);
 
@@ -447,22 +447,22 @@ public class ImageHeaderParser {
      * This is done by {@link ExifInterface} through a seekable {@link FileDescriptor} and this is only possible
      * starting on Lollipop version of Android.
      *
-     * @param context The context from which to obtain a content resolver
-     * @param width output image new width
-     * @param height output image new height
-     * @param imageInputUri The {@link Uri} that represents the input file
+     * @param context        The context from which to obtain a content resolver
+     * @param width          output image new width
+     * @param height         output image new height
+     * @param imageInputUri  The {@link Uri} that represents the input file
      * @param imageOutputUri The {@link Uri} that represents the output file
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public static void copyExif(Context context, int width, int height, Uri imageInputUri, Uri imageOutputUri) {
-        if(context == null) {
+        if (context == null) {
             Log.d(TAG, "context is null");
             return;
         }
 
         InputStream ins = null;
         ParcelFileDescriptor outFd = null;
-        try  {
+        try {
             ins = context.getContentResolver().openInputStream(imageInputUri);
             ExifInterface originalExif = new ExifInterface(ins);
 
@@ -497,16 +497,16 @@ public class ImageHeaderParser {
      * This is done by {@link ExifInterface} through a seekable {@link FileDescriptor} and this is only possible
      * starting on Lollipop version of Android.
      *
-     * @param context The context from which to obtain a content resolver
-     * @param originalExif The exif info from the original input file
-     * @param width output image new width
-     * @param height output image new height
+     * @param context        The context from which to obtain a content resolver
+     * @param originalExif   The exif info from the original input file
+     * @param width          output image new width
+     * @param height         output image new height
      * @param imageOutputUri The {@link Uri} that represents the output file
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public static void copyExif(Context context, ExifInterface originalExif, int width, int height, Uri imageOutputUri) {
 
-        if(context == null) {
+        if (context == null) {
             Log.d(TAG, "context is null");
             return;
         }
@@ -538,9 +538,9 @@ public class ImageHeaderParser {
      * Copy Exif attributes from the originalExif to the newExif and overwrites it's width and height with the given ones.
      *
      * @param originalExif Original exif information
-     * @param newExif New exif information
-     * @param width Width for overwriting into the newExif
-     * @param height Height for overwriting into the newExif
+     * @param newExif      New exif information
+     * @param width        Width for overwriting into the newExif
+     * @param height       Height for overwriting into the newExif
      * @throws IOException If it occurs some IO error while trying to save the new exif info.
      */
     private static void copyExifAttributes(ExifInterface originalExif, ExifInterface newExif, int width, int height) throws IOException {

@@ -2,7 +2,6 @@ package com.fjp.skeletalmuscle.viewmodel.state
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
 import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
 import com.fjp.skeletalmuscle.data.repository.request.HttpRequestCoroutine
@@ -24,6 +23,7 @@ class SportsAssessmentViewModel : SMBaseViewModel() {
     val rightLegCount = ObservableField("0")
 
     var sportsCalorieResult = MutableLiveData<ResultState<String>>()
+
     //保存测评数据
     fun saveAssessment(saveAssessmentRequest: SaveAssessmentRequest) {
         request({

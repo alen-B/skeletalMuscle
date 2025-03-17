@@ -83,8 +83,8 @@ object DeviceDataParse {
             val pitch: Float = Math.abs(twoBytesToFloat(data[14], data[15]) + 100)
             val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
             val yaw: Float = twoBytesToFloat(data[18], data[19])
-            println("=-=-=- roll:${roll}       yaw:${yaw}")
-            println("左pintch:${pitch}  roll:${roll}  yaw:${yaw} x方向加速度：${axL}  y方向加速度：${ayL}   z方向加速度：${azL}  绕x轴角速度：${wx} 绕y轴角速度：${wy}  绕z轴角速度：${wz}")
+//            println("=-=-=- roll:${roll}       yaw:${yaw}")
+//            println("左pintch:${pitch}  roll:${roll}  yaw:${yaw} x方向加速度：${axL}  y方向加速度：${ayL}   z方向加速度：${azL}  绕x轴角速度：${wx} 绕y轴角速度：${wy}  绕z轴角速度：${wz}")
             // 检查pitch是否大于100度
             val point = DataPoint(System.currentTimeMillis(), pitch.toDouble(), yaw.toDouble(), roll.toDouble(), axL.toDouble(), ayL.toDouble(), azL.toDouble(), wx.toDouble(), wy.toDouble(), wz.toDouble())
             return point
@@ -92,6 +92,7 @@ object DeviceDataParse {
 
         return null
     }
+
     fun parseData2DataPoint2(data: ByteArray): DataPoint? {
         if (data.size >= 20) {
             val axL: Float = Math.abs(twoBytesToAcceleration(data[2], data[3]))
@@ -103,7 +104,7 @@ object DeviceDataParse {
             val pitch: Float = Math.abs(twoBytesToFloat(data[14], data[15]) + 100)
             val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
             val yaw: Float = twoBytesToFloat(data[18], data[19])
-            println("右pintch:${pitch}  roll:${roll}  yaw:${yaw} x方向加速度：${axL}  y方向加速度：${ayL}   z方向加速度：${azL}  绕x轴角速度：${wx} 绕y轴角速度：${wy}  绕z轴角速度：${wz}")
+//            println("右pintch:${pitch}  roll:${roll}  yaw:${yaw} x方向加速度：${axL}  y方向加速度：${ayL}   z方向加速度：${azL}  绕x轴角速度：${wx} 绕y轴角速度：${wy}  绕z轴角速度：${wz}")
             // 检查pitch是否大于100度
             val point = DataPoint(System.currentTimeMillis(), pitch.toDouble(), yaw.toDouble(), roll.toDouble(), axL.toDouble(), ayL.toDouble(), azL.toDouble(), wx.toDouble(), wy.toDouble(), wz.toDouble())
             return point
@@ -111,6 +112,7 @@ object DeviceDataParse {
 
         return null
     }
+
     fun parseData2Roll(data: ByteArray): Float {
         if (data.size >= 20) {
             val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
@@ -150,7 +152,7 @@ object DeviceDataParse {
     //加速度计算公式
     private fun twoBytesToAcceleration(b1: Byte, b2: Byte): Float {
         // 根据文档中的公式转换两个字节的数据
-        return (b2.toInt() shl 8 or (b1.toInt() and 0xFF)) / 32768.0f * 16*9.8f // 示例转换公式，根据实际情况调整
+        return (b2.toInt() shl 8 or (b1.toInt() and 0xFF)) / 32768.0f * 16 * 9.8f // 示例转换公式，根据实际情况调整
     }
 
     //角速度计算公式

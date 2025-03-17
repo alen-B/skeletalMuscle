@@ -15,7 +15,6 @@ import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
 import com.fjp.skeletalmuscle.data.model.bean.result.SaveLiftLegResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportLiftLeg
 import com.fjp.skeletalmuscle.databinding.ActivitySportsHightKneeCompletedBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SportsHighKneeCompletedViewModel
@@ -38,7 +37,7 @@ import me.hgj.jetpackmvvm.base.appContext
 
 class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedViewModel, ActivitySportsHightKneeCompletedBinding>() {
     lateinit var sportLiftLeg: SaveLiftLegResult
-    val shareViewModel  :ShareViewModel by viewModels()
+    val shareViewModel: ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
@@ -78,7 +77,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=5f
+        lineChart.extraBottomOffset = 5f
 
         val description = Description()
         description.text = ""
@@ -88,15 +87,15 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount=2
+        xAxis.textSize = 20f
+        xAxis.labelCount = 2
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index<sportLiftLeg.heart_rate.size){
-                    DateTimeUtil.completedTimeFromat(sportLiftLeg.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
-                }else {
+                return if (index >= 0 && index < sportLiftLeg.heart_rate.size) {
+                    DateTimeUtil.completedTimeFromat(sportLiftLeg.heart_rate[value.toInt()].record_time, DateTimeUtil.DATE_PATTERN_SS)
+                } else {
                     ""
                 }
 
@@ -109,7 +108,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
-        leftAxis.axisMinimum=0f
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -131,7 +130,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
         lineDataSet.setCircleColor(resources.getColor(R.color.color_ff574c))
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
@@ -172,7 +171,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
-        barChart.extraBottomOffset=15f
+        barChart.extraBottomOffset = 15f
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -181,15 +180,15 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
+        xAxis.textSize = 20f
         xAxis.setAvoidFirstLastClipping(true)
-        xAxis.labelCount= Math.min(2,sportLiftLeg.calorie_list.size)
+        xAxis.labelCount = Math.min(2, sportLiftLeg.calorie_list.size)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index>=0 && index< sportLiftLeg.calorie_list.size){
-                    DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie_list[index].record_time,DateTimeUtil.DATE_PATTERN_SS)
-                }else{
+                return if (index >= 0 && index < sportLiftLeg.calorie_list.size) {
+                    DateTimeUtil.completedTimeFromat(sportLiftLeg.calorie_list[index].record_time, DateTimeUtil.DATE_PATTERN_SS)
+                } else {
                     ""
                 }
             }
@@ -201,7 +200,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         leftAxis.enableGridDashedLine(2f, 1f, 0f)
         leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
         leftAxis.gridLineWidth = 0f
-        leftAxis.axisMinimum=0f
+        leftAxis.axisMinimum = 0f
         leftAxis.setDrawLabels(false)
         leftAxis.setDrawAxisLine(false)
         leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
@@ -239,7 +238,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=5f
+        lineChart.extraBottomOffset = 5f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -249,12 +248,12 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.enableGridDashedLine(2f, 1f, 0f)
-        xAxis.textSize=20f
-        xAxis.labelCount=2
+        xAxis.textSize = 20f
+        xAxis.labelCount = 2
         xAxis.setAvoidFirstLastClipping(true)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return "${value.toInt()+1}组"
+                return "${value.toInt() + 1}组"
             }
 
         }
@@ -351,7 +350,7 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
                 this.error(R.drawable.avatar_default)
                 this.placeholder(R.drawable.avatar_default)
             })
-            shareViewModel.share(this@SportsHighKneeCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
+            shareViewModel.share(this@SportsHighKneeCompletedActivity, shareTitleView, mDatabind.shareCl, shareTBottomView)
 
 
         }

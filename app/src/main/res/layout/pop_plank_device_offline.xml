@@ -93,7 +93,6 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
         <Button
             android:id="@+id/connectBtn"
             style="@style/SMButton"

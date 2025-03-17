@@ -94,9 +94,9 @@ class CalendarActivity : BaseActivity<CalendarViewModel, ActivityCalendarBinding
                 } else {
                     day = calendar.day.toString()
                 }
-                if(calendar.month<10){
+                if (calendar.month < 10) {
                     month = "0${calendar.month}"
-                }else{
+                } else {
                     month = calendar.month.toString()
                 }
                 if (it.date == "${calendar.year}-${month}-${day}") {

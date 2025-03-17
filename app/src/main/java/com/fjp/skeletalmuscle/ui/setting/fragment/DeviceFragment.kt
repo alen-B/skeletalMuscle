@@ -21,49 +21,49 @@ class DeviceFragment : BaseFragment<DeviceViewModel, FragmentSettingDeviceBindin
         val leftKneeDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         val rightKneeDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
 
-        mDatabind.smartWatchLayout.setValue(if (GTSDevice != null) getString(R.string.setting_device_status_connected) else getString(R.string.setting_device_status_disconnect),if(GTSDevice != null) R.drawable.blue_point else 0)
-        mDatabind.leftKneeLL.setValue(if (leftKneeDevice != null) getString(R.string.setting_device_status_connected) else getString(R.string.setting_device_status_disconnect),if(leftKneeDevice != null) R.drawable.blue_point else 0)
-        mDatabind.rightKneeLL.setValue(if (rightKneeDevice != null) getString(R.string.setting_device_status_connected) else getString(R.string.setting_device_status_disconnect),if(rightKneeDevice != null) R.drawable.blue_point else 0)
+        mDatabind.smartWatchLayout.setValue(if (GTSDevice != null) getString(R.string.setting_device_status_connected) else getString(R.string.setting_device_status_disconnect), if (GTSDevice != null) R.drawable.blue_point else 0)
+        mDatabind.leftKneeLL.setValue(if (leftKneeDevice != null) getString(R.string.setting_device_status_connected) else getString(R.string.setting_device_status_disconnect), if (leftKneeDevice != null) R.drawable.blue_point else 0)
+        mDatabind.rightKneeLL.setValue(if (rightKneeDevice != null) getString(R.string.setting_device_status_connected) else getString(R.string.setting_device_status_disconnect), if (rightKneeDevice != null) R.drawable.blue_point else 0)
     }
 
 
     inner class ProxyClick {
 
-        fun clickConnectLeftKnee(){
+        fun clickConnectLeftKnee() {
             SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
                 override fun disConnected() {
 
                 }
 
                 override fun connected() {
-                    mDatabind.leftKneeLL.setValue( getString(R.string.setting_device_status_connected),R.drawable.blue_point)
+                    mDatabind.leftKneeLL.setValue(getString(R.string.setting_device_status_connected), R.drawable.blue_point)
 
                 }
 
             })
         }
 
-        fun clickConnectRightKnee(){
+        fun clickConnectRightKnee() {
             SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
                 override fun disConnected() {
 
                 }
 
                 override fun connected() {
-                    mDatabind.rightKneeLL.setValue( getString(R.string.setting_device_status_connected) ,R.drawable.blue_point)
+                    mDatabind.rightKneeLL.setValue(getString(R.string.setting_device_status_connected), R.drawable.blue_point)
                 }
 
             })
         }
 
-        fun clickConnectGTSKnee(){
+        fun clickConnectGTSKnee() {
             SMBleManager.scanDevices(DeviceType.GTS.value, DeviceType.GTS, object : SMBleManager.DeviceStatusListener {
                 override fun disConnected() {
 
                 }
 
                 override fun connected() {
-                    mDatabind.smartWatchLayout.setValue( getString(R.string.setting_device_status_connected),R.drawable.blue_point)
+                    mDatabind.smartWatchLayout.setValue(getString(R.string.setting_device_status_connected), R.drawable.blue_point)
                 }
 
             })

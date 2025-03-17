@@ -96,7 +96,7 @@ public class DashboardView extends View {
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
         float textHeight = fontMetrics.bottom - fontMetrics.top;
 
-        canvas.drawText(text, centerX - textWidth/2, centerY - textHeight/2, textPaint);
+        canvas.drawText(text, centerX - textWidth / 2, centerY - textHeight / 2, textPaint);
     }
 
     private void drawOutLine(Canvas canvas) {

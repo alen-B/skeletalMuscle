@@ -6,7 +6,8 @@ import okhttp3.OkHttpClient;
 
 public class OkHttpClientStore {
 
-    private OkHttpClientStore() {}
+    private OkHttpClientStore() {
+    }
 
     public final static OkHttpClientStore INSTANCE = new OkHttpClientStore();
 
@@ -14,8 +15,8 @@ public class OkHttpClientStore {
 
     /**
      * @return stored OkHttpClient if it was already set,
-     *         or just an instance created via empty constructor
-     *         and store it
+     * or just an instance created via empty constructor
+     * and store it
      */
     @NonNull
     public OkHttpClient getClient() {

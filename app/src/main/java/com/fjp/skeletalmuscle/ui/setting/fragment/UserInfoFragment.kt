@@ -257,9 +257,9 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(TakePhotoPop(requireContext(), object : TakePhotoPop.Listener {
             override fun onclickItem(index: Int, pop: TakePhotoPop) {
                 if (index == TakePhotoPop.TAKE_PHOTO) {
-                        takePhoto()
+                    takePhoto()
                 } else if (index == TakePhotoPop.ALBUM) {
-                        takeAlbum()
+                    takeAlbum()
                 }
                 pop.dismiss()
             }

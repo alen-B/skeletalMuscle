@@ -130,8 +130,6 @@
             app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
 
 
-
-
         <TextView
             android:id="@+id/minTv"
             android:layout_width="wrap_content"
@@ -181,8 +179,6 @@
             android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/heartRateView"
             app:layout_constraintTop_toTopOf="@+id/heartRateView" />
-
-
 
 
         <TextView
@@ -235,8 +231,6 @@
             app:layout_constraintTop_toTopOf="@+id/weightView" />
 
 
-
-
         <TextView
             android:id="@+id/enduranceTv"
             android:layout_width="wrap_content"
@@ -274,7 +268,6 @@
             android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/heatView"
             app:layout_constraintTop_toTopOf="@+id/heatView" />
-
 
 
         <TextView

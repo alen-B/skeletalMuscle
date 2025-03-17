@@ -13,13 +13,13 @@ class AssessmentTypeAdapter(data: ArrayList<String>) : BaseQuickAdapter<String, 
     }
 
     override fun convert(holder: BaseViewHolder, item: String) {
-        if(holder.bindingAdapterPosition==0){
+        if (holder.bindingAdapterPosition == 0) {
             holder.setImageResource(R.id.stepIv, R.drawable.assessment_01)
-        }else if(holder.bindingAdapterPosition==1){
+        } else if (holder.bindingAdapterPosition == 1) {
             holder.setImageResource(R.id.stepIv, R.drawable.assessment_02)
-        }else if(holder.bindingAdapterPosition==2){
+        } else if (holder.bindingAdapterPosition == 2) {
             holder.setImageResource(R.id.stepIv, R.drawable.assessment_03)
-        }else if(holder.bindingAdapterPosition==3){
+        } else if (holder.bindingAdapterPosition == 3) {
             holder.setImageResource(R.id.stepIv, R.drawable.assessment_04)
         }
 

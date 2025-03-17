@@ -1,20 +1,16 @@
 package com.fjp.skeletalmuscle.ui.setting.fragment
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.provider.DocumentsContract
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -52,7 +48,6 @@ import kotlinx.coroutines.withContext
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.parseState
 import java.io.IOException
-import java.io.OutputStream
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
@@ -93,7 +88,6 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
 
         }
     }
-
 
 
     private fun exportPDF(it: TodayDataResult) {

@@ -9,10 +9,10 @@ import android.content.pm.PackageManager
  *Time:2024/12/7
  *Description:
  */
-object  AppUtils {
+object AppUtils {
 
     fun getAppVersionName(context: Context): String {
-        var versionName =""
+        var versionName = ""
         try {
             // 获取PackageManager实例
             val packageManager = context.packageManager

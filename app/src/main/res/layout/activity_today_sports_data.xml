@@ -38,26 +38,26 @@
             android:layout_height="0dp" />
 
 
-<!--        <io.alterac.blurkit.BlurLayout-->
-<!--            android:id="@+id/blurLayout"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:blk_cornerRadius="20dp"-->
-<!--            android:onClick="@{()-> click.finish()}"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/nextBtn"-->
-<!--            android:layout_width="144dp"-->
-<!--            app:blk_blurRadius="25"-->
-<!--            android:layout_height="144dp">-->
+        <!--        <io.alterac.blurkit.BlurLayout-->
+        <!--            android:id="@+id/blurLayout"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:blk_cornerRadius="20dp"-->
+        <!--            android:onClick="@{()-> click.finish()}"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/nextBtn"-->
+        <!--            android:layout_width="144dp"-->
+        <!--            app:blk_blurRadius="25"-->
+        <!--            android:layout_height="144dp">-->
 
-            <ImageView
-                android:layout_width="144dp"
-                android:src="@drawable/arrow_right"
-                app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
-                app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/bg_back_gray"
-                android:onClick="@{()-> click.finish()}"
-                android:scaleType="center"
-                android:layout_height="144dp" />
-<!--        </io.alterac.blurkit.BlurLayout>-->
+        <ImageView
+            android:layout_width="144dp"
+            android:src="@drawable/arrow_right"
+            app:layout_constraintBottom_toBottomOf="@+id/nextBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/bg_back_gray"
+            android:onClick="@{()-> click.finish()}"
+            android:scaleType="center"
+            android:layout_height="144dp" />
+        <!--        </io.alterac.blurkit.BlurLayout>-->
 
         <Button
             android:id="@+id/nextBtn"

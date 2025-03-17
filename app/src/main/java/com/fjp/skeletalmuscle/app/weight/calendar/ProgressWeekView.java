@@ -3,7 +3,6 @@ package com.fjp.skeletalmuscle.app.weight.calendar;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
@@ -78,13 +77,13 @@ public class ProgressWeekView extends WeekView {
         int cy = mItemHeight / 2;
 
         int angle = getAngle(Integer.parseInt(calendar.getScheme()));
-        if(angle > 288){
+        if (angle > 288) {
             mProgressPaint.setColor(getContext().getResources().getColor(R.color.color_4e71ff));
-        }else if(angle > 216){
+        } else if (angle > 216) {
             mProgressPaint.setColor(getContext().getResources().getColor(R.color.color_ffc019));
-        }else if(angle > 108){
+        } else if (angle > 108) {
             mProgressPaint.setColor(getContext().getResources().getColor(R.color.color_ff824c));
-        }else{
+        } else {
             mProgressPaint.setColor(getContext().getResources().getColor(R.color.color_ff574c));
         }
 

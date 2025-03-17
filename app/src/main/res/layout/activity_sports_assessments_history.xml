@@ -300,6 +300,7 @@
                         android:text="@string/sports_assessment_history_waist"
                         android:layout_marginStart="32dp"
                         android:layout_height="wrap_content" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
@@ -309,6 +310,7 @@
                         android:textSize="@dimen/text_size_5"
                         android:textColor="@color/color_801c1c1c"
                         android:layout_height="wrap_content" />
+
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/waistlineLineChart"
                         android:layout_width="match_parent"
@@ -317,29 +319,29 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-<!--        <io.alterac.blurkit.BlurLayout-->
-<!--            android:id="@+id/backIv"-->
-<!--            android:layout_width="144dp"-->
-<!--            android:layout_height="144dp"-->
-<!--            android:onClick="@{()-> click.clickFinish()}"-->
-<!--            app:blk_blurRadius="25"-->
-<!--            app:blk_cornerRadius="20dp"-->
-<!--            android:layout_marginBottom="48dp"-->
-<!--            app:blk_fps="0"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent">-->
+        <!--        <io.alterac.blurkit.BlurLayout-->
+        <!--            android:id="@+id/backIv"-->
+        <!--            android:layout_width="144dp"-->
+        <!--            android:layout_height="144dp"-->
+        <!--            android:onClick="@{()-> click.clickFinish()}"-->
+        <!--            app:blk_blurRadius="25"-->
+        <!--            app:blk_cornerRadius="20dp"-->
+        <!--            android:layout_marginBottom="48dp"-->
+        <!--            app:blk_fps="0"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent">-->
 
-            <ImageView
-                android:layout_width="144dp"
-                android:layout_height="144dp"
-                android:background="@drawable/bg_back_gray"
-                android:onClick="@{()-> click.clickFinish()}"
-                android:scaleType="center"
-                android:layout_marginBottom="48dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/arrow_right"
-                tools:ignore="ContentDescription" />
-<!--        </io.alterac.blurkit.BlurLayout>-->
+        <ImageView
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:background="@drawable/bg_back_gray"
+            android:onClick="@{()-> click.clickFinish()}"
+            android:scaleType="center"
+            android:layout_marginBottom="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/arrow_right"
+            tools:ignore="ContentDescription" />
+        <!--        </io.alterac.blurkit.BlurLayout>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

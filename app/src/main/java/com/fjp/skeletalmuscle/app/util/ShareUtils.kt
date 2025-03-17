@@ -58,7 +58,7 @@ object ShareUtils {
         // 在画布上绘制第一个bitmap
         canvas.drawBitmap(bitmap1, 0f, 0f, null)
         // 在画布上绘制第二个bitmap，紧接着第一个bitmap
-        canvas.drawBitmap(bitmap2, (mergedBitmap.width-bitmap2.width)/2f, bitmap1.height.toFloat(), null)
+        canvas.drawBitmap(bitmap2, (mergedBitmap.width - bitmap2.width) / 2f, bitmap1.height.toFloat(), null)
         canvas.drawBitmap(bitmap3, 0f, bitmap1.height.toFloat() + bitmap2.height.toFloat(), null)
         return mergedBitmap
     }

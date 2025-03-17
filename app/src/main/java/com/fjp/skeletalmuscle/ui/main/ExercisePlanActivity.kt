@@ -10,7 +10,6 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.eventViewModel
-import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.app.weight.pop.VideoPop
@@ -266,14 +265,14 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     fun showVideoPop() {
         val videoPop = VideoPop(this@ExercisePlanActivity, object : VideoPop.Listener {
             override fun jump(pop: VideoPop) {
-                    finish()
-                    if(App.sportsType == SportsType.HIGH_KNEE){
-                        startActivity(Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java))
-                    }else if(App.sportsType == SportsType.DUMBBELL){
-                        startActivity(Intent(this@ExercisePlanActivity, DumbbellMainActivity::class.java))
-                    }else if(App.sportsType == SportsType.PLANK){
-                        startActivity(Intent(this@ExercisePlanActivity, PlankActivity::class.java))
-                    }
+                finish()
+                if (App.sportsType == SportsType.HIGH_KNEE) {
+                    startActivity(Intent(this@ExercisePlanActivity, HighKneeMainActivity::class.java))
+                } else if (App.sportsType == SportsType.DUMBBELL) {
+                    startActivity(Intent(this@ExercisePlanActivity, DumbbellMainActivity::class.java))
+                } else if (App.sportsType == SportsType.PLANK) {
+                    startActivity(Intent(this@ExercisePlanActivity, PlankActivity::class.java))
+                }
                 eventViewModel.startSports.postValue(true)
                 pop.dismiss()
                 finish()

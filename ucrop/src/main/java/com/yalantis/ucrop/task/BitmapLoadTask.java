@@ -98,7 +98,7 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
         try {
             InputStream stream = context.getContentResolver().openInputStream(mInputUri);
             BitmapFactory.decodeStream(stream, null, options);
-            options.inSampleSize = BitmapLoadUtils.computeSize(options.outWidth,options.outHeight);
+            options.inSampleSize = BitmapLoadUtils.computeSize(options.outWidth, options.outHeight);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -188,8 +188,8 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
         Response response = null;
         try {
             Request request = new Request.Builder()
-                .url(inputUri.toString())
-                .build();
+                    .url(inputUri.toString())
+                    .build();
             response = client.newCall(request).execute();
             source = response.body().source();
 

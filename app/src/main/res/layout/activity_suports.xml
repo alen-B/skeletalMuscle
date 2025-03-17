@@ -74,6 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:scrollbars="none"
             android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerChildView"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView"

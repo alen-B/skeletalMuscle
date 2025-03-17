@@ -1,7 +1,6 @@
 package com.fjp.skeletalmuscle.app.base
 
 import androidx.databinding.ObservableField
-import coil.load
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel

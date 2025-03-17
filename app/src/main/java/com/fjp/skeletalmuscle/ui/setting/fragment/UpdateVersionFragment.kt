@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
 import com.fjp.skeletalmuscle.app.base.BaseFragment
-import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.data.model.bean.result.VersionData
 import com.fjp.skeletalmuscle.databinding.FragmentUpdateVersionBinding
@@ -18,6 +17,7 @@ import java.io.File
 
 class UpdateVersionFragment(val versionData: VersionData) : BaseFragment<UpdateVersionViewModel, FragmentUpdateVersionBinding>(), CompoundButton.OnCheckedChangeListener, OnDownloadListener {
     private var apkFile: File? = null
+
     companion object {
         fun newInstance(versionData: VersionData) = UpdateVersionFragment(versionData)
     }
@@ -27,7 +27,7 @@ class UpdateVersionFragment(val versionData: VersionData) : BaseFragment<UpdateV
         mDatabind.click = ProxyClick()
         mViewModel.versionTitle.set("骨骼肌V${versionData.version}")
         versionData.content.forEach {
-            mViewModel.content.set(mViewModel.content.get()+it+'\n')
+            mViewModel.content.set(mViewModel.content.get() + it + '\n')
         }
 
         val isCheck = CacheUtil.getVoiceInteraction()
@@ -39,7 +39,7 @@ class UpdateVersionFragment(val versionData: VersionData) : BaseFragment<UpdateV
 
         fun clickUpdate() {
             activity?.externalCacheDir?.let {
-                mDatabind.progressBar.visibility= View.VISIBLE
+                mDatabind.progressBar.visibility = View.VISIBLE
                 HttpDownLoadManager(it.path).download(versionData.download_url, "gugeji.apk", this@UpdateVersionFragment)
             }
         }
@@ -72,11 +72,10 @@ class UpdateVersionFragment(val versionData: VersionData) : BaseFragment<UpdateV
                 if (!it.packageManager.canRequestPackageInstalls()) {
                     this@UpdateVersionFragment.apkFile = apk
                     ApkUtils.startPackageInstallActivity(it)
-                }else{
+                } else {
                     ApkUtils.installAPK(it, apk)
                 }
             }
-
 
 
         }
@@ -85,7 +84,7 @@ class UpdateVersionFragment(val versionData: VersionData) : BaseFragment<UpdateV
     override fun error(e: Exception) {
         runOnUiThread {
             e.printStackTrace()
-            showToast(activity,"更新失败！")
+            showToast(activity, "更新失败！")
         }
     }
 }

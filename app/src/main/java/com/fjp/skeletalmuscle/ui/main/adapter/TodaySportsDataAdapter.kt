@@ -19,7 +19,6 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
@@ -92,8 +91,8 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
 
-        lineChart.extraBottomOffset=18f
-        lineChart.extraRightOffset=18f
+        lineChart.extraBottomOffset = 18f
+        lineChart.extraRightOffset = 18f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -122,7 +121,7 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         lineDataSet.setDrawIcons(false)
         lineDataSet.setMode(LineDataSet.Mode.LINEAR);
         lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setColor(Color.parseColor("#FFDD82"))
 //        lineDataSet.setCircleColor(Color.BLACK)
 
@@ -183,8 +182,8 @@ class TodaySportsDataAdapter(data: ArrayList<TodaySports>, var clickItem: (item:
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
 
-        barChart.extraBottomOffset=18f
-        barChart.extraRightOffset=18f
+        barChart.extraBottomOffset = 18f
+        barChart.extraRightOffset = 18f
         val description = Description()
         description.text = ""
         barChart.description = description

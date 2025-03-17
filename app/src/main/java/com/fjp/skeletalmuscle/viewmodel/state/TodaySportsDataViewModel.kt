@@ -1,13 +1,8 @@
 package com.fjp.skeletalmuscle.viewmodel.state
 
-import android.app.Activity
-import android.view.View
-import androidx.lifecycle.viewModelScope
-import com.example.pdftest.ui.ShareUtils
 import com.fjp.skeletalmuscle.app.base.SMBaseViewModel
 import com.fjp.skeletalmuscle.data.model.bean.TodayDetailSportsType
 import com.fjp.skeletalmuscle.data.model.bean.TodaySports
-import kotlinx.coroutines.launch
 
 /**
  *Author:Mr'x

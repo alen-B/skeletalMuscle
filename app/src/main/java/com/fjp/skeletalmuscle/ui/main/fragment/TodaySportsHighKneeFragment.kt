@@ -33,8 +33,9 @@ import me.hgj.jetpackmvvm.base.appContext
 
 class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, FragmentTodaySportsHighKneeBinding>() {
     lateinit var sportLiftLeg: SportLiftLeg
+
     companion object {
-        fun newInstance(sportLiftLeg: SportLiftLeg):TodaySportsHighKneeFragment{
+        fun newInstance(sportLiftLeg: SportLiftLeg): TodaySportsHighKneeFragment {
             val fragment = TodaySportsHighKneeFragment()
             val bundle = Bundle()
             bundle.putParcelable(Constants.INTENT_KEY_TODAY_SPORTS_DATA, sportLiftLeg)
@@ -79,8 +80,8 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=5f
-        lineChart.extraLeftOffset=25f
+        lineChart.extraBottomOffset = 5f
+        lineChart.extraLeftOffset = 25f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -90,14 +91,14 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount=2
+        xAxis.textSize = 20f
+        xAxis.labelCount = 2
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                if(index>=0 && index < sportLiftLeg.heart_rate.size){
-                    return DateTimeUtil.formatDate(sportLiftLeg.heart_rate[value.toInt()].record_time.toLong()*1000,DateTimeUtil.HH_MM_SS)
-                }else{
+                if (index >= 0 && index < sportLiftLeg.heart_rate.size) {
+                    return DateTimeUtil.formatDate(sportLiftLeg.heart_rate[value.toInt()].record_time.toLong() * 1000, DateTimeUtil.HH_MM_SS)
+                } else {
                     return ""
                 }
             }
@@ -131,7 +132,7 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
         lineDataSet.setCircleColor(resources.getColor(R.color.color_ff574c))
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
 
@@ -172,7 +173,7 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
-        barChart.extraBottomOffset=15f
+        barChart.extraBottomOffset = 15f
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -182,14 +183,14 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount= Math.min(2,sportLiftLeg.calorie.size)
+        xAxis.textSize = 20f
+        xAxis.labelCount = Math.min(2, sportLiftLeg.calorie.size)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index>=0 && index< sportLiftLeg.calorie.size){
-                    DateTimeUtil.formatDate(sportLiftLeg.calorie[index].record_time.toLong(),DateTimeUtil.HH_MM_SS)
-                }else{
+                return if (index >= 0 && index < sportLiftLeg.calorie.size) {
+                    DateTimeUtil.formatDate(sportLiftLeg.calorie[index].record_time.toLong(), DateTimeUtil.HH_MM_SS)
+                } else {
                     ""
                 }
             }
@@ -239,7 +240,7 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=5f
+        lineChart.extraBottomOffset = 5f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -250,8 +251,8 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
         xAxis.enableGridDashedLine(2f, 1f, 0f)
-        xAxis.textSize=20f
-        xAxis.labelCount=2
+        xAxis.textSize = 20f
+        xAxis.labelCount = 2
 
         val leftAxis = lineChart.axisLeft
         leftAxis.setDrawGridLines(true)
@@ -280,7 +281,7 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         }
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return "${value.toInt()+1}组"
+                return "${value.toInt() + 1}组"
             }
 
         }
@@ -352,6 +353,7 @@ class TodaySportsHighKneeFragment : BaseFragment<TodaySportsHighKneeViewModel, F
         fun clickStrengthAndTime() {
             TodaySportsDetailActivity.startActivity(requireContext(), SportsType.HIGH_KNEE, ChartType.INTENSITY_AND_TIME)
         }
+
         fun clickCalendar() {
             startActivity(Intent(context, CalendarActivity::class.java))
         }

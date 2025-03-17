@@ -11,7 +11,6 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -58,8 +57,8 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                 mViewModel.mobile.set(s)
             }
         })
-      
-        if(phone!=null){
+
+        if (phone != null) {
             mViewModel.mobile.set(phone)
             mDatabind.phoneEt.setText(phone)
         }
@@ -147,6 +146,7 @@ class LoginActivity : BaseActivity<LoginViewModel, ActivityLoginBinding>() {
                     showToast(getString(R.string.login_agreement_no_checked))
                     YoYo.with(Techniques.Shake).duration(700).repeat(1).playOn(mDatabind.agreementTv)
                 }
+
                 else -> {
                     checkPermissions()
                 }

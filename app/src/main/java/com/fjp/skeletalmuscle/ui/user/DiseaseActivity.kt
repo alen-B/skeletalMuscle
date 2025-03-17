@@ -55,7 +55,7 @@ class DiseaseActivity : BaseActivity<DiseaseViewModel, ActivityDiseaseBinding>()
                     showToast(getString(R.string.disease_please_selected_detail))
                     return
                 }
-                val disease = Disease(disease_name = curDiseaseName, child_disease_name = arrayListOf(curDiseaseDetailName.replace("\n","")))
+                val disease = Disease(disease_name = curDiseaseName, child_disease_name = arrayListOf(curDiseaseDetailName.replace("\n", "")))
                 diseases.add(disease)
             }
             App.userInfo.disease = diseases

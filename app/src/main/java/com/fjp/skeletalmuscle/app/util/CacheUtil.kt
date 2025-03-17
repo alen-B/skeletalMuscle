@@ -63,7 +63,7 @@ object CacheUtil {
         val accountsJSON = kv.decodeString("accounts")
         if (accountsJSON != null) {
             val accounts: MutableList<Account> = Gson().fromJson(accountsJSON, object : TypeToken<MutableList<Account>>() {}.type)
-           val  iterator =accounts.iterator()
+            val iterator = accounts.iterator()
             while (iterator.hasNext()) {
                 val account = iterator.next()
                 if (account.phone == phone) {

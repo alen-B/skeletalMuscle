@@ -35,7 +35,7 @@ class SportsTypeAdapter(data: ArrayList<Sports>, var clickItem: (item: Sports) -
             }
             if (item.name == appContext.getString(R.string.sports_type_no) && (!item.isSelected)) {
                 data.forEach {
-                    if(it.name != appContext.getString(R.string.sports_type_no)){
+                    if (it.name != appContext.getString(R.string.sports_type_no)) {
                         it.isSelected = false
                         it.child.forEach { child -> child.isSelected = false }
                     }

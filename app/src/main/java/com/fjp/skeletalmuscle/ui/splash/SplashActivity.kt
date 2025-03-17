@@ -1,22 +1,18 @@
 package com.fjp.skeletalmuscle.ui.splash
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.AppUtils
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.weight.pop.NewVersionPop
-import com.fjp.skeletalmuscle.data.model.bean.result.VersionData
 import com.fjp.skeletalmuscle.databinding.ActivitySplashBinding
 import com.fjp.skeletalmuscle.ui.login.LoginActivity
 import com.fjp.skeletalmuscle.ui.main.MainActivity
-import com.fjp.skeletalmuscle.ui.setting.fragment.UpdateVersionFragment
 import com.fjp.skeletalmuscle.viewmodel.state.SplashViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SystemSettingViewModel
 import com.lxj.xpopup.XPopup
@@ -33,7 +29,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
     private var newVersion = false
     private var apkFile: File? = null
     lateinit var pop: BasePopupView
-    private lateinit var newVersionPop:NewVersionPop
+    private lateinit var newVersionPop: NewVersionPop
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         systemSettingViewModel.checkVersion()
@@ -45,8 +41,8 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
 
     }
 
-    fun doNext(){
-        if(!newVersion){
+    fun doNext() {
+        if (!newVersion) {
             if (CacheUtil.isLogin() && CacheUtil.getUser() != null) {
                 App.userInfo = CacheUtil.getUser()!!
                 startActivity(Intent(this@SplashActivity, MainActivity::class.java))
@@ -59,9 +55,9 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
 
     override fun createObserver() {
         super.createObserver()
-        systemSettingViewModel.appVersion.observe(this){
+        systemSettingViewModel.appVersion.observe(this) {
             if (it.version != AppUtils.getAppVersionName(this) && it.download_url.isNotEmpty()) {
-                newVersion=true
+                newVersion = true
                 showNewVersionPop()
             }
         }
@@ -78,12 +74,12 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
             }
 
             override fun onClickNotUpdate() {
-                newVersion=false
+                newVersion = false
                 doNext()
             }
 
 
-        },systemSettingViewModel.appVersion.value!! )
+        }, systemSettingViewModel.appVersion.value!!)
         pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(newVersionPop)
 
         pop.show()
@@ -109,7 +105,7 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(), O
             if (!packageManager.canRequestPackageInstalls()) {
                 this@SplashActivity.apkFile = apk
                 ApkUtils.startPackageInstallActivity(this@SplashActivity)
-            }else{
+            } else {
                 ApkUtils.installAPK(this@SplashActivity, apk)
             }
 

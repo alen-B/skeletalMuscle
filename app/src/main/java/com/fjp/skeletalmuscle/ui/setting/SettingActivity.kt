@@ -1,6 +1,5 @@
 package com.fjp.skeletalmuscle.ui.setting
 
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -13,13 +12,11 @@ import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.data.model.bean.Account
 import com.fjp.skeletalmuscle.databinding.ActivitySettingBinding
-import com.fjp.skeletalmuscle.ui.login.LoginActivity
 import com.fjp.skeletalmuscle.ui.setting.fragment.DeviceFragment
 import com.fjp.skeletalmuscle.ui.setting.fragment.ExportReportFragment
 import com.fjp.skeletalmuscle.ui.setting.fragment.SystemSettingFragment
 import com.fjp.skeletalmuscle.ui.setting.fragment.UserInfoFragment
 import com.fjp.skeletalmuscle.viewmodel.state.SettingViewModel
-import com.lxj.xpopup.XPopup
 
 class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>() {
     val PERMISSION_REQUEST_CODE = 201
@@ -47,9 +44,9 @@ class SettingActivity : BaseActivity<SettingViewModel, ActivitySettingBinding>()
             CacheUtil.setAccounts(accounts)
             CacheUtil.setUser(App.userInfo)
         }
-        eventViewModel.updateAvatarEvent.observeInActivity(this){
+        eventViewModel.updateAvatarEvent.observeInActivity(this) {
             App.userInfo.profile = it
-            mDatabind.avatarIv.load(it,builder = {
+            mDatabind.avatarIv.load(it, builder = {
                 allowHardware(false)
                 this.error(R.drawable.avatar_default)
                 this.placeholder(R.drawable.avatar_default)

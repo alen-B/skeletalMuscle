@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import coil.load
-import coil.request.ImageRequest
 import com.fjp.skeletalmuscle.R
 
 /**
@@ -84,7 +83,7 @@ class SettingItemLayout(context: Context, attrs: AttributeSet) : LinearLayoutCom
         switch.isChecked = isChecked
     }
 
-    fun setAvatarIv(context:Context,path: String) {
+    fun setAvatarIv(context: Context, path: String) {
         avatarIv.visibility = View.VISIBLE
         avatarIv.load(path, builder = {
             this.error(R.drawable.avatar_default)

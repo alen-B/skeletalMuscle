@@ -2,19 +2,11 @@ package com.fjp.skeletalmuscle.app.weight.pop
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.LinearLayoutCompat
 import com.fjp.skeletalmuscle.R
-import com.fjp.skeletalmuscle.app.util.DeviceType
-import com.fjp.skeletalmuscle.app.util.SMBleManager
-import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.ui.assessment.SportsAssessmentResultActivity
 import com.lxj.xpopup.impl.FullScreenPopupView
 import io.alterac.blurkit.BlurLayout
-import me.hgj.jetpackmvvm.base.appContext
 
 /**
  *Author:Mr'x
@@ -31,7 +23,7 @@ class AssessTipPop(context: Context) : FullScreenPopupView(context) {
         super.onCreate()
         findViewById<Button>(R.id.assessBtn).setOnClickListener {
             dismiss()
-            context.startActivity(Intent(context,SportsAssessmentResultActivity::class.java))
+            context.startActivity(Intent(context, SportsAssessmentResultActivity::class.java))
         }
         findViewById<Button>(R.id.disAssessBtn).setOnClickListener { dismiss() }
     }

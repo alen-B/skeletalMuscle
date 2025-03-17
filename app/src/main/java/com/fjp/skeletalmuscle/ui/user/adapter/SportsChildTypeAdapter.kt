@@ -5,9 +5,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.setAdapterAnimation
 import com.fjp.skeletalmuscle.app.util.SettingUtil
-import com.fjp.skeletalmuscle.data.model.bean.Sports
 import com.fjp.skeletalmuscle.data.model.bean.SportsChild
-import me.hgj.jetpackmvvm.base.appContext
 
 
 class SportsChildTypeAdapter(data: ArrayList<SportsChild>, var clickItem: (item: SportsChild) -> Unit) : BaseQuickAdapter<SportsChild, BaseViewHolder>(R.layout.item_sports_child_select, data) {

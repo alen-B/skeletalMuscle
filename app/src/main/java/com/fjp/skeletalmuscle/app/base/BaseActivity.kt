@@ -1,7 +1,6 @@
 package com.fjp.skeletalmuscle.app.base
 
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.databinding.ViewDataBinding
@@ -17,7 +16,6 @@ import com.fjp.skeletalmuscle.ui.setting.SettingActivity
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.activity.BaseVmDbActivity
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
-import me.jessyan.autosize.AutoSizeCompat
 
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDbActivity<VM, DB>() {
@@ -47,7 +45,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
 
     }
 
-    fun showReCompletedDialog(phone:String) {
+    fun showReCompletedDialog(phone: String) {
         val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("创建账号", "是否退出当前账号，创建新账号？", {
             finishAffinity()
             CacheUtil.setIsLogin(false)
@@ -59,6 +57,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
         pop.show()
 
     }
+
     /**
      * 创建liveData观察者
      */

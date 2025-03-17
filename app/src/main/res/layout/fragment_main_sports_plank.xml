@@ -110,8 +110,6 @@
             app:layout_constraintTop_toTopOf="@+id/sportTimeView" />
 
 
-
-
         <TextView
             android:id="@+id/minTv"
             android:layout_width="wrap_content"
@@ -163,8 +161,6 @@
             app:layout_constraintTop_toTopOf="@+id/heartRateView" />
 
 
-
-
         <TextView
             android:id="@+id/timesTv"
             android:layout_width="wrap_content"
@@ -214,7 +210,6 @@
             android:textSize="@dimen/text_size_5"
             app:layout_constraintStart_toStartOf="@+id/heatView"
             app:layout_constraintTop_toTopOf="@+id/heatView" />
-
 
 
         <TextView

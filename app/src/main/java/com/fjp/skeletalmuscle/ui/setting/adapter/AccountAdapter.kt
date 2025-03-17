@@ -1,8 +1,6 @@
 package com.fjp.skeletalmuscle.ui.setting.adapter
 
-import android.widget.ImageView
 import coil.load
-import coil.transform.CircleCropTransformation
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.fjp.skeletalmuscle.R
@@ -22,8 +20,8 @@ class AccountAdapter(data: MutableList<Account>, var clickItem: (item: Account, 
         if (holder.bindingAdapterPosition == 0) {
             holder.setIsRecyclable(false)
             holder.setBackgroundResource(R.id.avatarIv, R.drawable.account_add)
-        }else{
-            holder.getView<CircleImageView>(R.id.avatarIv).load(item.avatar, builder =  {
+        } else {
+            holder.getView<CircleImageView>(R.id.avatarIv).load(item.avatar, builder = {
                 error(R.drawable.avatar_default)
                 allowHardware(false)
                 placeholder(R.drawable.avatar_default)

@@ -50,9 +50,9 @@ fun <T> BaseVmActivity<*>.parseState(resultState: ResultState<T>, onSuccess: (T)
 
         is ResultState.Error -> {
             dismissLoading()
-            if(!NetworkUtil.isNetworkAvailable(appContext)){
+            if (!NetworkUtil.isNetworkAvailable(appContext)) {
                 Toast.makeText(this, "网络连接异常，请检测网络是否正常！", Toast.LENGTH_LONG).show()
-            }else{
+            } else {
 
                 onError?.run { this(resultState.error) }
             }

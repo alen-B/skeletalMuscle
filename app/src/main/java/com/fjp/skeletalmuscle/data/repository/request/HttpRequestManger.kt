@@ -22,7 +22,6 @@ import com.fjp.skeletalmuscle.data.model.bean.result.SportTrendLiftLegSportTimeR
 import com.fjp.skeletalmuscle.data.model.bean.result.TodayDataResult
 import com.fjp.skeletalmuscle.data.model.bean.result.UpdateImageResult
 import okhttp3.MultipartBody
-import retrofit2.http.Query
 
 /**
  * 作者　: hegaojian
@@ -87,6 +86,7 @@ class HttpRequestManger {
     suspend fun getAssessment(year: String): ApiResponse<ArrayList<AssessmentHistoryData>> {
         return apiService.getAssessment(year)
     }
+
     /**
      * 获取最后一次测评结果
      *
@@ -123,8 +123,8 @@ class HttpRequestManger {
      * 今日运动所有数据获取
      *time="2024-11-01"
      */
-    suspend fun getTodayData(time: String,endTime:String): ApiResponse<TodayDataResult> {
-        return apiService.getTodayData(time,endTime)
+    suspend fun getTodayData(time: String, endTime: String): ApiResponse<TodayDataResult> {
+        return apiService.getTodayData(time, endTime)
     }
 
     /**
@@ -225,8 +225,8 @@ class HttpRequestManger {
      *平板支撑-心率趋势图
      *
      */
-    suspend fun getExportData(startTime: Long,endTime: Long): ApiResponse<ExportData> {
-        return apiService.getExportData(startTime,endTime)
+    suspend fun getExportData(startTime: Long, endTime: Long): ApiResponse<ExportData> {
+        return apiService.getExportData(startTime, endTime)
     }
 
 
@@ -242,7 +242,7 @@ class HttpRequestManger {
      *版本检测
      *
      */
-    suspend fun checkVersion():AppVersion {
+    suspend fun checkVersion(): AppVersion {
         return apiService.checkVersion()
     }
 

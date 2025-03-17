@@ -60,12 +60,12 @@ object SMBleManager {
     init {
         BleManager.getInstance().init(App.instance)
         BleManager.getInstance().allConnectedDevice.forEach {
-            if(it.name == DeviceType.GTS.value){
-                connectedDevices.put(DeviceType.GTS,it)
-            }else if(it.name == DeviceType.LEFT_LEG.value){
-                connectedDevices.put(DeviceType.LEFT_LEG,it)
-            }else if(it.name == DeviceType.RIGHT_LEG.value){
-                connectedDevices.put(DeviceType.RIGHT_LEG,it)
+            if (it.name == DeviceType.GTS.value) {
+                connectedDevices.put(DeviceType.GTS, it)
+            } else if (it.name == DeviceType.LEFT_LEG.value) {
+                connectedDevices.put(DeviceType.LEFT_LEG, it)
+            } else if (it.name == DeviceType.RIGHT_LEG.value) {
+                connectedDevices.put(DeviceType.RIGHT_LEG, it)
             }
         }
         BleManager.getInstance().enableLog(BuildConfig.DEBUG).setReConnectCount(3, 5000).setSplitWriteNum(20).setConnectOverTime(15000).operateTimeout = 15000

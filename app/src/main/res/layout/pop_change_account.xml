@@ -88,6 +88,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_layout" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,6 +99,7 @@
             app:layout_constraintTop_toTopOf="@+id/recyclerView"
             app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
             app:layout_constraintStart_toStartOf="parent" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

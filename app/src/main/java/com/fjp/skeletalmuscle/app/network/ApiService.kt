@@ -49,6 +49,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("login")
     suspend fun login(@Field("mobile") mobile: String, @Field("code") code: String): ApiResponse<UserInfo>
+
     /**
      * 获取个人信息
      */
@@ -108,7 +109,7 @@ interface ApiService {
      *time="2024-11-01"
      */
     @GET("sport/get_today_data")
-    suspend fun getTodayData(@Query("time") time: String,@Query("end_time") endTime: String): ApiResponse<TodayDataResult>
+    suspend fun getTodayData(@Query("time") time: String, @Query("end_time") endTime: String): ApiResponse<TodayDataResult>
 
     /**
      * 高抬腿-卡路里趋势图
@@ -200,18 +201,20 @@ interface ApiService {
      */
     @GET("sport_trend/calendar")
     suspend fun calendar(@Query("month") month: String): ApiResponse<ArrayList<CalendarResult>>
+
     /**
      *获取最后一次的测评结果
      *
      */
     @GET("assess/get_latest_test")
     suspend fun getLatestTest(): ApiResponse<AssessmentHistoryData?>
+
     /**
      *数据导出
      *
      */
     @GET("/sport/get_data")
-    suspend fun getExportData(@Query("start_time") startTime: Long,@Query("end_time") endTime: Long): ApiResponse<ExportData>
+    suspend fun getExportData(@Query("start_time") startTime: Long, @Query("end_time") endTime: Long): ApiResponse<ExportData>
 
 
     @Multipart

@@ -83,6 +83,7 @@
             android:layout_marginTop="33dp"
             app:layout_constraintStart_toStartOf="@+id/rtView"
             app:layout_constraintTop_toBottomOf="@+id/titleTv" />
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="0dp"
@@ -97,7 +98,7 @@
             android:progressDrawable="@drawable/me_bg_vip_progress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/rtView"
-            android:layout_height="15dp"/>
+            android:layout_height="15dp" />
 
         <Button
             style="@style/SMButton"

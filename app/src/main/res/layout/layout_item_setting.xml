@@ -23,6 +23,7 @@
         android:visibility="gone"
         android:layout_height="50dp"
         tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/valueTv"
         android:layout_width="wrap_content"

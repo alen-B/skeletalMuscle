@@ -36,13 +36,13 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = Proxy()
-        if (App.sportsType == SportsType.HIGH_KNEE ) {
+        if (App.sportsType == SportsType.HIGH_KNEE) {
             initHighKneeView()
         } else if (App.sportsType == SportsType.DUMBBELL) {
             initDumbbellView()
         } else if (App.sportsType == SportsType.HAND_GRIPS) {
             initHandGripsView()
-        }else if(App.sportsType == SportsType.ASSESSMENT){
+        } else if (App.sportsType == SportsType.ASSESSMENT) {
             mDatabind.step2Tv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.guide1_step1_1), null, null, null)
             initHighKnee()
         }
@@ -50,28 +50,29 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
 
     override fun onResume() {
         super.onResume()
-        if (App.sportsType == SportsType.HIGH_KNEE ) {
+        if (App.sportsType == SportsType.HIGH_KNEE) {
             initHighKnee()
         } else if (App.sportsType == SportsType.DUMBBELL) {
             initDumbbell()
         } else if (App.sportsType == SportsType.HAND_GRIPS) {
             initHandGrips()
-        }else if(App.sportsType == SportsType.ASSESSMENT){
+        } else if (App.sportsType == SportsType.ASSESSMENT) {
             mDatabind.step2Tv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.guide1_step1_1), null, null, null)
             initHighKnee()
         }
 
     }
-    var listener:SMBleManager.DeviceStatusListener? = object : SMBleManager.DeviceStatusListener {
+
+    var listener: SMBleManager.DeviceStatusListener? = object : SMBleManager.DeviceStatusListener {
         override fun disConnected() {
             appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
-            if(context!=null){
+            if (context != null) {
                 mDatabind.reconnectBtn.visibility = View.VISIBLE
             }
         }
 
         override fun connected() {
-            context?.let{
+            context?.let {
                 mDatabind.reconnectBtn.visibility = View.GONE
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))
                 showConnectedView()
@@ -81,7 +82,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
 
     }
 
-    private fun initHighKneeView(){
+    private fun initHighKneeView() {
         mDatabind.iconIv.setBackgroundResource(R.drawable.high_knee_guide5_icon)
         val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         if (leftLegDevice != null) {
@@ -95,6 +96,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
         }
     }
+
     private fun initHighKnee() {
 
         val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
@@ -122,7 +124,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
     }
 
 
-    private fun initHandGripsView(){
+    private fun initHandGripsView() {
         mViewModel.title.set(getString(R.string.hand_grips_connect_left_device_title))
         mDatabind.step2Tv.text = getString(R.string.hand_grips_connect_left_device_connect)
         mDatabind.step21Tv.text = getString(R.string.hand_grips_connect_left_device_step1)
@@ -188,7 +190,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         mBleScanHelper.startScanBle(1)
     }
 
-    fun initDumbbellView(){
+    fun initDumbbellView() {
         mViewModel.title.set(getString(R.string.dumbbell_connect_left_device_title))
         mDatabind.step2Tv.text = getString(R.string.dumbbell_connect_left_device_connected_title)
         mDatabind.step21Tv.text = getString(R.string.dumbbell_connect_left_device_step1)
@@ -245,8 +247,10 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             SportsType.HAND_GRIPS -> {
                 mViewModel.title.set(getString(R.string.hand_grips_connect_left_device_connected_title))
             }
+
             SportsType.PLANK -> {
             }
+
             SportsType.ASSESSMENT -> {
                 mViewModel.title.set(getString(R.string.high_knee_guide_step5_title))
             }

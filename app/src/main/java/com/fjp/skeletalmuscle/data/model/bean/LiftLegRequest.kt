@@ -5,8 +5,7 @@ package com.fjp.skeletalmuscle.data.model.bean
  *Time:2024/12/1
  *Description:
  */
-data class LiftLegRequest(
-    var calorie: MutableList<Calorie>,//消耗的卡路里
+data class LiftLegRequest(var calorie: MutableList<Calorie>,//消耗的卡路里
     var end_time: Long,//结束时间
     var heart_rate: MutableList<HeartRate>,//记录心率
     var record: MutableList<Record>,//记录高抬腿数据
@@ -18,5 +17,4 @@ data class LiftLegRequest(
     var extreme_breakthrough: Int,//极限突破
     var heart_lung_enhancement: Int,//心肺提升
     var sport_time: Int,//运动时长
-    var plan_sport_time:Int
-)
+    var plan_sport_time: Int)

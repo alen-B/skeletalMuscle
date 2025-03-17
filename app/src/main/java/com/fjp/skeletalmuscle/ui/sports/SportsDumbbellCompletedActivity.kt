@@ -1,7 +1,6 @@
 package com.fjp.skeletalmuscle.ui.sports
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -16,14 +15,9 @@ import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.CircleImageView
 import com.fjp.skeletalmuscle.app.weight.pop.SharePop
 import com.fjp.skeletalmuscle.data.model.bean.result.SaveDumbbellResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SavePlankResult
-import com.fjp.skeletalmuscle.data.model.bean.result.SportDumbbell
-import com.fjp.skeletalmuscle.data.model.bean.result.SportFlatSupport
 import com.fjp.skeletalmuscle.databinding.ActivitySportsDumbbellCompletedBinding
-import com.fjp.skeletalmuscle.databinding.ActivitySportsPlankCompletedBinding
 import com.fjp.skeletalmuscle.viewmodel.state.ShareViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.SportsDumbbellCompletedViewModel
-import com.fjp.skeletalmuscle.viewmodel.state.SportsPlankCompletedViewModel
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -41,9 +35,9 @@ import com.github.mikephil.charting.utils.Utils
 import com.lxj.xpopup.XPopup
 import me.hgj.jetpackmvvm.base.appContext
 
-class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedViewModel,ActivitySportsDumbbellCompletedBinding>() {
+class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedViewModel, ActivitySportsDumbbellCompletedBinding>() {
     lateinit var dumbbellResult: SaveDumbbellResult
-    val shareViewmodel  : ShareViewModel by viewModels()
+    val shareViewmodel: ShareViewModel by viewModels()
     override fun initView(savedInstanceState: Bundle?) {
         dumbbellResult = intent.getParcelableExtra(Constants.INTENT_COMPLETED)!!
         mDatabind.viewModel = mViewModel
@@ -62,6 +56,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         initHeartRateLineChart()
         initLegAngleLineChart()
     }
+
     private fun initCalorieBarChart() {
         val barChart = mDatabind.calorieBarChat
         barChart.setTouchEnabled(false)
@@ -69,7 +64,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         barChart.setScaleEnabled(false)
         barChart.setDrawBorders(false)
         barChart.setDrawGridBackground(false)
-        barChart.extraBottomOffset=5f
+        barChart.extraBottomOffset = 5f
         val description = Description()
         description.text = ""
         barChart.description = description
@@ -79,14 +74,14 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount= Math.min(2,dumbbellResult.calorie_list.size)
+        xAxis.textSize = 20f
+        xAxis.labelCount = Math.min(2, dumbbellResult.calorie_list.size)
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index <dumbbellResult.calorie_list.size){
-                    DateTimeUtil.completedTimeFromat(dumbbellResult.calorie_list[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
-                }else{
+                return if (index >= 0 && index < dumbbellResult.calorie_list.size) {
+                    DateTimeUtil.completedTimeFromat(dumbbellResult.calorie_list[value.toInt()].record_time, DateTimeUtil.DATE_PATTERN_SS)
+                } else {
                     ""
                 }
             }
@@ -135,7 +130,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=5f
+        lineChart.extraBottomOffset = 5f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -145,14 +140,14 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         xAxis.axisLineColor = ContextCompat.getColor(appContext, R.color.color_331c1c1c)
         xAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize=20f
-        xAxis.labelCount=2
+        xAxis.textSize = 20f
+        xAxis.labelCount = 2
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
-                return if(index >=0 && index <dumbbellResult.heart_rate.size){
-                    DateTimeUtil.completedTimeFromat(dumbbellResult.heart_rate[value.toInt()].record_time,DateTimeUtil.DATE_PATTERN_SS)
-                }else{
+                return if (index >= 0 && index < dumbbellResult.heart_rate.size) {
+                    DateTimeUtil.completedTimeFromat(dumbbellResult.heart_rate[value.toInt()].record_time, DateTimeUtil.DATE_PATTERN_SS)
+                } else {
                     ""
                 }
             }
@@ -184,7 +179,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         lineDataSet.setDrawIcons(false)
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
-        lineDataSet.circleRadius=4f
+        lineDataSet.circleRadius = 4f
         lineDataSet.setCircleColor(resources.getColor(R.color.color_ff574c))
         lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ff574c)
         lineDataSet.setDrawCircleHole(false)
@@ -217,6 +212,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         lineChart.setNoDataText("暂无数据")
         lineChart.animateY(0)
     }
+
     private fun initLegAngleLineChart() {
         val lineChart = mDatabind.legAngleLineChart
         lineChart.legend.isEnabled = false
@@ -225,7 +221,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         lineChart.setScaleEnabled(false)
         lineChart.setDrawBorders(false)
         lineChart.setDrawGridBackground(false)
-        lineChart.extraBottomOffset=5f
+        lineChart.extraBottomOffset = 5f
         val description = Description()
         description.text = ""
         lineChart.description = description
@@ -252,9 +248,9 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         rightAxis.isEnabled = false
 
         val values2 = ArrayList<Entry>()
-        val expandAngle  = dumbbellResult.record.filter { it.type == 2 }
+        val expandAngle = dumbbellResult.record.filter { it.type == 2 }
         for (i in expandAngle.indices) {
-            values2.add(BarEntry(i.toFloat(),expandAngle[i].degree.toFloat()))
+            values2.add(BarEntry(i.toFloat(), expandAngle[i].degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet2 = LineDataSet(values2, "千卡")
@@ -303,7 +299,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
                 this.error(R.drawable.avatar_default)
                 this.placeholder(R.drawable.avatar_default)
             })
-            shareViewmodel.share(this@SportsDumbbellCompletedActivity,shareTitleView,mDatabind.shareCl,shareTBottomView)
+            shareViewmodel.share(this@SportsDumbbellCompletedActivity, shareTitleView, mDatabind.shareCl, shareTBottomView)
         }
 
         fun clickCompleted() {

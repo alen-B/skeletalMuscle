@@ -23,17 +23,17 @@ class SelectedWaistlineAndWeightActivity : BaseActivity<SelectedWaistlineAndWeig
         initWaistLineData()
         mViewModel.title.set(getString(R.string.selected_waistline_weight_title))
 
-        val weightAdapter = WaistlineAndWeightAdapter(mViewModel.weightDataArr as ArrayList<Int>,true, currWeightIndex, clickItem = { item, position ->
+        val weightAdapter = WaistlineAndWeightAdapter(mViewModel.weightDataArr as ArrayList<Int>, true, currWeightIndex, clickItem = { item, position ->
             currWeightIndex = position
         })
         mDatabind.weightRView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), weightAdapter)
-        mDatabind.weightRView.smoothScrollToPosition(currWeightIndex+3)
-        val waistlineAdapter = WaistlineAndWeightAdapter(mViewModel.waistlineDataArr as ArrayList<Int>,false, currWaistLineIndex, clickItem = { item, position ->
+        mDatabind.weightRView.smoothScrollToPosition(currWeightIndex + 3)
+        val waistlineAdapter = WaistlineAndWeightAdapter(mViewModel.waistlineDataArr as ArrayList<Int>, false, currWaistLineIndex, clickItem = { item, position ->
 //            currIndex = position
             currWaistLineIndex = position
         })
         mDatabind.waistlineRView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), waistlineAdapter)
-        mDatabind.waistlineRView.smoothScrollToPosition(currWaistLineIndex+3)
+        mDatabind.waistlineRView.smoothScrollToPosition(currWaistLineIndex + 3)
     }
 
     private fun initWeightData() {
@@ -63,9 +63,9 @@ class SelectedWaistlineAndWeightActivity : BaseActivity<SelectedWaistlineAndWeig
         }
 
         fun clickComplete() {
-            val intent = Intent(this@SelectedWaistlineAndWeightActivity,SportsAssessmentActivity::class.java)
-            intent.putExtra(Constants.INTENT_KEY_WEIGHT,mViewModel.weightDataArr[currWeightIndex])
-            intent.putExtra(Constants.INTENT_KEY_WAISTLINE,mViewModel.waistlineDataArr[currWaistLineIndex])
+            val intent = Intent(this@SelectedWaistlineAndWeightActivity, SportsAssessmentActivity::class.java)
+            intent.putExtra(Constants.INTENT_KEY_WEIGHT, mViewModel.weightDataArr[currWeightIndex])
+            intent.putExtra(Constants.INTENT_KEY_WAISTLINE, mViewModel.waistlineDataArr[currWaistLineIndex])
             startActivity(intent)
         }
     }

@@ -5,4 +5,4 @@ package com.fjp.skeletalmuscle.data.model.bean.result
  *Time:2024/12/12
  *Description:
  */
-class CalendarResult(  var score: String,var date: String)
+class CalendarResult(var score: String, var date: String)

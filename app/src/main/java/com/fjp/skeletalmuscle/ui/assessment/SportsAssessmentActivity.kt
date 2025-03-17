@@ -29,12 +29,10 @@ import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
-import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.app.weight.pop.PlankDeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.AssessmentType
 import com.fjp.skeletalmuscle.data.model.bean.BleDevice
 import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
-import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentBinding
 import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentViewModel
 import com.lxj.xpopup.XPopup
@@ -205,7 +203,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
 
     private fun updateTimerTextView() {
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
-        val sportsSecond = (elapsedTime /1000 % 60).toInt()
+        val sportsSecond = (elapsedTime / 1000 % 60).toInt()
         val timeString = String.format("%02d:%02d", sportsMinutes, sportsSecond)
         mViewModel.curTime.set(timeString)
         if (curType != AssessmentType.Grip) {
@@ -223,7 +221,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
                 }
             }
         }
-        if (totalTime - seconds == 0&& curType !=AssessmentType.Grip) {
+        if (totalTime - seconds == 0 && curType != AssessmentType.Grip) {
             completed()
         }
     }
@@ -350,7 +348,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     }
 
     fun showOffLinePop() {
-        val deviceOffLinePop = PlankDeviceOffLinePop(this@SportsAssessmentActivity,  object : PlankDeviceOffLinePop.Listener {
+        val deviceOffLinePop = PlankDeviceOffLinePop(this@SportsAssessmentActivity, object : PlankDeviceOffLinePop.Listener {
 
 
             override fun reconnect(type: DeviceType) {
