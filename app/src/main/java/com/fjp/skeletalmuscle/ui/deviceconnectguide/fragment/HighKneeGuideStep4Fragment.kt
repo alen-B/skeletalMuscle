@@ -34,9 +34,18 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        println("===============4")
         mDatabind.viewModel = mViewModel
         mDatabind.click = Proxy()
+        if (App.sportsType == SportsType.HIGH_KNEE ) {
+            initHighKneeView()
+        } else if (App.sportsType == SportsType.DUMBBELL) {
+            initDumbbellView()
+        } else if (App.sportsType == SportsType.HAND_GRIPS) {
+            initHandGripsView()
+        }else if(App.sportsType == SportsType.ASSESSMENT){
+            mDatabind.step2Tv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.guide1_step1_1), null, null, null)
+            initHighKnee()
+        }
     }
 
     override fun onResume() {
@@ -71,8 +80,8 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         }
 
     }
-    private fun initHighKnee() {
 
+    private fun initHighKneeView(){
         mDatabind.iconIv.setBackgroundResource(R.drawable.high_knee_guide5_icon)
         val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         if (leftLegDevice != null) {
@@ -84,6 +93,12 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             mViewModel.title.set(getString(R.string.high_knee_guide_step4_title))
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
+        }
+    }
+    private fun initHighKnee() {
+
+        val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
+        if (leftLegDevice == null) {
             SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, listener)
         }
     }
@@ -106,8 +121,8 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private fun initHandGrips() {
+
+    private fun initHandGripsView(){
         mViewModel.title.set(getString(R.string.hand_grips_connect_left_device_title))
         mDatabind.step2Tv.text = getString(R.string.hand_grips_connect_left_device_connect)
         mDatabind.step21Tv.text = getString(R.string.hand_grips_connect_left_device_step1)
@@ -121,6 +136,13 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             mViewModel.title.set(getString(R.string.hand_grips_connect_left_device_title))
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun initHandGrips() {
+        val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_HAND_GRIPS]
+        if (leftLegDevice == null) {
             initBluetooth()
         }
     }
@@ -166,7 +188,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         mBleScanHelper.startScanBle(1)
     }
 
-    private fun initDumbbell() {
+    fun initDumbbellView(){
         mViewModel.title.set(getString(R.string.dumbbell_connect_left_device_title))
         mDatabind.step2Tv.text = getString(R.string.dumbbell_connect_left_device_connected_title)
         mDatabind.step21Tv.text = getString(R.string.dumbbell_connect_left_device_step1)
@@ -181,6 +203,12 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             mViewModel.title.set(getString(R.string.dumbbell_connect_left_device_title))
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(false)
+        }
+    }
+
+    private fun initDumbbell() {
+        val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
+        if (leftLegDevice == null) {
             connectDevice()
         }
     }
