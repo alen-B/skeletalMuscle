@@ -230,7 +230,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         }
     }
 
-    fun showOffLinePop() {
+    private fun showOffLinePop() {
         val deviceOffLinePop = DeviceOffLinePop(this@DumbbellMainActivity, SportsType.DUMBBELL, object : DeviceOffLinePop.Listener {
             override fun reconnect(type: DeviceType) {
                 if (type == DeviceType.GTS) {

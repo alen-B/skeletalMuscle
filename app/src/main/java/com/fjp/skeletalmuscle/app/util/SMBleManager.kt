@@ -149,6 +149,10 @@ object SMBleManager {
                             it.leftHandGripsConnected()
                         } else if (deviceType == DeviceType.RIGHT_HAND_GRIPS) {
                             it.rightHandGripsConnected()
+                        }else if(deviceType == DeviceType.LEFT_DUMBBELL){
+                            it.leftLegDisConnected()
+                        }else if(deviceType == DeviceType.RIGHT_DUMBBELL){
+                            it.rightLegDisConnected()
                         }
 
                     }

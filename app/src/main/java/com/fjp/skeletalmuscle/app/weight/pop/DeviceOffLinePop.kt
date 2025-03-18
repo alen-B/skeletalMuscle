@@ -111,6 +111,36 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                 connectBtn.text = appContext.getString(R.string.device_off_line_reconnect)
                 rightKneeIv.setBackgroundResource(R.drawable.device_disconnect)
             }
+        }else if(sportsType == SportsType.DUMBBELL){
+            val GTSDevice = SMBleManager.connectedDevices[DeviceType.GTS]
+            if (GTSDevice == null) {
+                disConnectedAccount++
+                braceletLL.setBackgroundResource(R.drawable.bg_device_offline)
+                braceletTv.text = context.getString(R.string.device_off_line_bracelet)
+                connectBtn.text = appContext.getString(R.string.device_off_line_reconnect)
+                braceletIv.setBackgroundResource(R.drawable.device_disconnect)
+                leftIv.setBackgroundResource(R.drawable.off_line)
+
+            }
+            val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
+            if (leftLegDevice == null) {
+                disConnectedAccount++
+                leftKneeLL.setBackgroundResource(R.drawable.bg_device_offline)
+                leftKneeTv.text = context.getString(R.string.device_off_line_left_dumbbell)
+                connectBtn.text = appContext.getString(R.string.device_off_line_reconnect)
+                leftIv.setBackgroundResource(R.drawable.off_line)
+                leftKneeIv.setBackgroundResource(R.drawable.device_disconnect)
+            }
+
+            val rightLegDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL]
+            if (rightLegDevice == null) {
+                disConnectedAccount++
+                rightKneeLL.setBackgroundResource(R.drawable.bg_device_offline)
+                leftIv.setBackgroundResource(R.drawable.off_line)
+                rightKneeTv.text = context.getString(R.string.device_off_line_right_dumbbell)
+                connectBtn.text = appContext.getString(R.string.device_off_line_reconnect)
+                rightKneeIv.setBackgroundResource(R.drawable.device_disconnect)
+            }
         }
 
 
@@ -212,8 +242,73 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                     dismiss()
                 }
             } else if (sportsType == SportsType.DUMBBELL) {
-                listener.completed()
-                dismiss()
+                if (gts == null) {
+                    SMBleManager.scanDevices(DeviceType.GTS.value, DeviceType.GTS, object : SMBleManager.DeviceStatusListener {
+                        override fun disConnected() {
+                        }
+
+                        override fun connected() {
+                            disConnectedAccount--
+                            braceletLL.setBackgroundResource(R.drawable.bg_device_connected)
+                            braceletTv.text = context.getString(R.string.device_off_line_bracelet_connected)
+                            braceletIv.setBackgroundResource(R.drawable.device_connected)
+
+                            if (disConnectedAccount == 0) {
+                                titleTv.text = appContext.getString(R.string.device_off_line_connected)
+                                leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
+                                connectBtn.text = appContext.getString(R.string.device_off_line_complete)
+                                listener.reconnect(DeviceType.GTS)
+                            }
+                        }
+
+                    })
+                }
+                val leftDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
+                val rightDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL]
+                if (leftDevice == null) {
+                    SMBleManager.scanDevices(DeviceType.LEFT_DUMBBELL.value, DeviceType.LEFT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
+                        override fun disConnected() {
+                        }
+
+                        override fun connected() {
+                            disConnectedAccount--
+                            leftKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
+                            leftKneeTv.text = context.getString(R.string.device_off_line_left_dumbbell_connected)
+                            leftKneeIv.setBackgroundResource(R.drawable.device_connected)
+                            if (disConnectedAccount == 0) {
+                                titleTv.text = appContext.getString(R.string.device_off_line_connected)
+                                leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
+                                connectBtn.text = appContext.getString(R.string.device_off_line_complete)
+                                listener.reconnect(DeviceType.LEFT_DUMBBELL)
+                            }
+                        }
+
+                    })
+                }
+                if (rightDevice == null) {
+                    SMBleManager.scanDevices(DeviceType.RIGHT_DUMBBELL.value, DeviceType.RIGHT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
+                        override fun disConnected() {
+                        }
+
+                        override fun connected() {
+                            disConnectedAccount--
+                            rightKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
+                            rightKneeTv.text = context.getString(R.string.device_off_line_right_dumbbell_connected)
+                            rightKneeIv.setBackgroundResource(R.drawable.device_connected)
+                            if (disConnectedAccount == 0) {
+                                titleTv.text = appContext.getString(R.string.device_off_line_connected)
+                                leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
+                                connectBtn.text = appContext.getString(R.string.device_off_line_complete)
+                                listener.reconnect(DeviceType.RIGHT_DUMBBELL)
+                            }
+                        }
+
+                    })
+                }
+                if (leftDevice != null && rightDevice!= null && gts!= null) {
+                    listener.completed()
+                    dismiss()
+                }
             } else if (sportsType == SportsType.ASSESSMENT) {
                 if (leftLeg == null) {
                     SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
@@ -223,7 +318,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun connected() {
                             disConnectedAccount--
                             leftKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
-                            leftKneeTv.text = context.getString(R.string.device_off_line_bracelet_connected)
+                            leftKneeTv.text = context.getString(R.string.device_off_line_left_knee_connected)
                             leftKneeIv.setBackgroundResource(R.drawable.device_connected)
                             if (disConnectedAccount == 0) {
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
@@ -243,7 +338,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun connected() {
                             disConnectedAccount--
                             rightKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
-                            rightKneeTv.text = context.getString(R.string.device_off_line_bracelet_connected)
+                            rightKneeTv.text = context.getString(R.string.device_off_line_right_knee_connected)
                             rightKneeIv.setBackgroundResource(R.drawable.device_connected)
                             if (disConnectedAccount == 0) {
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
