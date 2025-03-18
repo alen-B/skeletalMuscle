@@ -204,7 +204,7 @@
     <string name="dumbbell_connect_left_device_step2">●\u0020 手握左手哑铃</string>
     <string name="dumbbell_connect_left_device_step3">●\u0020 检查传感器</string>
 
-    <string name="dumbbell_connect_right_device_title">请将右手哑铃握在左手上</string>
+    <string name="dumbbell_connect_right_device_title">请将右手哑铃握在右手上</string>
     <string name="dumbbell_connect_right_device_connect">右手哑铃已连接成功</string>
     <string name="dumbbell_connect_right_device_connected_title">连接右手哑铃</string>
     <string name="dumbbell_connect_right_device_step1">●\u0020 取出右手哑铃</string>
