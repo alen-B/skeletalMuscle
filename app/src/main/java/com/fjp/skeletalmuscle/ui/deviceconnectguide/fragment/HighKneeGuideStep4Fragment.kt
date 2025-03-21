@@ -220,7 +220,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         mDatabind.step22Tv.text = getString(R.string.dumbbell_connect_left_device_step2)
         mDatabind.step23Tv.text = getString(R.string.dumbbell_connect_left_device_step3)
         mDatabind.iconIv.setBackgroundResource(R.drawable.dumbbell)
-        val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
+        val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         if (leftLegDevice != null) {
             showConnectedView()
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
@@ -239,7 +239,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
         mDatabind.step22Tv.text = getString(R.string.dumbbell_connect_left_device_step2)
         mDatabind.step23Tv.text = getString(R.string.dumbbell_connect_left_device_step3)
         mDatabind.iconIv.setBackgroundResource(R.drawable.dumbbell)
-        val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
+        val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
         if (leftLegDevice != null) {
             showConnectedView()
             (activity as DeviceConnectGuideActivity).setNextButtonEnable(true)
@@ -252,7 +252,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
     }
 
     fun connectDevice() {
-        SMBleManager.scanDevices(DeviceType.LEFT_DUMBBELL.value, DeviceType.LEFT_DUMBBELL, listener)
+        SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, listener)
     }
 
     fun showConnectedView() {

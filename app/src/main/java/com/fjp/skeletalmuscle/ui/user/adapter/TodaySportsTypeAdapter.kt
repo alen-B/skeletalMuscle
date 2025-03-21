@@ -81,7 +81,7 @@ class TodaySportsTypeAdapter(data: ArrayList<TodaySportsType>, var defaultIndex:
     }
 
     private fun rotateAndSwitchViews(iv: View, cl: View) {
-        AnimUtil.flipAnimatorYViewShow(iv, cl, 500)
+        AnimUtil.flipAnimatorYViewShow(iv, cl, 300)
     }
 }
 

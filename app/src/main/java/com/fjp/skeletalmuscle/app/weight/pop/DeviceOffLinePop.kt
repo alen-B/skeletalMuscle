@@ -122,7 +122,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                 leftIv.setBackgroundResource(R.drawable.off_line)
 
             }
-            val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
+            val leftLegDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
             if (leftLegDevice == null) {
                 disConnectedAccount++
                 leftKneeLL.setBackgroundResource(R.drawable.bg_device_offline)
@@ -132,7 +132,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                 leftKneeIv.setBackgroundResource(R.drawable.device_disconnect)
             }
 
-            val rightLegDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL]
+            val rightLegDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
             if (rightLegDevice == null) {
                 disConnectedAccount++
                 rightKneeLL.setBackgroundResource(R.drawable.bg_device_offline)
@@ -263,10 +263,10 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
 
                     })
                 }
-                val leftDevice = SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL]
-                val rightDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL]
+                val leftDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
+                val rightDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
                 if (leftDevice == null) {
-                    SMBleManager.scanDevices(DeviceType.LEFT_DUMBBELL.value, DeviceType.LEFT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
+                    SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
                         override fun disConnected() {
                         }
 
@@ -279,14 +279,14 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.LEFT_DUMBBELL)
+                                listener.reconnect(DeviceType.LEFT_LEG)
                             }
                         }
 
                     })
                 }
                 if (rightDevice == null) {
-                    SMBleManager.scanDevices(DeviceType.RIGHT_DUMBBELL.value, DeviceType.RIGHT_DUMBBELL, object : SMBleManager.DeviceStatusListener {
+                    SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
                         override fun disConnected() {
                         }
 
@@ -299,7 +299,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.RIGHT_DUMBBELL)
+                                listener.reconnect(DeviceType.RIGHT_LEG)
                             }
                         }
 

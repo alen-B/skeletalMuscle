@@ -155,8 +155,6 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                     mDatabind.countdownText.text = (Math.ceil(millis / 1000.0).toInt() - 1).toString()
                 }
                 animateText()
-
-
             }
 
             override fun onFinish() {
@@ -338,9 +336,10 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         }
 
         val pitch = DeviceDataParse.parseData2Pitch(data)
+        println("======left pitch:${pitch}")
 //        val roll = DeviceDataParse.parseData2Roll(data)
 //        val yaw = DeviceDataParse.parseData2Yaw(data)
-        if (pitch > 180) {
+        if (pitch < 0) {
             return
         }
         if (pitch > 90) {
@@ -415,10 +414,12 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         if (!isRunning) {
             return
         }
-        val pitch = DeviceDataParse.parseData2Pitch(data)
+        var pitch = DeviceDataParse.parseData2Pitch(data)
+//        println("======rightpitch:${pitch}")
 //        val roll = DeviceDataParse.parseData2Roll(data)
 //        val yaw = DeviceDataParse.parseData2Yaw(data)
-        if (pitch > 180) {
+
+        if (pitch < 0) {
             return
         }
         if (pitch > 90) {
@@ -728,7 +729,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         val level = levels - ceil((angle / anglePerLevel).toDouble()).toInt() // 反转等级
         // 确保返回的level不会超出triangleViews的大小
         val minLevel = Math.min(level, 5)
-        if (minLevel > 0) {
+        if (minLevel in 1..4) {
             return minLevel
         }
         return 0

@@ -39,7 +39,8 @@ object ExerciseDetector {
     //上举运动只记录一个哑铃的，两个哑铃都记录次数显示会不对
     @Synchronized
     fun processData(leftPitch: Double, leftYaw: Double, leftRoll: Double, leftAccelX: Double, leftAccelY: Double, leftAccelZ: Double, rightPitch: Double, rightYaw: Double, rightRoll: Double, rightAccelX: Double, rightAccelY: Double, rightAccelZ: Double, isLeftData: Boolean) {
-        if (leftPitch < 120 && leftPitch > 80) {
+        println("=======leftPitch:${leftPitch}")
+        if (leftPitch < 40 ) {
             if (isLeftData) {
                 // 检测上举运动
                 if (leftAccelZ > ACCELERATION_THRESHOLD_Z && !isUpInProgress) {

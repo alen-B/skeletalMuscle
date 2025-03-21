@@ -82,7 +82,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 mDatabind.sportsWeightCl.visibility = View.VISIBLE
                 mDatabind.sportsUpliftCl.visibility = View.VISIBLE
                 mDatabind.sportsExpandChestCl.visibility = View.VISIBLE
-                if (SMBleManager.connectedDevices[DeviceType.GTS] != null && SMBleManager.connectedDevices[DeviceType.LEFT_DUMBBELL] != null && SMBleManager.connectedDevices[DeviceType.RIGHT_DUMBBELL] != null) {
+                if (SMBleManager.connectedDevices[DeviceType.GTS] != null && SMBleManager.connectedDevices[DeviceType.LEFT_LEG] != null && SMBleManager.connectedDevices[DeviceType.RIGHT_LEG] != null) {
                     mDatabind.shareBtn.isEnabled = true
                     mDatabind.deviceLinkTv.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.exercise_device_linked), null, null, null)
                 }

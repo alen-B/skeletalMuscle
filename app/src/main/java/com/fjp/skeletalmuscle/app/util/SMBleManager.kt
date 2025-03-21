@@ -149,9 +149,9 @@ object SMBleManager {
                             it.leftHandGripsConnected()
                         } else if (deviceType == DeviceType.RIGHT_HAND_GRIPS) {
                             it.rightHandGripsConnected()
-                        }else if(deviceType == DeviceType.LEFT_DUMBBELL){
+                        }else if(deviceType == DeviceType.LEFT_LEG){
                             it.leftLegDisConnected()
-                        }else if(deviceType == DeviceType.RIGHT_DUMBBELL){
+                        }else if(deviceType == DeviceType.RIGHT_LEG){
                             it.rightLegDisConnected()
                         }
 
@@ -235,11 +235,11 @@ object SMBleManager {
     }
 
     fun dumbbellLeftDeviceIsConnected(): Boolean {
-        return connectedDevices[DeviceType.LEFT_DUMBBELL] != null
+        return connectedDevices[DeviceType.LEFT_LEG] != null
     }
 
     fun dumbbellRightDeviceIsConnected(): Boolean {
-        return connectedDevices[DeviceType.RIGHT_DUMBBELL] != null
+        return connectedDevices[DeviceType.RIGHT_LEG] != null
     }
 
     fun handGripsLeftdeviceisconnected(): Boolean {
