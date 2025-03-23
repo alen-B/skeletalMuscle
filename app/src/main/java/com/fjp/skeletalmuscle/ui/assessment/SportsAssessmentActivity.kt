@@ -151,10 +151,10 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE)
         }
         SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let {
-            SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE)
+            SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR)
         }
         SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let {
-            SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE)
+            SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR)
         }
 
         initMediaPlayerHigh()

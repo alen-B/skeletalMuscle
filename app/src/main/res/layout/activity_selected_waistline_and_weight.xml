@@ -77,23 +77,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:noRepeatClick="@{()-> click.clickComplete()}" />
 
-        <io.alterac.blurkit.BlurLayout
-            android:id="@+id/blurLayout"
-            android:layout_width="144dp"
-            android:layout_height="144dp"
-            android:onClick="@{()-> click.clickFinish()}"
-            app:blk_blurRadius="25"
-            app:blk_cornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
             <ImageView
+                android:id="@+id/blurLayout"
                 android:layout_width="144dp"
                 android:layout_height="144dp"
                 android:background="@drawable/bg_back_gray"
                 android:onClick="@{()-> click.clickFinish()}"
                 android:scaleType="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/arrow_right" />
-        </io.alterac.blurkit.BlurLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

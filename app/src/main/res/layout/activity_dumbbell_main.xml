@@ -239,12 +239,12 @@
             android:layout_width="166dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="35dp"
-            android:visibility="gone"
             android:background="@drawable/bg_white_80_round_20"
             app:layout_constraintTop_toTopOf="@+id/rTimesView"
             app:layout_constraintBottom_toBottomOf="@+id/rTimesView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
             android:layout_height="84dp" />
 
         <TextView

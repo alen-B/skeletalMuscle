@@ -40,7 +40,7 @@ object ExerciseDetector {
     @Synchronized
     fun processData(leftPitch: Double, leftYaw: Double, leftRoll: Double, leftAccelX: Double, leftAccelY: Double, leftAccelZ: Double, rightPitch: Double, rightYaw: Double, rightRoll: Double, rightAccelX: Double, rightAccelY: Double, rightAccelZ: Double, isLeftData: Boolean) {
         println("=======leftPitch:${leftPitch}")
-        if (leftPitch < 40 ) {
+        if (leftPitch < 40) {
             if (isLeftData) {
                 // 检测上举运动
                 if (leftAccelZ > ACCELERATION_THRESHOLD_Z && !isUpInProgress) {
@@ -55,23 +55,34 @@ object ExerciseDetector {
             if (isLeftData) {
                 if (leftYaw < 0) {
                     leftYawTemp = leftYaw.toInt() + 360
+                } else {
+                    leftYawTemp = leftYaw.toInt()
                 }
                 if (rightYaw < 0) {
                     rightYawTemp = rightYaw.toInt() + 360
+                } else {
+                    rightYawTemp = rightYaw.toInt()
                 }
-                curAngle = abs(leftYawTemp - rightYawTemp)
+                if (leftYaw < 90 && rightYaw > -90 || rightYaw < 90 && leftYaw > -90) {
+                    curAngle = abs(leftYaw - rightYaw).toInt()
+                } else {
+                    curAngle = abs(leftYawTemp - rightYawTemp)
+                }
+                println("===leftYawTemp:${leftYawTemp}    ===leftYaw:${leftYaw}")
+                println("===rightYawTemp:${rightYawTemp}   ===rightYaw:${rightYaw}")
+                println("===curAngle:${curAngle}")
+
+
                 if (maxAngle < curAngle) {
                     maxAngle = curAngle
                 }
-                if (curAngle > 40 && !isExpanding) {
+                if (curAngle > 60 && !isExpanding) {
                     isExpanding = true
-                } else if (curAngle < 40 && isExpanding) {
+                } else if (curAngle < 60 && isExpanding) {
                     chestCount++
-                    if (maxAngle > 180) {
-                        maxAngle -= 180
-                    }
                     records.add(Record(maxAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
                     isExpanding = false
+                    println("===maxAngle:${maxAngle}")
                     maxAngle = 0
                 }
             }

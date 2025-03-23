@@ -29,7 +29,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            app:layout_constraintBottom_toTopOf="@+id/blurLayout"
+            app:layout_constraintBottom_toTopOf="@+id/backIv"
             android:layout_width="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +49,7 @@
         <!--            android:layout_height="144dp">-->
 
         <ImageView
+            android:id="@+id/backIv"
             android:layout_width="144dp"
             android:src="@drawable/arrow_right"
             app:layout_constraintBottom_toBottomOf="@+id/nextBtn"

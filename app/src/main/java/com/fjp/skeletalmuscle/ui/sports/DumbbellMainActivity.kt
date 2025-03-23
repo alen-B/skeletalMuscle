@@ -39,6 +39,7 @@ import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
 import kotlin.math.ceil
+import kotlin.math.max
 
 class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMainBinding>(), SMBleManager.DeviceListener {
     val dumbbellRequest = DumbbellRequest(mutableListOf(), 0, mutableListOf(), mutableListOf(), 0, System.currentTimeMillis() / 1000, 5, 0, 0)
@@ -47,12 +48,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     private var isRunning: Boolean = false
     private var pauseTime: Long = 0
     private val handler = Handler(Looper.getMainLooper())
-    private val UPLIFT_THRESHOLD = 5 // 上举的阈值
 
-    private var leftLegLifted = false
-    private var rightLegLifted = false
-    private var leftLegLifts = 0//左腿太高了多少次
-    private var rightLegLifts = 0//右腿太高了多少次
     private var totalHeartRate = 0
     private var maxHeartRate = 0//最大心率
     private var minHeartRate = 0//最小心率
@@ -73,8 +69,6 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
     private var rightOldLevel = -1
     private var leftOldLevel = -1
-    private var leftIsDescending = false // 标记是否已经开始下降
-    private var rightIsDescending = false // 标记是否已经开始下降
     private var leftLevelViews = mutableListOf<ImageView>()
     private var rightLevelViews = mutableListOf<ImageView>()
     private val updateTimerTask = object : Runnable {
@@ -109,10 +103,10 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE)
         }
         SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let {
-            SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE)
+            SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR)
         }
         SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let {
-            SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE)
+            SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR)
         }
     }
 
@@ -192,10 +186,22 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         dumbbellRequest.end_time = System.currentTimeMillis() / 1000
         dumbbellRequest.plan_sport_time = App.sportsTime * 60
         dumbbellRequest.record.addAll(ExerciseDetector.records)
-//        dumbbellRequest.score = score
+        dumbbellRequest.score = getScore()
         mViewModel.saveDumbbell(dumbbellRequest)
     }
 
+
+    private fun getScore():Int{
+        var upliftScore = ((ExerciseDetector.upCount/(App.upliftAccount*1.0))*100f).toInt()
+        if(upliftScore>100){
+            upliftScore = 100
+        }
+        var expandChestScore = ((ExerciseDetector.chestCount/(App.expandChestAccount*1.0))*100).toInt()
+        if(expandChestScore>100){
+            expandChestScore = 100
+        }
+        return  max(60,((upliftScore+expandChestScore)/2).toInt())
+    }
     override fun createObserver() {
         super.createObserver()
         mViewModel.dumbbellLiveData.observe(this) {
@@ -235,9 +241,9 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
                 if (type == DeviceType.GTS) {
                     SMBleManager.connectedDevices[DeviceType.GTS]?.let { SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE) }
                 } else if (type == DeviceType.LEFT_LEG) {
-                    SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                    SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR) }
                 } else if (type == DeviceType.RIGHT_LEG) {
-                    SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_CHARACTERISTIC_WRITE) }
+                    SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR) }
                 }
 
             }
@@ -270,8 +276,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     override fun rightHandGripsConnected() {
     }
 
-    var leftDataPoint: DataPoint = DataPoint(0L, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    var rightDataPoint: DataPoint = DataPoint(0L, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    private var leftDataPoint: DataPoint = DataPoint(0L, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    private var rightDataPoint: DataPoint = DataPoint(0L, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
     override fun onLeftDeviceData(data: ByteArray) {
         if (!isRunning) {
             return
@@ -455,35 +461,6 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
     private fun calculateCaloriesBurned(age: Int, weight: Double, heartRate: Int, exerciseTimeMinutes: Float, isMale: Boolean): Double {
         return if (isMale) (age * 0.2017 + weight * 0.09036 + heartRate * 0.6309 - 55.0969) * exerciseTimeMinutes / 4.184 else (age * 0.074 + weight * 0.05741 + heartRate * 0.4472 - 20.4022) * exerciseTimeMinutes / 4.184
-    }
-
-    var standardAction = 0
-    private fun getCurScore(pitch: Float): Int {
-        if (pitch in 80.0..95.0) {
-            if (standardAction != 0) {
-                return 101
-            }
-            return 100
-        } else if ((pitch in 65.0..79.0) || (pitch >= 96 && pitch < 105)) {
-            standardAction++
-            if (standardAction != 0) {
-                return 81
-            }
-            return 80
-        } else if ((pitch in 50.0..64.0) || (pitch in 106.0..120.0)) {
-            standardAction = 0
-            return 50
-        } else {
-            standardAction = 0
-            return 15
-        }
-    }
-
-    private fun getAvgScore(pitch: Float) {
-        val curScore = getCurScore(pitch)
-        sportsTotalScore += curScore
-        sportsAvgScore = ((sportsTotalScore / ((leftLegLifts + rightLegLifts) * 100f)) * 100).toInt()
-        mDatabind.scoreViewTv.text = Math.min(sportsAvgScore, 100).toString()
     }
 
     private fun calculateLevelFromAngle(angle: Float): Int {

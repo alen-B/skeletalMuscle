@@ -36,8 +36,8 @@ class Constants {
 
 
         const val LEG_UUID_SERVICE = "0000ffe5-0000-1000-8000-00805f9a34fb"
-        const val LEG__UUID_CHARACTERISTIC_WRITE = "0000ffe4-0000-1000-8000-00805f9a34fb"
-
+        const val LEG__UUID_CHARACTERISTIC_WRITE = "0000ffe9-0000-1000-8000-00805f9a34fb"
+        const val LEG__UUID_NOTIFY_CHAR = "0000ffe4-0000-1000-8000-00805f9a34fb"
 
         const val PREFERENCES_KEY_USER = "user"
 

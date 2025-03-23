@@ -44,6 +44,8 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
         findViewById<TextView>(R.id.titleTv).setTextColor(ContextCompat.getColor(appContext, R.color.white))
         SMBleManager.addDeviceResultDataListener(this)
         App.sportsTime = mViewModel.sportsTime.get()!!.toInt()
+        App.expandChestAccount = mViewModel.sportsUplift.get()!!.toInt()
+        App.upliftAccount = mViewModel.sportsExpandChest.get()!!.toInt()
     }
 
     override fun createObserver() {
@@ -183,6 +185,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 return
             }
             mViewModel.sportsUplift.set((mViewModel.sportsUplift.get()!!.toInt() - 1).toString())
+            App.upliftAccount =  mViewModel.sportsUplift.get()!!.toInt()
         }
 
         fun clickSportsUpliftAdd() {
@@ -190,6 +193,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 return
             }
             mViewModel.sportsUplift.set((mViewModel.sportsUplift.get()!!.toInt() + 1).toString())
+            App.upliftAccount =  mViewModel.sportsUplift.get()!!.toInt()
         }
 
         fun clickSportsExpandChestSub() {
@@ -198,6 +202,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
             }
 
             mViewModel.sportsExpandChest.set((mViewModel.sportsExpandChest.get()!!.toInt() - 1).toString())
+            App.expandChestAccount =  mViewModel.sportsExpandChest.get()!!.toInt()
         }
 
         fun clickSportsExpandChestAdd() {
@@ -205,6 +210,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
                 return
             }
             mViewModel.sportsExpandChest.set((mViewModel.sportsExpandChest.get()!!.toInt() + 1).toString())
+            App.expandChestAccount =  mViewModel.sportsExpandChest.get()!!.toInt()
         }
 
         fun clickSportsAngleSub() {
