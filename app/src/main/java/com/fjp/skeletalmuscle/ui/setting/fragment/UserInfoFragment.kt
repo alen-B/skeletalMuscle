@@ -14,6 +14,7 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.eventViewModel
+import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
@@ -155,7 +156,7 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         }
 
         fun clickExit() {
-            val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
+            val pop = XPopup.Builder(context).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400.dp.toInt()).asConfirm(getString(R.string.setting_exit), getString(R.string.setting_exit_content), {
                 CacheUtil.setUser(null)
                 CacheUtil.setIsLogin(false)
                 val intent = Intent(context, LoginActivity::class.java)

@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.databinding.ViewDataBinding
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.ext.dismissLoadingExt
+import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.showLoadingExt
 import com.fjp.skeletalmuscle.app.util.CacheUtil
 import com.fjp.skeletalmuscle.app.util.Constants
@@ -46,7 +47,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
     }
 
     fun showReCompletedDialog(phone: String) {
-        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("创建账号", "是否退出当前账号，创建新账号？", {
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400.dp.toInt()).asConfirm("创建账号", "是否退出当前账号，创建新账号？", {
             finishAffinity()
             CacheUtil.setIsLogin(false)
             CacheUtil.setUser(null)

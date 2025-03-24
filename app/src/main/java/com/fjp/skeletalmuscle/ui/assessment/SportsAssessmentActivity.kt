@@ -21,6 +21,7 @@ import androidx.core.view.isVisible
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.AssessmentUtils
 import com.fjp.skeletalmuscle.app.util.BleScanHelper
@@ -597,7 +598,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     }
 
     fun showExitDialog() {
-        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400).asConfirm("当前正在运动", "您确定要退出吗？", {
+        val pop = XPopup.Builder(this).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).popupWidth(400.dp.toInt()).asConfirm("当前正在运动", "您确定要退出吗？", {
             finish()
         }, { })
 
