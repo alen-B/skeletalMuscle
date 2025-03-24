@@ -63,11 +63,14 @@ object DeviceDataParse {
 
     fun parseData2Pitch(data: ByteArray): Float {
         if (data.size >= 20) {
-            val pitch: Float = 90-twoBytesToFloat(data[14], data[15])
-            val roll: Float = Math.abs(twoBytesToFloat(data[16], data[17]))
-            val yaw: Float = twoBytesToFloat(data[18], data[19])
-            // 检查pitch是否大于100度
-            return pitch
+            println("===originPitch:${twoBytesToFloat(data[14], data[15])}")
+            val pitch: Float = twoBytesToFloat(data[14], data[15])
+            if (pitch < 0) {
+                return 90 + pitch
+            } else {
+                return 90 - pitch
+            }
+
         }
         return 0f
     }

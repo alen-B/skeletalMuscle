@@ -63,8 +63,10 @@ object ExerciseDetector {
                 } else {
                     rightYawTemp = rightYaw.toInt()
                 }
-                if (leftYaw < 90 && rightYaw > -90 || rightYaw < 90 && leftYaw > -90) {
+                if (leftYaw < 90 && rightYaw > -90) {
                     curAngle = abs(leftYaw - rightYaw).toInt()
+                } else if (rightYaw < 90 && leftYaw > -90) {
+                    curAngle = abs(rightYaw - leftYaw).toInt()
                 } else {
                     curAngle = abs(leftYawTemp - rightYawTemp)
                 }
