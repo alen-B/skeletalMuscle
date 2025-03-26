@@ -95,6 +95,7 @@
     <string name="main_times_angle">次°</string>
     <string name="main_rate">/分</string>
     <string name="main_kilocalorie">千卡</string>
+    <string name="main_kg">千克</string>
     <string name="main_total_score">/100</string>
     <string name="times_of_minute">次/分</string>
     <string name="unit_times_of_minute">分</string>

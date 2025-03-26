@@ -22,7 +22,7 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, Activ
     companion object {
         fun startActivity(context: Context, sportsType: SportsType, chartType: ChartType) {
             val intent = Intent(context, TodaySportsDetailActivity::class.java)
-            intent.putExtra(Constants.INTENT_KEY_SPORTS_DETAIL_TYPE, sportsType)
+            intent.putExtra(Constants.INTENT_KEY_SPORTS_DETAIL_TYPE, sportsType.type)
             intent.putExtra(Constants.INTENT_KEY_SPORTS_CHART_TYPE, chartType.type)
             context.startActivity(intent)
         }
@@ -33,11 +33,11 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, Activ
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
 
-        val sportsType = intent.get(Constants.INTENT_KEY_SPORTS_DETAIL_TYPE, SportsType.HIGH_KNEE)
+        val sportsType = intent.get(Constants.INTENT_KEY_SPORTS_DETAIL_TYPE, SportsType.HIGH_KNEE.type)
         val chartType = intent.get(Constants.INTENT_KEY_SPORTS_CHART_TYPE, ChartType.BURN_CALORIES.type)
-        initSecondTitle(sportsType!!.type, chartType!!)
+        initSecondTitle(sportsType!!, chartType!!)
         val vp = mDatabind.todayViewpager
-        val fragments = arrayListOf<Fragment>(TodaySportsDetailFragment.newInstance(sportsType, chartType, DateType.DAY), TodaySportsDetailFragment.newInstance(sportsType, chartType, DateType.WEEK), TodaySportsDetailFragment.newInstance(sportsType, chartType, DateType.MONTH), TodaySportsDetailFragment.newInstance(sportsType, chartType, DateType.YEAR))
+        val fragments = arrayListOf<Fragment>(TodaySportsDetailFragment.newInstance(sportsType!!, chartType, DateType.DAY), TodaySportsDetailFragment.newInstance(sportsType, chartType, DateType.WEEK), TodaySportsDetailFragment.newInstance(sportsType, chartType, DateType.MONTH), TodaySportsDetailFragment.newInstance(sportsType, chartType, DateType.YEAR))
         vp.adapter = TodaySportsDetailAdapter(supportFragmentManager, fragments)
         mDatabind.tabLayout.setViewPager(vp)
         mDatabind.tabLayout.setOnTabSelectListener(object : OnTabSelectListener {
@@ -69,6 +69,10 @@ class TodaySportsDetailActivity : BaseActivity<TodaySportsDetailViewModel, Activ
             ChartType.INTENSITY_AND_TIME.type -> {
                 return getString(R.string.sports_record_sport_time)
             }
+            ChartType.DUMBBELL_AVG_ANGLE.type -> {
+                return getString(R.string.today_sports_data_avg_angle)
+            }
+
 
             else -> {
                 return getString(R.string.today_sports_detail_calorie)

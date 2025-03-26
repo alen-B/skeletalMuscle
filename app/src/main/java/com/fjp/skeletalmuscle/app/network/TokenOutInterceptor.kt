@@ -28,7 +28,7 @@ class TokenOutInterceptor : Interceptor {
         return if (response.body() != null && response.body()!!.contentType() != null) {
             val mediaType = response.body()!!.contentType()
             val string = response.body()!!.string()
-            -Log.d("===response:", string)
+            Log.d("===response:", string)
             val responseBody = ResponseBody.create(mediaType, string)
             try {
                 val apiResponse = gson.fromJson(string, ApiResponse::class.java)

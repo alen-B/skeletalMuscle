@@ -229,7 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="12dp"
-            android:text="@string/main_kilocalorie"
+            android:text="@string/main_kg"
             android:textColor="@color/color_1c1c1c"
             android:textSize="@dimen/text_size_5"
             app:layout_constraintBottom_toBottomOf="@+id/weightTv"

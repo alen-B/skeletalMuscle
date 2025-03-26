@@ -13,7 +13,7 @@ class ExercisePlanViewModel : SMBaseViewModel() {
     val sportsIcon = ObservableField(R.drawable.exercise_plan_height_leg)
     val sportsType = ObservableField("")
     val sportsTime = ObservableField("2")
-    val sportsWeight = ObservableField("3")
+    val sportsWeight = ObservableField("1")
     val sportsUplift = ObservableField("10")
     val sportsExpandChest = ObservableField("10")
     val sportsAngle = ObservableField("90")

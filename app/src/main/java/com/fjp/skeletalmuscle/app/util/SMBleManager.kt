@@ -83,6 +83,7 @@ object SMBleManager {
 
             override fun onLeScan(bleDevice: BleDevice) {
                 super.onLeScan(bleDevice)
+
                 Log.d("BLE", "Found device: " + bleDevice.name)
                 if (bleDevice.name != null && bleDevice.name.startsWith(devicePrefix)) {
                     foundDevices.add(bleDevice)

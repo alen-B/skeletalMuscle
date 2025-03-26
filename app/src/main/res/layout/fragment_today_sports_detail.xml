@@ -208,37 +208,15 @@
                 android:layout_marginBottom="160dp"
                 android:layout_height="220dp" />
 
-            <TextView
-                android:id="@+id/upAvgAngleTv"
-                android:layout_width="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/horizontalBarChart"
-                android:text="@string/today_sports_detail_up_avg_angle"
-                android:visibility="gone"
-                android:textSize="@dimen/text_size_5"
-                android:layout_marginTop="42dp"
-                android:textColor="@color/color_801c1c1c"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/upAvgAngleValueTv"
-                android:layout_width="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/upAvgAngleTv"
-                app:layout_constraintBaseline_toBaselineOf="@+id/upAvgAngleTv"
-                android:text="90°"
-                android:visibility="gone"
-                android:textSize="60sp"
-                android:layout_marginTop="42dp"
-                android:textColor="@color/color_1c1c1c"
-                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/expandChestAvgAngleTv"
                 android:layout_width="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/upAvgAngleValueTv"
-                app:layout_constraintTop_toTopOf="@+id/upAvgAngleValueTv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalBarChart"
                 android:text="@string/today_sports_detail_expand_chest_avg_angle"
                 android:visibility="gone"
+                android:layout_marginTop="42dp"
                 android:textSize="@dimen/text_size_5"
                 android:textColor="@color/color_801c1c1c"
                 android:layout_height="wrap_content" />
@@ -255,17 +233,6 @@
                 android:textColor="@color/color_1c1c1c"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/upTv"
-                android:layout_width="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:drawableStartCompat="@drawable/right_leg_angle_reactangle"
-                app:layout_constraintTop_toTopOf="@+id/rightLegAvgAngleTv"
-                android:text="@string/exercise_plan_uplift"
-                android:visibility="gone"
-                android:textSize="@dimen/text_size_5"
-                android:textColor="@color/color_801c1c1c"
-                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/expandChestTv"
@@ -280,14 +247,6 @@
                 android:textColor="@color/color_801c1c1c"
                 android:layout_height="wrap_content" />
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/dumbbellUpAngleLineChart"
-                android:layout_width="0dp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expandChestTv"
-                android:layout_height="110dp" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/dumbbellExpandAngleLineChart"
@@ -295,8 +254,9 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dumbbellUpAngleLineChart"
-                android:layout_height="110dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expandChestAvgAngleTv"
+                android:layout_height="220dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

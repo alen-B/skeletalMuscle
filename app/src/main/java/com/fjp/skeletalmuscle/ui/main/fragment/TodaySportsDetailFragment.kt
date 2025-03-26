@@ -43,15 +43,15 @@ import me.hgj.jetpackmvvm.ext.parseState
 
 class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewModel, FragmentTodaySportsDetailBinding>() {
     val request: RequestTodaySportsDetailFragmentViewModel by viewModels()
-    var sportsType: SportsType = SportsType.HIGH_KNEE
+    var sportsType: Int=SportsType.HIGH_KNEE.type
     var type: Int = 0
     var dateType: DateType = DateType.DAY
 
     companion object {
-        fun newInstance(sportsType: SportsType, chartType: Int, dateType: DateType): TodaySportsDetailFragment {
+        fun newInstance(sportsType: Int, chartType: Int, dateType: DateType): TodaySportsDetailFragment {
             val fragment = TodaySportsDetailFragment()
             val bundle = Bundle()
-            bundle.putString(Constants.INTENT_SPORTS_TYPE, sportsType.name)
+            bundle.putInt(Constants.INTENT_SPORTS_TYPE, sportsType)
             bundle.putInt(Constants.INTENT_KEY_TYPE, chartType)
             bundle.putString(Constants.INTENT_KEY_DATE_TYPE, dateType.name)
             fragment.arguments = bundle
@@ -60,7 +60,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        sportsType = SportsType.valueOf(arguments?.get(Constants.INTENT_SPORTS_TYPE) as String)
+        sportsType = requireArguments().getInt(Constants.INTENT_SPORTS_TYPE,SportsType.HIGH_KNEE.type)
         type = arguments?.getInt(Constants.INTENT_KEY_TYPE)!!
         dateType = DateType.valueOf(arguments?.get(Constants.INTENT_KEY_DATE_TYPE) as String)
         mDatabind.viewModel = mViewModel
@@ -68,22 +68,22 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         when (type) {
             ChartType.BURN_CALORIES.type -> {
                 showCaloriesView()
-                if (sportsType == SportsType.HIGH_KNEE) {
+                if (sportsType == SportsType.HIGH_KNEE.type) {
                     request.getLiftLegCalorie(dateType.value)
-                } else if (sportsType == SportsType.DUMBBELL) {
+                } else if (sportsType == SportsType.DUMBBELL.type) {
                     request.getSportTrendDumbbellCalorie(dateType.value)
-                } else if (sportsType == SportsType.PLANK) {
+                } else if (sportsType == SportsType.PLANK.type) {
                     request.getSportTrendFlatSupportCalorie(dateType.value)
                 }
             }
 
             ChartType.HEART_RATE_TREND.type -> {
                 showHeartRatetrendView()
-                if (sportsType == SportsType.HIGH_KNEE) {
+                if (sportsType == SportsType.HIGH_KNEE.type) {
                     request.getLiftLegHeartRate(dateType.value)
-                } else if (sportsType == SportsType.DUMBBELL) {
+                } else if (sportsType == SportsType.DUMBBELL.type) {
                     request.getSportTrendDumbbellHeartRate(dateType.value)
-                } else if (sportsType == SportsType.PLANK) {
+                } else if (sportsType == SportsType.PLANK.type) {
                     request.getSportTrendFlatSupportHeartRate(dateType.value)
                 }
             }
@@ -105,17 +105,12 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
             }
 
             ChartType.DUMBBELL_AVG_ANGLE.type -> {
-                request.getSportTrendDumbbellUp(dateType.value)
+//                request.getSportTrendDumbbellUp(dateType.value)
                 request.getSportTrendDumbbellExpandChest(dateType.value)
-                mDatabind.upAvgAngleTv.visibility = View.VISIBLE
-                mDatabind.upAvgAngleValueTv.visibility = View.VISIBLE
                 mDatabind.expandChestAvgAngleTv.visibility = View.VISIBLE
                 mDatabind.expandChestAvgAngValueTv.visibility = View.VISIBLE
-                mDatabind.upTv.visibility = View.VISIBLE
                 mDatabind.expandChestTv.visibility = View.VISIBLE
-                mDatabind.upTv.visibility = View.VISIBLE
                 mDatabind.expandChestTv.visibility = View.VISIBLE
-                mDatabind.dumbbellUpAngleLineChart.visibility = View.VISIBLE
                 mDatabind.dumbbellExpandAngleLineChart.visibility = View.VISIBLE
             }
         }
@@ -163,18 +158,11 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
 
         }
 
-        request.dumbbellUpResult.observe(this) {
-            parseState(it, { result ->
-                initDumbbellUpAngleLineChart(mDatabind.dumbbellUpAngleLineChart, result, true)
-            }, {
-                appContext.showToast(getString(R.string.request_failed))
-            })
-
-        }
 
         request.dumbbellExpandChestResult.observe(this) {
             parseState(it, { result ->
-                initDumbbellUpAngleLineChart(mDatabind.dumbbellUpAngleLineChart, result, false)
+                mDatabind.expandChestAvgAngValueTv.setText(result.avg_expand_chest_degree.toInt().toString()+"°")
+                initDumbbellUpAngleLineChart(mDatabind.dumbbellExpandAngleLineChart, result, false)
             }, {
                 appContext.showToast(getString(R.string.request_failed))
             })
@@ -401,7 +389,7 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         val values = ArrayList<Entry>()
 
         for (i in result.trend.indices) {
-            values.add(BarEntry(i.toFloat(), result.trend[i].up_degree.toFloat()))
+            values.add(BarEntry(i.toFloat(), result.trend[i].expand_chest_degree.toFloat()))
         }
         val dataSets = ArrayList<ILineDataSet>()
         val lineDataSet = LineDataSet(values, "千卡")
@@ -409,11 +397,8 @@ class TodaySportsDetailFragment : BaseFragment<TodaySportsDetailFragmentViewMode
         lineDataSet.mode = LineDataSet.Mode.LINEAR
         lineDataSet.setDrawCircles(true)
         lineDataSet.circleRadius = 4f
-        if (isUp) {
-            lineDataSet.color = appContext.getColor(R.color.color_ffc019)
-        } else {
-            lineDataSet.color = appContext.getColor(R.color.color_blue)
-        }
+        lineDataSet.color = appContext.getColor(R.color.color_blue)
+        lineDataSet.setCircleColor(appContext.getColor(R.color.color_blue))
         lineDataSet.setDrawCircleHole(false)
 
         // text size of values

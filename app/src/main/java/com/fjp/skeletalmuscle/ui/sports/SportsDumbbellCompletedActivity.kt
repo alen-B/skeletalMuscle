@@ -258,6 +258,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(true)
         lineDataSet2.color = appContext.getColor(R.color.color_blue)
+        lineDataSet2.setCircleColor(appContext.getColor(R.color.color_blue))
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)
         // draw selection line as dashed

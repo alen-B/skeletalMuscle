@@ -990,43 +990,15 @@
                         app:layout_constraintBaseline_toBaselineOf="@+id/expandChestValueTv"
                         app:layout_constraintEnd_toStartOf="@+id/expandChestValueTv" />
 
-                    <TextView
-                        android:id="@+id/upliftValueTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:text="0°"
-                        android:textColor="@color/color_1c1c1c"
-                        android:textSize="@dimen/text_size_3"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/expandChestTv"
-                        app:layout_constraintEnd_toStartOf="@+id/expandChestTv" />
-
-                    <TextView
-                        android:id="@+id/upliftTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sports_record_upleft"
-                        android:textColor="@color/color_801c1c1c"
-                        android:textSize="@dimen/text_size_5"
-                        app:drawableStartCompat="@drawable/right_leg_angle_reactangle"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/upliftValueTv"
-                        app:layout_constraintEnd_toStartOf="@+id/upliftValueTv" />
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/dumbbelUpLineChart"
-                        android:layout_width="0dp"
-                        android:layout_height="57dp"
-                        app:layout_constraintEnd_toEndOf="@+id/bgAngleView"
-                        app:layout_constraintStart_toStartOf="@+id/bgAngleView"
-                        app:layout_constraintTop_toBottomOf="@+id/dumbbellAvgAngleTv" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/dumbbellExpandChestLineChart"
                         android:layout_width="0dp"
-                        android:layout_height="57dp"
+                        android:layout_height="0dp"
                         app:layout_constraintEnd_toEndOf="@+id/bgAngleView"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/bgAngleView"
-                        app:layout_constraintTop_toBottomOf="@+id/dumbbelUpLineChart" />
+                        app:layout_constraintTop_toBottomOf="@+id/expandChestTv" />
 
                     <!-- 哑铃心率趋势-->
                     <View
@@ -1078,8 +1050,9 @@
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/dumbbellHeartRateLineChart"
                         android:layout_width="0dp"
-                        android:layout_height="130dp"
+                        android:layout_height="0dp"
                         app:layout_constraintEnd_toEndOf="@+id/bgHeartRateView"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/bgHeartRateView"
                         app:layout_constraintTop_toBottomOf="@+id/dumbbellHeartRateTv" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

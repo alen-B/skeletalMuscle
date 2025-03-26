@@ -151,10 +151,8 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         if (todayData.sport_dumbbell != null && todayData.sport_dumbbell.sport_time != 0L) {
             mDatabind.dumbbeBg.visibility = View.VISIBLE
             mDatabind.dumbbellScoreTv.text = todayData.sport_dumbbell.score.toString()
-            mDatabind.upliftValueTv.text = "${todayData.sport_dumbbell.avg_up_degree}°"
-            mDatabind.expandChestValueTv.text = "${todayData.sport_dumbbell.avg_expand_chest_degree.toString()}°"
+            mDatabind.expandChestValueTv.text = "${todayData.sport_dumbbell.avg_expand_chest_degree.toInt().toString()}°"
             initSportsDumbbell(todayData)
-            initDumbbelUpLineChart(todayData.sport_dumbbell.up_degree)
             initDumbbellExpandChestLineChart(todayData.sport_dumbbell.expand_chest_degree)
         } else {
             mDatabind.dumbbeBg.visibility = View.GONE
@@ -169,80 +167,6 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         } else {
             mDatabind.flatSupportBg.visibility = View.GONE
         }
-    }
-
-    private fun initDumbbelUpLineChart(upDegree: List<UpDegree>) {
-        val lineChart = mDatabind.dumbbelUpLineChart
-        lineChart.legend.isEnabled = false
-        lineChart.setTouchEnabled(false)
-        lineChart.isDragEnabled = false
-        lineChart.setScaleEnabled(false)
-        lineChart.setDrawBorders(false)
-        lineChart.setDrawGridBackground(false)
-
-        lineChart.extraBottomOffset = 18f
-        lineChart.extraRightOffset = 18f
-        val description = Description()
-        description.text = ""
-        lineChart.description = description
-        val xAxis = lineChart.xAxis
-        xAxis.isEnabled = false
-
-        val leftAxis = lineChart.axisLeft
-        leftAxis.setDrawGridLines(true)
-        leftAxis.enableGridDashedLine(2f, 1f, 0f)
-        leftAxis.enableAxisLineDashedLine(2f, 1f, 0f)
-        leftAxis.gridLineWidth = 0.5f
-        leftAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        leftAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        leftAxis.textSize = 16.dp
-        leftAxis.axisMinimum = 0f
-        leftAxis.labelCount = 4
-        leftAxis.valueFormatter = object : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                return "${upDegree[value.toInt()].up_degree}°"
-            }
-        }
-        val rightAxis: YAxis = lineChart.axisRight
-        rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        rightAxis.enableGridDashedLine(2f, 1f, 0f)
-        rightAxis.enableAxisLineDashedLine(2f, 1f, 0f)
-        rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        rightAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        val values = ArrayList<Entry>()
-
-        for (i in upDegree.indices) {
-            values.add(BarEntry(i.toFloat(), upDegree[i].up_degree.toFloat()))
-        }
-        val dataSets = ArrayList<ILineDataSet>()
-        val lineDataSet = LineDataSet(values, "")
-        lineDataSet.setDrawIcons(false)
-        lineDataSet.setMode(LineDataSet.Mode.LINEAR);
-        lineDataSet.setDrawCircles(true)
-        lineDataSet.setCircleColor(ContextCompat.getColor(appContext, R.color.color_ffc019))
-        lineDataSet.circleRadius = 4f
-        lineDataSet.color = ContextCompat.getColor(appContext, R.color.color_ffc019)
-        lineDataSet.setDrawCircleHole(false)
-
-        lineDataSet.setDrawValues(false)
-
-
-        lineDataSet.enableDashedHighlightLine(10f, 5f, 0f)
-
-        lineDataSet.setDrawFilled(true)
-
-        if (Utils.getSDKInt() >= 18) {
-            val drawable = ContextCompat.getDrawable(appContext, R.drawable.fade_yellow)
-            lineDataSet.fillDrawable = drawable
-        } else {
-            lineDataSet.fillColor = Color.BLACK
-        }
-        dataSets.add(lineDataSet)
-        val barData = LineData(dataSets)
-        lineChart.data = barData
-        lineChart.setNoDataText("暂无数据")
     }
 
     private fun initDumbbellExpandChestLineChart(expandChestDegree: List<ExpandChestDegree>) {
@@ -274,7 +198,12 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         leftAxis.labelCount = 4
         leftAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return "${expandChestDegree[value.toInt()].expand_chest_degree}°"
+                val index = value.toInt()
+                if(index<expandChestDegree.size){
+                    return "${expandChestDegree[value.toInt()].expand_chest_degree}°"
+                }else{
+                    return ""
+                }
             }
         }
         val rightAxis: YAxis = lineChart.axisRight
@@ -328,7 +257,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         mViewModel.dumbbellSportsDate.add(SportsRecord("消耗卡路里", (dummbbell.sum_calorie / 1000).toString(), "千卡"))
         mDatabind.dumbbellRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.dumbbellSportsDate))
         mDatabind.dumbbellRecyclerView.addItemDecoration(SpaceItemDecoration(16.dp.toInt(), 0))
-        initLineChart(mDatabind.dumbbellHeartRateLineChart, dummbbell.heart_rate, 4)
+        initLineChart(mDatabind.dumbbellHeartRateLineChart, dummbbell.heart_rate, 3)
 //        dumbbellAngleLineChart
     }
 
