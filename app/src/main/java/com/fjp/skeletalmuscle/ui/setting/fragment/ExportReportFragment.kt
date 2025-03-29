@@ -95,20 +95,28 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
         try {
             val pageWidth: Float = PageSize.A4.width
             val pageHeight: Float = PageSize.A4.height
-            PDFManager.createPDF(requireContext())
+            if (mDatabind.curWeekRB.isChecked) {
+                PDFManager.createPDF(requireContext(),mDatabind.curWeekTv.text.toString().replace(" ",""))
+
+            } else if (mDatabind.curMonthRB.isChecked) {
+                PDFManager.createPDF(requireContext(),mDatabind.curMonthTv.text.toString().replace(" ",""))
+            } else {
+                PDFManager.createPDF(requireContext(),mDatabind.curCustomerStartTv.text.toString()+mDatabind.curCustomerEndTv.text)
+            }
+
             val title = "${App.userInfo.name},骨骼肌运动报告"
             PDFManager.createParagraph(title, TextAlignment.LEFT, 18f)
             PDFManager.add(Paragraph().setWidth(pageWidth / 5 * 2).setHeight(0.5f).setBackgroundColor(DeviceRgb(0, 0, 0)))
-//            val icon = BitmapFactory.decodeResource(resources, R.drawable.pdf_icon)
-//            val imgData = ImageDataFactory.create(PDFManager.bitmapToBytes(icon))
-//            val image = Image(imgData)
-//            image.scale(0.5f, 0.5f)
-//            image.setWidth(60f)
+            val icon = BitmapFactory.decodeResource(resources, R.drawable.pdf_icon)
+            val imgData = ImageDataFactory.create(PDFManager.bitmapToBytes(icon))
+            val image = Image(imgData)
+            image.scale(0.5f, 0.5f)
+            image.setWidth(120f)
             // 设置图片位置为右上角
-//            val imageWidth: Float = image.getImageScaledWidth()
-//            val imageHeight: Float = image.getImageScaledHeight()
-//            image.setFixedPosition(pageWidth - imageWidth - 40, pageHeight - imageHeight * 2)
-//            PDFManager.addImage(image)
+            val imageWidth: Float = image.getImageScaledWidth()
+            val imageHeight: Float = image.getImageScaledHeight()
+            image.setFixedPosition(pageWidth - imageWidth+35, pageHeight - imageHeight )
+            PDFManager.addImage(image)
 //
             if (mDatabind.curWeekRB.isChecked) {
                 PDFManager.createParagraph("报告日期：" + mDatabind.curWeekTv.text, TextAlignment.LEFT, 8f, fontColor = ColorConstants.GRAY)
@@ -159,11 +167,11 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
             allSportstable.addCell(Cell().add(run).setBorder(null))
             allSportstable.addCell(PDFManager.createCellAndBackground(Text("平均得分 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text(it.score.toString() + " 分").setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)), cellBackGround = DeviceRgb(244, 249, 255), isFirst = true, isLast = false).setMarginLeft(40f))
             allSportstable.addCell(PDFManager.createCellAndBackground(Text("运动时长 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text(DateTimeUtil.formatExportTime(it.sport_time.toLong())).setFontSize(12f).setFontColor(ColorConstants.BLACK), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = false))
-            allSportstable.addCell(PDFManager.createCellAndBackground(Text("消耗卡路里 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text("${(it.calorie_total / 1000f).toInt()}千卡").setFontSize(12f).setFontColor(ColorConstants.BLACK), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = false))
+            allSportstable.addCell(PDFManager.createCellAndBackground(Text("消耗卡路里 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text("${(it.calorie_total / 1000f).toInt()} 千卡").setFontSize(12f).setFontColor(ColorConstants.BLACK), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = false))
             allSportstable.addCell(PDFManager.createCellAndBackground(Text("平均心率 ").setFontSize(10f).setFontColor(ColorConstants.GRAY), Text(it.avg_rate_value.toString()+" bpm").setFontColor(ColorConstants.BLACK).setFontSize(12f), cellBackGround = DeviceRgb(244, 249, 255), isFirst = false, isLast = true))
             PDFManager.add(allSportstable)
             if (it.sport_lift_leg != null) {
-                PDFManager.createParagraph(Text("高抬腿运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_lift_leg.score.toString()).setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
+                PDFManager.createParagraph(Text("高抬腿运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(it.sport_lift_leg.score.toString()+" 分").setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
                 val highLegTab = Table(UnitValue.createPercentArray(floatArrayOf(30f, 30f, 30f, 30f, 30f, 30f)))
                 highLegTab.setBorder(null)
                 // 添加表头行
@@ -185,7 +193,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
                 PDFManager.createLine()
             }
             if (it.sport_dumbbell != null) {
-                PDFManager.createParagraph(Text("哑铃运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_dumbbell.score.toString()).setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
+                PDFManager.createParagraph(Text("哑铃运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(it.sport_dumbbell.score.toString()+" 分").setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
                 val dumbbellTab = Table(UnitValue.createPercentArray(floatArrayOf(80f, 80f, 80f, 80f, 80f)))
                 dumbbellTab.setBorder(null)
 //                dumbbellTab.addHeaderCell(PDFManager.createCell("平均得分"))
@@ -206,7 +214,7 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
                 PDFManager.createLine()
             }
             if (it.sport_flat_support != null) {
-                PDFManager.createParagraph(Text("平板支撑运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(" " + it.sport_flat_support.score.toString()).setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
+                PDFManager.createParagraph(Text("平板支撑运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(it.sport_flat_support.score.toString()+" 分").setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
                 val plankTab = Table(UnitValue.createPercentArray(2))
                 plankTab.setBorder(null)
 //                plankTab.addHeaderCell(PDFManager.createCell("平均得分"))

@@ -23,6 +23,7 @@ object DateTimeUtil {
     val DATE_PATTERN = "yyyy-MM-dd"
     val DATE_PATTERN2 = "yyyy年MM月dd日"
     val DATE_PATTERN3 = "yyyy年MM月"
+    val DATE_PATTERN4 = "yyyy年MM月dd日 HH:mm:ss"
     var DATE_PATTERN_SS = "yyyy-MM-dd HH:mm:ss"
     var DATE_PATTERN_SS2 = "yyyy/MM/dd HH:mm:ss"
     var DATE_PATTERN_MM = "yyyy-MM-dd HH:mm"
