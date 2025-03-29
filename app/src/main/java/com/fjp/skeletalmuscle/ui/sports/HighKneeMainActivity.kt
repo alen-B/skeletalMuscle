@@ -254,7 +254,11 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private fun getCardiorespiratorEndurance(): Double {
         // 抬腿频率
         val rate = (leftLegLifts + rightLegLifts) * 1f / (System.currentTimeMillis() / 1000 - liftLegRequest.start_time) / 60
-        return String.format("%.2f", rate * (leftLegAngleSum + rightLegAngleSum) / (leftLegLifts + rightLegLifts)).toDouble()
+        if(rate != 0.0f){
+            return String.format("%.2f", rate * (leftLegAngleSum + rightLegAngleSum) / (leftLegLifts + rightLegLifts)).toDouble()
+        }else{
+            return 0.0
+        }
     }
 
     override fun createObserver() {

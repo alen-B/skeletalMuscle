@@ -63,7 +63,7 @@ object DeviceDataParse {
 
     fun parseData2Pitch(data: ByteArray): Float {
         if (data.size >= 20) {
-            println("===originPitch:${twoBytesToFloat(data[14], data[15])}")
+//            println("===originPitch:${twoBytesToFloat(data[14], data[15])}")
             val pitch: Float = twoBytesToFloat(data[14], data[15])
             if (pitch < 0) {
                 return 90 + pitch
