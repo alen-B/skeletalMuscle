@@ -237,7 +237,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         showToast("完成了运动")
         pauseTimer()
         liftLegRequest.end_time = System.currentTimeMillis() / 1000
-        liftLegRequest.cardiorespiratory_endurance = getCardiorespiratorEndurance()
+         liftLegRequest.cardiorespiratory_endurance = getCardiorespiratorEndurance()
 
         if (liftLegRequest.end_time - liftLegRequest.start_time > App.sportsTime * 60) {
             liftLegRequest.end_time = liftLegRequest.start_time + App.sportsTime * 60

@@ -71,7 +71,8 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
             }
         }
 
-        override fun connected() {
+        override fun connected(bleDevice: com.clj.fastble.data.BleDevice) {
+            mViewModel.saveDeivce(bleDevice)
             context?.let {
                 mDatabind.reconnectBtn.visibility = View.GONE
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))

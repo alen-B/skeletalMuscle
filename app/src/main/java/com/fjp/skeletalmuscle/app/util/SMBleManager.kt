@@ -30,7 +30,7 @@ object SMBleManager {
 
     interface DeviceStatusListener {
         fun disConnected()
-        fun connected()
+        fun connected(bleDevice: BleDevice)
     }
 
     interface DeviceListener {
@@ -74,7 +74,7 @@ object SMBleManager {
 
             override fun onLeScan(bleDevice: BleDevice) {
                 super.onLeScan(bleDevice)
-                Log.d("BLE", "Found device: " + bleDevice.name)
+                Log.d("BLE", "Found device: " + bleDevice.name +"mac:"+bleDevice.mac)
                 if (bleDevice.mac != null && bleDevice.mac == deviceMac) {
                     foundDevices.add(bleDevice)
                     connectToDevice(bleDevice, deviceType, listener)
@@ -84,7 +84,7 @@ object SMBleManager {
 
             override fun onScanning(bleDevice: BleDevice) {
                 // 在这里可以根据需要更新扫描进度的 UI
-                Log.d("BLE", "Found device: " + bleDevice.name)
+                Log.d("BLE", "Found device: " + bleDevice.name +"mac:"+bleDevice.mac)
             }
 
             override fun onScanFinished(scanResultList: MutableList<BleDevice>?) {
@@ -114,11 +114,12 @@ object SMBleManager {
             override fun onConnectSuccess(bleDevice: BleDevice, gatt: BluetoothGatt, status: Int) {
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success) + bleDevice.name)
                 connectedDevices[deviceType] = bleDevice
+
                 println("connectedDevices[deviceType]:${connectedDevices[deviceType]}   name:" + bleDevice.name)
                 if (deviceType === DeviceType.GTS) {
                     subscribeToNotifications(bleDevice, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_NOTIFY_CHAR)
                 }
-                listener?.connected()
+                listener?.connected(bleDevice)
             }
 
             override fun onDisConnected(isActiveDisConnected: Boolean, device: BleDevice, gatt: BluetoothGatt, status: Int) {

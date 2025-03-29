@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
+import com.clj.fastble.data.BleDevice
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
@@ -58,7 +59,7 @@ class PlankDeviceOffLinePop(context: Context, val listener: Listener) : FullScre
                     override fun disConnected() {
                     }
 
-                    override fun connected() {
+                    override fun connected(bleDevice: BleDevice) {
                         disConnectedAccount--
                         braceletLL.setBackgroundResource(R.drawable.bg_device_connected)
                         braceletTv.text = context.getString(R.string.device_off_line_bracelet_connected)

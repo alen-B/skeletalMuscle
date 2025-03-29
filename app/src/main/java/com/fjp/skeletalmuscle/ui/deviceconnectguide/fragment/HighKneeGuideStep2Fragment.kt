@@ -3,6 +3,7 @@ package com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.clj.fastble.data.BleDevice
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.ext.showToast
@@ -48,7 +49,8 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
             }
         }
 
-        override fun connected() {
+        override fun connected(bleDevice: BleDevice) {
+            mViewModel.saveDeivce(bleDevice)
             context?.let {
                 mDatabind.reconnectBtn.visibility = View.GONE
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success))

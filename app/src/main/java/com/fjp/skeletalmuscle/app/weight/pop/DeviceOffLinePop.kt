@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
+import com.clj.fastble.data.BleDevice
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
@@ -155,7 +156,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             braceletLL.setBackgroundResource(R.drawable.bg_device_connected)
                             braceletTv.text = context.getString(R.string.device_off_line_bracelet_connected)
@@ -176,7 +177,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             leftKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
                             leftKneeTv.text = context.getString(R.string.device_off_line_bracelet_connected)
@@ -196,7 +197,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             rightKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
                             rightKneeTv.text = context.getString(R.string.device_off_line_bracelet_connected)
@@ -221,7 +222,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             braceletLL.setBackgroundResource(R.drawable.bg_device_connected)
                             braceletTv.text = context.getString(R.string.device_off_line_bracelet_connected)
@@ -247,7 +248,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             braceletLL.setBackgroundResource(R.drawable.bg_device_connected)
                             braceletTv.text = context.getString(R.string.device_off_line_bracelet_connected)
@@ -270,7 +271,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             leftKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
                             leftKneeTv.text = context.getString(R.string.device_off_line_left_dumbbell_connected)
@@ -290,7 +291,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             rightKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
                             rightKneeTv.text = context.getString(R.string.device_off_line_right_dumbbell_connected)
@@ -315,7 +316,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             leftKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
                             leftKneeTv.text = context.getString(R.string.device_off_line_left_knee_connected)
@@ -335,7 +336,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         override fun disConnected() {
                         }
 
-                        override fun connected() {
+                        override fun connected(bleDevice: BleDevice) {
                             disConnectedAccount--
                             rightKneeLL.setBackgroundResource(R.drawable.bg_device_connected)
                             rightKneeTv.text = context.getString(R.string.device_off_line_right_knee_connected)

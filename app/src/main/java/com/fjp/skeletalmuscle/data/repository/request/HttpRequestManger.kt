@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.data.repository.request
 
 import com.fjp.skeletalmuscle.app.network.apiService
+import com.fjp.skeletalmuscle.data.model.DeviceInfoRequest
 import com.fjp.skeletalmuscle.data.model.bean.ApiResponse
 import com.fjp.skeletalmuscle.data.model.bean.DumbbellRequest
 import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
@@ -236,6 +237,14 @@ class HttpRequestManger {
      */
     suspend fun calendar(month: String): ApiResponse<ArrayList<CalendarResult>> {
         return apiService.calendar(month)
+    }
+
+    /**
+     *保存蓝牙设备信息
+     *
+     */
+    suspend fun saveDevice(device: DeviceInfoRequest): ApiResponse<String> {
+        return apiService.saveDevice(device)
     }
 
     /**

@@ -2,6 +2,7 @@ package com.fjp.skeletalmuscle.app.util
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 
 
 /**
@@ -24,5 +25,9 @@ object AppUtils {
             e.printStackTrace()
         }
         return ""
+    }
+
+    fun isTablet(context: Context): Boolean {
+        return (context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
     }
 }

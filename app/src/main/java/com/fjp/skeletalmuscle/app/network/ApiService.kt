@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.app.network
 
+import com.fjp.skeletalmuscle.data.model.DeviceInfoRequest
 import com.fjp.skeletalmuscle.data.model.bean.ApiResponse
 import com.fjp.skeletalmuscle.data.model.bean.DumbbellRequest
 import com.fjp.skeletalmuscle.data.model.bean.FlatSupportRequest
@@ -96,6 +97,12 @@ interface ApiService {
      */
     @POST("sport/dumbbell")
     suspend fun saveDumbbell(@Body dumbbellRequest: DumbbellRequest): ApiResponse<SaveDumbbellResult>
+    /**
+     * 保存设备信息
+     *
+     */
+    @POST("save_device")
+    suspend fun saveDevice(@Body deviceinfo: DeviceInfoRequest): ApiResponse<String>
 
     /**
      * 平板支撑

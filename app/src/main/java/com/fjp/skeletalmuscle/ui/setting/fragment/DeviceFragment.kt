@@ -1,6 +1,7 @@
 package com.fjp.skeletalmuscle.ui.setting.fragment
 
 import android.os.Bundle
+import com.clj.fastble.data.BleDevice
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.base.BaseFragment
 import com.fjp.skeletalmuscle.app.util.DeviceType
@@ -35,7 +36,7 @@ class DeviceFragment : BaseFragment<DeviceViewModel, FragmentSettingDeviceBindin
 
                 }
 
-                override fun connected() {
+                override fun connected(bleDevice: BleDevice) {
                     mDatabind.leftKneeLL.setValue(getString(R.string.setting_device_status_connected), R.drawable.blue_point)
 
                 }
@@ -49,7 +50,7 @@ class DeviceFragment : BaseFragment<DeviceViewModel, FragmentSettingDeviceBindin
 
                 }
 
-                override fun connected() {
+                override fun connected(bleDevice: BleDevice) {
                     mDatabind.rightKneeLL.setValue(getString(R.string.setting_device_status_connected), R.drawable.blue_point)
                 }
 
@@ -62,7 +63,7 @@ class DeviceFragment : BaseFragment<DeviceViewModel, FragmentSettingDeviceBindin
 
                 }
 
-                override fun connected() {
+                override fun connected(bleDevice: BleDevice) {
                     mDatabind.smartWatchLayout.setValue(getString(R.string.setting_device_status_connected), R.drawable.blue_point)
                 }
 

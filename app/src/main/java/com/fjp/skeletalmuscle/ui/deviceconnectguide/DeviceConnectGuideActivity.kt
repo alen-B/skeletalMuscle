@@ -3,6 +3,7 @@ package com.fjp.skeletalmuscle.ui.deviceconnectguide
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
@@ -23,10 +24,19 @@ import com.fjp.skeletalmuscle.ui.deviceconnectguide.fragment.HighKneeGuideStep6F
 import com.fjp.skeletalmuscle.viewmodel.state.DeviceConnectViewModel
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
+import com.tencent.map.geolocation.TencentLocation
+import com.tencent.map.geolocation.TencentLocationListener
+import com.tencent.map.geolocation.TencentLocationManager
+import com.tencent.map.geolocation.TencentLocationRequest
+import me.hgj.jetpackmvvm.base.appContext
 
 class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, ActivityDeviceConnectGuideBinding>() {
 
     companion object {
+        var province:String=""
+        var city:String=""
+        var district:String=""
+        var address:String=""
         fun start(context: Context) {
             val intent = Intent(context, DeviceConnectGuideActivity::class.java)
             context.startActivity(intent)
@@ -37,6 +47,7 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
+        location()
         if (App.sportsType == SportsType.ASSESSMENT) {
             fragments = arrayListOf(HighKneeGuideStep4Fragment.newInstance(), HighKneeGuideStep6Fragment.newInstance())
         } else if (App.sportsType == SportsType.PLANK) {
@@ -159,5 +170,37 @@ class DeviceConnectGuideActivity : BaseActivity<DeviceConnectViewModel, Activity
     private fun showPop(popView: BasePopupView) {
         val pop = XPopup.Builder(this@DeviceConnectGuideActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(popView)
         pop.show()
+    }
+
+    private fun location() {
+        TencentLocationManager.setUserAgreePrivacy(true)
+        val mLocationManager = TencentLocationManager.getInstance(this)
+        val request = TencentLocationRequest.create()
+        request.isGpsFirst = true
+        mLocationManager.requestSingleFreshLocation(request, object : TencentLocationListener {
+            override fun onLocationChanged(location: TencentLocation?, p1: Int, p2: String?) {
+                dismissLoading()
+                location?.let {
+                    it.latitude.toString()
+                    it.longitude.toString()
+                    it.address + it.name
+                    it.province
+                    it.city
+                    it.district
+                    if (it.city == null) {
+                        return@let
+                    }
+                    DeviceConnectGuideActivity.province = it.province
+                    DeviceConnectGuideActivity.city = it.city
+                    DeviceConnectGuideActivity.district = it.district
+                    DeviceConnectGuideActivity.address = "${it.address + it.name}"
+                }
+            }
+
+            override fun onStatusUpdate(p0: String?, p1: Int, p2: String?) {
+
+            }
+
+        }, Looper.getMainLooper())
     }
 }
