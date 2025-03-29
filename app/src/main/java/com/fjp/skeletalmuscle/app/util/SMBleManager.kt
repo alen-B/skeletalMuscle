@@ -17,7 +17,6 @@ import com.lxj.xpopup.BuildConfig
 import me.hgj.jetpackmvvm.base.appContext
 import java.math.BigInteger
 
-
 /**
  *Author:Mr'x
  *Time:2024/11/4
@@ -60,15 +59,7 @@ object SMBleManager {
 
     init {
         BleManager.getInstance().init(App.instance)
-        BleManager.getInstance().allConnectedDevice.forEach {
-            if (it.name == DeviceType.GTS.value) {
-                connectedDevices[DeviceType.GTS] = it
-            } else if (it.name == DeviceType.LEFT_LEG.value) {
-                connectedDevices[DeviceType.LEFT_LEG] = it
-            } else if (it.name == DeviceType.RIGHT_LEG.value) {
-                connectedDevices[DeviceType.RIGHT_LEG] = it
-            }
-        }
+
         BleManager.getInstance().enableLog(BuildConfig.DEBUG).setReConnectCount(3, 5000).setSplitWriteNum(20).setConnectOverTime(15000).operateTimeout = 15000
     }
 
@@ -83,9 +74,8 @@ object SMBleManager {
 
             override fun onLeScan(bleDevice: BleDevice) {
                 super.onLeScan(bleDevice)
-
+                Log.d("BLE", "Found device: " + bleDevice.name)
                 if (bleDevice.mac != null && bleDevice.mac == deviceMac) {
-                    Log.d("BLE", "Found device: " + bleDevice.name + "device mac:" + bleDevice.mac)
                     foundDevices.add(bleDevice)
                     connectToDevice(bleDevice, deviceType, listener)
                     BleManager.getInstance().cancelScan() // 停止扫描
@@ -127,8 +117,6 @@ object SMBleManager {
                 println("connectedDevices[deviceType]:${connectedDevices[deviceType]}   name:" + bleDevice.name)
                 if (deviceType === DeviceType.GTS) {
                     subscribeToNotifications(bleDevice, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_NOTIFY_CHAR)
-                } else {
-//                    subscribeToNotifications(bleDevice, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR)
                 }
                 listener?.connected()
             }
@@ -153,10 +141,6 @@ object SMBleManager {
                             it.leftHandGripsConnected()
                         } else if (deviceType == DeviceType.RIGHT_HAND_GRIPS) {
                             it.rightHandGripsConnected()
-                        } else if (deviceType == DeviceType.LEFT_LEG) {
-                            it.leftLegDisConnected()
-                        } else if (deviceType == DeviceType.RIGHT_LEG) {
-                            it.rightLegDisConnected()
                         }
 
                     }
@@ -167,25 +151,14 @@ object SMBleManager {
     }
 
     fun subscribeToNotifications(bleDevice: BleDevice, uuidService: String, uuidNotify: String) {
+        val deviceName: String = bleDevice.name
         val deviceMac: String = bleDevice.mac
         BleManager.getInstance().notify(bleDevice, uuidService, uuidNotify, object : BleNotifyCallback() {
             override fun onNotifySuccess() {
                 // 订阅成功，可以在这里发送获取数据的指令
-                Log.d("subscribeToNotifications", "deviceName:" + deviceMac)
+                Log.d("subscribeToNotifications", "deviceName:" + deviceName)
                 if (deviceMac == DeviceType.GTS.value) {
-                    // 将十六进制字符串转换为字节数组
-                    val hexCommand = "DA420200630183BD"
-                    var command = BigInteger(hexCommand, 16).toByteArray()
-                    // 如果BigInteger解释为正数它会在开头添加额外的0x00，所以需要移除
-                    if (command[0].toInt() == 0x00) {
-                        val tmp = ByteArray(command.size - 1)
-                        System.arraycopy(command, 1, tmp, 0, tmp.size)
-                        command = tmp
-                    }
-                    writeDataToBleDevice(bleDevice, uuidService, Constants.GTS_UUID_CHARACTERISTIC_WRITE, command)
-                } else {
-//                    val command = byteArrayOf(0xff.toByte(), 0xaa.toByte(), 0x01.toByte(), 0x07.toByte(), 0x00.toByte())
-//                    writeDataToBleDevice(bleDevice, uuidService, Constants.LEG__UUID_CHARACTERISTIC_WRITE,command)
+                    writeDataToBleDevice(bleDevice)
                 }
             }
 
@@ -198,7 +171,7 @@ object SMBleManager {
                 // 设备返回的数据将在这里接收
 //                DeviceDataParse.handleNotifyData(data)
                 deviceListeners.forEach {
-                    if (deviceMac === DeviceType.GTS.value) {
+                    if (deviceMac == DeviceType.GTS.value) {
                         it.onGTSData(data)
                     } else if (deviceMac == DeviceType.LEFT_LEG.value) {
                         it.onLeftDeviceData(data)
@@ -216,27 +189,23 @@ object SMBleManager {
         })
     }
 
-    private fun writeDataToBleDevice(bleDevice: BleDevice, uuidService: String, uuidWrite: String, command: ByteArray) {
-        BleManager.getInstance().write(bleDevice, uuidService,  // 你的设备服务UUID
-            uuidWrite,  // 你的设备特征UUID
+    private fun writeDataToBleDevice(bleDevice: BleDevice) {
+
+        // 将十六进制字符串转换为字节数组
+        val hexCommand = "DA420200630183BD"
+        var command = BigInteger(hexCommand, 16).toByteArray()
+        // 如果BigInteger解释为正数它会在开头添加额外的0x00，所以需要移除
+        if (command[0].toInt() == 0x00) {
+            val tmp = ByteArray(command.size - 1)
+            System.arraycopy(command, 1, tmp, 0, tmp.size)
+            command = tmp
+        }
+        BleManager.getInstance().write(bleDevice, Constants.GTS_UUID_SERVICE,  // 你的设备服务UUID
+            Constants.GTS_UUID_CHARACTERISTIC_WRITE,  // 你的设备特征UUID
             command, object : BleWriteCallback() {
                 override fun onWriteSuccess(current: Int, total: Int, justWrite: ByteArray) {
                     // 写入数据成功，根据需要更新UI或其他操作
                     Log.d("writeDataToBleDevice", "Write successful")
-                    if (bleDevice.mac == DeviceType.LEFT_LEG.value || bleDevice.mac == DeviceType.RIGHT_LEG.value) {
-                        BleManager.getInstance().write(bleDevice, uuidService,  // 你的设备服务UUID
-                            uuidWrite,  // 你的设备特征UUID
-                            byteArrayOf(0xff.toByte(), 0xaa.toByte(), 0x01.toByte(), 0x00.toByte(), 0x00.toByte()), object : BleWriteCallback() {
-                                override fun onWriteSuccess(current: Int, total: Int, justWrite: ByteArray?) {
-                                    Log.d("writeDataToBleDevice", "Write save successful")
-                                }
-
-                                override fun onWriteFailure(exception: BleException?) {
-                                    Log.d("writeDataToBleDevice", "Write save onWriteFailure")
-                                }
-
-                            })
-                    }
                 }
 
                 override fun onWriteFailure(exception: BleException) {
