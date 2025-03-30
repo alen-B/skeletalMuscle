@@ -64,8 +64,7 @@ class HighKneeGuideStep4Fragment : BaseFragment<HighKneeGuideStep4ViewModel, Fra
     }
 
     var listener: SMBleManager.DeviceStatusListener? = object : SMBleManager.DeviceStatusListener {
-        override fun disConnected() {
-            appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
+        override fun disConnected() { appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_fail))
             if (context != null) {
                 mDatabind.reconnectBtn.visibility = View.VISIBLE
             }

@@ -66,6 +66,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     private var fatBurningTime = 0.0
     private var cardioTime = 0.0
     private var breakTime = 0.0
+    private var isUp = true//刚进来是在做上举运动
 
     private var rightOldLevel = -1
     private var leftOldLevel = -1
@@ -91,6 +92,12 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mDatabind.click = ProxyClick()
         ExerciseDetector.upCount = 0
         ExerciseDetector.chestCount = 0
+        mViewModel.title.set("上举运动")
+        leftLevelViews.add(mDatabind.lIv1)
+        leftLevelViews.add(mDatabind.lIv2)
+        leftLevelViews.add(mDatabind.lIv3)
+        leftLevelViews.add(mDatabind.lIv4)
+        leftLevelViews.add(mDatabind.lIv5)
         App.userInfo?.let {
             age = DateUtils.calculateAge(DateTimeUtil.formatDate(DateTimeUtil.DATE_PATTERN, it.birthday), Date(System.currentTimeMillis()))
             weight = it.weight
@@ -169,12 +176,30 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         val seconds = ((elapsedTime / 1000) % 60).toInt()
         if (sportsMinutes == mViewModel.maxTime) {
-            showToast("完成了运动")
-            completed()
+            if (this.isUp) {
+                setExpandView()
+
+            } else {
+                showToast("完成了运动")
+                completed()
+            }
+
         }
         val timeString = String.format("%02d:%02d", sportsMinutes, seconds)
         mViewModel.curTime.set(timeString)
         mDatabind.progressBar.setProgressPercentage((elapsedTime / 1000 / (mViewModel.maxTime * 60 / 100f)).toDouble(), false)
+    }
+
+    private fun setExpandView() {
+        mViewModel.title.set("扩胸运动")
+        mDatabind.lCurDataTv.text = "扩胸"
+        mDatabind.lLC.visibility = View.VISIBLE
+        mDatabind.upLLC.visibility = View.GONE
+        sportsMinutes = 0
+        elapsedTime = 0
+        startTime = SystemClock.uptimeMillis() - elapsedTime
+        this.isUp = false
+        mViewModel.maxTime = App.expandSportsTime
     }
 
     fun completed() {
@@ -182,7 +207,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         if (seconds > App.sportsTime * 60) {
             seconds = App.sportsTime * 60
         }
-        dumbbellRequest.sport_time = seconds
+        dumbbellRequest.sport_time = seconds + App.upSportsTime * 60
         dumbbellRequest.end_time = System.currentTimeMillis() / 1000
         dumbbellRequest.plan_sport_time = App.sportsTime * 60
         dumbbellRequest.record.addAll(ExerciseDetector.records)
@@ -191,17 +216,18 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     }
 
 
-    private fun getScore():Int{
-        var upliftScore = ((ExerciseDetector.upCount/(App.upliftAccount*1.0))*100f).toInt()
-        if(upliftScore>100){
+    private fun getScore(): Int {
+        var upliftScore = ((ExerciseDetector.upCount / (App.upliftAccount * 1.0)) * 100f).toInt()
+        if (upliftScore > 100) {
             upliftScore = 100
         }
-        var expandChestScore = ((ExerciseDetector.chestCount/(App.expandChestAccount*1.0))*100).toInt()
-        if(expandChestScore>100){
+        var expandChestScore = ((ExerciseDetector.chestCount / (App.expandChestAccount * 1.0)) * 100).toInt()
+        if (expandChestScore > 100) {
             expandChestScore = 100
         }
-        return  max(60,((upliftScore+expandChestScore)/2).toInt())
+        return max(60, ((upliftScore + expandChestScore) / 2).toInt())
     }
+
     override fun createObserver() {
         super.createObserver()
         mViewModel.dumbbellLiveData.observe(this) {
@@ -286,11 +312,16 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         if (parseData != null) {
             leftDataPoint = parseData
         }
-        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, true)
-//        println("===上举次数：${ExerciseDetector.upCount}")
-//        println("===扩胸次数：${ExerciseDetector.chestCount}")
-        mViewModel.leftLegCount.set(ExerciseDetector.upCount.toString())
-        mViewModel.rightLegCount.set(ExerciseDetector.chestCount.toString())
+        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, true, this.isUp)
+        if (isUp) {
+            mViewModel.leftLegCount.set(ExerciseDetector.upCount.toString())
+        } else {
+            mDatabind.lCurDataTv.text = ExerciseDetector.maxAngle.toString()+"°"
+            mViewModel.leftLegCount.set(ExerciseDetector.chestCount.toString())
+            setLeftCurLevelByPitch(ExerciseDetector.maxAngle.toFloat())
+
+        }
+
     }
 
 
@@ -303,9 +334,12 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             rightDataPoint = parseData
             println("parseData.roll:  " + parseData.roll)
         }
-        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, false)
-        mViewModel.leftLegCount.set(ExerciseDetector.upCount.toString())
-        mViewModel.rightLegCount.set(ExerciseDetector.chestCount.toString())
+        ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, false, this.isUp)
+        if (isUp) {
+            mViewModel.leftLegCount.set(ExerciseDetector.upCount.toString())
+        } else {
+            mViewModel.leftLegCount.set(ExerciseDetector.chestCount.toString())
+        }
 
     }
 
@@ -362,10 +396,19 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         return if (isMale) (age * 0.2017 + weight * 0.09036 + heartRate * 0.6309 - 55.0969) * exerciseTimeMinutes / 4.184 else (age * 0.074 + weight * 0.05741 + heartRate * 0.4472 - 20.4022) * exerciseTimeMinutes / 4.184
     }
 
+    private fun setLeftCurLevelByPitch(pitch: Float) {
+        val leftLevel = calculateLevelFromAngle(pitch)
+        if (leftOldLevel != -1) {
+            leftLevelViews[leftOldLevel].setImageDrawable(null)
+        }
+        leftLevelViews[leftLevel].setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.sports_current_data_selected))
+        leftOldLevel = leftLevel
+    }
+
     private fun calculateLevelFromAngle(angle: Float): Int {
         // 假设角度从0到90度，分成7个等级
         // 你可以根据实际需求调整这个方法
-        val maxAngle = 90
+        val maxAngle = 220
         val levels = 5
         // 计算每个等级的角度
         val anglePerLevel = (maxAngle / levels).toFloat()
@@ -373,7 +416,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         val level = levels - ceil((angle / anglePerLevel).toDouble()).toInt() // 反转等级
         // 确保返回的level不会超出triangleViews的大小
         val minLevel = Math.min(level, 5)
-        if (minLevel > 0) {
+        if (minLevel in 1..4) {
             return minLevel
         }
         return 0

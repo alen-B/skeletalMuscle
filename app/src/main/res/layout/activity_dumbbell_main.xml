@@ -22,8 +22,41 @@
 
         <include
             layout="@layout/layout_title"
-            app:viewModel="@{viewModel}" />
-
+            android:layout_marginStart="48dp"
+            app:viewModel="@{viewModel}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/upLLC"
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="35dp"
+            android:paddingLeft="17dp"
+            android:paddingRight="26dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="100dp">
+            <View
+                android:layout_width="28dp"
+                android:background="@drawable/bg_1a4e71ff_8"
+                android:layout_height="74dp"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:background="@drawable/circle"
+                android:layout_marginLeft="25dp"
+                android:layout_height="25dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="上举"
+                android:textSize="30sp"
+                android:textColor="#99494949"
+                android:layout_marginLeft="54dp"
+                android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lLC"
             android:layout_width="140dp"
@@ -31,7 +64,8 @@
             app:layout_constraintTop_toBottomOf="@+id/title_layout"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="35dp"
-            android:layout_marginTop="200dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/lTimesView"
             android:background="@drawable/bg_white_round_20"
             android:gravity="center_horizontal"
             android:paddingBottom="12dp"
@@ -42,53 +76,52 @@
                 android:layout_width="wrap_content"
                 android:textColor="#99494949"
                 android:textSize="@dimen/text_size_3"
-                android:text="上举"
                 android:layout_height="wrap_content" />
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/lIv1"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="24dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_e64e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
+                        <ImageView
+                            android:id="@+id/lIv1"
+                            android:layout_width="110dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_height="40dp"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/bg_e64e71ff_8"
+                            tools:ignore="ContentDescription" />
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/lIv2"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="2dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:background="@drawable/bg_b34e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
+                        <ImageView
+                            android:id="@+id/lIv2"
+                            android:layout_width="110dp"
+                            android:layout_marginTop="2dp"
+                            android:scaleType="centerCrop"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_b34e71ff_8"
+                            tools:ignore="ContentDescription" />
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/lIv3"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="2dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_804e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
+                        <ImageView
+                            android:id="@+id/lIv3"
+                            android:layout_width="110dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="40dp"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/bg_804e71ff_8"
+                            tools:ignore="ContentDescription" />
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/lIv4"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="2dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_3d4e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
+                        <ImageView
+                            android:id="@+id/lIv4"
+                            android:layout_width="110dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="40dp"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/bg_3d4e71ff_8"
+                            tools:ignore="ContentDescription" />
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/lIv5"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="2dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_1a4e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
+                        <ImageView
+                            android:id="@+id/lIv5"
+                            android:layout_width="110dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="40dp"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/bg_1a4e71ff_8"
+                            tools:ignore="ContentDescription" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
@@ -97,8 +130,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="35dp"
             android:background="@drawable/bg_3d4e71ff_20"
-            app:layout_constraintTop_toBottomOf="@+id/lLC"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
             android:layout_height="70dp" />
 
         <TextView
@@ -124,72 +158,6 @@
             android:textSize="@dimen/text_size_4"
             android:layout_height="wrap_content" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/rLC"
-            android:layout_width="140dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/title_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="35dp"
-            android:paddingBottom="12dp"
-            android:layout_marginTop="200dp"
-            android:background="@drawable/bg_white_round_20"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/rCurDataTv"
-                android:text="扩胸"
-                android:layout_width="wrap_content"
-                android:textColor="#99494949"
-                android:textSize="@dimen/text_size_3"
-                android:layout_height="wrap_content" />
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/rIv1"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="24dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_e64e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/rIv2"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="2dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_b34e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/rIv3"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="2dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_804e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/rIv4"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="2dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_3d4e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/rIv5"-->
-            <!--                android:layout_width="110dp"-->
-            <!--                android:layout_marginTop="2dp"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:scaleType="centerCrop"-->
-            <!--                android:background="@drawable/bg_1a4e71ff_8"-->
-            <!--                tools:ignore="ContentDescription" />-->
-        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ImageView
             android:id="@+id/centerIv"
@@ -201,38 +169,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="wrap_content" />
 
-        <View
-            android:id="@+id/rTimesView"
-            android:layout_width="140dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="35dp"
-            android:background="@drawable/bg_3d4e71ff_20"
-            app:layout_constraintTop_toBottomOf="@+id/rLC"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_height="70dp" />
-
-        <TextView
-            android:id="@+id/rTimesTv"
-            android:layout_width="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/rTimesView"
-            app:layout_constraintBottom_toBottomOf="@+id/rTimesView"
-            app:layout_constraintStart_toStartOf="@+id/rTimesView"
-            app:layout_constraintEnd_toEndOf="@+id/rTimesView"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            android:textColor="@color/color_222"
-            android:textSize="@dimen/text_size_1"
-            android:text="@{viewModel.rightLegCount}"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/rUnitTv"
-            android:layout_width="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@+id/rTimesTv"
-            app:layout_constraintStart_toEndOf="@+id/rTimesTv"
-            android:text="@string/main_times"
-            android:textColor="@color/color_222"
-            android:textSize="@dimen/text_size_4"
-            android:layout_height="wrap_content" />
 
         <View
             android:id="@+id/scoreView"
@@ -240,8 +176,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="35dp"
             android:background="@drawable/bg_white_80_round_20"
-            app:layout_constraintTop_toTopOf="@+id/rTimesView"
-            app:layout_constraintBottom_toBottomOf="@+id/rTimesView"
+            app:layout_constraintTop_toTopOf="@+id/lTimesView"
+            app:layout_constraintBottom_toBottomOf="@+id/lTimesView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
@@ -279,9 +215,9 @@
             android:layout_height="17dp"
             app:rpbBackgroundColor="@color/color_ccc6d1fc"
             app:rpbCornerRadius="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/rTimesView"
+            app:layout_constraintBottom_toTopOf="@+id/backIv"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="36dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:rpbProgressColor="@color/colorAccent"
             app:rpbShowProgressText="false" />

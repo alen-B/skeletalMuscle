@@ -22,8 +22,7 @@ class DumbbellViewModel : SMBaseViewModel() {
     val leftLegAngle = ObservableField("")
     val rightLegAngle = ObservableField("")
     val leftLegCount = ObservableField("0")
-    val rightLegCount = ObservableField("0")
-    val maxTime = App.sportsTime//单位分钟
+    var maxTime = App.upSportsTime//单位分钟
     var dumbbellLiveData = MutableLiveData<ResultState<SaveDumbbellResult>>()
     fun saveDumbbell(dumbbellRequest: DumbbellRequest) {
         request({

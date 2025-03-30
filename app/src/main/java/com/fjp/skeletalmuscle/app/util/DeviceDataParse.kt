@@ -133,20 +133,6 @@ object DeviceDataParse {
         return 0f
     }
 
-    // 根据角度计算等级的方法
-    private fun calculateLevelFromAngle(angle: Float): Int {
-        // 假设角度从0到90度，分成7个等级
-        // 你可以根据实际需求调整这个方法
-        val maxAngle = 90
-        val levels = 7
-        // 计算每个等级的角度
-        val anglePerLevel = (maxAngle / levels).toFloat()
-        // 计算当前角度对应的等级
-        val level = levels - Math.ceil((angle / anglePerLevel).toDouble()).toInt() // 反转等级
-        // 确保返回的level不会超出triangleViews的大小
-        return Math.min(level, 7)
-    }
-
     private fun twoBytesToFloat(b1: Byte, b2: Byte): Float {
         // 根据文档中的公式转换两个字节的数据
         return (b2.toInt() shl 8 or (b1.toInt() and 0xFF)) / 32768.0f * 180.0f // 示例转换公式，根据实际情况调整

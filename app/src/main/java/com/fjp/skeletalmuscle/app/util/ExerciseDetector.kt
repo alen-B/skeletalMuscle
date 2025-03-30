@@ -22,10 +22,10 @@ object ExerciseDetector {
     private var endAngleLeft: Double = 0.0
     private var endAngleRight: Double = 0.0
     private var expansionCount = 0 // 扩胸次数计数器
-    private var maxAngle = 0 // 扩胸最大角度
+    var maxAngle = 0 // 扩胸最大角度
     private var leftYawTemp = 0
     private var rightYawTemp = 0
-    private var curAngle = 0
+    var curAngle = 0
     private var useAngle = 0//用户面朝的角度
     private var totalAngle = 0f
     private var startAngle = 0f
@@ -38,9 +38,10 @@ object ExerciseDetector {
 
     //上举运动只记录一个哑铃的，两个哑铃都记录次数显示会不对
     @Synchronized
-    fun processData(leftPitch: Double, leftYaw: Double, leftRoll: Double, leftAccelX: Double, leftAccelY: Double, leftAccelZ: Double, rightPitch: Double, rightYaw: Double, rightRoll: Double, rightAccelX: Double, rightAccelY: Double, rightAccelZ: Double, isLeftData: Boolean) {
-        println("=======leftPitch:${leftPitch}")
-        if (leftPitch < 40) {
+    fun processData(leftPitch: Double, leftYaw: Double, leftRoll: Double, leftAccelX: Double, leftAccelY: Double, leftAccelZ: Double, rightPitch: Double, rightYaw: Double, rightRoll: Double, rightAccelX: Double, rightAccelY: Double, rightAccelZ: Double, isLeftData: Boolean, isUp: Boolean) {
+//        println("=======leftPitch:${leftPitch}")
+
+        if (leftPitch < 40 && isUp) {
             if (isLeftData) {
                 // 检测上举运动
                 if (leftAccelZ > ACCELERATION_THRESHOLD_Z && !isUpInProgress) {
@@ -51,7 +52,9 @@ object ExerciseDetector {
                     isUpInProgress = false
                 }
             }
-        } else {
+        }
+
+        if (!isUp) {
             if (isLeftData) {
                 if (leftYaw < 0) {
                     leftYawTemp = leftYaw.toInt() + 360
@@ -70,9 +73,9 @@ object ExerciseDetector {
                 } else {
                     curAngle = abs(leftYawTemp - rightYawTemp)
                 }
-                println("===leftYawTemp:${leftYawTemp}    ===leftYaw:${leftYaw}")
-                println("===rightYawTemp:${rightYawTemp}   ===rightYaw:${rightYaw}")
-                println("===curAngle:${curAngle}")
+//                println("===leftYawTemp:${leftYawTemp}    ===leftYaw:${leftYaw}")
+//                println("===rightYawTemp:${rightYawTemp}   ===rightYaw:${rightYaw}")
+//                println("===curAngle:${curAngle}")
 
 
                 if (maxAngle < curAngle) {
@@ -84,7 +87,7 @@ object ExerciseDetector {
                     chestCount++
                     records.add(Record(maxAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
                     isExpanding = false
-                    println("===maxAngle:${maxAngle}")
+//                    println("===maxAngle:${maxAngle}")
                     maxAngle = 0
                 }
             }

@@ -31,6 +31,8 @@ class App : BaseApp() {
         var userInfo = UserInfo("", "", 0, arrayListOf(), 0, 0, 0, "", "", "", "", 0, 0, arrayListOf<UserSports>(), 0, 0, "", 0, "", "")
         var sportsType = SportsType.HIGH_KNEE
         var sportsTime = 2
+        var upSportsTime = 1
+        var expandSportsTime = 1
         var legAngle = 90
         var upliftAccount = 10
         var expandChestAccount = 10

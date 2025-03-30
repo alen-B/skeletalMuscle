@@ -86,7 +86,7 @@
                 android:layout_marginStart="24dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/exercise_plan_sports_time"
+                android:text="@string/exercise_plan_sports_time_up"
                 android:layout_height="wrap_content" />
 
             <View
@@ -108,7 +108,7 @@
                 android:layout_marginStart="22dp"
                 android:background="@drawable/exercise_sub"
                 android:layout_height="42dp"
-                android:onClick="@{()-> click.clickSportsTimeSub()}"
+                android:onClick="@{()-> click.clickUpSportsTimeSub()}"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -126,7 +126,7 @@
                 android:id="@+id/sportsTimeDataTv"
                 android:layout_width="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{viewModel.sportsTime}"
+                android:text="@{viewModel.upSportsTime}"
                 android:textStyle="bold"
                 android:textSize="@dimen/text_size_2"
                 android:textColor="@color/color_99222222"
@@ -142,12 +142,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="22dp"
                 android:layout_height="42dp"
-                android:onClick="@{()-> click.clickSportsTimeAdd()}"
+                android:onClick="@{()-> click.clickUpSportsTimeAdd()}"
                 android:background="@drawable/exercise_add"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--        哑铃重量-->
+        <!--      扩胸时间-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sportsWeightCl"
             android:layout_width="0dp"
@@ -169,7 +169,7 @@
                 android:layout_marginStart="24dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/exercise_plan_dumbbell_weight"
+                android:text="@string/exercise_plan_sports_time_expand"
                 android:layout_height="wrap_content" />
 
             <View
@@ -191,7 +191,7 @@
                 android:layout_marginStart="22dp"
                 android:background="@drawable/exercise_sub"
                 android:layout_height="42dp"
-                android:onClick="@{()-> click.clickSportsWeightSub()}"
+                android:onClick="@{()-> click.clickExpandSportsTimeSub()}"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -199,7 +199,7 @@
                 android:layout_width="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/unit_kg"
+                android:text="@string/unit_min"
                 android:textSize="@dimen/text_size_5"
                 app:layout_constraintBaseline_toBaselineOf="@+id/sportsWeightDataTv"
                 android:textColor="@color/color_99222222"
@@ -210,7 +210,7 @@
                 android:id="@+id/sportsWeightDataTv"
                 android:layout_width="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{viewModel.sportsWeight}"
+                android:text="@{viewModel.expandSportsTime}"
                 android:textStyle="bold"
                 android:textSize="@dimen/text_size_2"
                 android:textColor="@color/color_99222222"
@@ -226,7 +226,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="22dp"
                 android:layout_height="42dp"
-                android:onClick="@{()-> click.clickSportsWeightAdd()}"
+                android:onClick="@{()-> click.clickExpandSportsTimeAdd()}"
                 android:background="@drawable/exercise_add"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>

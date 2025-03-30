@@ -152,6 +152,44 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
             App.sportsTime = mViewModel.sportsTime.get()!!.toInt()
         }
 
+        fun clickUpSportsTimeSub() {
+
+            if (App.sportsType == SportsType.DUMBBELL && mViewModel.upSportsTime.get()!!.toInt() == 1) {
+                return
+            }
+
+            mViewModel.upSportsTime.set((mViewModel.upSportsTime.get()!!.toInt() - 1).toString())
+            App.upSportsTime = mViewModel.upSportsTime.get()!!.toInt()
+        }
+        fun clickUpSportsTimeAdd() {
+
+            if (App.sportsType == SportsType.DUMBBELL && mViewModel.upSportsTime.get()!!.toInt() == SPORTS_TIME_MAX_DUMBBELL) {
+                return
+            }
+
+            mViewModel.upSportsTime.set((mViewModel.upSportsTime.get()!!.toInt() + 1).toString())
+            App.upSportsTime = mViewModel.upSportsTime.get()!!.toInt()
+        }
+
+        fun clickExpandSportsTimeSub() {
+
+            if (App.sportsType == SportsType.DUMBBELL && mViewModel.expandSportsTime.get()!!.toInt() == 1) {
+                return
+            }
+
+            mViewModel.expandSportsTime.set((mViewModel.expandSportsTime.get()!!.toInt() - 1).toString())
+            App.expandSportsTime = mViewModel.expandSportsTime.get()!!.toInt()
+        }
+        fun clickExpandSportsTimeAdd() {
+
+            if (App.sportsType == SportsType.DUMBBELL && mViewModel.expandSportsTime.get()!!.toInt() == SPORTS_TIME_MAX_DUMBBELL) {
+                return
+            }
+
+            mViewModel.expandSportsTime.set((mViewModel.expandSportsTime.get()!!.toInt() + 1).toString())
+            App.expandSportsTime = mViewModel.expandSportsTime.get()!!.toInt()
+        }
+
         fun clickSportsTimeAdd() {
             if (App.sportsType == SportsType.HIGH_KNEE && mViewModel.sportsTime.get()!!.toInt() == SPORTS_TIME_MAX_LEG_KNEE) {
                 return

@@ -538,7 +538,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         val level = levels - ceil((angle / anglePerLevel).toDouble()).toInt() // 反转等级
         // 确保返回的level不会超出triangleViews的大小
         val minLevel = Math.min(level, 5)
-        if (minLevel > 0) {
+        if (minLevel in 1..4) {
             return minLevel
         }
         return 0

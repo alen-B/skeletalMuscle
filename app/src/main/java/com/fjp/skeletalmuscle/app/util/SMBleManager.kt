@@ -59,11 +59,19 @@ object SMBleManager {
 
     init {
         BleManager.getInstance().init(App.instance)
-
+        BleManager.getInstance().allConnectedDevice.forEach {
+            if(it.name == DeviceType.GTS.value){
+                connectedDevices.put(DeviceType.GTS,it)
+            }else if(it.name == DeviceType.LEFT_LEG.value){
+                connectedDevices.put(DeviceType.LEFT_LEG,it)
+            }else if(it.name == DeviceType.RIGHT_LEG.value){
+                connectedDevices.put(DeviceType.RIGHT_LEG,it)
+            }
+        }
         BleManager.getInstance().enableLog(BuildConfig.DEBUG).setReConnectCount(3, 5000).setSplitWriteNum(20).setConnectOverTime(15000).operateTimeout = 15000
     }
 
-    fun scanDevices(deviceMac: String, deviceType: DeviceType, listener: DeviceStatusListener?) {
+    fun scanDevices(devicePrefix: String, deviceType: DeviceType, listener: DeviceStatusListener?) {
         BleManager.getInstance().scan(object : BleScanCallback() {
 
             override fun onScanStarted(success: Boolean) {
@@ -74,8 +82,8 @@ object SMBleManager {
 
             override fun onLeScan(bleDevice: BleDevice) {
                 super.onLeScan(bleDevice)
-                Log.d("BLE", "Found device: " + bleDevice.name +"mac:"+bleDevice.mac)
-                if (bleDevice.mac != null && bleDevice.mac == deviceMac) {
+                Log.d("BLE", "Found device: " + bleDevice.name)
+                if (bleDevice.name != null && bleDevice.name.startsWith(devicePrefix)) {
                     foundDevices.add(bleDevice)
                     connectToDevice(bleDevice, deviceType, listener)
                     BleManager.getInstance().cancelScan() // 停止扫描
@@ -84,12 +92,12 @@ object SMBleManager {
 
             override fun onScanning(bleDevice: BleDevice) {
                 // 在这里可以根据需要更新扫描进度的 UI
-                Log.d("BLE", "Found device: " + bleDevice.name +"mac:"+bleDevice.mac)
+                Log.d("BLE", "Found device: " + bleDevice.name)
             }
 
             override fun onScanFinished(scanResultList: MutableList<BleDevice>?) {
                 if (foundDevices.isEmpty()) {
-                    Log.d("BLE", "No devices found with prefix: $deviceMac")
+                    Log.d("BLE", "No devices found with prefix: $devicePrefix")
                     appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_not_find))
                     listener?.disConnected()
                 }
@@ -114,7 +122,6 @@ object SMBleManager {
             override fun onConnectSuccess(bleDevice: BleDevice, gatt: BluetoothGatt, status: Int) {
                 appContext.showToast(appContext.getString(R.string.bluetooth_scaning_device_connect_success) + bleDevice.name)
                 connectedDevices[deviceType] = bleDevice
-
                 println("connectedDevices[deviceType]:${connectedDevices[deviceType]}   name:" + bleDevice.name)
                 if (deviceType === DeviceType.GTS) {
                     subscribeToNotifications(bleDevice, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_NOTIFY_CHAR)
@@ -153,12 +160,11 @@ object SMBleManager {
 
     fun subscribeToNotifications(bleDevice: BleDevice, uuidService: String, uuidNotify: String) {
         val deviceName: String = bleDevice.name
-        val deviceMac: String = bleDevice.mac
         BleManager.getInstance().notify(bleDevice, uuidService, uuidNotify, object : BleNotifyCallback() {
             override fun onNotifySuccess() {
                 // 订阅成功，可以在这里发送获取数据的指令
                 Log.d("subscribeToNotifications", "deviceName:" + deviceName)
-                if (deviceMac == DeviceType.GTS.value) {
+                if (deviceName.startsWith("GTS")) {
                     writeDataToBleDevice(bleDevice)
                 }
             }
@@ -172,16 +178,16 @@ object SMBleManager {
                 // 设备返回的数据将在这里接收
 //                DeviceDataParse.handleNotifyData(data)
                 deviceListeners.forEach {
-                    if (deviceMac == DeviceType.GTS.value) {
+                    if (deviceName.startsWith(DeviceType.GTS.value)) {
                         it.onGTSData(data)
-                    } else if (deviceMac == DeviceType.LEFT_LEG.value) {
+                    } else if (deviceName.startsWith(DeviceType.LEFT_LEG.value)) {
                         it.onLeftDeviceData(data)
 
-                    } else if (deviceMac == DeviceType.RIGHT_LEG.value) {
+                    } else if (deviceName.startsWith(DeviceType.RIGHT_LEG.value)) {
                         it.onRightDeviceData(data)
-                    } else if (deviceMac == DeviceType.LEFT_HAND_GRIPS.value) {
+                    } else if (deviceName.startsWith(DeviceType.LEFT_HAND_GRIPS.value)) {
                         it.onLeftHandGripsData(data)
-                    } else if (deviceMac == DeviceType.RIGHT_HAND_GRIPS.value) {
+                    } else if (deviceName.startsWith(DeviceType.RIGHT_HAND_GRIPS.value)) {
                         it.onRightHandGripsData(data)
                     }
 

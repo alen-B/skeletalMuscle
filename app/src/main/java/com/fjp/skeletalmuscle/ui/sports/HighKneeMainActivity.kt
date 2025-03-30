@@ -398,7 +398,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         setLeftCurLevelByPitch(pitch)
     }
 
-    fun setLeftCurLevelByPitch(pitch: Float) {
+    private fun setLeftCurLevelByPitch(pitch: Float) {
         val leftLevel = calculateLevelFromAngle(pitch)
         if (leftOldLevel != -1) {
             leftLevelViews[leftOldLevel].setImageDrawable(null)

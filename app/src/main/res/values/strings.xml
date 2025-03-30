@@ -167,6 +167,8 @@
     <string name="exercise_plan_title">选择您的运动计划</string>
     <string name="exercise_plan_sports_data">运动处方</string>
     <string name="exercise_plan_sports_time">运动时间</string>
+    <string name="exercise_plan_sports_time_up">上举时间</string>
+    <string name="exercise_plan_sports_time_expand">扩胸时间</string>
     <string name="exercise_plan_foot_height">抬脚高度</string>
     <string name="exercise_plan_dumbbell_weight">哑铃重量</string>
     <string name="exercise_plan_uplift">上举</string>
