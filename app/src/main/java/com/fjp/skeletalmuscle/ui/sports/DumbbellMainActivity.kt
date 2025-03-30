@@ -175,6 +175,9 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     private fun updateTimerTextView() {
         sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
         val seconds = ((elapsedTime / 1000) % 60).toInt()
+        if(isUp && elapsedTime/1000.toInt() >= mViewModel.maxTime*60-5){
+            mDatabind.nextSportsIv.visibility = View.VISIBLE
+        }
         if (sportsMinutes == mViewModel.maxTime) {
             if (this.isUp) {
                 setExpandView()
@@ -195,6 +198,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mDatabind.lCurDataTv.text = "扩胸"
         mDatabind.lLC.visibility = View.VISIBLE
         mDatabind.upLLC.visibility = View.GONE
+        mDatabind.nextSportsIv.visibility = View.GONE
+        mDatabind.centerIv.setBackgroundResource(R.drawable.older)
         sportsMinutes = 0
         elapsedTime = 0
         startTime = SystemClock.uptimeMillis() - elapsedTime

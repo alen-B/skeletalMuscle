@@ -40,7 +40,8 @@ object ExerciseDetector {
     @Synchronized
     fun processData(leftPitch: Double, leftYaw: Double, leftRoll: Double, leftAccelX: Double, leftAccelY: Double, leftAccelZ: Double, rightPitch: Double, rightYaw: Double, rightRoll: Double, rightAccelX: Double, rightAccelY: Double, rightAccelZ: Double, isLeftData: Boolean, isUp: Boolean) {
 //        println("=======leftPitch:${leftPitch}")
-
+        println("===leftYaw:${leftYaw}    ===rightYaw:${rightYaw}")
+        println("===curAngle:${curAngle}")
         if (leftPitch < 40 && isUp) {
             if (isLeftData) {
                 // 检测上举运动
@@ -73,13 +74,16 @@ object ExerciseDetector {
                 } else {
                     curAngle = abs(leftYawTemp - rightYawTemp)
                 }
-//                println("===leftYawTemp:${leftYawTemp}    ===leftYaw:${leftYaw}")
+                println("===leftYaw:${leftYaw}    ===rightYaw:${rightYaw}")
 //                println("===rightYawTemp:${rightYawTemp}   ===rightYaw:${rightYaw}")
-//                println("===curAngle:${curAngle}")
+                println("===curAngle:${curAngle}")
 
 
                 if (maxAngle < curAngle) {
                     maxAngle = curAngle
+                }
+                if (maxAngle > 180) {
+                    maxAngle = 360 - 180
                 }
                 if (curAngle > 60 && !isExpanding) {
                     isExpanding = true

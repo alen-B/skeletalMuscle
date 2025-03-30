@@ -37,12 +37,6 @@ class VideoPop(context: Context, val listener: Listener) : FullScreenPopupView(c
         findViewById<Button>(R.id.nextBtn).setOnClickListener {
             listener.jump(this)
         }
-        blurLayout = findViewById(R.id.blurLayout)
-        blurLayout.startBlur()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        blurLayout.pauseBlur()
-    }
 }
