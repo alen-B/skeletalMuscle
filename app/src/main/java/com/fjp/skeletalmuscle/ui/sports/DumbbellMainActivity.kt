@@ -35,6 +35,7 @@ import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityDumbbellMainBinding
 import com.fjp.skeletalmuscle.viewmodel.state.DumbbellViewModel
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
@@ -75,6 +76,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     private var rightLevelViews = mutableListOf<ImageView>()
     lateinit var countDownTimer: CountDownTimer
     private var oldTime = 0L
+    lateinit var pop: BasePopupView
     private val updateTimerTask = object : Runnable {
         override fun run() {
             val currentTime = if (isRunning) SystemClock.uptimeMillis() else pauseTime
@@ -286,6 +288,9 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     }
 
     private fun showOffLinePop() {
+        if (this@DumbbellMainActivity::pop.isInitialized && pop.isShow) {
+            pop.dismiss()
+        }
         val deviceOffLinePop = DeviceOffLinePop(this@DumbbellMainActivity, SportsType.DUMBBELL, object : DeviceOffLinePop.Listener {
             override fun reconnect(type: DeviceType) {
                 if (type == DeviceType.GTS) {
@@ -303,7 +308,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             }
 
         })
-        val pop = XPopup.Builder(this@DumbbellMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
+        pop = XPopup.Builder(this@DumbbellMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
 
         pop.show()
     }

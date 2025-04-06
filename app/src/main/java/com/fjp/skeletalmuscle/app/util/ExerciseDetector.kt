@@ -1,7 +1,6 @@
 package com.fjp.skeletalmuscle.app.util
 
 import com.fjp.skeletalmuscle.data.model.bean.Record
-import java.lang.Math.abs
 import java.util.TreeSet
 
 // 滑动平均滤波类
@@ -107,25 +106,29 @@ object ExerciseDetector {
     @Synchronized
     fun processData(leftPitch: Double, leftYaw: Double, leftRoll: Double, leftAccelX: Double, leftAccelY: Double, leftAccelZ: Double, rightPitch: Double, rightYaw: Double, rightRoll: Double, rightAccelX: Double, rightAccelY: Double, rightAccelZ: Double, isUp: Boolean) {
 //        println("=======leftPitch:${leftPitch}")
-            if (leftYaw < 0) {
-                leftYawTemp = leftYaw.toInt() + 360
-            } else {
-                leftYawTemp = leftYaw.toInt()
-            }
-            if (leftPreviousAngle != null && kotlin.math.abs(leftYawTemp - leftPreviousAngle!!) > 180) {
-                leftYawTemp -= 360
-            }
+        if (leftYaw < 0) {
+            leftYawTemp = leftYaw.toInt() + 360
+        } else {
+            leftYawTemp = leftYaw.toInt()
+        }
+        if (leftPreviousAngle != null && kotlin.math.abs(leftYawTemp - leftPreviousAngle!!) > 180) {
+            leftYawTemp -= 360
+        }
 
-            if (rightYaw < 0) {
-                rightYawTemp = rightYaw.toInt() + 360
-            }else {
-                rightYawTemp = rightYaw.toInt()
-            }
-            if (rightPreviousAngle != null && kotlin.math.abs(rightYawTemp - rightPreviousAngle!!) > 180) {
-                rightYawTemp -= 360
-            }
-        processAngle(leftYawTemp,rightYawTemp)
-        println("当前角度：leftYaw:${leftYaw} + leftYawTemp:${leftYawTemp}+    rightYawTemp:${rightYawTemp}")
+        if (rightYaw < 0) {
+            rightYawTemp = rightYaw.toInt() + 360
+        } else {
+            rightYawTemp = rightYaw.toInt()
+        }
+        if (rightPreviousAngle != null && kotlin.math.abs(rightYawTemp - rightPreviousAngle!!) > 180) {
+            rightYawTemp -= 360
+        }
+        processAngle(leftYawTemp, rightYawTemp)
+        if (leftCurrentMaxAngle != null && leftCurrentMinAngle != null && rightCurrentMaxAngle != null && rightCurrentMinAngle != null) {
+            println("当前角度: leftYawTemp:${leftYawTemp}     rightYawTemp:${rightYawTemp}   ${(leftCurrentMaxAngle!! - leftCurrentMinAngle!!) + (rightCurrentMaxAngle!! - rightCurrentMinAngle!!)}")
+        } else {
+            println("当前角度: leftYawTemp:${leftYawTemp}     rightYawTemp:${rightYawTemp}")
+        }
 
     }
 
@@ -139,20 +142,27 @@ object ExerciseDetector {
     private var rightCurrentMaxAngle: Int? = null
     private var rightIsAscending = false
 
-    fun processAngle(leftAngle: Int,rightAngle:Int) {
+    fun processAngle(leftAngle: Int, rightAngle: Int) {
         if (leftPreviousAngle != null) {
+            if (leftCurrentMinAngle ==null) {
+                leftCurrentMinAngle = leftAngle
+            }
+            if( leftCurrentMinAngle!! > leftAngle){
+                leftCurrentMinAngle = leftAngle
+            }
+            if (leftCurrentMaxAngle == null) {
+                leftCurrentMaxAngle = leftAngle
+            }
+            if( leftCurrentMaxAngle!! < leftAngle){
+                leftCurrentMaxAngle = leftAngle
+            }
             if (leftAngle >= leftPreviousAngle!!) {
                 // 角度上升
                 if (!leftIsAscending) {
                     // 开始上升阶段，重置最大最小值
                     leftIsAscending = true
-                    leftCurrentMinAngle = leftPreviousAngle
-                    leftCurrentMaxAngle = leftAngle
-                } else {
-                    // 持续上升，更新最大角度
-                    if (leftCurrentMaxAngle == null || leftCurrentMaxAngle!! < leftAngle) {
-                        leftCurrentMaxAngle = leftAngle
-                    }
+//                    leftCurrentMinAngle = leftPreviousAngle
+//                    leftCurrentMaxAngle = leftAngle
                 }
             } else {
                 // 角度下降
@@ -161,15 +171,18 @@ object ExerciseDetector {
                     leftIsAscending = false
                     if (leftCurrentMinAngle != null && leftCurrentMaxAngle != null) {
                         leftExpansionAngle = leftCurrentMaxAngle!! - leftCurrentMinAngle!!
-                        println("左设备角度：${leftExpansionAngle}")
-                        if (leftExpansionAngle > 30) {
-                            println("===左设备+1：${leftExpansionAngle}")
-                            rightCurrentMinAngle= null
-                            rightCurrentMaxAngle= null
+                        if (rightCurrentMinAngle != null && rightCurrentMaxAngle != null) {
+                            rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
+                        }
+                        if (leftExpansionAngle > 30 && leftExpansionAngle<250) {
+                            println("===左设备+1：${leftExpansionAngle}     左设备角度${rightExpansionAngle}")
+
                             chestCount++
                             records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
                         }
                     }
+                    rightCurrentMinAngle = null
+                    rightCurrentMaxAngle = null
                     leftCurrentMinAngle = null
                     leftCurrentMaxAngle = null
                 }
@@ -179,43 +192,53 @@ object ExerciseDetector {
 
 
         if (rightPreviousAngle != null) {
-            if (rightAngle >= rightPreviousAngle!!) {
-                // 角度上升
-                if (!rightIsAscending) {
-                    // 开始上升阶段，重置最大最小值
-                    rightIsAscending = true
-                    rightCurrentMinAngle = rightPreviousAngle
-                    rightCurrentMaxAngle = rightAngle
-                } else {
-                    // 持续上升，更新最大角度
-                    if(rightCurrentMaxAngle==null || rightCurrentMaxAngle!! < rightAngle){
-                        rightCurrentMaxAngle = rightAngle
-                    }
 
-                }
-            } else {
-                // 角度下降
-                if (rightIsAscending) {
-                    // 从上升转为下降，完成一次扩胸
-                    rightIsAscending = false
-                    if (rightCurrentMinAngle != null && rightCurrentMaxAngle != null) {
-                        rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
-                        println("右设备角度：${rightExpansionAngle}")
-                        if (rightExpansionAngle > 30) {
-                            println("===右设备+1：${rightExpansionAngle}")
-                            leftCurrentMinAngle= null
-                            leftCurrentMaxAngle= null
-                            chestCount++
-                            records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
-                        }
-                    }
-                    rightCurrentMinAngle = null
-                    rightCurrentMaxAngle = null
-                }
+            if (rightCurrentMinAngle == null) {
+                rightCurrentMinAngle = rightAngle
             }
+            if(rightCurrentMinAngle!! > rightAngle){
+                rightCurrentMinAngle = rightAngle
+            }
+            if (rightCurrentMaxAngle == null) {
+                rightCurrentMaxAngle = rightAngle
+            }
+            if( rightCurrentMaxAngle!! < rightAngle){
+                rightCurrentMaxAngle = rightAngle
+            }
+//            if (rightAngle >= rightPreviousAngle!!) {
+//                // 角度上升
+//                if (!rightIsAscending) {
+//                    // 开始上升阶段，重置最大最小值
+//                    rightIsAscending = true
+////                    rightCurrentMinAngle = rightPreviousAngle
+////                    rightCurrentMaxAngle = rightAngle
+//                }
+//            } else {
+//                // 角度下降
+//                if (rightIsAscending) {
+//                    // 从上升转为下降，完成一次扩胸
+//                    rightIsAscending = false
+//                    if (rightCurrentMinAngle != null && rightCurrentMaxAngle != null) {
+//                        rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
+//                        if (leftCurrentMinAngle != null && leftCurrentMaxAngle != null) {
+//                            leftExpansionAngle = leftCurrentMaxAngle!! - leftCurrentMinAngle!!
+//                        }
+//                        if (rightExpansionAngle > 30) {
+//                            println("===右设备+1：${rightExpansionAngle}     左设备角度${leftExpansionAngle}")
+//
+//                            chestCount++
+//                            records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
+//                        }
+//                    }
+//                    rightCurrentMinAngle = null
+//                    rightCurrentMaxAngle = null
+//                    leftIsAscending = false
+//                    leftCurrentMinAngle = null
+//                    leftCurrentMaxAngle = null
+//                }
+//            }
         }
         rightPreviousAngle = rightAngle
-
 
 
     }

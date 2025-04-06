@@ -31,6 +31,7 @@ import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.fjp.skeletalmuscle.databinding.ActivityPlankBinding
 import com.fjp.skeletalmuscle.viewmodel.state.PlankViewModel
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
@@ -64,7 +65,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
 
     private var calories: MutableList<Calorie> = arrayListOf()
     private var heartRate: MutableList<HeartRate> = arrayListOf()
-
+    lateinit var pop: BasePopupView
     private val updateTimerTask = object : Runnable {
         override fun run() {
             val currentTime = if (isRunning) SystemClock.uptimeMillis() else pauseTime
@@ -244,6 +245,9 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
     }
 
     fun showOffLinePop() {
+        if (this@PlankActivity::pop.isInitialized && pop.isShow) {
+            pop.dismiss()
+        }
         val deviceOffLinePop = DeviceOffLinePop(this@PlankActivity, SportsType.PLANK, object : DeviceOffLinePop.Listener {
             override fun reconnect(type: DeviceType) {
                 if (type == DeviceType.GTS) {
@@ -260,7 +264,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
 
             }
         })
-        val pop = XPopup.Builder(this@PlankActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
+        pop = XPopup.Builder(this@PlankActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
         pop.show()
     }
 

@@ -39,6 +39,7 @@ import com.fjp.skeletalmuscle.databinding.ActivityHighKneeMainBinding
 import com.fjp.skeletalmuscle.viewmodel.request.RequestHighKneeViewModel
 import com.fjp.skeletalmuscle.viewmodel.state.HighKneeViewModel
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import me.hgj.jetpackmvvm.ext.parseState
 import me.hgj.jetpackmvvm.util.DateUtils
 import java.util.Date
@@ -95,6 +96,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     private var mediaPlayer_low: MediaPlayer? = null
     private var leftLevelViews = mutableListOf<ImageView>()
     private var rightLevelViews = mutableListOf<ImageView>()
+    lateinit var pop: BasePopupView
     private val updateTimerTask = object : Runnable {
         override fun run() {
             val currentTime = if (isRunning) SystemClock.uptimeMillis() else pauseTime
@@ -298,6 +300,9 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     fun showOffLinePop() {
+        if (this@HighKneeMainActivity::pop.isInitialized && pop.isShow) {
+            pop.dismiss()
+        }
         val deviceOffLinePop = DeviceOffLinePop(this@HighKneeMainActivity, SportsType.HIGH_KNEE, object : DeviceOffLinePop.Listener {
             override fun reconnect(type: DeviceType) {
                 if (type == DeviceType.GTS) {
@@ -314,7 +319,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
 
             }
         })
-        val pop = XPopup.Builder(this@HighKneeMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
+        pop = XPopup.Builder(this@HighKneeMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
         pop.show()
     }
 

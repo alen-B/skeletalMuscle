@@ -13,6 +13,7 @@ import com.fjp.skeletalmuscle.app.util.SMBleManager
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
 import com.lxj.xpopup.impl.FullScreenPopupView
 import io.alterac.blurkit.BlurLayout
+import kotlinx.coroutines.delay
 import me.hgj.jetpackmvvm.base.appContext
 
 /**
@@ -191,8 +192,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         }
 
                     })
-                }
-                if (rightLeg == null) {
+                }else if (rightLeg == null) {
                     SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
                         override fun disConnected() {
                         }
@@ -267,6 +267,7 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                 val leftDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
                 val rightDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
                 if (leftDevice == null) {
+                    println("=====左设备没连接")
                     SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
                         override fun disConnected() {
                         }
@@ -285,8 +286,8 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                         }
 
                     })
-                }
-                if (rightDevice == null) {
+                }else if (rightDevice == null) {
+                    println("=====右设备没连接")
                     SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
                         override fun disConnected() {
                         }

@@ -14,6 +14,9 @@ import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.lxj.xpopup.BuildConfig
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import me.hgj.jetpackmvvm.base.appContext
 import java.math.BigInteger
 
@@ -182,7 +185,6 @@ object SMBleManager {
                         it.onGTSData(data)
                     } else if (deviceName.startsWith(DeviceType.LEFT_LEG.value)) {
                         it.onLeftDeviceData(data)
-
                     } else if (deviceName.startsWith(DeviceType.RIGHT_LEG.value)) {
                         it.onRightDeviceData(data)
                     } else if (deviceName.startsWith(DeviceType.LEFT_HAND_GRIPS.value)) {
