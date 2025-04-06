@@ -1,5 +1,6 @@
 package com.fjp.skeletalmuscle.app.util
 
+import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.data.model.bean.Record
 import java.util.TreeSet
 
@@ -124,11 +125,6 @@ object ExerciseDetector {
             rightYawTemp -= 360
         }
         processAngle(leftYawTemp, rightYawTemp)
-        if (leftCurrentMaxAngle != null && leftCurrentMinAngle != null && rightCurrentMaxAngle != null && rightCurrentMinAngle != null) {
-            println("当前角度: leftYawTemp:${leftYawTemp}     rightYawTemp:${rightYawTemp}   ${(leftCurrentMaxAngle!! - leftCurrentMinAngle!!) + (rightCurrentMaxAngle!! - rightCurrentMinAngle!!)}")
-        } else {
-            println("当前角度: leftYawTemp:${leftYawTemp}     rightYawTemp:${rightYawTemp}")
-        }
 
     }
 
@@ -144,16 +140,16 @@ object ExerciseDetector {
 
     fun processAngle(leftAngle: Int, rightAngle: Int) {
         if (leftPreviousAngle != null) {
-            if (leftCurrentMinAngle ==null) {
+            if (leftCurrentMinAngle == null) {
                 leftCurrentMinAngle = leftAngle
             }
-            if( leftCurrentMinAngle!! > leftAngle){
+            if (leftCurrentMinAngle!! > leftAngle) {
                 leftCurrentMinAngle = leftAngle
             }
             if (leftCurrentMaxAngle == null) {
                 leftCurrentMaxAngle = leftAngle
             }
-            if( leftCurrentMaxAngle!! < leftAngle){
+            if (leftCurrentMaxAngle!! < leftAngle) {
                 leftCurrentMaxAngle = leftAngle
             }
             if (leftAngle >= leftPreviousAngle!!) {
@@ -174,12 +170,17 @@ object ExerciseDetector {
                         if (rightCurrentMinAngle != null && rightCurrentMaxAngle != null) {
                             rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
                         }
-                        if (leftExpansionAngle > 30 && leftExpansionAngle<250) {
+                        if (leftExpansionAngle > 30 && leftExpansionAngle < 250 && rightExpansionAngle > 30) {
                             println("===左设备+1：${leftExpansionAngle}     左设备角度${rightExpansionAngle}")
-
+                            eventViewModel.sportWarningEvent.postValue(false)
                             chestCount++
                             records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
                         }
+
+                        if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50)) {
+                            eventViewModel.sportWarningEvent.postValue(true)
+                        }
+
                     }
                     rightCurrentMinAngle = null
                     rightCurrentMaxAngle = null
@@ -196,13 +197,13 @@ object ExerciseDetector {
             if (rightCurrentMinAngle == null) {
                 rightCurrentMinAngle = rightAngle
             }
-            if(rightCurrentMinAngle!! > rightAngle){
+            if (rightCurrentMinAngle!! > rightAngle) {
                 rightCurrentMinAngle = rightAngle
             }
             if (rightCurrentMaxAngle == null) {
                 rightCurrentMaxAngle = rightAngle
             }
-            if( rightCurrentMaxAngle!! < rightAngle){
+            if (rightCurrentMaxAngle!! < rightAngle) {
                 rightCurrentMaxAngle = rightAngle
             }
 //            if (rightAngle >= rightPreviousAngle!!) {

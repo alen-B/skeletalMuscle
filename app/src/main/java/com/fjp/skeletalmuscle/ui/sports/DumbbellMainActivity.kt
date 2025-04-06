@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
@@ -261,6 +262,16 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
                 showToast(getString(R.string.request_failed))
                 showReCompletedDialog()
             })
+        }
+        eventViewModel.sportWarningEvent.observeInActivity(this){
+            if(it){
+                mViewModel.title.set("双手打开角度不够，请及时调整")
+                mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
+            }else{
+                mViewModel.leftImg.set(R.drawable.title_left_default_icon)
+                mViewModel.title.set("扩胸运动")
+            }
+
         }
     }
 

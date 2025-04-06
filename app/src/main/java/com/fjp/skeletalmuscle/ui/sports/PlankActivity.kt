@@ -244,7 +244,7 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
         }
     }
 
-    fun showOffLinePop() {
+    private fun showOffLinePop() {
         if (this@PlankActivity::pop.isInitialized && pop.isShow) {
             pop.dismiss()
         }

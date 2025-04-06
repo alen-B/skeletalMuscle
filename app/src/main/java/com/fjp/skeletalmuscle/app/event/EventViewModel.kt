@@ -21,5 +21,6 @@ class EventViewModel : BaseViewModel() {
     val updateUserNameEvent = EventLiveData<String>()
 
     val updateAvatarEvent = EventLiveData<String>()
+    val sportWarningEvent = EventLiveData<Boolean>()
 
 }

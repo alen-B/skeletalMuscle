@@ -350,7 +350,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         }
     }
 
-    fun showOffLinePop() {
+    private fun showOffLinePop() {
         if (this@SportsAssessmentActivity::pop.isInitialized && pop.isShow) {
             pop.dismiss()
         }

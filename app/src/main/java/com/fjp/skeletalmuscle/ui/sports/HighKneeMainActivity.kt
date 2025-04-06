@@ -299,7 +299,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
         }
     }
 
-    fun showOffLinePop() {
+    private fun showOffLinePop() {
         if (this@HighKneeMainActivity::pop.isInitialized && pop.isShow) {
             pop.dismiss()
         }
