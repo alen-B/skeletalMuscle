@@ -79,7 +79,7 @@ object DeviceDataParse {
         if (data.size >= 20) {
             val axL: Float = Math.abs(twoBytesToAcceleration(data[2], data[3]))
             val ayL: Float = Math.abs(twoBytesToAcceleration(data[4], data[5]))
-            val azL: Float = Math.abs(twoBytesToAcceleration(data[6], data[7]))
+            val azL: Float = twoBytesToAcceleration(data[6], data[7])
             val wx: Float = Math.abs(twoBytesToAcceleration(data[8], data[9]))
             val wy: Float = Math.abs(twoBytesToAcceleration(data[10], data[11]))
             val wz: Float = Math.abs(twoBytesToAcceleration(data[12], data[13]))

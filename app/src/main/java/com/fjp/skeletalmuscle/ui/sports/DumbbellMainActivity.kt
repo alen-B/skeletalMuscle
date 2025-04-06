@@ -97,6 +97,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
         ExerciseDetector.leftUpCount = 0
+        ExerciseDetector.rightUpCount = 0
         ExerciseDetector.chestCount = 0
         mViewModel.title.set("上举运动")
         leftLevelViews.add(mDatabind.lIv1)

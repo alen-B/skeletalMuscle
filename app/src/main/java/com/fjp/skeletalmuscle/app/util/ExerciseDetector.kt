@@ -112,17 +112,22 @@ object ExerciseDetector {
         } else {
             leftYawTemp = leftYaw.toInt()
         }
-        if (leftPreviousAngle != null && kotlin.math.abs(leftYawTemp - leftPreviousAngle!!) > 180) {
+        if (leftPreviousAngle != null && leftYawTemp - leftPreviousAngle!! > 180) {
             leftYawTemp -= 360
         }
-
+        if (leftPreviousAngle != null && leftYawTemp - leftPreviousAngle!! < -180) {
+            leftYawTemp += 360
+        }
         if (rightYaw < 0) {
             rightYawTemp = rightYaw.toInt() + 360
         } else {
             rightYawTemp = rightYaw.toInt()
         }
-        if (rightPreviousAngle != null && kotlin.math.abs(rightYawTemp - rightPreviousAngle!!) > 180) {
+        if (rightPreviousAngle != null && rightYawTemp - rightPreviousAngle!! > 180) {
             rightYawTemp -= 360
+        }
+        if (rightPreviousAngle != null && rightYawTemp - rightPreviousAngle!! < -180) {
+            rightYawTemp += 360
         }
         processAngle(leftYawTemp, rightYawTemp)
 
@@ -192,7 +197,7 @@ object ExerciseDetector {
         leftPreviousAngle = leftAngle
 
 
-        if (rightPreviousAngle != null) {
+//        if (rightPreviousAngle != null) {
 
             if (rightCurrentMinAngle == null) {
                 rightCurrentMinAngle = rightAngle
@@ -238,7 +243,7 @@ object ExerciseDetector {
 //                    leftCurrentMaxAngle = null
 //                }
 //            }
-        }
+//        }
         rightPreviousAngle = rightAngle
 
 
