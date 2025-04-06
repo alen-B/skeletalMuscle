@@ -51,11 +51,45 @@
                 android:layout_height="25dp"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:text="上举"
+                android:text="左手"
                 android:textSize="30sp"
-                android:textColor="#99494949"
+                android:textColor="#494949"
                 android:layout_marginLeft="54dp"
                 android:layout_height="wrap_content"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/upRightLLC"
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_white_round_20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintTop_toBottomOf="@+id/title_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="35dp"
+            android:paddingRight="17dp"
+            android:paddingLeft="26dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="100dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="右手"
+                android:textSize="30sp"
+                android:textColor="#494949"
+                android:layout_marginRight="54dp"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:background="@drawable/circle"
+                android:layout_marginRight="25dp"
+                android:layout_height="25dp"/>
+            <View
+                android:layout_width="28dp"
+                android:background="@drawable/bg_1a4e71ff_8"
+                android:layout_height="74dp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lLC"
@@ -74,7 +108,7 @@
             <TextView
                 android:id="@+id/lCurDataTv"
                 android:layout_width="wrap_content"
-                android:textColor="#99494949"
+                android:textColor="#494949"
                 android:textSize="@dimen/text_size_3"
                 android:layout_marginTop="12dp"
                 android:layout_height="wrap_content" />
@@ -221,6 +255,38 @@
             android:textSize="@dimen/text_size_3"
             android:layout_height="wrap_content" />
 
+        <View
+            android:id="@+id/rTimesView"
+            android:layout_width="140dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="35dp"
+            android:background="@drawable/bg_3d4e71ff_20"
+            app:layout_constraintTop_toTopOf="@+id/lTimesView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="70dp" />
+
+        <TextView
+            android:id="@+id/rTimesTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/rTimesView"
+            app:layout_constraintBottom_toBottomOf="@+id/rTimesView"
+            app:layout_constraintStart_toStartOf="@+id/rTimesView"
+            app:layout_constraintEnd_toEndOf="@+id/rTimesView"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:textColor="@color/color_222"
+            android:textSize="@dimen/text_size_1"
+            android:text="@{viewModel.rightLegCount}"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/rUnitTv"
+            android:layout_width="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/rTimesTv"
+            app:layout_constraintStart_toEndOf="@+id/rTimesTv"
+            android:text="@string/main_times"
+            android:textColor="@color/color_222"
+            android:textSize="@dimen/text_size_4"
+            android:layout_height="wrap_content" />
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
             android:id="@+id/progressBar"
             android:layout_width="0dp"

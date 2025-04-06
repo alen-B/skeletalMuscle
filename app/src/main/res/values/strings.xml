@@ -229,7 +229,7 @@
     </string-array>
 
     <string name="unit_min">min</string>
-    <string name="unit_kg">kg</string>
+    <string name="unit_kg">千克</string>
     <string name="unit_cm">cm</string>
     <string name="unit_group">组</string>
     <string name="unit_angle">°</string>

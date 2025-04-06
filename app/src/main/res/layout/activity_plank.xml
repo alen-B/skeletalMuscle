@@ -33,7 +33,6 @@
         <ImageView
             android:id="@+id/centerIv"
             android:layout_width="wrap_content"
-            android:visibility="gone"
             android:background="@drawable/sports_plank_temp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

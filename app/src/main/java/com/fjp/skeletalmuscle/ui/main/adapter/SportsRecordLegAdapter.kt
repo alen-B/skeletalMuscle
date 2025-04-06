@@ -15,8 +15,23 @@ class SportsRecordLegAdapter(data: ArrayList<SportsRecord>) : BaseQuickAdapter<S
 
     override fun convert(holder: BaseViewHolder, item: SportsRecord) {
         holder.setText(R.id.titleTv, item.name)
-        holder.setText(R.id.numberTv, item.value)
-        holder.setText(R.id.unitTv, item.unit)
+        if(item.name == "上举次数"){
+            holder.setText(R.id.numberTv, item.value)
+            holder.setVisible(R.id.dumbellLL,true)
+            holder.setVisible(R.id.numberTv,false)
+            holder.setVisible(R.id.unitTv,false)
+            holder.setText(R.id.rightAccountTv,item.value)
+            holder.setText(R.id.leftAccountTv,item.value2)
+        }else{
+            holder.setVisible(R.id.dumbellLL,false)
+            holder.setVisible(R.id.numberTv,true)
+            holder.setVisible(R.id.unitTv,true)
+            holder.setText(R.id.numberTv, item.value)
+            holder.setText(R.id.unitTv, item.unit)
+        }
+
+        println("===titleTv:${item.name}")
+        println("===value:${item.value}")
 
     }
 }

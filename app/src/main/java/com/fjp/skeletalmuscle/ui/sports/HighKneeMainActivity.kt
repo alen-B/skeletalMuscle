@@ -31,6 +31,7 @@ import com.fjp.skeletalmuscle.app.weight.pop.DeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.Calorie
 import com.fjp.skeletalmuscle.data.model.bean.HeartRate
 import com.fjp.skeletalmuscle.data.model.bean.HeartRateLevel
+import com.fjp.skeletalmuscle.data.model.bean.HightRecord
 import com.fjp.skeletalmuscle.data.model.bean.LiftLegRequest
 import com.fjp.skeletalmuscle.data.model.bean.Record
 import com.fjp.skeletalmuscle.data.model.bean.SportsType
@@ -371,7 +372,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                         mViewModel.title.set("太棒了，您做的很好，继续！")
                     }
                     leftLegLifts++
-                    liftLegRequest.record.add(Record(leftLegmaxPitchInCycle.toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
+                    liftLegRequest.record.add(HightRecord(leftLegmaxPitchInCycle.toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1))
                     leftLegAngleSum += leftLegmaxPitchInCycle.toDouble()
                     mViewModel.leftLegCount.set(leftLegLifts.toString())
                     getAvgScore(abs(leftLegmaxPitchInCycle))
@@ -450,7 +451,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
                     rightLegLifts++
                     mViewModel.rightLegAngle.set("R ${rightLastPitch.toInt()}°")
                     rightLegAngleSum += abs(rightLegmaxPitchInCycle).toDouble()
-                    liftLegRequest.record.add(Record(rightLegmaxPitchInCycle.toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
+                    liftLegRequest.record.add(HightRecord(rightLegmaxPitchInCycle.toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2))
                     mViewModel.rightLegCount.set(rightLegLifts.toString())
                     getAvgScore(abs(rightLegmaxPitchInCycle))
 

@@ -18,5 +18,8 @@ data class HeartRate(val rate_value: Int, val record_time: String) : Parcelable
 
 
 //type:1上举，2扩胸
+//hand:1左手,2右手
 @Parcelize
-data class Record(val degree: Int, val record_time: String, val type: Int) : Parcelable
+data class Record(val degree: Int, val record_time: String, val type: Int,val hand:Int) : Parcelable
+@Parcelize
+data class HightRecord(val degree: Int, val record_time: String, val type: Int) : Parcelable

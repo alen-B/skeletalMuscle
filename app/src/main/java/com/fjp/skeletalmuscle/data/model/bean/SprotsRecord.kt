@@ -5,4 +5,4 @@ package com.fjp.skeletalmuscle.data.model.bean
  *Time:2024/10/30
  *Description:
  */
-class SportsRecord(var name: String, var value: String, var unit: String) {}
+class SportsRecord(val name: String, val value: String, val unit: String,val value2:String="",val unit2:String="") {}

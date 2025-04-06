@@ -19,6 +19,7 @@ import com.bigkoo.pickerview.view.TimePickerView
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseFragment
+import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.util.PDFManager
@@ -110,12 +111,13 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
             val icon = BitmapFactory.decodeResource(resources, R.drawable.pdf_icon)
             val imgData = ImageDataFactory.create(PDFManager.bitmapToBytes(icon))
             val image = Image(imgData)
-            image.scale(0.5f, 0.5f)
-            image.setWidth(120f)
+            image.scale(0.3f, 0.3f)
             // 设置图片位置为右上角
-            val imageWidth: Float = image.getImageScaledWidth()
-            val imageHeight: Float = image.getImageScaledHeight()
-            image.setFixedPosition(pageWidth - imageWidth+35, pageHeight - imageHeight )
+            val imageWidth: Float = image.imageWidth
+            val imageHeight: Float = image.imageHeight
+            val imageScaledWidth: Float = image.imageScaledWidth
+            val imageScaledHeight: Float = image.imageScaledHeight
+            image.setFixedPosition(pageWidth - imageScaledWidth-10.dp, pageHeight - imageScaledHeight-10.dp )
             PDFManager.addImage(image)
 //
             if (mDatabind.curWeekRB.isChecked) {
@@ -194,19 +196,21 @@ class ExportReportFragment : BaseFragment<ExportReportViewModel, FragmentExportR
             }
             if (it.sport_dumbbell != null) {
                 PDFManager.createParagraph(Text("哑铃运动 ").setFontSize(12f).setFontColor(ColorConstants.BLACK), Text(it.sport_dumbbell.score.toString()+" 分").setFontSize(12f).setFontColor(DeviceRgb(30, 157, 144)))
-                val dumbbellTab = Table(UnitValue.createPercentArray(floatArrayOf(80f, 80f, 80f, 80f, 80f)))
+                val dumbbellTab = Table(UnitValue.createPercentArray(floatArrayOf(80f, 80f, 80f, 80f, 80f, 80f)))
                 dumbbellTab.setBorder(null)
 //                dumbbellTab.addHeaderCell(PDFManager.createCell("平均得分"))
                 dumbbellTab.addHeaderCell(PDFManager.createCell("运动时长", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
                 dumbbellTab.addHeaderCell(PDFManager.createCell("消耗卡路里", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addHeaderCell(PDFManager.createCell("上举次数", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("左手上举次数", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addHeaderCell(PDFManager.createCell("右手上举次数", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
                 dumbbellTab.addHeaderCell(PDFManager.createCell("扩胸次数", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
                 dumbbellTab.addHeaderCell(PDFManager.createCell("哑铃重量", color = ColorConstants.GRAY, textAligment = TextAlignment.LEFT).setWidth(80f))
 
 //                dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.score.toString()))
                 dumbbellTab.addCell(PDFManager.createCell(DateTimeUtil.sceond2Min(it.sport_dumbbell.sport_time.toLong()) + " 分钟", textAligment = TextAlignment.LEFT).setWidth(80f))
                 dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.sum_calorie / 1000} 千卡", textAligment = TextAlignment.LEFT).setWidth(80f))
-                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.up_times} 次", textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.left_up_times} 次", textAligment = TextAlignment.LEFT).setWidth(80f))
+                dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.right_up_times} 次", textAligment = TextAlignment.LEFT).setWidth(80f))
                 dumbbellTab.addCell(PDFManager.createCell("${it.sport_dumbbell.expand_chest_times} 次", textAligment = TextAlignment.LEFT).setWidth(80f))
                 dumbbellTab.addCell(PDFManager.createCell(it.sport_dumbbell.weight.toString() + " kg", textAligment = TextAlignment.LEFT).setWidth(80f))
 

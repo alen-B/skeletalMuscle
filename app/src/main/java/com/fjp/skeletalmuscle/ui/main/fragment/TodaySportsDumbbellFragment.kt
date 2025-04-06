@@ -51,9 +51,10 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         mViewModel.heartRate.set(sportDumbbell.avg_rate_value.toString())
         mViewModel.weight.set(sportDumbbell.weight.toString())
         mViewModel.calorie.set((sportDumbbell.sum_calorie / 1000).toString())
-        mViewModel.upTimes.set(sportDumbbell.up_times.toString())
         mViewModel.expandChestTimes.set(sportDumbbell.expand_chest_times.toString())
         mViewModel.expandChestDegree.set(String.format("%.0f", sportDumbbell.avg_expand_chest_degree) + "°")
+        mDatabind.leftAccountTv.text = sportDumbbell.left_up_times.toString()
+        mDatabind.rightAccountTv.text = sportDumbbell.right_up_times.toString()
 
         initCalorieBarChart()
         initHeartRateLineChart()
@@ -262,6 +263,7 @@ class TodaySportsDumbbellFragment() : BaseFragment<TodaySportsDumbbellViewModel,
         lineDataSet2.mode = LineDataSet.Mode.LINEAR
         lineDataSet2.setDrawCircles(true)
         lineDataSet2.color = appContext.getColor(R.color.color_blue)
+        lineDataSet2.circleRadius = 4f
         lineDataSet2.setCircleColor(appContext.getColor(R.color.color_blue))
         lineDataSet2.setDrawCircleHole(false)
         lineDataSet2.setDrawValues(false)

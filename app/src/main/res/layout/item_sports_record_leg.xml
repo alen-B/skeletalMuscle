@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="206dp"
     android:layout_height="102dp"
+    android:background="@drawable/bg_white_round_20"
     android:paddingStart="14dp"
-    android:paddingEnd="14dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:background="@drawable/bg_white_round_20">
+    android:paddingEnd="14dp"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="运动时长"
         android:textColor="@color/color_cc1c1c1c"
         android:textSize="@dimen/text_size_5"
-        android:text="运动时长"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,11 +23,11 @@
         android:id="@+id/numberTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:layout_marginEnd="6dp"
+        android:text="28"
         android:textColor="@color/color_1c1c1c"
         android:textSize="@dimen/text_size_1"
-        android:text="28"
-        android:layout_marginEnd="6dp"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/unitTv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,9 +36,91 @@
         android:id="@+id/unitTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="分钟"
         android:textColor="@color/color_1c1c1c"
         android:textSize="@dimen/text_size_5"
-        android:text="分钟"
-        app:layout_constraintStart_toEndOf="@+id/numberTv"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numberTv" />
+
+    <LinearLayout
+        android:id="@+id/dumbellLL"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="top"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTv">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="L"
+            android:textColor="@color/color_331c1c1c"
+            android:textSize="@dimen/text_size_5" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/rightAccountTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="111"
+                android:textColor="@color/black"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/rightUnitTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="次"
+                android:textSize="@dimen/text_size_5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="4dp"
+                android:background="@color/color_331c1c1c" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R"
+            android:textColor="@color/color_331c1c1c"
+            android:textSize="@dimen/text_size_5" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/leftAccountTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="111"
+                android:textColor="@color/black"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/leftUnitTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="次"
+                android:textSize="@dimen/text_size_5" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

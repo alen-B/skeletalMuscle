@@ -3,6 +3,12 @@ package com.fjp.skeletalmuscle.app.util
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.concurrent.ConcurrentHashMap
 
 
 /**
@@ -29,5 +35,22 @@ object AppUtils {
 
     fun isTablet(context: Context): Boolean {
         return (context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+    }
+}
+
+fun <T> debounce(
+    delay: Long,
+    coroutineScope: CoroutineScope = GlobalScope,
+    action: (T) -> Unit
+): (T) -> Unit {
+    val debounceMap = ConcurrentHashMap<Int, Job>()
+    return { param: T ->
+        val currentKey = param.hashCode()
+        debounceMap[currentKey]?.cancel()
+        debounceMap[currentKey] = coroutineScope.launch {
+            delay(delay)
+            action(param)
+            debounceMap.remove(currentKey)
+        }
     }
 }

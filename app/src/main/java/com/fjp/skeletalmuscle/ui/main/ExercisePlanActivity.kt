@@ -307,7 +307,7 @@ class ExercisePlanActivity : BaseActivity<ExercisePlanViewModel, ActivityExercis
     }
 
     fun showVideoPop() {
-        val videoPop = VideoPop(this@ExercisePlanActivity, object : VideoPop.Listener {
+        val videoPop = VideoPop(this@ExercisePlanActivity,App.sportsType, object : VideoPop.Listener {
             override fun jump(pop: VideoPop) {
                 finish()
                 if (App.sportsType == SportsType.HIGH_KNEE) {

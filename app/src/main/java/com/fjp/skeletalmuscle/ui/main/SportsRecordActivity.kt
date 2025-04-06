@@ -45,6 +45,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.ext.parseState
+import me.hgj.jetpackmvvm.ext.util.toJson
 import java.util.Calendar
 
 class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsRecordBinding>() {
@@ -200,20 +201,14 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
             override fun getFormattedValue(value: Float): String {
                 val index = value.toInt()
                 if(index<expandChestDegree.size){
-                    return "${expandChestDegree[value.toInt()].expand_chest_degree}°"
+                    return "${index}°"
                 }else{
                     return ""
                 }
             }
         }
         val rightAxis: YAxis = lineChart.axisRight
-        rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        rightAxis.enableGridDashedLine(2f, 1f, 0f)
-        rightAxis.enableAxisLineDashedLine(2f, 1f, 0f)
-        rightAxis.gridLineWidth = 0.5f
-        rightAxis.gridColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
-        rightAxis.textColor = ContextCompat.getColor(appContext, R.color.color_801c1c1c)
+        rightAxis.isEnabled = false
         val values = ArrayList<Entry>()
 
         for (i in expandChestDegree.indices) {
@@ -252,9 +247,10 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         var dummbbell = todayData.sport_dumbbell!!
         mViewModel.dumbbellSportsDate.add(SportsRecord("运动时长", DateTimeUtil.sceond2Min(dummbbell.sport_time), "分钟"))
         mViewModel.dumbbellSportsDate.add(SportsRecord("哑铃重量", dummbbell.weight.toString(), "kg"))
-        mViewModel.dumbbellSportsDate.add(SportsRecord("上举次数", dummbbell.up_times.toString(), "次"))
+        mViewModel.dumbbellSportsDate.add(SportsRecord("上举次数", dummbbell.left_up_times.toString(), "次",dummbbell.right_up_times.toString(), "次"))
         mViewModel.dumbbellSportsDate.add(SportsRecord("扩胸次数", dummbbell.expand_chest_times.toString(), "次"))
         mViewModel.dumbbellSportsDate.add(SportsRecord("消耗卡路里", (dummbbell.sum_calorie / 1000).toString(), "千卡"))
+        println( "json===:${mViewModel.dumbbellSportsDate.toJson()}")
         mDatabind.dumbbellRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.dumbbellSportsDate))
         mDatabind.dumbbellRecyclerView.addItemDecoration(SpaceItemDecoration(16.dp.toInt(), 0))
         initLineChart(mDatabind.dumbbellHeartRateLineChart, dummbbell.heart_rate, 3)

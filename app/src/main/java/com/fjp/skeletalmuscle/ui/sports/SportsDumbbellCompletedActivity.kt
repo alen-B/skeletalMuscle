@@ -51,6 +51,8 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         mViewModel.upTimes.set(dumbbellResult.up_times.toString())
         mViewModel.expandChestTimes.set(dumbbellResult.expand_chest_times.toString())
         mViewModel.expandChestDegree.set(String.format("%.0f", dumbbellResult.avg_expand_chest_degree) + "°")
+        mDatabind.leftAccountTv.setText(dumbbellResult.left_up_times.toString())
+        mDatabind.rightAccountTv.setText(dumbbellResult.right_up_times.toString())
 //
         initCalorieBarChart()
         initHeartRateLineChart()
@@ -260,6 +262,7 @@ class SportsDumbbellCompletedActivity : BaseActivity<SportsDumbbellCompletedView
         lineDataSet2.color = appContext.getColor(R.color.color_blue)
         lineDataSet2.setCircleColor(appContext.getColor(R.color.color_blue))
         lineDataSet2.setDrawCircleHole(false)
+        lineDataSet2.circleRadius = 4f
         lineDataSet2.setDrawValues(false)
         // draw selection line as dashed
         lineDataSet2.enableDashedHighlightLine(10f, 5f, 0f)

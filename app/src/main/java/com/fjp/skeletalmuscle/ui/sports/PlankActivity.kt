@@ -126,7 +126,6 @@ class PlankActivity : BaseActivity<PlankViewModel, ActivityPlankBinding>(), SMBl
             override fun onFinish() {
                 requestStartTime = System.currentTimeMillis() / 1000
                 mDatabind.countdownText.visibility = View.GONE
-                mDatabind.centerIv.visibility = View.VISIBLE
                 startTimer()
             }
 
