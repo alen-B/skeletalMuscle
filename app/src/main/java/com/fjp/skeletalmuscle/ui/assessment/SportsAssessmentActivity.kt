@@ -37,6 +37,7 @@ import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
 import com.fjp.skeletalmuscle.databinding.ActivitySportsAssessmentBinding
 import com.fjp.skeletalmuscle.viewmodel.state.SportsAssessmentViewModel
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import me.hgj.jetpackmvvm.ext.parseState
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -81,6 +82,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var curType = AssessmentType.HighLeg
     private var weight: Int = 0//用户选择的当前体重
     private var waistline: Int = 0//用户选择的当前腰围
+    lateinit var pop: BasePopupView
     private val updateTimerTask = object : Runnable {
         override fun run() {
 
@@ -349,6 +351,9 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     }
 
     fun showOffLinePop() {
+        if (this@SportsAssessmentActivity::pop.isInitialized && pop.isShow) {
+            pop.dismiss()
+        }
         val deviceOffLinePop = PlankDeviceOffLinePop(this@SportsAssessmentActivity, object : PlankDeviceOffLinePop.Listener {
 
 
@@ -358,7 +363,7 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             override fun completed() {
             }
         })
-        val pop = XPopup.Builder(this@SportsAssessmentActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
+        pop = XPopup.Builder(this@SportsAssessmentActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)
         pop.show()
     }
 
