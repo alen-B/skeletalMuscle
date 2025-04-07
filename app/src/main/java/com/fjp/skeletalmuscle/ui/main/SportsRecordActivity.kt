@@ -152,6 +152,7 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         if (todayData.sport_dumbbell != null && todayData.sport_dumbbell.sport_time != 0L) {
             mDatabind.dumbbeBg.visibility = View.VISIBLE
             mDatabind.dumbbellScoreTv.text = todayData.sport_dumbbell.score.toString()
+            mDatabind.dumbbellAvgHeartRateValueTv.text = todayData.sport_dumbbell.avg_rate_value.toString()
             mDatabind.expandChestValueTv.text = "${todayData.sport_dumbbell.avg_expand_chest_degree.toInt().toString()}°"
             initSportsDumbbell(todayData)
             initDumbbellExpandChestLineChart(todayData.sport_dumbbell.expand_chest_degree)
