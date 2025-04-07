@@ -76,25 +76,5 @@ class ChestExpansionDetector {
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        val testDatasets = listOf(
-            // 数据集 1
-            listOf(
-                20.0, 30.0, 50.0, 80.0, 120.0, 150.0, 120.0, 80.0, 50.0, 30.0,
-                40.0, 60.0, 90.0, 130.0, 1580.0, 130.0, 90.0, 60.0, 40.0, 20.0,20.0, 30.0, 50.0, 80.0, 120.0, 150.0, 120.0, 80.0, 50.0, 30.0,
-                40.0, 60.0, 90.0, 130.0, 150.0, 130.0, 90.0, 60.0, 40.0, 20.0,20.0, 30.0, 50.0, 80.0, 120.0, 150.0, 120.0, 80.0, 50.0, 30.0,
-                40.0, 60.0, 90.0, 130.0, 148.0, 130.0, 90.0, 60.0, 40.0, 20.0,20.0, 30.0, 50.0, 80.0, 120.0, 150.0, 120.0, 80.0, 50.0, 30.0,
-                40.0, 60.0, 90.0, 130.0, 130.0, 90.0, 60.0, 40.0, 20.0
-            )
-
-        )
-
-        for ((index, dataset) in testDatasets.withIndex()) {
-            val detector = ChestExpansionDetector()
-            for (angle in dataset) {
-                detector.processAngle(angle)
-            }
-            println("数据集 $index 扩胸运动次数: ${detector.getExpansionCount()}")
-            println("数据集 $index 每次扩胸运动的角度差: ${detector.getAngleDifferences()}")
-        }
     }
 }

@@ -266,11 +266,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             }
 
             else -> {
-                println("=============================")
-                println("抬腿次数：" + (leftLegLifts + rightLegLifts))
-                println("起坐：" + totalSitUpTimes)
-                println("最大握力：" + maxGrip)
-                println("=============================")
 //                mViewModel.title.set("运动测评已全部完成！")
                 mDatabind.startTv.text = "提交"
                 mDatabind.startTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, R.drawable.fly), null)

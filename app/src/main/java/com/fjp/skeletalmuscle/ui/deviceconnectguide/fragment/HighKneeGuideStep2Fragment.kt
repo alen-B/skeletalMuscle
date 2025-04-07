@@ -21,7 +21,6 @@ class HighKneeGuideStep2Fragment : BaseFragment<HighKneeGuideStep2ViewModel, Fra
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        println("===============2")
         mDatabind.viewModel = mViewModel
         mDatabind.click = Proxy()
         mViewModel.title.set(getString(R.string.high_knee_guide_step2_title))

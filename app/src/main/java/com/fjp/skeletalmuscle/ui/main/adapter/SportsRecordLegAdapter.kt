@@ -30,9 +30,6 @@ class SportsRecordLegAdapter(data: ArrayList<SportsRecord>) : BaseQuickAdapter<S
             holder.setText(R.id.unitTv, item.unit)
         }
 
-        println("===titleTv:${item.name}")
-        println("===value:${item.value}")
-
     }
 }
 

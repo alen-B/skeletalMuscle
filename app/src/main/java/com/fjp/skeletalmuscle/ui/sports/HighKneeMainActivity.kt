@@ -556,18 +556,12 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             }
             // 计算卡路里消耗
             caloriesBurned = calculateCaloriesBurned(age, weight, interestedValue, seconds / 60f, isMale)
-            println("seconds - oldSeconds:${seconds - oldSeconds} interestedValue：${interestedValue} oldCaloriesBurned:${oldCaloriesBurned}    totalCalor:${caloriesBurned}")
 
             //消耗 caloriesBurned 千卡
             //暖身激活时间 warmupTime 秒
             //高效燃脂 fatBurningTime 秒
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
-            println("===消耗 caloriesBurned 千卡:  " + caloriesBurned)
-            println("===暖身激活时间:  " + warmupTime)
-            println("===高效燃脂:  " + fatBurningTime)
-            println("===心肺提升时间:  " + cardioTime)
-            println("===极限突破:  " + breakTime)
             liftLegRequest.heart_rate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
             liftLegRequest.calorie.add(Calorie((((caloriesBurned - oldCaloriesBurned).coerceAtLeast(0.0)) * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
             liftLegRequest.heart_lung_enhancement = cardioTime

@@ -167,8 +167,8 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.GTS)
                             }
+                            listener.reconnect(DeviceType.GTS)
                         }
 
                     })
@@ -187,12 +187,13 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.LEFT_LEG)
                             }
+                            listener.reconnect(DeviceType.LEFT_LEG)
                         }
 
                     })
-                }else if (rightLeg == null) {
+                }
+                if (rightLeg == null) {
                     SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
                         override fun disConnected() {
                         }
@@ -206,8 +207,8 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.RIGHT_LEG)
                             }
+                            listener.reconnect(DeviceType.RIGHT_LEG)
                         }
 
                     })
@@ -232,8 +233,8 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.GTS)
                             }
+                            listener.reconnect(DeviceType.GTS)
                         }
 
                     })
@@ -258,8 +259,8 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.GTS)
                             }
+                            listener.reconnect(DeviceType.GTS)
                         }
 
                     })
@@ -267,7 +268,6 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                 val leftDevice = SMBleManager.connectedDevices[DeviceType.LEFT_LEG]
                 val rightDevice = SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]
                 if (leftDevice == null) {
-                    println("=====左设备没连接")
                     SMBleManager.scanDevices(DeviceType.LEFT_LEG.value, DeviceType.LEFT_LEG, object : SMBleManager.DeviceStatusListener {
                         override fun disConnected() {
                         }
@@ -281,13 +281,13 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.LEFT_LEG)
                             }
+                            listener.reconnect(DeviceType.LEFT_LEG)
                         }
 
                     })
-                }else if (rightDevice == null) {
-                    println("=====右设备没连接")
+                }
+                if (rightDevice == null) {
                     SMBleManager.scanDevices(DeviceType.RIGHT_LEG.value, DeviceType.RIGHT_LEG, object : SMBleManager.DeviceStatusListener {
                         override fun disConnected() {
                         }
@@ -301,8 +301,8 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                                 titleTv.text = appContext.getString(R.string.device_off_line_connected)
                                 leftIv.setBackgroundResource(R.drawable.title_left_default_icon)
                                 connectBtn.text = appContext.getString(R.string.device_off_line_complete)
-                                listener.reconnect(DeviceType.RIGHT_LEG)
                             }
+                            listener.reconnect(DeviceType.RIGHT_LEG)
                         }
 
                     })

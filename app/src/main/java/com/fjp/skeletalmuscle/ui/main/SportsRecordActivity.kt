@@ -251,7 +251,6 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
         mViewModel.dumbbellSportsDate.add(SportsRecord("上举次数", dummbbell.left_up_times.toString(), "次",dummbbell.right_up_times.toString(), "次"))
         mViewModel.dumbbellSportsDate.add(SportsRecord("扩胸次数", dummbbell.expand_chest_times.toString(), "次"))
         mViewModel.dumbbellSportsDate.add(SportsRecord("消耗卡路里", (dummbbell.sum_calorie / 1000).toString(), "千卡"))
-        println( "json===:${mViewModel.dumbbellSportsDate.toJson()}")
         mDatabind.dumbbellRecyclerView.init(LinearLayoutManager(this, RecyclerView.HORIZONTAL, false), SportsRecordLegAdapter(mViewModel.dumbbellSportsDate))
         mDatabind.dumbbellRecyclerView.addItemDecoration(SpaceItemDecoration(16.dp.toInt(), 0))
         initLineChart(mDatabind.dumbbellHeartRateLineChart, dummbbell.heart_rate, 3)

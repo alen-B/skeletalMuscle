@@ -16,7 +16,6 @@ class HighKneeGuideStep1Fragment : BaseFragment<HighKneeGuideStep1ViewModel, Fra
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
-        println("===============1")
 
 
     }
