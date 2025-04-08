@@ -96,10 +96,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
-        ExerciseDetector.leftUpCount = 0
-        ExerciseDetector.rightUpCount = 0
-        ExerciseDetector.chestCount = 0
-        ExerciseDetector.records.clear()
+        ExerciseDetector.clear()
+
         mViewModel.title.set("上举运动")
         leftLevelViews.add(mDatabind.lIv1)
         leftLevelViews.add(mDatabind.lIv2)

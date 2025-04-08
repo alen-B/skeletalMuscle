@@ -8,76 +8,45 @@ import java.util.TreeSet
 
 object ExerciseDetector {
     private const val ACCELERATION_THRESHOLD_Z = 5.0 // z加速度阈值
-    private const val ACCELERATION_THRESHOLD_AccelX = 8.0 //AccelX阈值
     val records: MutableList<Record> = mutableListOf()
     var leftUpCount = 0 // 上举运动次数
     var rightUpCount = 0 // 右手上举运动次数
     var chestCount = 0 // 扩胸运动次数
     private var leftIsUpInProgress = false // 上举运动是否正在进行
     private var rightIsUpInProgress = false // 右手上举运动是否正在进行
-    private var isDescending = false // 标记扩胸角度是否已经开始下降
-    private var leftAngleSet = TreeSet<Double>()
-    private var rightAngleSet = TreeSet<Double>()
-    private var isExpanding = false
-    private var leftIsExpanding = false
-    private var rightIsExpanding = false
-    private var startAngleLeft: Double = 0.0
-    private var startAngleRight: Double = 0.0
-    private var endAngleLeft: Double = 0.0
-    private var endAngleRight: Double = 0.0
 
-    //    private var expansionCount = 0 // 扩胸次数计数器
     var maxAngle = 0 // 扩胸最大角度
     private var leftYawTemp = 0
-    private var leftYawMin = 360//左设备的最小角度
-    private var leftYawMax = 0//左设备的最大角度
     private var rightYawTemp = 0
-    private var rightYawMin = 360//右设备的最小角度
-    private var rightYawMax = 0//右设备的最大角度
-    var curAngle = 0
-    private var useAngle = 0//用户面朝的角度
-    private var totalAngle = 0f
-    private var startAngle = 0f
-
-    private var leftNegativeMinAngle = 0//左设备负值的最小值
-    private var leftNegativeMaxAngle = 0//左设备负值的最大值
-
-    private var leftPositiveMinAngle = 0//左设备正值的最小值
-    private var leftPositiveMaxAngle = 0//左设备正值的最大值
-
-    private var rightNegativeMinAngle = 0//右设备负值的最小值
-    private var rightNegativeMaxAngle = 0//右设备负值的最大值
-
-    private var rightPositiveMinAngle = 0//右设备正值的最小值
-    private var rightPositiveMaxAngle = 0//右设备正值的最大值
-
-    private var pointAngle = 0 //参考角度
-    private var angles = mutableListOf<Int>()
-
-    // 角速度阈值，用于判断是否开始运动
-    private val angularVelocityThreshold = 1.0f
 
     // 角度变化阈值，用于判断是否完成一次扩胸运动
     private val angleChangeThreshold = 30f
 
-    //上举运动只记录一个哑铃的，两个哑铃都记录次数显示会不对
 
-    private var isAdd = false//数据是否是在增加
-
-    private var expansionCount = 0
-    private var previousLeftAngle: Int? = null
-    private var currentLeftMinAngle: Int? = null
-    private var currentLeftMaxAngle: Int? = null
-    private var leftDeviceIsAscending = false
     private var leftExpansionAngle = 0
     private var rightExpansionAngle = 0
 
+    private var leftPreviousAngle: Int? = null
+    private var leftCurrentMinAngle: Int? = null
+    private var leftCurrentMaxAngle: Int? = null
+    private var leftIsAscending = false
 
-    private var previousRightAngle: Int? = null
-    private var currentRightMinAngle: Int? = null
-    private var currentRightMaxAngle: Int? = null
-    private var rightDeviceIsAscending = false
-
+    private var rightPreviousAngle: Int? = null
+    private var rightCurrentMinAngle: Int? = null
+    private var rightCurrentMaxAngle: Int? = null
+    private var rightIsAscending = false
+    fun clear(){
+        leftUpCount = 0
+        rightUpCount = 0
+        chestCount = 0
+        records.clear()
+        leftExpansionAngle = 0
+        rightExpansionAngle = 0
+        rightCurrentMinAngle = null
+        rightCurrentMaxAngle = null
+        leftCurrentMinAngle = null
+        leftCurrentMaxAngle = null
+    }
     fun processLeftUpData(leftPitch: Double, leftAccelZ: Double) {
         if (leftPitch < 50) {
             // 检测上举运动
@@ -133,15 +102,7 @@ object ExerciseDetector {
 
     }
 
-    private var leftPreviousAngle: Int? = null
-    private var leftCurrentMinAngle: Int? = null
-    private var leftCurrentMaxAngle: Int? = null
-    private var leftIsAscending = false
 
-    private var rightPreviousAngle: Int? = null
-    private var rightCurrentMinAngle: Int? = null
-    private var rightCurrentMaxAngle: Int? = null
-    private var rightIsAscending = false
 
     fun processAngle(leftAngle: Int, rightAngle: Int) {
         if (leftPreviousAngle != null) {
@@ -175,7 +136,7 @@ object ExerciseDetector {
                         if (rightCurrentMinAngle != null && rightCurrentMaxAngle != null) {
                             rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
                         }
-                        if (leftExpansionAngle > 30 && leftExpansionAngle < 250 && rightExpansionAngle > 30) {
+                        if (leftExpansionAngle > angleChangeThreshold && leftExpansionAngle < 250 && rightExpansionAngle > angleChangeThreshold) {
                             println("===左设备+1：${leftExpansionAngle}     左设备角度${rightExpansionAngle}")
                             eventViewModel.sportWarningEvent.postValue(false)
                             chestCount++
