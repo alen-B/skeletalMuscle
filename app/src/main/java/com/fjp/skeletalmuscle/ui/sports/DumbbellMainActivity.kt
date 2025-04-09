@@ -372,7 +372,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
                 mDatabind.lCurDataTv.text = "${ExerciseDetector.records[ExerciseDetector.records.size - 1].degree.toString()}°"
             }
             mViewModel.leftLegCount.set(ExerciseDetector.chestCount.toString())
-            setLeftCurLevelByPitch(ExerciseDetector.maxAngle.toFloat())
+//            setLeftCurLevelByPitch(ExerciseDetector.maxAngle.toFloat())
         }
     }
 

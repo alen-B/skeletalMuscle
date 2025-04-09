@@ -2,12 +2,11 @@ package com.fjp.skeletalmuscle.app.util
 
 import com.fjp.skeletalmuscle.app.eventViewModel
 import com.fjp.skeletalmuscle.data.model.bean.Record
-import java.util.TreeSet
 
 // 滑动平均滤波类
 
 object ExerciseDetector {
-    private const val ACCELERATION_THRESHOLD_Z = 5.0 // z加速度阈值
+    private const val ACCELERATION_THRESHOLD_Z = 13.0 // z加速度阈值
     val records: MutableList<Record> = mutableListOf()
     var leftUpCount = 0 // 上举运动次数
     var rightUpCount = 0 // 右手上举运动次数
@@ -15,7 +14,7 @@ object ExerciseDetector {
     private var leftIsUpInProgress = false // 上举运动是否正在进行
     private var rightIsUpInProgress = false // 右手上举运动是否正在进行
 
-    var maxAngle = 0 // 扩胸最大角度
+    var chestShowAngle = 0 // 扩胸最大角度
     private var leftYawTemp = 0
     private var rightYawTemp = 0
 
@@ -35,7 +34,8 @@ object ExerciseDetector {
     private var rightCurrentMinAngle: Int? = null
     private var rightCurrentMaxAngle: Int? = null
     private var rightIsAscending = false
-    fun clear(){
+
+    fun clear() {
         leftUpCount = 0
         rightUpCount = 0
         chestCount = 0
@@ -47,6 +47,7 @@ object ExerciseDetector {
         leftCurrentMinAngle = null
         leftCurrentMaxAngle = null
     }
+
     fun processLeftUpData(leftPitch: Double, leftAccelZ: Double) {
         if (leftPitch < 50) {
             // 检测上举运动
@@ -103,7 +104,6 @@ object ExerciseDetector {
     }
 
 
-
     fun processAngle(leftAngle: Int, rightAngle: Int) {
         if (leftPreviousAngle != null) {
             if (leftCurrentMinAngle == null) {
@@ -118,7 +118,23 @@ object ExerciseDetector {
             if (leftCurrentMaxAngle!! < leftAngle) {
                 leftCurrentMaxAngle = leftAngle
             }
+
+            if (rightCurrentMinAngle == null) {
+                rightCurrentMinAngle = rightAngle
+            }
+            if (rightCurrentMinAngle!! > rightAngle) {
+                rightCurrentMinAngle = rightAngle
+            }
+            if (rightCurrentMaxAngle == null) {
+                rightCurrentMaxAngle = rightAngle
+            }
+            if (rightCurrentMaxAngle!! < rightAngle) {
+                rightCurrentMaxAngle = rightAngle
+            }
+
+
             if (leftAngle >= leftPreviousAngle!!) {
+
                 // 角度上升
                 if (!leftIsAscending) {
                     // 开始上升阶段，重置最大最小值
@@ -156,22 +172,11 @@ object ExerciseDetector {
             }
         }
         leftPreviousAngle = leftAngle
-
+        rightPreviousAngle = rightAngle
 
 //        if (rightPreviousAngle != null) {
 
-            if (rightCurrentMinAngle == null) {
-                rightCurrentMinAngle = rightAngle
-            }
-            if (rightCurrentMinAngle!! > rightAngle) {
-                rightCurrentMinAngle = rightAngle
-            }
-            if (rightCurrentMaxAngle == null) {
-                rightCurrentMaxAngle = rightAngle
-            }
-            if (rightCurrentMaxAngle!! < rightAngle) {
-                rightCurrentMaxAngle = rightAngle
-            }
+
 //            if (rightAngle >= rightPreviousAngle!!) {
 //                // 角度上升
 //                if (!rightIsAscending) {
@@ -205,7 +210,7 @@ object ExerciseDetector {
 //                }
 //            }
 //        }
-        rightPreviousAngle = rightAngle
+
 
 
     }
