@@ -6,7 +6,7 @@ import com.fjp.skeletalmuscle.data.model.bean.Record
 // 滑动平均滤波类
 
 object ExerciseDetector {
-    private const val ACCELERATION_THRESHOLD_Z = 13.0 // z加速度阈值
+    private const val ACCELERATION_THRESHOLD_Z = 8.0 // z加速度阈值
     val records: MutableList<Record> = mutableListOf()
     var leftUpCount = 0 // 上举运动次数
     var rightUpCount = 0 // 右手上举运动次数
@@ -53,7 +53,7 @@ object ExerciseDetector {
             // 检测上举运动
             if (leftAccelZ > ACCELERATION_THRESHOLD_Z && !leftIsUpInProgress) {
                 leftIsUpInProgress = true
-            } else if (leftAccelZ < ACCELERATION_THRESHOLD_Z && leftIsUpInProgress) {
+            } else if (leftAccelZ < 3 && leftIsUpInProgress) {
                 leftUpCount++
                 records.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1, 1))
                 leftIsUpInProgress = false
@@ -66,7 +66,7 @@ object ExerciseDetector {
             // 检测上举运动
             if (rightAccelZ > ACCELERATION_THRESHOLD_Z && !rightIsUpInProgress) {
                 rightIsUpInProgress = true
-            } else if (rightAccelZ < ACCELERATION_THRESHOLD_Z && rightIsUpInProgress) {
+            } else if (rightAccelZ < 3 && rightIsUpInProgress) {
                 rightUpCount++
                 records.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1, 2))
                 rightIsUpInProgress = false
