@@ -162,7 +162,6 @@ object SMBleManager {
     }
 
     fun subscribeToNotifications(bleDevice: BleDevice, uuidService: String, uuidNotify: String) {
-
         val deviceName: String = bleDevice.name
         BleManager.getInstance().notify(bleDevice, uuidService, uuidNotify, object : BleNotifyCallback() {
             override fun onNotifySuccess() {

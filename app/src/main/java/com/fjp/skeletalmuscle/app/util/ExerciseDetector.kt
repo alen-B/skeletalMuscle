@@ -35,6 +35,9 @@ object ExerciseDetector {
     private var rightCurrentMaxAngle: Int? = null
     private var rightIsAscending = false
 
+    private var preRightCurrentMinAngle: Int? = null
+    private var preLeftCurrentMinAngle: Int? = null
+
     fun clear() {
         leftUpCount = 0
         rightUpCount = 0
@@ -49,7 +52,7 @@ object ExerciseDetector {
     }
 
     fun processLeftUpData(leftPitch: Double, leftAccelZ: Double) {
-        if (leftPitch < 50) {
+        if (leftPitch < 30) {
             // 检测上举运动
             if (leftAccelZ > ACCELERATION_THRESHOLD_Z && !leftIsUpInProgress) {
                 leftIsUpInProgress = true
@@ -62,7 +65,7 @@ object ExerciseDetector {
     }
 
     fun processRightUpData(rightPitch: Double, rightAccelZ: Double) {
-        if (rightPitch < 50) {
+        if (rightPitch < 30) {
             // 检测上举运动
             if (rightAccelZ > ACCELERATION_THRESHOLD_Z && !rightIsUpInProgress) {
                 rightIsUpInProgress = true
@@ -137,32 +140,29 @@ object ExerciseDetector {
 
                 // 角度上升
                 if (!leftIsAscending) {
-                    // 开始上升阶段，重置最大最小值
                     leftIsAscending = true
-//                    leftCurrentMinAngle = leftPreviousAngle
-//                    leftCurrentMaxAngle = leftAngle
+                    chestShowAngle = 0
                 }
             } else {
                 // 角度下降
                 if (leftIsAscending) {
                     // 从上升转为下降，完成一次扩胸
                     leftIsAscending = false
-                    if (leftCurrentMinAngle != null && leftCurrentMaxAngle != null) {
-                        leftExpansionAngle = leftCurrentMaxAngle!! - leftCurrentMinAngle!!
-                        if (rightCurrentMinAngle != null && rightCurrentMaxAngle != null) {
-                            rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
-                        }
-                        if (leftExpansionAngle > angleChangeThreshold && leftExpansionAngle < 250 && rightExpansionAngle > angleChangeThreshold) {
-                            println("===左设备+1：${leftExpansionAngle}     左设备角度${rightExpansionAngle}")
-                            eventViewModel.sportWarningEvent.postValue(false)
-                            chestCount++
-                            records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
-                        }
+                    leftExpansionAngle = leftCurrentMaxAngle!! - leftCurrentMinAngle!!
+                    rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
+                    if (leftExpansionAngle > angleChangeThreshold && rightExpansionAngle > angleChangeThreshold && leftExpansionAngle + rightExpansionAngle < 280) {
+                        println("===左设备+1：   ${leftExpansionAngle.toInt()}     左设备角度      ${rightExpansionAngle.toInt()}")
+                        eventViewModel.sportWarningEvent.postValue(false)
+                        chestShowAngle = leftExpansionAngle + rightExpansionAngle
+                        chestCount++
+                        preRightCurrentMinAngle = rightCurrentMinAngle
+                        preLeftCurrentMinAngle = leftCurrentMinAngle
+                        records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
 
-                        if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50)) {
-                            eventViewModel.sportWarningEvent.postValue(true)
-                        }
+                    }
 
+                    if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50)) {
+                        eventViewModel.sportWarningEvent.postValue(true)
                     }
                     rightCurrentMinAngle = null
                     rightCurrentMaxAngle = null
@@ -210,7 +210,6 @@ object ExerciseDetector {
 //                }
 //            }
 //        }
-
 
 
     }

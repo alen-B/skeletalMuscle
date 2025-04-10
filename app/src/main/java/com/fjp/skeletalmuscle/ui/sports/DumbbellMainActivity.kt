@@ -263,11 +263,11 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
                 showReCompletedDialog()
             })
         }
-        eventViewModel.sportWarningEvent.observeInActivity(this){
-            if(it){
+        eventViewModel.sportWarningEvent.observeInActivity(this) {
+            if (it) {
                 mViewModel.title.set("双手打开角度不够，请及时调整")
                 mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
-            }else{
+            } else {
                 mViewModel.leftImg.set(R.drawable.title_left_default_icon)
                 mViewModel.title.set("扩胸运动")
             }
@@ -353,7 +353,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             leftDataPoint = parseData
         }
         if (isUp) {
-            if (leftDataPoint.pitch > 50) {
+            if (leftDataPoint.pitch > 30) {
                 mViewModel.title.set("您握哑铃方式不正确，请及时调整")
                 mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             } else {
@@ -368,9 +368,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             mViewModel.rightLegCount.set(ExerciseDetector.rightUpCount.toString())
         } else {
             ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, this.isUp)
-            if (ExerciseDetector.records.size > 0) {
-                mDatabind.lCurDataTv.text = "${ExerciseDetector.records[ExerciseDetector.records.size - 1].degree.toString()}°"
-            }
+            mDatabind.lCurDataTv.text = "${ExerciseDetector.chestShowAngle.toString()}°"
             mViewModel.leftLegCount.set(ExerciseDetector.chestCount.toString())
 //            setLeftCurLevelByPitch(ExerciseDetector.maxAngle.toFloat())
         }
@@ -387,6 +385,13 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             println("parseData.roll:  " + parseData.roll)
         }
         if (isUp) {
+            if (leftDataPoint.pitch > 30) {
+                mViewModel.title.set("您握哑铃方式不正确，请及时调整")
+                mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
+            } else {
+                mViewModel.leftImg.set(R.drawable.title_left_default_icon)
+                mViewModel.title.set("上举运动")
+            }
             ExerciseDetector.processRightUpData(rightDataPoint.pitch, rightDataPoint.az)
             mViewModel.leftLegCount.set(ExerciseDetector.leftUpCount.toString())
             mViewModel.rightLegCount.set(ExerciseDetector.rightUpCount.toString())

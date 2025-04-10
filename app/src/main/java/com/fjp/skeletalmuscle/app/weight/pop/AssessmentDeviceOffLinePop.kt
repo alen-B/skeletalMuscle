@@ -19,7 +19,6 @@ import me.hgj.jetpackmvvm.base.appContext
  *Description:
  */
 class AssessmentDeviceOffLinePop(context: Context, val listener: Listener) : FullScreenPopupView(context) {
-    private lateinit var blurLayout: BlurLayout
     private var disConnectedAccount = 0//未连接的设备数量
 
     interface Listener {
@@ -113,12 +112,6 @@ class AssessmentDeviceOffLinePop(context: Context, val listener: Listener) : Ful
                 dismiss()
             }
         }
-        blurLayout = findViewById(R.id.blurLayout)
-        blurLayout.startBlur()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        blurLayout.pauseBlur()
-    }
 }
