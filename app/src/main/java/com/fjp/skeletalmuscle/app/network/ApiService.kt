@@ -41,7 +41,6 @@ interface ApiService {
 
     companion object {
         const val SERVER_URL = "http://8.141.25.141:8003/"
-        const val SERVER_URL1 = "https://wanandroid.com/"
     }
 
     /**

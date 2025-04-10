@@ -48,8 +48,8 @@ class NetworkApi : BaseNetworkApi() {
             addInterceptor(LogInterceptor())
             //超时时间 连接、读、写
             connectTimeout(10, TimeUnit.SECONDS)
-            readTimeout(5, TimeUnit.SECONDS)
-            writeTimeout(5, TimeUnit.SECONDS)
+            readTimeout(10, TimeUnit.SECONDS)
+            writeTimeout(10, TimeUnit.SECONDS)
         }
         return builder
     }

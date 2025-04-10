@@ -201,9 +201,12 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
     private fun setExpandView() {
         countDownTimer.cancel()
+        handler.removeCallbacks(updateTimerTask)
+
         this.isUp = false
         startCountdown()
         upSeconds = seconds
+        mViewModel.leftImg.set(R.drawable.title_left_default_icon)
         mViewModel.title.set("扩胸运动")
         mDatabind.lCurDataTv.text = "扩胸"
         mDatabind.lLC.visibility = View.VISIBLE
@@ -217,6 +220,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         sportsMinutes = 0
         elapsedTime = 0
         startTime = SystemClock.uptimeMillis() - elapsedTime
+        updateTimerTextView()
 
         mViewModel.maxTime = App.expandSportsTime
     }
@@ -259,6 +263,8 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
                 startActivity(intent)
                 finish()
             }, {
+                println("上传失败：${ it.errorMsg}")
+                it.printStackTrace()
                 showToast(getString(R.string.request_failed))
                 showReCompletedDialog()
             })
@@ -382,7 +388,6 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         val parseData = DeviceDataParse.parseData2DataPoint(data)
         if (parseData != null) {
             rightDataPoint = parseData
-            println("parseData.roll:  " + parseData.roll)
         }
         if (isUp) {
             if (leftDataPoint.pitch > 30) {
@@ -434,11 +439,6 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             //高效燃脂 fatBurningTime 秒
             //心肺提升时间 cardioTime 秒
             //极限突破 breakTime 秒
-            println("===消耗 caloriesBurned 千卡:  " + caloriesBurned)
-            println("===暖身激活时间:  " + warmupTime)
-            println("===高效燃脂:  " + fatBurningTime)
-            println("===心肺提升时间:  " + cardioTime)
-            println("===极限突破:  " + breakTime)
             dumbbellRequest.calorie.add(Calorie((((caloriesBurned - oldCaloriesBurned).coerceAtLeast(0.0)) * 1000).toInt(), DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
             dumbbellRequest.heart_rate.add(HeartRate(interestedValue, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS)))
             oldCaloriesBurned = caloriesBurned
