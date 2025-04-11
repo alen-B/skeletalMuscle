@@ -17,6 +17,7 @@ import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
 import com.fjp.skeletalmuscle.app.ext.dp
 import com.fjp.skeletalmuscle.app.ext.init
+import com.fjp.skeletalmuscle.app.ext.loadImageWithCallback
 import com.fjp.skeletalmuscle.app.ext.showToast
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
@@ -396,13 +397,10 @@ class SportsRecordActivity : BaseActivity<SportsRecordViewModel, ActivitySportsR
             val timeTv = shareTitleView.findViewById<TextView>(R.id.timeTv)
             nameTv.text = App.userInfo.name
             timeTv.text = DateTimeUtil.formatShareTime(System.currentTimeMillis())
-            avatarIv.load(App.userInfo.profile)
-            avatarIv.load(App.userInfo.profile, builder = {
-                allowHardware(false)
-                this.error(R.drawable.avatar_default)
-                this.placeholder(R.drawable.avatar_default)
-            })
-            shareViewModel.share(this@SportsRecordActivity, shareTitleView, mDatabind.scrollView.getChildAt(0), shareTBottomView)
+
+            loadImageWithCallback(avatarIv,App.userInfo.profile) {
+                shareViewModel.share(this@SportsRecordActivity, shareTitleView, mDatabind.scrollView.getChildAt(0), shareTBottomView)
+            }
         }
 
     }

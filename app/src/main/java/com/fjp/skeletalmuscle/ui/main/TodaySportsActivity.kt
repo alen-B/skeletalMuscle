@@ -4,13 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import coil.load
+import coil.request.ImageRequest
+import coil.request.ImageResult
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.ext.loadImageWithCallback
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.CircleImageView
@@ -84,14 +88,11 @@ class TodaySportsActivity : BaseActivity<TodaySportsDataViewModel, ActivityToday
             val timeTv = shareTitleView.findViewById<TextView>(R.id.timeTv)
             nameTv.text = App.userInfo.name
             timeTv.text = DateTimeUtil.formatShareTime(System.currentTimeMillis())
-            avatarIv.load(App.userInfo.profile)
-            avatarIv.load(App.userInfo.profile, builder = {
-                allowHardware(false)
-                this.error(R.drawable.avatar_default)
-                this.placeholder(R.drawable.avatar_default)
-            })
-            fragments[0].view?.let {
-                shareViewmodel.share(this@TodaySportsActivity, shareTitleView, it, shareTBottomView)
+
+            loadImageWithCallback(avatarIv,App.userInfo.profile) {
+                fragments[0].view?.let {
+                    shareViewmodel.share(this@TodaySportsActivity, shareTitleView, it, shareTBottomView)
+                }
             }
 
 

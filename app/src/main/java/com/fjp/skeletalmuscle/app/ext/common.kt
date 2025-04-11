@@ -1,8 +1,15 @@
 package com.fjp.skeletalmuscle.app.ext
 
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.View
+import android.widget.ImageView
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.target.Target
+import com.fjp.skeletalmuscle.R
+import me.hgj.jetpackmvvm.base.appContext
 
 /**
  *Author:Mr'x
@@ -64,5 +71,20 @@ interface OnLazyClickListener : View.OnClickListener {
     }
 
     fun onLazyClick(v: View)
+}
+
+fun loadImageWithCallback(imageView:ImageView,url: String, onSuccess: () -> Unit = {}) {
+    val imageLoader = ImageLoader(appContext)
+
+    // 创建 ImageRequest
+    val request = ImageRequest.Builder(appContext).placeholder(R.drawable.avatar_default).data(url).allowHardware(false).target(object:Target{
+        override fun onSuccess(result: Drawable) {
+            super.onSuccess(result)
+            imageView.setImageDrawable(result)
+            onSuccess()
+        }
+
+    }).build()
+    imageLoader.enqueue(request)
 }
 

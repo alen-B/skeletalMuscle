@@ -38,6 +38,7 @@ class TokenOutInterceptor : Interceptor {
                     appContext.startActivity(Intent(appContext, LoginActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     })
+
                 }
             } catch (e: Exception) {
                 println("Gson 解析异常")

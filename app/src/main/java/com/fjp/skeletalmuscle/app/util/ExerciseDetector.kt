@@ -108,7 +108,7 @@ object ExerciseDetector {
     }
 
 
-    fun processAngle(leftAngle: Int, rightAngle: Int) {
+    private fun processAngle(leftAngle: Int, rightAngle: Int) {
         if (leftPreviousAngle != null) {
             if (leftCurrentMinAngle == null) {
                 leftCurrentMinAngle = leftAngle
@@ -152,7 +152,6 @@ object ExerciseDetector {
                     leftExpansionAngle = leftCurrentMaxAngle!! - leftCurrentMinAngle!!
                     rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
                     if (leftExpansionAngle > angleChangeThreshold && rightExpansionAngle > angleChangeThreshold && leftExpansionAngle + rightExpansionAngle < 280) {
-                        println("===左设备+1：   ${leftExpansionAngle.toInt()}     左设备角度      ${rightExpansionAngle.toInt()}")
                         eventViewModel.sportWarningEvent.postValue(false)
                         chestShowAngle = leftExpansionAngle + rightExpansionAngle
                         chestCount++
@@ -160,9 +159,7 @@ object ExerciseDetector {
                         preLeftCurrentMinAngle = leftCurrentMinAngle
                         records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
 
-                    }
-
-                    if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50)) {
+                    }else if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50)) {
                         eventViewModel.sportWarningEvent.postValue(true)
                     }
                     rightCurrentMinAngle = null
@@ -175,42 +172,6 @@ object ExerciseDetector {
         leftPreviousAngle = leftAngle
         rightPreviousAngle = rightAngle
 
-//        if (rightPreviousAngle != null) {
-
-
-//            if (rightAngle >= rightPreviousAngle!!) {
-//                // 角度上升
-//                if (!rightIsAscending) {
-//                    // 开始上升阶段，重置最大最小值
-//                    rightIsAscending = true
-////                    rightCurrentMinAngle = rightPreviousAngle
-////                    rightCurrentMaxAngle = rightAngle
-//                }
-//            } else {
-//                // 角度下降
-//                if (rightIsAscending) {
-//                    // 从上升转为下降，完成一次扩胸
-//                    rightIsAscending = false
-//                    if (rightCurrentMinAngle != null && rightCurrentMaxAngle != null) {
-//                        rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
-//                        if (leftCurrentMinAngle != null && leftCurrentMaxAngle != null) {
-//                            leftExpansionAngle = leftCurrentMaxAngle!! - leftCurrentMinAngle!!
-//                        }
-//                        if (rightExpansionAngle > 30) {
-//                            println("===右设备+1：${rightExpansionAngle}     左设备角度${leftExpansionAngle}")
-//
-//                            chestCount++
-//                            records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
-//                        }
-//                    }
-//                    rightCurrentMinAngle = null
-//                    rightCurrentMaxAngle = null
-//                    leftIsAscending = false
-//                    leftCurrentMinAngle = null
-//                    leftCurrentMaxAngle = null
-//                }
-//            }
-//        }
 
 
     }

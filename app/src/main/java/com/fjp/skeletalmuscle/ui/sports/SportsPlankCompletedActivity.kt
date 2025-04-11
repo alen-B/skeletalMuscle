@@ -10,6 +10,7 @@ import coil.load
 import com.fjp.skeletalmuscle.R
 import com.fjp.skeletalmuscle.app.App
 import com.fjp.skeletalmuscle.app.base.BaseActivity
+import com.fjp.skeletalmuscle.app.ext.loadImageWithCallback
 import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DateTimeUtil
 import com.fjp.skeletalmuscle.app.weight.CircleImageView
@@ -209,13 +210,10 @@ class SportsPlankCompletedActivity : BaseActivity<SportsPlankCompletedViewModel,
             val timeTv = shareTitleView.findViewById<TextView>(R.id.timeTv)
             nameTv.text = App.userInfo.name
             timeTv.text = DateTimeUtil.formatShareTime(System.currentTimeMillis())
-            avatarIv.load(App.userInfo.profile)
-            avatarIv.load(App.userInfo.profile, builder = {
-                allowHardware(false)
-                this.error(R.drawable.avatar_default)
-                this.placeholder(R.drawable.avatar_default)
-            })
-            shareViewmodel.share(this@SportsPlankCompletedActivity, shareTitleView, mDatabind.shareCl, shareTBottomView)
+            loadImageWithCallback(avatarIv,App.userInfo.profile) {
+                shareViewmodel.share(this@SportsPlankCompletedActivity, shareTitleView, mDatabind.shareCl, shareTBottomView)
+            }
+
         }
 
         fun clickCompleted() {
