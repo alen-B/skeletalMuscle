@@ -101,15 +101,23 @@ class UserInfoFragment : BaseFragment<UserInfoViewModel, FragmentUserInfoBinding
         }
 
         requestUserInfoViewModel.avatar.observe(this) {
-            appContext.showToast("更新成功")
             App.userInfo.profile = it
             mDatabind.avatarLayout.setAvatarIv(requireContext(), App.userInfo.profile)
             CacheUtil.setUser(App.userInfo)
+            requestUserInfoViewModel.saveInfoReq(App.userInfo)
             eventViewModel.updateAvatarEvent.postValue(it)
         }
 
         requestUserInfoViewModel.updateImageFailed.observe(this) {
             appContext.showToast("更新失败")
+        }
+
+        saveUserInfoViewModel.saveResult.observe(this) {
+            parseState(it, {
+                appContext.showToast("更新成功")
+            }, {
+                appContext.showToast(getString(R.string.request_failed))
+            })
         }
     }
 
