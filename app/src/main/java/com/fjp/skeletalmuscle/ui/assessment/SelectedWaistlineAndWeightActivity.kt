@@ -48,11 +48,11 @@ class SelectedWaistlineAndWeightActivity : BaseActivity<SelectedWaistlineAndWeig
 
     private fun initWaistLineData() {
 
-        for (i in 0..50) {
-            if ((i + 70) == App.userInfo.waistline.toInt()) {
+        for (i in 0..80) {
+            if ((i + 40) == App.userInfo.waistline.toInt()) {
                 currWaistLineIndex = i
             }
-            mViewModel.waistlineDataArr.add(i, i + 70)
+            mViewModel.waistlineDataArr.add(i, i + 40)
         }
     }
 
