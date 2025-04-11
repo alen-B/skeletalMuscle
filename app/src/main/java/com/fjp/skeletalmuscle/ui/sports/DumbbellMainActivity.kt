@@ -359,7 +359,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             leftDataPoint = parseData
         }
         if (isUp) {
-            if (leftDataPoint.pitch > 30) {
+            if (leftDataPoint.pitch > ExerciseDetector.upMinAngle) {
                 mViewModel.title.set("您握哑铃方式不正确，请及时调整")
                 mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             } else {
@@ -382,6 +382,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
 
     override fun onRightDeviceData(data: ByteArray) {
+        println("pitch角度：${leftDataPoint.pitch}")
         if (!isRunning) {
             return
         }
@@ -390,7 +391,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             rightDataPoint = parseData
         }
         if (isUp) {
-            if (leftDataPoint.pitch > 30) {
+            if (leftDataPoint.pitch > ExerciseDetector.upMinAngle) {
                 mViewModel.title.set("您握哑铃方式不正确，请及时调整")
                 mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
             } else {
