@@ -46,6 +46,9 @@ object ExerciseDetector {
     private var rightErrorTimes = 0
     private var chestExpansionTimes = 0
 
+    var sendAngleZero = false
+    var leftAscendingStartAngle: Int? = null
+
     fun clear() {
         leftUpCount = 0
         rightUpCount = 0
@@ -59,14 +62,14 @@ object ExerciseDetector {
         leftCurrentMaxAngle = null
     }
 
-    fun processLeftUpData(leftPitch: Double, leftAccelZ: Double) {
+    fun processLeftUpData(leftPitch: Double,leftRoll: Double ,leftAccelZ: Double) {
 
         // 检测上举运动
         if (leftAccelZ > ACCELERATION_THRESHOLD_Z && !leftIsUpInProgress) {
             leftIsUpInProgress = true
             leftErrorTimes = 0
         } else if (leftAccelZ < 3 && leftIsUpInProgress) {
-            if (leftPitch > upMinAngle) {
+            if (leftPitch > upMinAngle||leftRoll>upMinAngle) {
                 leftErrorTimes++
             }
             if (leftErrorTimes != 0) {
@@ -85,32 +88,32 @@ object ExerciseDetector {
         }
     }
 
-    fun processRightUpData(rightPitch: Double, rightAccelZ: Double) {
-            // 检测上举运动
-            if (rightAccelZ > ACCELERATION_THRESHOLD_Z && !rightIsUpInProgress) {
-                rightIsUpInProgress = true
-                rightErrorTimes = 0
-            } else if (rightAccelZ < 3 && rightIsUpInProgress) {
+    fun processRightUpData(rightPitch: Double, rightRoll: Double, rightAccelZ: Double) {
+        // 检测上举运动
+        if (rightAccelZ > ACCELERATION_THRESHOLD_Z && !rightIsUpInProgress) {
+            rightIsUpInProgress = true
+            rightErrorTimes = 0
+        } else if (rightAccelZ < 3 && rightIsUpInProgress) {
 
-                if (rightPitch > upMinAngle) {
-                    rightErrorTimes++
-                }
-                if (rightErrorTimes != 0) {
-                    rightIsUpInProgress = false
-                    leftUpTitle = "您右手握哑铃方式不正确，请及时调整"
-                    eventViewModel.sportWarningEvent.postValue(true)
-                    rightErrorTimes = 0
-                    return
-                }
-                rightIsUpInProgress = false
-                rightErrorTimes = 0
-                rightUpCount++
-                records.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1, 2))
-                if (leftUpTitle != "上举运动") {
-                    leftUpTitle = "上举运动"
-                }
-                eventViewModel.sportWarningEvent.postValue(false)
+            if (rightPitch > upMinAngle || rightRoll > upMinAngle) {
+                rightErrorTimes++
             }
+            if (rightErrorTimes != 0) {
+                rightIsUpInProgress = false
+                leftUpTitle = "您右手握哑铃方式不正确，请及时调整"
+                eventViewModel.sportWarningEvent.postValue(true)
+                rightErrorTimes = 0
+                return
+            }
+            rightIsUpInProgress = false
+            rightErrorTimes = 0
+            rightUpCount++
+            records.add(Record(0, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 1, 2))
+            if (leftUpTitle != "上举运动") {
+                leftUpTitle = "上举运动"
+            }
+            eventViewModel.sportWarningEvent.postValue(false)
+        }
     }
 
     @Synchronized
@@ -118,6 +121,7 @@ object ExerciseDetector {
         if (leftPitch > 120 || leftPitch < 70 || rightPitch > 120 || rightPitch < 70) {
             chestExpansionTimes++
         }
+        println("leftRoll:${leftRoll}")
 //        println("=======leftPitch:${leftPitch}")
         if (leftYaw < 0) {
             leftYawTemp = leftYaw.toInt() + 360
@@ -147,6 +151,7 @@ object ExerciseDetector {
 
 
     private fun processAngle(leftAngle: Int, rightAngle: Int) {
+        println("当前角度：${leftAngle}")
         if (leftPreviousAngle != null) {
             if (leftCurrentMinAngle == null) {
                 leftCurrentMinAngle = leftAngle
@@ -175,18 +180,26 @@ object ExerciseDetector {
             }
 
 
-            if (leftAngle >= leftPreviousAngle!!) {
-
+            if (leftAngle > leftPreviousAngle!!) {
                 // 角度上升
                 if (!leftIsAscending) {
                     leftIsAscending = true
                     chestShowAngle = 0
+                    chestExpansionTimes = 0
+                    leftAscendingStartAngle = leftAngle
                 }
+                if (leftAscendingStartAngle != null && leftAngle - leftAscendingStartAngle!! > 5 && !sendAngleZero) {
+                    sendAngleZero = true
+                    chestShowAngle = 0
+                    eventViewModel.sportWarningEvent.postValue(false)
+                }
+
             } else {
                 // 角度下降
                 if (leftIsAscending) {
                     // 从上升转为下降，完成一次扩胸
                     leftIsAscending = false
+                    sendAngleZero = false
                     leftExpansionAngle = leftCurrentMaxAngle!! - leftCurrentMinAngle!!
                     rightExpansionAngle = rightCurrentMaxAngle!! - rightCurrentMinAngle!!
                     if (leftExpansionAngle > angleChangeThreshold && rightExpansionAngle > angleChangeThreshold && leftExpansionAngle + rightExpansionAngle < 280) {
@@ -213,7 +226,7 @@ object ExerciseDetector {
                         records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
                         eventViewModel.sportWarningEvent.postValue(false)
 
-                    } else if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50)) {
+                    } else if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50) || rightExpansionAngle < 30 && leftExpansionAngle < 30) {
                         chestTitle = "双手打开角度不够，请及时调整"
                         eventViewModel.sportWarningEvent.postValue(true)
                     }

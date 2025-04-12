@@ -383,7 +383,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         }
 
         if (isUp) {
-            ExerciseDetector.processLeftUpData(leftDataPoint.pitch, leftDataPoint.az)
+            ExerciseDetector.processLeftUpData(leftDataPoint.pitch,leftDataPoint.roll, leftDataPoint.az)
         } else {
             ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, this.isUp)
         }
@@ -391,7 +391,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
 
 
     override fun onRightDeviceData(data: ByteArray) {
-        println("pitch角度：${leftDataPoint.pitch}")
+//        println("pitch角度：${leftDataPoint.pitch}")
         if (!isRunning) {
             return
         }
@@ -400,7 +400,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             rightDataPoint = parseData
         }
         if (isUp) {
-            ExerciseDetector.processRightUpData(rightDataPoint.pitch, rightDataPoint.az)
+            ExerciseDetector.processRightUpData(rightDataPoint.pitch,rightDataPoint.roll, rightDataPoint.az)
         } else {
 
 //            ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, false, this.isUp)
