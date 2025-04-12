@@ -226,7 +226,7 @@ object ExerciseDetector {
                         records.add(Record(leftExpansionAngle + rightExpansionAngle, DateTimeUtil.formatDate(System.currentTimeMillis(), DateTimeUtil.DATE_PATTERN_SS), 2, 1))
                         eventViewModel.sportWarningEvent.postValue(false)
 
-                    } else if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50) || rightExpansionAngle < 30 && leftExpansionAngle < 30) {
+                    } else if (leftExpansionAngle > 50 && rightExpansionAngle < 50 || (leftExpansionAngle < 50 && rightExpansionAngle > 50)) {
                         chestTitle = "双手打开角度不够，请及时调整"
                         eventViewModel.sportWarningEvent.postValue(true)
                     }
