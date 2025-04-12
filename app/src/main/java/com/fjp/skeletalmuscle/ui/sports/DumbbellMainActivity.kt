@@ -263,22 +263,45 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
                 startActivity(intent)
                 finish()
             }, {
-                println("上传失败：${ it.errorMsg}")
+                println("上传失败：${it.errorMsg}")
                 it.printStackTrace()
                 showToast(getString(R.string.request_failed))
                 showReCompletedDialog()
             })
         }
         eventViewModel.sportWarningEvent.observeInActivity(this) {
-            if (it) {
-                mViewModel.title.set("双手打开角度不够，请及时调整")
-                mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
+            if (isUp) {
+                if (it) {
+                    if (mViewModel.leftImg.get() != R.drawable.title_icon_device_connecting) {
+                        mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
+                    }
+                } else {
+                    if (mViewModel.leftImg.get() != R.drawable.title_left_default_icon) {
+                        mViewModel.leftImg.set(R.drawable.title_left_default_icon)
+                    }
+                    mViewModel.leftLegCount.set(ExerciseDetector.leftUpCount.toString())
+                    mViewModel.rightLegCount.set(ExerciseDetector.rightUpCount.toString())
+                }
+                mViewModel.title.set(ExerciseDetector.leftUpTitle)
             } else {
-                mViewModel.leftImg.set(R.drawable.title_left_default_icon)
-                mViewModel.title.set("扩胸运动")
+                if (it) {
+                    if (mViewModel.leftImg.get() != R.drawable.title_icon_device_connecting) {
+
+                        mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
+                    }
+                } else {
+                    if (mViewModel.leftImg.get() != R.drawable.title_left_default_icon) {
+                        mViewModel.leftImg.set(R.drawable.title_left_default_icon)
+                    }
+                    mDatabind.lCurDataTv.text = "${ExerciseDetector.chestShowAngle.toString()}°"
+                    mViewModel.leftLegCount.set(ExerciseDetector.chestCount.toString())
+                }
+                mViewModel.title.set(ExerciseDetector.chestTitle)
             }
 
+
         }
+
     }
 
     inner class ProxyClick {
@@ -358,25 +381,11 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         if (parseData != null) {
             leftDataPoint = parseData
         }
-        if (isUp) {
-            if (leftDataPoint.pitch > ExerciseDetector.upMinAngle) {
-                mViewModel.title.set("您握哑铃方式不正确，请及时调整")
-                mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
-            } else {
-                mViewModel.leftImg.set(R.drawable.title_left_default_icon)
-                mViewModel.title.set("上举运动")
-            }
-        }
 
         if (isUp) {
             ExerciseDetector.processLeftUpData(leftDataPoint.pitch, leftDataPoint.az)
-            mViewModel.leftLegCount.set(ExerciseDetector.leftUpCount.toString())
-            mViewModel.rightLegCount.set(ExerciseDetector.rightUpCount.toString())
         } else {
             ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, this.isUp)
-            mDatabind.lCurDataTv.text = "${ExerciseDetector.chestShowAngle.toString()}°"
-            mViewModel.leftLegCount.set(ExerciseDetector.chestCount.toString())
-//            setLeftCurLevelByPitch(ExerciseDetector.maxAngle.toFloat())
         }
     }
 
@@ -391,16 +400,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             rightDataPoint = parseData
         }
         if (isUp) {
-            if (leftDataPoint.pitch > ExerciseDetector.upMinAngle) {
-                mViewModel.title.set("您握哑铃方式不正确，请及时调整")
-                mViewModel.leftImg.set(R.drawable.title_icon_device_connecting)
-            } else {
-                mViewModel.leftImg.set(R.drawable.title_left_default_icon)
-                mViewModel.title.set("上举运动")
-            }
             ExerciseDetector.processRightUpData(rightDataPoint.pitch, rightDataPoint.az)
-            mViewModel.leftLegCount.set(ExerciseDetector.leftUpCount.toString())
-            mViewModel.rightLegCount.set(ExerciseDetector.rightUpCount.toString())
         } else {
 
 //            ExerciseDetector.processData(leftDataPoint.pitch, leftDataPoint.yaw, leftDataPoint.roll, leftDataPoint.ax, leftDataPoint.ay, leftDataPoint.az, rightDataPoint.pitch, rightDataPoint.yaw, rightDataPoint.roll, rightDataPoint.ax, rightDataPoint.ay, rightDataPoint.az, false, this.isUp)

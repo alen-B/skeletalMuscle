@@ -22,5 +22,7 @@ class EventViewModel : BaseViewModel() {
 
     val updateAvatarEvent = EventLiveData<String>()
     val sportWarningEvent = EventLiveData<Boolean>()
+    val leftUpSportWarningEvent = EventLiveData<LeftUpWarning>()
 
 }
+class LeftUpWarning(leftHand:Boolean,isWarning:Boolean)

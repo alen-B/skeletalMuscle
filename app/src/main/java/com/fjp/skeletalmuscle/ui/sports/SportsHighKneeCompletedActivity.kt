@@ -349,7 +349,6 @@ class SportsHighKneeCompletedActivity : BaseActivity<SportsHighKneeCompletedView
                 shareViewModel.share(this@SportsHighKneeCompletedActivity, shareTitleView, mDatabind.shareCl, shareTBottomView)
             }
 
-
         }
 
         fun clickCompleted() {
