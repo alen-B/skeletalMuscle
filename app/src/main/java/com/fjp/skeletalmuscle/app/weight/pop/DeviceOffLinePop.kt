@@ -22,7 +22,6 @@ import me.hgj.jetpackmvvm.base.appContext
  *Description:
  */
 class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listener: Listener) : FullScreenPopupView(context) {
-    private lateinit var blurLayout: BlurLayout
     private var disConnectedAccount = 0//未连接的设备数量
 
     interface Listener {
@@ -358,12 +357,6 @@ class DeviceOffLinePop(context: Context, val sportsType: SportsType, val listene
                 }
             }
         }
-        blurLayout = findViewById<BlurLayout>(R.id.blurLayout)
-        blurLayout.startBlur()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        blurLayout.pauseBlur()
-    }
 }
