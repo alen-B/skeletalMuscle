@@ -209,6 +209,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
         mViewModel.leftImg.set(R.drawable.title_left_default_icon)
         mViewModel.title.set("扩胸运动")
         mDatabind.lCurDataTv.text = "扩胸"
+        mViewModel.leftLegCount.set("0")
         mDatabind.lLC.visibility = View.VISIBLE
         mDatabind.upLLC.visibility = View.GONE
         mDatabind.upRightLLC.visibility = View.GONE

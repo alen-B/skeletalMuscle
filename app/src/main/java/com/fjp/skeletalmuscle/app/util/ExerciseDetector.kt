@@ -47,7 +47,6 @@ object ExerciseDetector {
     private var chestExpansionTimes = 0
 
     var sendAngleZero = false
-    var leftAscendingStartAngle: Int? = null
 
     fun clear() {
         leftUpCount = 0
@@ -184,14 +183,7 @@ object ExerciseDetector {
                 // 角度上升
                 if (!leftIsAscending) {
                     leftIsAscending = true
-                    chestShowAngle = 0
                     chestExpansionTimes = 0
-                    leftAscendingStartAngle = leftAngle
-                }
-                if (leftAscendingStartAngle != null && leftAngle - leftAscendingStartAngle!! > 5 && !sendAngleZero) {
-                    sendAngleZero = true
-                    chestShowAngle = 0
-                    eventViewModel.sportWarningEvent.postValue(false)
                 }
 
             } else {
@@ -230,11 +222,11 @@ object ExerciseDetector {
                         chestTitle = "双手打开角度不够，请及时调整"
                         eventViewModel.sportWarningEvent.postValue(true)
                     }
-                    rightCurrentMinAngle = null
-                    rightCurrentMaxAngle = null
-                    leftCurrentMinAngle = null
-                    leftCurrentMaxAngle = null
                 }
+                rightCurrentMinAngle = null
+                rightCurrentMaxAngle = null
+                leftCurrentMinAngle = null
+                leftCurrentMaxAngle = null
             }
         }
         leftPreviousAngle = leftAngle
