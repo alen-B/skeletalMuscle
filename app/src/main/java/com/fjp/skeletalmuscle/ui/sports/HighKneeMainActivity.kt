@@ -300,6 +300,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
     }
 
     private fun showOffLinePop() {
+        pauseTimer()
         if (this@HighKneeMainActivity::pop.isInitialized && pop.isShow) {
             pop.dismiss()
         }
@@ -316,7 +317,7 @@ class HighKneeMainActivity : BaseActivity<HighKneeViewModel, ActivityHighKneeMai
             }
 
             override fun completed() {
-
+                startTimer()
             }
         })
         pop = XPopup.Builder(this@HighKneeMainActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)

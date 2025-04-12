@@ -30,7 +30,7 @@ import com.fjp.skeletalmuscle.app.util.Constants
 import com.fjp.skeletalmuscle.app.util.DeviceDataParse
 import com.fjp.skeletalmuscle.app.util.DeviceType
 import com.fjp.skeletalmuscle.app.util.SMBleManager
-import com.fjp.skeletalmuscle.app.weight.pop.PlankDeviceOffLinePop
+import com.fjp.skeletalmuscle.app.weight.pop.AssessmentDeviceOffLinePop
 import com.fjp.skeletalmuscle.data.model.bean.AssessmentType
 import com.fjp.skeletalmuscle.data.model.bean.BleDevice
 import com.fjp.skeletalmuscle.data.model.bean.SaveAssessmentRequest
@@ -83,10 +83,11 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     private var weight: Int = 0//用户选择的当前体重
     private var waistline: Int = 0//用户选择的当前腰围
     lateinit var pop: BasePopupView
+    private var pauseTime: Long = 0
     private val updateTimerTask = object : Runnable {
         override fun run() {
 
-            val currentTime = SystemClock.uptimeMillis()
+            val currentTime = if (isRunning) SystemClock.uptimeMillis() else pauseTime
             elapsedTime = currentTime - startTime
             // 检查是否暂停
             seconds++
@@ -150,9 +151,6 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         rightLevelViews.add(mDatabind.rIv4)
         rightLevelViews.add(mDatabind.rIv5)
         SMBleManager.addDeviceResultDataListener(this)
-        SMBleManager.connectedDevices[DeviceType.GTS]?.let {
-            SMBleManager.subscribeToNotifications(it, Constants.GTS_UUID_SERVICE, Constants.GTS_UUID_CHARACTERISTIC_WRITE)
-        }
         SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let {
             SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR)
         }
@@ -204,10 +202,16 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
         }
     }
 
+    private fun pauseTimer() {
+        isRunning = false
+        pauseTime = SystemClock.uptimeMillis()
+        handler.removeCallbacks(updateTimerTask)
+    }
+
     private fun updateTimerTextView() {
-        sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
-        val sportsSecond = (elapsedTime / 1000 % 60).toInt()
-        val timeString = String.format("%02d:%02d", sportsMinutes, sportsSecond)
+//        sportsMinutes = ((elapsedTime / (1000 * 60)) % 60).toInt()
+//        val sportsSecond = (elapsedTime / 1000 % 60).toInt()
+        val timeString = String.format("%02d:%02d", 0, seconds)
         mViewModel.curTime.set(timeString)
         if (curType != AssessmentType.Grip) {
             mDatabind.countdownTv.text = "还剩${totalTime - seconds}S"
@@ -322,12 +326,13 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
             mDatabind.centerIv.visibility = View.GONE
             if (curType == AssessmentType.HighLeg) {
                 mViewModel.title.set("请高抬腿运动一分钟")
-
+                mDatabind.countdownTv.text = "还剩60S"
                 mDatabind.centerBigIv.visibility = View.VISIBLE
                 isHighLeg(true)
             } else if (curType == AssessmentType.UpDown) {
                 mDatabind.centerBigIv.visibility = View.VISIBLE
                 mDatabind.centerBigIv.setBackgroundResource(R.drawable.sports_sit_up_temp)
+                mDatabind.countdownTv.text = "还剩60S"
                 mViewModel.title.set("请起坐运动一分钟")
 
             } else {
@@ -346,16 +351,23 @@ class SportsAssessmentActivity : BaseActivity<SportsAssessmentViewModel, Activit
     }
 
     private fun showOffLinePop() {
+        pauseTimer()
         if (this@SportsAssessmentActivity::pop.isInitialized && pop.isShow) {
             pop.dismiss()
         }
-        val deviceOffLinePop = PlankDeviceOffLinePop(this@SportsAssessmentActivity, object : PlankDeviceOffLinePop.Listener {
+        val deviceOffLinePop = AssessmentDeviceOffLinePop(this@SportsAssessmentActivity, object : AssessmentDeviceOffLinePop.Listener {
 
 
             override fun reconnect(type: DeviceType) {
+                if (type == DeviceType.LEFT_LEG) {
+                    SMBleManager.connectedDevices[DeviceType.LEFT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR) }
+                } else if (type == DeviceType.RIGHT_LEG) {
+                    SMBleManager.connectedDevices[DeviceType.RIGHT_LEG]?.let { SMBleManager.subscribeToNotifications(it, Constants.LEG_UUID_SERVICE, Constants.LEG__UUID_NOTIFY_CHAR) }
+                }
             }
 
             override fun completed() {
+                startTimer()
             }
         })
         pop = XPopup.Builder(this@SportsAssessmentActivity).dismissOnTouchOutside(true).dismissOnBackPressed(true).isDestroyOnDismiss(true).autoOpenSoftInput(false).asCustom(deviceOffLinePop)

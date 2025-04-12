@@ -36,7 +36,7 @@ class TokenOutInterceptor : Interceptor {
                 if (apiResponse.code == 400) {
                     //如果是普通的activity话 可以直接跳转，如果是navigation中的fragment，可以发送通知跳转
                     appContext.startActivity(Intent(appContext, LoginActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     })
 
                 }

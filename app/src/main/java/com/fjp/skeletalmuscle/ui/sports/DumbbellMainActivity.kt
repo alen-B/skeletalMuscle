@@ -329,6 +329,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
     }
 
     private fun showOffLinePop() {
+        pauseTimer()
         if (this@DumbbellMainActivity::pop.isInitialized && pop.isShow) {
             pop.dismiss()
         }
@@ -345,7 +346,7 @@ class DumbbellMainActivity : BaseActivity<DumbbellViewModel, ActivityDumbbellMai
             }
 
             override fun completed() {
-
+                    startTimer()
             }
 
         })
